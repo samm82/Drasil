@@ -23,7 +23,7 @@ physicCon = [acceleration, angAccel, angDisp, angVelo, angFreq, angular, chgInVe
   rigidBody, scalarAccel, scalarPos, space, speed, strain, stress, tension,
   time, torque, velocity, weight, xAccel, xConstAccel, xDist, xPos, xVel,
   yAccel, yConstAccel, yDist, yPos, yVel, momentum, moment, fOfGravity, positionVec,
-  pendulum, body, kinematics, frequency, period]
+  pendulum, body, kinematics, frequency, period, xForce, yForce]
 
 physicCon' :: [CI]
 physicCon' = [oneD, twoD, threeD]
@@ -38,7 +38,7 @@ acceleration, angAccel, angDisp, angVelo, angFreq, angular, chgInVelocity, cohes
   space, speed, strain, stress, tension, time, torque, velocity, weight,
   xAccel, xConstAccel, xDist, xPos, xVel, yAccel, yConstAccel, yDist,
   yPos, yVel, momentum, moment, fOfGravity, positionVec, pendulum, body,
-  kinematics, frequency, period :: ConceptChunk
+  kinematics, frequency, period, xForce, yForce :: ConceptChunk
 
 oneD, twoD, threeD :: CI
 oneD   = commonIdeaWithDict "oneD"   (cn "one-dimensional")   "1D" [mathematics, physics]
@@ -184,6 +184,9 @@ yAccel = dccWDS "yScalAcc" (nounPhraseSent $ phrase yComp `sOf` phrase accelerat
 constAccelV = dccWDS "constAccelV" (cn "constant acceleration vector") (S "The" +:+ phrase constAccel +:+ S "vector")
 xConstAccel = dccWDS "xConstAccel" (nounPhraseSent $ phrase xComp `sOf` phrase constAccel) (S "The" +:+ phrase xComp `sOf` phrase constAccel)
 yConstAccel = dccWDS "yConstAccel" (nounPhraseSent $ phrase yComp `sOf` phrase constAccel) (S "The" +:+ phrase yComp `sOf` phrase constAccel)
+
+xForce = dccWDS "xScalForce" (nounPhraseSent $ phrase xComp `sOf` phrase force) (S "The" +:+ phrase xComp `sOf` phrase force)
+yForce = dccWDS "yScalForce" (nounPhraseSent $ phrase yComp `sOf` phrase force) (S "The" +:+ phrase yComp `sOf` phrase force)
 
 
 --FIXME: COMBINATION HACK (for all below)

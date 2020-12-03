@@ -1,4 +1,4 @@
-module Drasil.DblPendulum.Goals (goals, goalsInputs) where
+module Drasil.Pendulum.Goals (goals, goalsInputs) where
 
 import Language.Drasil
 import Utils.Drasil

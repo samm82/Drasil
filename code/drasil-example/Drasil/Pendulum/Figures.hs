@@ -1,4 +1,4 @@
-module Drasil.DblPendulum.Figures (figMotion) where
+module Drasil.Pendulum.Figures (figMotion) where
 
 import Language.Drasil
 

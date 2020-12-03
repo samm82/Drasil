@@ -1,4 +1,4 @@
-module Drasil.DblPendulum.Requirements where
+module Drasil.Pendulum.Requirements where
 
 import Language.Drasil
 import Drasil.DocLang.SRS (datCon, propCorSol)
@@ -11,9 +11,9 @@ import Data.Drasil.Concepts.Documentation (datumConstraint, funcReqDom,
 --   requirement, srs, traceyMatrix, unlikelyChg, value, vavPlan)
 import Data.Drasil.Concepts.Math (calculation)
 import Data.Drasil.Concepts.Software (errMsg)
-import Drasil.DblPendulum.IMods (angularDisplacementIM)
-import Drasil.DblPendulum.Unitals (lenRod, pendDisplacementAngle)
-import Data.Drasil.Quantities.Physics (angularDisplacement)
+import Drasil.Pendulum.IMods (calAngularAccelerationIM)
+import Drasil.Pendulum.Unitals (lenRod, pendDisplacementAngle)
+import Data.Drasil.Quantities.Physics (angularAccel)
 
 {--Functional Requirements--}
 
@@ -36,12 +36,12 @@ verifyInptValsDesc = foldlSent [S "Check the entered", plural inValue,
 
 calcAngPosDesc = foldlSent [S "Calculate the following" +: plural value,
   foldlList Comma List [
-    ch angularDisplacement +:+ sParen (S "from" +:+ makeRef2S angularDisplacementIM),  
-    ch pendDisplacementAngle   +:+ sParen (S "from" +:+ makeRef2S angularDisplacementIM)
+    ch angularAccel +:+ sParen (S "from" +:+ makeRef2S calAngularAccelerationIM),  
+    ch pendDisplacementAngle   +:+ sParen (S "from" +:+ makeRef2S calAngularAccelerationIM)
   ]]
 outputValuesDesc = foldlSent [atStart output_, ch lenRod,
-  sParen (S "from" +:+ makeRef2S angularDisplacementIM) `sAnd` ch lenRod,
-  sParen (S "from" +:+ makeRef2S angularDisplacementIM)]
+  sParen (S "from" +:+ makeRef2S calAngularAccelerationIM) `sAnd` ch lenRod,
+  sParen (S "from" +:+ makeRef2S calAngularAccelerationIM)]
 
 
 {--Nonfunctional Requirements--}

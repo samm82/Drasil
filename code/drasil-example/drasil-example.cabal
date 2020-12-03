@@ -291,23 +291,23 @@ executable template
   default-language: Haskell2010
   ghc-options:      -Wall -Wredundant-constraints
 
-executable dblpendulum
+executable pendulum
   hs-source-dirs: .
-  main-is: Drasil/DblPendulum/Main.hs
+  main-is: Drasil/Pendulum/Main.hs
   other-modules:
-      Drasil.DblPendulum.Body
-    , Drasil.DblPendulum.Figures
-    , Drasil.DblPendulum.Concepts
-    , Drasil.DblPendulum.Assumptions
-    , Drasil.DblPendulum.Goals
-    , Drasil.DblPendulum.DataDefs
-    , Drasil.DblPendulum.Unitals
-    , Drasil.DblPendulum.TMods
+      Drasil.Pendulum.Body
+    , Drasil.Pendulum.Figures
+    , Drasil.Pendulum.Concepts
+    , Drasil.Pendulum.Assumptions
+    , Drasil.Pendulum.Goals
+    , Drasil.Pendulum.DataDefs
+    , Drasil.Pendulum.Unitals
+    , Drasil.Pendulum.TMods
     , Drasil.Projectile.References
-    , Drasil.DblPendulum.GenDefs
-    , Drasil.DblPendulum.References
-    , Drasil.DblPendulum.IMods
-    , Drasil.DblPendulum.Requirements
+    , Drasil.Pendulum.GenDefs
+    , Drasil.Pendulum.References
+    , Drasil.Pendulum.IMods
+    , Drasil.Pendulum.Requirements
   
 
   Build-Depends:

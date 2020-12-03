@@ -1,4 +1,4 @@
-module Drasil.DblPendulum.Body where
+module Drasil.Pendulum.Body where
 
 import Language.Drasil hiding (Symbol(..), Vector)
 import Language.Drasil.Printers (PrintingInformation(..), defaultConfiguration)
@@ -25,20 +25,20 @@ import Drasil.DocLang (AuxConstntSec(AuxConsProg),
   SSDSec(..), SSDSub(SSDProblem, SSDSolChSpec), SolChSpec(SCSProg),
   TConvention(..), TSIntro(..), TraceabilitySec(TraceabilityProg),
   Verbosity(Verbose), intro, mkDoc, traceMatStandard, tsymb)
-import Drasil.DblPendulum.Figures (figMotion)
+import Drasil.Pendulum.Figures (figMotion)
 import Data.Drasil.Concepts.Math (mathcon, cartesian)
 import Data.Drasil.Quantities.Math (unitVect, unitVectj)
-import Drasil.DblPendulum.Assumptions (assumptions)
-import Drasil.DblPendulum.Concepts (pendulumTitle)
-import Drasil.DblPendulum.Goals (goals, goalsInputs)
-import Drasil.DblPendulum.DataDefs (dataDefs)
-import Drasil.DblPendulum.TMods (tMods)
-import Drasil.DblPendulum.IMods (iMods)
-import Drasil.DblPendulum.GenDefs (genDefns)
-import Drasil.DblPendulum.Unitals (symbols, inputs, outputs,
+import Drasil.Pendulum.Assumptions (assumptions)
+import Drasil.Pendulum.Concepts (pendulumTitle)
+import Drasil.Pendulum.Goals (goals, goalsInputs)
+import Drasil.Pendulum.DataDefs (dataDefs)
+import Drasil.Pendulum.TMods (tMods)
+import Drasil.Pendulum.IMods (iMods)
+import Drasil.Pendulum.GenDefs (genDefns)
+import Drasil.Pendulum.Unitals (symbols, inputs, outputs,
   inConstraints, outConstraints, acronyms)
-import Drasil.DblPendulum.Requirements (funcReqs, nonFuncReqs)
-import Drasil.DblPendulum.References (citations)
+import Drasil.Pendulum.Requirements (funcReqs, nonFuncReqs)
+import Drasil.Pendulum.References (citations)
 
 
 srs :: Document

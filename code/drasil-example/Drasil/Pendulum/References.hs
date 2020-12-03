@@ -1,4 +1,4 @@
-module Drasil.DblPendulum.References where
+module Drasil.Pendulum.References where
 
 import Language.Drasil
 import Data.Drasil.Citations (cartesianWiki)

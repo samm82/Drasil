@@ -1,4 +1,4 @@
-module Drasil.DblPendulum.Concepts where
+module Drasil.Pendulum.Concepts where
 
 import Language.Drasil
 --import Utils.Drasil

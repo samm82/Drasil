@@ -1,4 +1,4 @@
-module Drasil.DblPendulum.Unitals where
+module Drasil.Pendulum.Unitals where
 
 import Language.Drasil
 import Language.Drasil.ShortHands
@@ -14,7 +14,7 @@ import Data.Drasil.SI_Units (metre, degree, radian)
 import qualified Data.Drasil.Quantities.Physics as QP (position, ixPos, force, velocity,
   angularVelocity, angularAccel, gravitationalAccel, tension, acceleration, yAccel,
   xAccel, yVel, xVel, iyPos, time, position, torque, momentOfInertia, angularDisplacement,
-  angularFrequency, frequency, period)
+  angularFrequency, frequency, period, xPos, yPos, yForce, xForce)
 import Data.Drasil.Concepts.Physics (pendulum, twoD)
 import Data.Drasil.Concepts.Math as CM (angle)
 import Data.Drasil.Quantities.Math as QM (unitVect, unitVectj, pi_)
@@ -41,7 +41,7 @@ unitalChunks = [lenRod, QPP.mass, QP.force, QP.ixPos,
    QP.angularVelocity, QP.angularAccel, QP.gravitationalAccel, QP.tension, QP.acceleration,
    QP.yAccel, QP.xAccel, QP.yVel, QP.xVel, QP.iyPos, QP.time, QP.velocity, QP.position, QP.torque,
    QP.momentOfInertia, QP.angularDisplacement, QP.angularVelocity, initialPendAngle,
-   QP.angularFrequency, QP.frequency, QP.period, pendDisplacementAngle]
+   QP.angularFrequency, QP.frequency, QP.period, pendDisplacementAngle, QP.xPos, QP.yPos, QP.xForce, QP.yForce]
 
 lenRod, pendDisplacementAngle, initialPendAngle :: UnitalChunk
 

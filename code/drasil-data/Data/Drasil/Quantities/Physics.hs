@@ -9,7 +9,8 @@ import qualified Data.Drasil.Concepts.Physics as CP (acceleration, angAccel,
   kEnergy, linAccel, linDisp, linVelo, momentOfInertia, position, potEnergy,
   pressure, restitutionCoef, scalarAccel, scalarPos, speed, time, torque,
   velocity, weight, xAccel, xConstAccel, xDist, xPos, xVel, yAccel, yConstAccel,
-  yDist,  yPos, yVel, momentum, moment, fOfGravity, positionVec, tension, angFreq, period, frequency)
+  yDist,  yPos, yVel, momentum, moment, fOfGravity, positionVec, tension, angFreq,
+  period, frequency, xForce, yForce)
 
 import Data.Drasil.SI_Units (joule, metre, newton, pascal, radian, second, hertz)
 import Data.Drasil.Units.Physics (accelU, angAccelU, angVelU, gravConstU, 
@@ -28,7 +29,7 @@ physicscon = [acceleration, angularAccel, angularDisplacement, angularVelocity,
   potEnergy, pressure, scalarAccel, scalarPos, speed, time, torque, velocity,
   weight, xAccel, xConstAccel, xDist, xPos, xVel, yAccel, yConstAccel, yDist,
   yPos, yVel,momentum, moment, moment2D, fOfGravity, positionVec, tension,
-  angularFrequency, period, frequency]
+  angularFrequency, period, frequency, xForce, yForce]
 
 acceleration, angularAccel, angularDisplacement, angularVelocity, chgInVelocity,
   constAccel, constAccelV, displacement, distance, energy, fSpeed, fVel, force,
@@ -37,13 +38,13 @@ acceleration, angularAccel, angularDisplacement, angularVelocity, chgInVelocity,
   linearVelocity, momentOfInertia, position, potEnergy, pressure, scalarAccel,
   scalarPos, speed, time, torque, velocity, weight, xAccel, xConstAccel, xDist,
   xPos, xVel, yAccel, yConstAccel, yDist, yPos, yVel, momentum, moment, moment2D,
-  fOfGravity, positionVec, tension, angularFrequency, period, frequency :: UnitalChunk
+  fOfGravity, positionVec, tension, angularFrequency, period, frequency, xForce, yForce :: UnitalChunk
 
 
 acceleration         = uc CP.acceleration (vec lA) accelU
 angularAccel         = uc CP.angAccel lAlpha angAccelU
 angularDisplacement  = uc CP.angDisp lTheta radian
-angularFrequency     = uc CP.angFreq cOmega second
+angularFrequency     = uc CP.angFreq cOmega angVelU
 angularVelocity      = uc CP.angVelo lOmega angVelU
 chgInVelocity        = uc CP.chgInVelocity (Concat [cDelta, vec lV]) velU
 constAccel           = uc CP.constAccel (sup lA lC) accelU
@@ -108,6 +109,9 @@ iyVel = uc CP.iyVel (sup (subY lV) initial) velU
 
 xAccel = uc CP.xAccel (subX lA) accelU
 yAccel = uc CP.yAccel (subY lA) accelU
+
+xForce = uc CP.xForce (subX cF) newton
+yForce = uc CP.yForce (subY cF) newton
 
 constAccelV = uc CP.constAccelV (sup (vec  lA) constant) accelU
 xConstAccel = uc CP.xConstAccel (sup (subX lA) constant) accelU
