@@ -14,14 +14,14 @@ import Language.Drasil.UID (UID)
 
 import Control.Lens (makeLenses, view)
 
+data Partition = Sections
+                | Part
+                | Chapter
+{-
 -- | Section Contents are split into subsections or contents, where contents
 -- are standard layout objects (see 'Contents').
 data SecCons = Sub Section
              | Con Contents
-
-data Partition = Sections
-                | Part
-                | Chapter
 
 -- | Sections have a title ('Sentence'), a list of contents ('SecCons')
 -- and a shortname ('Reference').
@@ -31,17 +31,19 @@ data Section = Section
              , _lab :: Reference
              }
 makeLenses ''Section
+-}
 
-{-
+--data SecHeader  = SecHeader Title Reference
+--newtype Content = Content   Contents
+
 data Section = Section
              { depth  :: Depth
-             , header :: SecHeader 
-             , cons   :: Content
+             , header :: Title 
+             , cons   :: [Contents]
+             , _lab   :: Reference
              }
+makeLenses ''Section
 
-data SecHeader = SecHeader Title Reference
-data Content   = Content   Contents
--} 
 -- | Finds the 'UID' of a 'Section'.
 instance HasUID        Section where uid = lab . uid
 -- | Finds the short name of a 'Section'.
@@ -49,9 +51,9 @@ instance HasShortName  Section where shortname = shortname . view lab
 -- | Finds the reference information of a 'Section'.
 instance Referable Section where
   refAdd     = getAdd . getRefAdd . view lab
-  renderRef (Section _ _ lb)  = RP (prepend "Sec") (getAdd $ getRefAdd lb)
+  renderRef (Section _ _ _ lb)  = RP (prepend "Sec") (getAdd $ getRefAdd lb)
 -- | Finds the reference address of a 'Section'.
-instance HasRefAddress Section where getRefAdd (Section _ _ lb) = RP (prepend "Sec") (getAdd $ getRefAdd lb)
+instance HasRefAddress Section where getRefAdd (Section _ _ _ lb) = RP (prepend "Sec") (getAdd $ getRefAdd lb)
 
 -- | A Document has a Title ('Sentence'), Author(s) ('Sentence'), and 'Section's
 -- which hold the contents of the document.
@@ -106,6 +108,12 @@ mkRawLC x lb = llcc lb x
 
 -- | Smart constructor for creating 'Section's with a title ('Sentence'), introductory contents
 -- (ie. paragraphs, tables, etc.), a list of subsections, and a shortname ('Reference').
+section :: Depth -> Sentence -> [Contents] -> Reference -> Section
+section = Section
+
+{- original code
+-- | Smart constructor for creating 'Section's with a title ('Sentence'), introductory contents
+-- (ie. paragraphs, tables, etc.), a list of subsections, and a shortname ('Reference').
 section :: Sentence -> [Contents] -> [Section] -> Reference -> Section
 section title intro secs = Section title (map Con intro ++ map Sub secs)
 
@@ -122,6 +130,7 @@ getSec t@(Section _ sc _) = t : concatMap getSecCons sc
 getSecCons :: SecCons -> [Section]
 getSecCons (Sub sec) = getSec sec
 getSecCons (Con _)   = []
+-}
 
 -- | 'Figure' smart constructor with a 'Lbl' and a 'Filepath'. Assumes 100% of page width as max width.
 fig :: Lbl -> Filepath -> RawContent

@@ -125,8 +125,8 @@ module Language.Drasil (
   , titleizeNP, titleizeNP', nounPhrase'', nounPhraseSP, nounPhraseSent
   -- Document
   , Document(..), ShowTableOfContents(..), DType(..), Section(..)
-  , Contents(..), SecCons(..), ListType(..), ItemType(..), ListTuple
-  , LabelledContent(..), UnlabelledContent(..), extractSection
+  , Contents(..), ListType(..), ItemType(..), ListTuple
+  , LabelledContent(..), UnlabelledContent(..)
   , mkParagraph, mkRawLC, checkToC
   , llcc, ulcc
   , section, fig, figWithWidth
@@ -214,8 +214,8 @@ import Language.Drasil.Expr.Math (abs_, neg, negVec, log, ln, sin, cos, tan, sqr
           cross, m2x2, vec2D, dgnl2x2, euclidean, defint, intAll)
 import Language.Drasil.Expr.Display
 import Language.Drasil.Document (section, fig, figWithWidth
-  , Section(..), SecCons(..) , llcc, ulcc, Document(..)
-  , mkParagraph, mkFig, mkRawLC, ShowTableOfContents(..), checkToC, extractSection
+  , Section(..), llcc, ulcc, Document(..)
+  , mkParagraph, mkFig, mkRawLC, ShowTableOfContents(..), checkToC
   , makeTabRef, makeFigRef, makeSecRef, makeEqnRef, makeURI)
 import Language.Drasil.Document.Core (Contents(..), ListType(..), ItemType(..), DType(..)
   , RawContent(..), ListTuple, MaxWidthPercent
