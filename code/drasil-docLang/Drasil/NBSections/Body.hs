@@ -9,16 +9,16 @@ import qualified Drasil.DocLang.Notebook as NB (review, mainIdea, methAndAnls, e
 
 -- Review
 reviewSec :: [Contents] -> Section
-reviewSec cs = NB.review cs []
+reviewSec = NB.review 1
 
 -- Main Idea
-mainIdeaSec :: [Contents] -> [Section] -> Section
-mainIdeaSec = NB.mainIdea
+mainIdeaSec :: [Contents] -> Section
+mainIdeaSec = NB.mainIdea 1
 
 -- Method and Analysis
-mthdAndanls :: [Contents] -> [Section] -> Section
-mthdAndanls = NB.methAndAnls
+mthdAndanls :: [Contents] -> Section
+mthdAndanls = NB.methAndAnls 1
 
 -- Example
-exampleSec :: [Contents] -> [Section] -> Section
-exampleSec = NB.example
+exampleSec :: [Contents] -> Section
+exampleSec = NB.example 1

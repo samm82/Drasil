@@ -2,7 +2,8 @@ module Drasil.DocumentLanguage.Notebook.DocumentLanguage(mkNb) where
 
 import Drasil.DocumentLanguage.Notebook.NBDecl (NBDecl, mkNBDesc)
 import Drasil.DocumentLanguage.Notebook.Core (ApndxSec(..), NBDesc, DocSection(..), 
-  IntrodSec(..), IntrodSub(..), BodySec(..), BodySub(..), SmmrySec(..))
+  IntrodSec(..), InPurposeSub(..), BodySec(..), ReviewSub(..), MainIdeaSub(..),
+  MethsAnlsSub(..), ExampleSub(..), SmmrySec(..))
 
 import Language.Drasil
 
@@ -27,41 +28,51 @@ mkSections :: SystemInformation -> NBDesc -> [Section]
 mkSections si = map doit  
   where
     doit :: DocSection -> Section
-    doit (IntrodSec is)      = mkIntroSec si is
+    doit (IntrodSec is)      = mkIntroSec is
+    doit (InPurposeSub is)   = mkInPurpSub is
     doit (BodySec bs)        = mkBodySec bs
+    doit (ReviewSub rs)      = mkReviewSub rs
+    doit (MainIdeaSub ms)    = mkMainIdeaSub ms
+    doit (MethsAnlsSub ms)   = mkMethAnlSub ms   
+    doit (ExampleSub es)     = mkExpSub es  
     doit (SmmrySec ss)       = mkSmmrySec ss
     doit BibSec              = mkBib (citeDB si)
     doit (ApndxSec a)        = mkAppndxSec a
 
 -- Add more intro subsections
 -- | Helper for making the 'Introduction' section
-mkIntroSec :: SystemInformation -> IntrodSec -> Section
-mkIntroSec si (IntrodProg probIntro l) =
-  Intro.introductionSection probIntro $ map (mkSubIntro si) l
-  where
-    mkSubIntro :: SystemInformation -> IntrodSub -> Section
-    mkSubIntro _ (InPurpose intro) = Intro.purposeOfDoc intro
+mkIntroSec :: IntrodSec -> Section
+mkIntroSec (IntrodProg probIntro) = Intro.introductionSection probIntro 
+  
+mkInPurpSub :: InPurposeSub -> Section
+mkInPurpSub (InPurposeProg intro) = Intro.purposeOfDoc intro
 
 -- | Helper for making the 'Body' section
 mkBodySec :: BodySec -> Section
-mkBodySec (BodyProg l) = NB.body [] $ map mkSubs l
-  where
-    mkSubs :: BodySub -> Section
-    mkSubs (Review cs )                 = Body.reviewSec cs 
-    mkSubs (MainIdea cntnts subsec)     = Body.mainIdeaSec cntnts subsec
-    mkSubs (MethsAndAnls cntnts subsec) = Body.mthdAndanls cntnts subsec
-    mkSubs (Example cntnts subsec)      = Body.exampleSec cntnts subsec
+mkBodySec (BodyProg bodyIntro) = NB.body 0 bodyIntro
+
+mkReviewSub :: ReviewSub -> Section
+mkReviewSub (ReviewProg cntnts) = Body.reviewSec cntnts   
+
+mkMainIdeaSub :: MainIdeaSub -> Section
+mkMainIdeaSub (MainIdeaProg cntnts) = Body.mainIdeaSec cntnts
+
+mkMethAnlSub :: MethsAnlsSub -> Section
+mkMethAnlSub (MethsAnlsProg cntnts) = Body.mthdAndanls cntnts
+
+mkExpSub :: ExampleSub -> Section
+mkExpSub (ExampleProg cntnts) = Body.exampleSec cntnts
 
 -- | Helper for making the 'Summary' section
 mkSmmrySec :: SmmrySec -> Section
-mkSmmrySec (SmmryProg cs) = NB.summary cs []
+mkSmmrySec (SmmryProg cs) = NB.summary 0 cs
 
 -- | Helper for making the 'Bibliography' section
 mkBib :: BibRef -> Section
-mkBib bib = NB.reference [UlC $ ulcc (Bib bib)] []
+mkBib bib = NB.reference 0 [UlC $ ulcc (Bib bib)]
 
 -- | Helper for making the 'Appendix' section
 mkAppndxSec :: ApndxSec -> Section
-mkAppndxSec (ApndxProg cs) = NB.appendix cs []
+mkAppndxSec (ApndxProg cs) = NB.appendix 0 cs
 
     

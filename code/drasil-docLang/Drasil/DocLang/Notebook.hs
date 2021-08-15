@@ -13,31 +13,31 @@ import qualified Data.Drasil.Concepts.Physics as P (motion, horizontalMotion, ve
 --doc  sys = Document (Doc.notebook `S.forTPS` sys)
 
 intro, prpsOfDoc, body, review, mainIdea, motion, hormotion, vermotion, methAndAnls,
-  coorSyst, kinematic, procForAnls, summary, appendix, reference, example :: [Contents] -> [Section] -> Section
+  coorSyst, kinematic, procForAnls, summary, appendix, reference, example :: Int -> [Contents] -> Section
   
-intro       cs ss = section (titleize Doc.introduction)      cs ss introLabel
-prpsOfDoc   cs ss = section (titleize Doc.prpsOfDoc)         cs ss docPurposeLabel
+intro       d cs = section d (titleize Doc.introduction)       cs introLabel
+prpsOfDoc   d cs = section d (titleize Doc.prpsOfDoc)          cs docPurposeLabel
 
-body        cs ss = section (titleize Doc.body)              cs ss bodyLabel
-review      cs ss = section (titleize Doc.review)            cs ss reviewLabel
+body        d cs = section d (titleize Doc.body)               cs bodyLabel
+review      d cs = section d (titleize Doc.review)             cs reviewLabel
 
-mainIdea    cs ss = section (titleize Doc.mainIdea)          cs ss mainIdeaLabel
-motion      cs ss = section (titleize P.motion)              cs ss motionLabel
-hormotion   cs ss = section (titleize P.horizontalMotion)    cs ss hormotionLabel
-vermotion   cs ss = section (titleize P.verticalMotion)      cs ss vermotionLabel
+mainIdea    d cs = section d (titleize Doc.mainIdea)           cs mainIdeaLabel
+motion      d cs = section d (titleize P.motion)               cs motionLabel
+hormotion   d cs = section d (titleize P.horizontalMotion)     cs hormotionLabel
+vermotion   d cs = section d (titleize P.verticalMotion)       cs vermotionLabel
 
-methAndAnls cs ss = section (titleize' Doc.methAndAnls)      cs ss methsAndanlsLabel
+methAndAnls d cs = section d (titleize' Doc.methAndAnls)       cs methsAndanlsLabel
 
-summary     cs ss = section (titleize Doc.summary)           cs ss summaryLabel
+summary     d cs = section d (titleize Doc.summary)            cs summaryLabel
 
-procForAnls cs ss = section  (titleize Doc.procForAnls)      cs ss anlsProcLabel
-coorSyst    cs ss = section  (titleize Doc.coordinateSystem) cs ss coorSystLabel
-kinematic   cs ss = section  (titleize P.kinematics)         cs ss kinematicLabel
+procForAnls d cs = section  d (titleize Doc.procForAnls)       cs anlsProcLabel
+coorSyst    d cs = section  d (titleize Doc.coordinateSystem)  cs coorSystLabel
+kinematic   d cs = section  d (titleize P.kinematics)          cs kinematicLabel
 
-appendix    cs ss = section (titleize Doc.appendix)          cs ss appendixLabel
+appendix    d cs = section d (titleize Doc.appendix)           cs appendixLabel
 
-reference   cs ss = section (titleize' Doc.reference)        cs ss referenceLabel
-example     cs ss = section (titleize Doc.example)           cs ss exampleLabel
+reference   d cs = section d (titleize' Doc.reference)         cs referenceLabel
+example     d cs = section d (titleize Doc.example)            cs exampleLabel
 
 --Labels--
 sectionReferences :: [Reference]
