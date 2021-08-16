@@ -78,12 +78,18 @@ egetDocDesc = fmGetDocDesc exprPlate
 
 -- | Extracts expressions from a 'Section'.
 egetSec :: Section -> [DisplayExpr]
-egetSec (Section _ sc _ ) = concatMap egetSecCon sc
+egetSec (Section _ _ c _ ) = concatMap egetSecCon c
 
+{-
 -- | Extracts expressions from section contents.
 egetSecCon :: SecCons -> [DisplayExpr]
 egetSecCon (Sub s) = egetSec s
 egetSecCon (Con c) = egetCon' c
+-}
+
+-- | Extracts expressions from section contents.
+egetSecCon :: Contents -> [DisplayExpr]
+egetSecCon = egetCon' 
 
 -- | Extracts expressions from something that has contents.
 egetCon' :: HasContents a => a -> [DisplayExpr]
@@ -151,12 +157,18 @@ getDocDesc = fmGetDocDesc (sentencePlate id)
 
 -- | Extracts 'Sentence's from a 'Section'.
 getSec :: Section -> [Sentence]
-getSec (Section t sc _ ) = t : concatMap getSecCon sc
+getSec (Section _ t c _ ) = t : concatMap getSecCon c
 
+{-
 -- | Extracts 'Sentence's from section contents.
 getSecCon :: SecCons -> [Sentence]
 getSecCon (Sub s) = getSec s
 getSecCon (Con c) = getCon' c
+-}
+
+-- | Extracts 'Sentence's from section contents.
+getSecCon :: Contents -> [Sentence]
+getSecCon = getCon'
 
 -- | Extracts 'Sentence's from something that has contents.
 getCon' :: HasContents a => a -> [Sentence]
