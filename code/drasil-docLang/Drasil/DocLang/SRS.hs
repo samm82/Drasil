@@ -43,106 +43,110 @@ tOfCont, refMat, tOfUnit, tOfSymb, tOfAbbAcc, intro, prpsOfDoc, scpOfReq,
   reference, appendix, offShelfSol, scpOfTheProj, prodUCTable, indPRCase,
   termogy :: Int -> [Contents] -> Section
 
+
+---------------------------------------------------------------------------------------------------------------
+-- | section        |       |   uid      | depth |      title                     | contents | reference
+---------------------------------------------------------------------------------------------------------------
 -- | Table of Contents section.
-tOfCont       d cs = section d (titleize' Doc.tOfCont)                  cs tOfContLabel
+tOfCont       d cs = section "tOfCont"       d (titleize' Doc.tOfCont)                  cs tOfContLabel
 
 -- | Reference Material section.
-refMat        d cs = section d (titleize Doc.refMat)                    cs refMatLabel
+refMat        d cs = section "refMat"        d (titleize Doc.refMat)                    cs refMatLabel
 -- | Table of Units section.
-tOfUnit       d cs = section d (titleize' Doc.tOfUnit)                  cs tOfUnitLabel
+tOfUnit       d cs = section "tOfUnit"       d (titleize' Doc.tOfUnit)                  cs tOfUnitLabel
 -- | Table of Symbols section.
-tOfSymb       d cs = section d (titleize' Doc.tOfSymb)                  cs tOfSymbLabel
+tOfSymb       d cs = section "tOfSymb"       d (titleize' Doc.tOfSymb)                  cs tOfSymbLabel
 -- | Table of Abbreviations and Acronyms section.
-tOfAbbAcc     d cs = section d (titleize' Doc.abbAcc)                   cs tOfAbbAccLabel
+tOfAbbAcc     d cs = section "tOfAbbAcc"     d (titleize' Doc.abbAcc)                   cs tOfAbbAccLabel
 
 -- | Introduction section.
-intro         d cs = section d (titleize Doc.introduction)              cs introLabel
+intro         d cs = section "intro"         d (titleize Doc.introduction)              cs introLabel
 -- | Purpose of Document section.
-prpsOfDoc     d cs = section d (titleize Doc.prpsOfDoc)                 cs docPurposeLabel
+prpsOfDoc     d cs = section "prpsOfDoc"     d (titleize Doc.prpsOfDoc)                 cs docPurposeLabel
 -- | Scope of Requirements section.
-scpOfReq      d cs = section d (titleize' Doc.scpOfReq)                 cs reqsScopeLabel
+scpOfReq      d cs = section "scpOfReq"      d (titleize' Doc.scpOfReq)                 cs reqsScopeLabel
 -- | Characteristics of Intended Reader section.
-charOfIR      d cs = section d (titleize' Doc.charOfIR)                 cs readerCharsLabel
+charOfIR      d cs = section "charOfIR"      d (titleize' Doc.charOfIR)                 cs readerCharsLabel
 -- | Organization of Document section.
-orgOfDoc      d cs = section d (titleize Doc.orgOfDoc)                  cs docOrgLabel
+orgOfDoc      d cs = section "orgOfDoc"      d (titleize Doc.orgOfDoc)                  cs docOrgLabel
 
 -- | Stakeholders section.
-stakeholder   d cs = section d (titleize' Doc.stakeholder)              cs stakeholderLabel
+stakeholder   d cs = section "stakeholder"   d (titleize' Doc.stakeholder)              cs stakeholderLabel
 -- | The Customer section.
-theCustomer   d cs = section d (titleizeNP $ the Doc.customer)          cs customerLabel
+theCustomer   d cs = section "theCustomer"   d (titleizeNP $ the Doc.customer)          cs customerLabel
 -- | The Client section.
-theClient     d cs = section d (titleizeNP $ the Doc.client)            cs clientLabel
+theClient     d cs = section "theClient"     d (titleizeNP $ the Doc.client)            cs clientLabel
 
 -- | General System Description section.
-genSysDes     d cs = section d (titleize Doc.generalSystemDescription)  cs genSysDescLabel
+genSysDes     d cs = section "genSysDes"     d (titleize Doc.generalSystemDescription)  cs genSysDescLabel
 -- | System Context section.
-sysCont       d cs = section d (titleize Doc.sysCont)                   cs sysContextLabel
+sysCont       d cs = section "sysCont"       d (titleize Doc.sysCont)                   cs sysContextLabel
 -- | User Characteristics section.
-userChar      d cs = section d (titleize' Doc.userCharacteristic)       cs userCharsLabel
+userChar      d cs = section "userChar"      d (titleize' Doc.userCharacteristic)       cs userCharsLabel
 -- | System Constraints section.
-sysCon        d cs = section d (titleize' Doc.systemConstraint)         cs sysConstraintsLabel
+sysCon        d cs = section "sysCon"        d (titleize' Doc.systemConstraint)         cs sysConstraintsLabel
 
 -- | Specific System Description section.
-specSysDes    d cs = section d (titleize Doc.specificsystemdescription) cs specSystDescLabel
+specSysDes    d cs = section "specSysDes"    d (titleize Doc.specificsystemdescription) cs specSystDescLabel
 
 -- | Problem Description section.
-probDesc      d cs = section d (titleize Doc.problemDescription)        cs probDescLabel
+probDesc      d cs = section "probDesc"      d (titleize Doc.problemDescription)        cs probDescLabel
 -- | Terminology and Definitions section.
-termAndDefn   d cs = section d (titleize' Doc.termAndDef)               cs termDefsLabel
+termAndDefn   d cs = section "termAndDefn"   d (titleize' Doc.termAndDef)               cs termDefsLabel
 -- | Physical System Description section.
-physSyst      d cs = section d (titleize Doc.physSyst)                  cs physSystLabel
+physSyst      d cs = section "physSyst"      d (titleize Doc.physSyst)                  cs physSystLabel
 -- | Goal Statement section.
-goalStmt      d cs = section d (titleize' Doc.goalStmt)                 cs goalStmtLabel
+goalStmt      d cs = section "goalStmt"      d (titleize' Doc.goalStmt)                 cs goalStmtLabel
 
 -- | Solution Characteristics Specification section.
-solCharSpec   d cs = section d (titleize Doc.solutionCharSpec)          cs solCharSpecLabel
+solCharSpec   d cs = section "solCharSpec"   d (titleize Doc.solutionCharSpec)          cs solCharSpecLabel
 -- | Assumptions section.
-assumpt       d cs = section d (titleize' Doc.assumption)               cs assumptLabel
+assumpt       d cs = section "assumpt"       d (titleize' Doc.assumption)               cs assumptLabel
 -- | Theoretical Models section.
-thModel       d cs = section d (titleize' Doc.thModel)                  cs thModelLabel
+thModel       d cs = section "thModel"       d (titleize' Doc.thModel)                  cs thModelLabel
 -- | General Definitions section.
-genDefn       d cs = section d (titleize' Doc.genDefn)                  cs genDefnLabel
+genDefn       d cs = section "genDefn"       d (titleize' Doc.genDefn)                  cs genDefnLabel
 -- | Data Definitions section.
-dataDefn      d cs = section d (titleize' Doc.dataDefn)                 cs dataDefnLabel
+dataDefn      d cs = section "dataDefn"      d (titleize' Doc.dataDefn)                 cs dataDefnLabel
 -- | Instance Models section.
-inModel       d cs = section d (titleize' Doc.inModel)                  cs inModelLabel
+inModel       d cs = section "inModel"       d (titleize' Doc.inModel)                  cs inModelLabel
 -- | Data Constraints section.
-datCon        d cs = section d (titleize' Doc.datumConstraint)          cs datConLabel
+datCon        d cs = section "datCon"        d (titleize' Doc.datumConstraint)          cs datConLabel
 -- | Properties of a Correct Solution section.
-propCorSol    d cs = section d (titleize' Doc.propOfCorSol)             cs corSolPropsLabel
+propCorSol    d cs = section "propCorSol"    d (titleize' Doc.propOfCorSol)             cs corSolPropsLabel
 
 -- | Requirements section.
-require       d cs = section d (titleize' Doc.requirement)              cs requirementsLabel
+require       d cs = section "require"       d (titleize' Doc.requirement)              cs requirementsLabel
 -- | Non-Functional Requirements section.
-nonfuncReq    d cs = section d (titleize' Doc.nonfunctionalRequirement) cs nonfuncReqLabel
+nonfuncReq    d cs = section "nonfuncReq"    d (titleize' Doc.nonfunctionalRequirement) cs nonfuncReqLabel
 -- | Functional Requirements section.
-funcReq       d cs = section d (titleize' Doc.functionalRequirement)    cs funcReqLabel
+funcReq       d cs = section "funcReq"       d (titleize' Doc.functionalRequirement)    cs funcReqLabel
 
 -- | Likely Changes section.
-likeChg       d cs = section d (titleize' Doc.likelyChg)                cs likeChgLabel
+likeChg       d cs = section "likeChg"       d (titleize' Doc.likelyChg)                cs likeChgLabel
 -- | Unlikely Changes section.
-unlikeChg     d cs = section d (titleize' Doc.unlikelyChg)              cs unlikeChgLabel
+unlikeChg     d cs = section "unlikeChg"     d (titleize' Doc.unlikelyChg)              cs unlikeChgLabel
 
 -- | Traceablilty Matrices and Graphs section.
-traceyMandG   d cs = section d (titleize' Doc.traceyMandG)              cs traceMatricesLabel
+traceyMandG   d cs = section "traceyMandG"   d (titleize' Doc.traceyMandG)              cs traceMatricesLabel
 -- | Values of Auxiliary Constants section.
-valsOfAuxCons d cs = section d (titleize Doc.consVals)                  cs valsOfAuxConsLabel
+valsOfAuxCons d cs = section "valsOfAuxCons" d (titleize Doc.consVals)                  cs valsOfAuxConsLabel
 -- | References section.
-reference     d cs = section d (titleize' Doc.reference)                cs referenceLabel
+reference     d cs = section "reference"     d (titleize' Doc.reference)                cs referenceLabel
 -- | Appendix section.
-appendix      d cs = section d (titleize Doc.appendix)                  cs appendixLabel
+appendix      d cs = section "appendix"      d (titleize Doc.appendix)                  cs appendixLabel
 -- | Off-the-Shelf Solutions section.
-offShelfSol   d cs = section d (titleize' Doc.offShelfSolution)         cs offShelfSolnsLabel
+offShelfSol   d cs = section "offShelfSol"   d (titleize' Doc.offShelfSolution)         cs offShelfSolnsLabel
 
 -- Unused
 -- | Scope of the Project section.
-scpOfTheProj  d cs = section d (atStart (Doc.scpOfTheProj titleize))    cs projScopeLabel
+scpOfTheProj  d cs = section "scpOfTheProj"  d (atStart (Doc.scpOfTheProj titleize))    cs projScopeLabel
 -- | Product Use Case Table section.
-prodUCTable   d cs = section d (titleize Doc.prodUCTable)               cs useCaseTableLabel
+prodUCTable   d cs = section "prodUCTable"   d (titleize Doc.prodUCTable)               cs useCaseTableLabel
 -- | Individual Product Use Case section.
-indPRCase     d cs = section d (titleize' Doc.indPRCase)                cs indPRCaseLabel
+indPRCase     d cs = section "indPRCase"     d (titleize' Doc.indPRCase)                cs indPRCaseLabel
 -- | Terminology section.
-termogy       d cs = section d (titleize Doc.terminology)               cs terminologyLabel
+termogy       d cs = section "termogy"       d (titleize Doc.terminology)               cs terminologyLabel
 
 --Labels--
 -- | Collections all 'Section' 'Reference's.
