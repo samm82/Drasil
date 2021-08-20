@@ -37,7 +37,8 @@ makeLenses ''Section
 --newtype Content = Content   Contents
 
 data Section = Section
-             { depth  :: Depth
+             { sid    :: UID
+             , depth  :: Depth
              , header :: Title 
              , cons   :: [Contents]
              , _lab   :: Reference
@@ -51,9 +52,9 @@ instance HasShortName  Section where shortname = shortname . view lab
 -- | Finds the reference information of a 'Section'.
 instance Referable Section where
   refAdd     = getAdd . getRefAdd . view lab
-  renderRef (Section _ _ _ lb)  = RP (prepend "Sec") (getAdd $ getRefAdd lb)
+  renderRef (Section _ _ _ _ lb)  = RP (prepend "Sec") (getAdd $ getRefAdd lb)
 -- | Finds the reference address of a 'Section'.
-instance HasRefAddress Section where getRefAdd (Section _ _ _ lb) = RP (prepend "Sec") (getAdd $ getRefAdd lb)
+instance HasRefAddress Section where getRefAdd (Section _ _ _ _ lb) = RP (prepend "Sec") (getAdd $ getRefAdd lb)
 
 -- | A Document has a Title ('Sentence'), Author(s) ('Sentence'), and 'Section's
 -- which hold the contents of the document.
@@ -108,7 +109,7 @@ mkRawLC x lb = llcc lb x
 
 -- | Smart constructor for creating 'Section's with a title ('Sentence'), introductory contents
 -- (ie. paragraphs, tables, etc.), a list of subsections, and a shortname ('Reference').
-section :: Depth -> Sentence -> [Contents] -> Reference -> Section
+section :: String -> Int -> Sentence -> [Contents] -> Reference -> Section
 section = Section
 
 {- original code
