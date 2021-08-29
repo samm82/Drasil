@@ -10,9 +10,10 @@ module Drasil.DocumentLanguage where
 import Drasil.DocDecl (SRSDecl, mkDocDesc)
 import Drasil.DocumentLanguage.Core (AppndxSec(..), AuxConstntSec(..),
   DerivationDisplay(..), DocDesc, DocSection(..), OffShelfSolnsSec(..), GSDSec(..),
-  GSDSub(..), IntroSec(..), IntroSub(..), LCsSec(..), LFunc(..),
-  PDSub(..), ProblemDescription(..), RefSec(..), RefTab(..), ReqrmntSec(..),
-  ReqsSub(..), SCSSub(..), StkhldrSec(..), StkhldrSub(..), SolChSpec(..),
+  SysCntxtSub(..), UsrCharsSub(..), SystConsSub(..), IntroSec(..), 
+  IPurposeSub(..), IScopeSub(..), ICharSub(..), IOrgSub(..),
+  LCsSec(..), LFunc(..), PDSub(..), ProblemDescription(..), RefSec(..), RefTab(..), ReqrmntSec(..),
+  ReqsSub(..), SCSSub(..), StkhldrSec(..), ClientSub(..), CstmrSub(..), SolChSpec(..),
   SSDSec(..), SSDSub(..), TraceabilitySec(..), TraceConfig(..),
   TSIntro(..), UCsSec(..), getTraceConfigUID)
 import Drasil.DocumentLanguage.Definitions (ddefn, derivation, instanceModel,
@@ -130,12 +131,17 @@ dRefToRef r = map ref $ r ^. getDecRefs
 
 -- | Recursively find all references in a section (meant for getting at 'LabelledContent').
 findAllRefs :: Section -> [Reference]
-findAllRefs (Section _ cs r) = r: concatMap findRefSecCons cs
+findAllRefs (Section _ _ _ c r) = r: concatMap findRefSecCons c
   where
+    findRefSecCons :: Contents -> [Reference]
+    findRefSecCons (LlC (LblC rf _)) = [rf]
+    findRefSecCons _ = []
+    {-
     findRefSecCons :: SecCons -> [Reference]
     findRefSecCons (Sub s) = findAllRefs s
     findRefSecCons (Con (LlC (LblC rf _))) = [rf]
     findRefSecCons _ = []
+    -}
 
 -- | Helper for filling in the traceability matrix and graph information into the system.
 fillTraceSI :: SRSDecl -> SystemInformation -> SystemInformation
@@ -171,14 +177,24 @@ mkSections :: SystemInformation -> DocDesc -> [Section]
 mkSections si dd = map doit dd
   where
     doit :: DocSection -> Section
-    doit TableOfContents      = mkToC dd
-    doit (RefSec rs)          = mkRefSec si dd rs
+    --doit TableOfContents      = mkToC dd
+    doit (RefSec rs)          = mkRefSec rs
     doit (IntroSec is)        = mkIntroSec si is
+    doit (IPurposeSub ips)    = mkIPurpSub ips
+    doit (IScopeSub iss)      = mkIScopeSub iss
+    doit (ICharSub ics)       = mkICharSub si ics
+    doit (IOrgSub ios)        = mkIOrgSub ios
     doit (StkhldrSec sts)     = mkStkhldrSec sts
+    doit (ClientSub cls)       = mkClientSub cls
+    doit (CstmrSub css)        = mkCstmrSub css
+       
     doit (SSDSec ss)          = mkSSDSec si ss
     doit (AuxConstntSec acs)  = mkAuxConsSec acs 
     doit Bibliography         = mkBib (citeDB si)
     doit (GSDSec gs')         = mkGSDSec gs'
+    doit (SysCntxtSub scs)    = mkSysCntxtSub scs
+    doit (UsrCharsSub ucs)    = mkUsrCharsSub ucs
+    doit (SystConsSub scs)    = mkSystConsSub scs
     doit (ReqrmntSec r)       = mkReqrmntSec r
     doit (LCsSec lc)          = mkLCsSec lc
     doit (UCsSec ulcs)        = mkUCsSec ulcs
@@ -189,17 +205,39 @@ mkSections si dd = map doit dd
 {--}
 
 -- | Helper for making the Table of Contents section.
-mkToC :: DocDesc -> Section
-mkToC dd = SRS.tOfCont [intro, UlC $ ulcc $ Enumeration $ Bullet $ map ((, Nothing) . toToC) dd] []
-  where
-    intro = mkParagraph $ S "An outline of all sections included in this SRS is recorded here for easy reference."
+--mkToC :: DocDesc -> Section
+--mkToC dd = SRS.tOfCont 0 [intro, UlC $ ulcc $ Enumeration $ Bullet $ map ((, Nothing) . toToC) dd]
+--  where
+--    intro = mkParagraph $ S "An outline of all sections included in this SRS is recorded here for easy reference."
 
 {--}
 
 -- | Helper for creating the reference section and subsections.
 -- Includes Table of Symbols, Units and Abbreviations and Acronyms.
-mkRefSec :: SystemInformation -> DocDesc -> RefSec -> Section
-mkRefSec si dd (RefProg c l) = SRS.refMat [c] (map (mkSubRef si) l)
+mkRefSec :: RefSec -> Section
+mkRefSec (RefProg c _) = SRS.refMat 0 [c]
+--mkRefSec si dd (RefProg c l) = SRS.refMat 0 [c] (map (mkSubRef si) l)
+
+mkTofUnitSub :: SystemInformation -> DocDesc -> RefTab -> Section
+mkTofUnitSub si' dd TUnits = mkTofUnitSub si' dd $ TUnits' defaultTUI tOfUnitSIName
+mkTofUnitSub SI {_sysinfodb = db} dd (TUnits' con f) =
+      SRS.tOfUnit 1 [tuIntro con, LlC $ f (nub $ sortBy compUnitDefn $ extractUnits dd db)] 
+
+mkTofSymbSub :: SystemInformation -> DocDesc -> RefTab -> Section
+mkTofSymbSub SI {_quants = v, _sysinfodb = cdb} dd (TSymb con) =
+    SRS.tOfSymb 1
+    [tsIntro con,
+              LlC $ table Equational (sortBySymbol
+              $ filter (`hasStageSymbol` Equational) 
+              (nub $ map qw v ++ ccss' (getDocDesc dd) (egetDocDesc dd) cdb))
+              atStart] 
+mkTofSymbSub SI {_sysinfodb = cdb} dd (TSymb' f con) =
+    mkTSymb (ccss (getDocDesc dd) (egetDocDesc dd) cdb) f con
+
+mkTofAbbAccSub :: SystemInformation -> RefTab -> Section
+mkTofAbbAccSub SI {_usedinfodb = db} TAandA =
+    SRS.tOfAbbAcc 1 [LlC $ tableAbbAccGen $ nub $ map fst $ Map.elems $ termTable db] 
+  {-
   where
     mkSubRef :: SystemInformation -> RefTab -> Section
     mkSubRef si' TUnits = mkSubRef si' $ TUnits' defaultTUI tOfUnitSIName
@@ -223,15 +261,15 @@ mkRefSec si dd (RefProg c l) = SRS.refMat [c] (map (mkSubRef si) l)
       mkTSymb (ccss (getDocDesc dd) (egetDocDesc dd) cdb) f con
     mkSubRef SI {_usedinfodb = db} TAandA =
       SRS.tOfAbbAcc [LlC $ tableAbbAccGen $ nub $ map fst $ Map.elems $ termTable db] []
+  -}
 
 -- | Helper for creating the table of symbols.
 mkTSymb :: (Quantity e, Concept e, Eq e, MayHaveUnit e) =>
   [e] -> LFunc -> [TSIntro] -> Section
-mkTSymb v f c = SRS.tOfSymb [tsIntro c,
+mkTSymb v f c = SRS.tOfSymb 1 [tsIntro c,
   LlC $ table Equational
     (sortBy (compsy `on` eqSymb) $ filter (`hasStageSymbol` Equational) (nub v))
     (lf f)] 
-    []
   where lf Term = atStart
         lf Defn = capSent . (^. defn)
         lf (TermExcept cs) = \x -> if (x ^. uid) `elem` map (^. uid) cs then
@@ -245,37 +283,47 @@ mkTSymb v f c = SRS.tOfSymb [tsIntro c,
 
 -- | Makes the Introduction section into a 'Section'.
 mkIntroSec :: SystemInformation -> IntroSec -> Section
-mkIntroSec si (IntroProg probIntro progDefn l) =
-  Intro.introductionSection probIntro progDefn $ map (mkSubIntro si) l
-  where
-    mkSubIntro :: SystemInformation -> IntroSub -> Section
-    mkSubIntro _ (IPurpose intro) = Intro.purposeOfDoc intro
-    mkSubIntro _ (IScope main) = Intro.scopeOfRequirements main
-    mkSubIntro SI {_sys = sys} (IChar assumed topic asset) =
-      Intro.charIntRdrF sys assumed topic asset (SRS.userChar [] [])
-    mkSubIntro _ (IOrgSec i b s t) = Intro.orgSec i b s t
-    -- FIXME: s should be "looked up" using "b" once we have all sections being generated
+mkIntroSec si (IntroProg probIntro progDefn) = Intro.introductionSection probIntro progDefn   
+
+mkIPurpSub :: IPurposeSub -> Section  
+mkIPurpSub (IPurposeProg intro) = Intro.purposeOfDoc intro
+
+mkIScopeSub :: IScopeSub -> Section  
+mkIScopeSub (IScopeProg main) = Intro.scopeOfRequirements main
+
+mkICharSub :: SystemInformation -> ICharSub -> Section  
+mkICharSub SI {_sys = sys} (ICharProg assumed topic asset) = Intro.charIntRdrF sys assumed topic asset (SRS.userChar 1 [])
+
+mkIOrgSub :: IOrgSub -> Section  
+mkIOrgSub (IOrgProg i b s t) = Intro.orgSec i b s t
+-- FIXME: s should be "looked up" using "b" once we have all sections being generated
 
 {--}
 
 -- | Helper for making the Stakeholders section.
 mkStkhldrSec :: StkhldrSec -> Section
-mkStkhldrSec (StkhldrProg l) = SRS.stakeholder [Stk.stakeholderIntro] $ map mkSubs l
-  where
-    mkSubs :: StkhldrSub -> Section
-    mkSubs (Client kWrd details) = Stk.tClientF kWrd details
-    mkSubs (Cstmr kWrd)          = Stk.tCustomerF kWrd
+mkStkhldrSec (StkhldrProg _)= SRS.stakeholder 0 [Stk.stakeholderIntro] 
+
+mkClientSub :: ClientSub -> Section
+mkClientSub (ClientProg kWrd details) = Stk.tClientF kWrd details
+
+mkCstmrSub :: CstmrSub -> Section
+mkCstmrSub (CstmrProg kWrd) = Stk.tCustomerF kWrd
 
 {--}
 
 -- | Helper for making the General System Description section.
 mkGSDSec :: GSDSec -> Section
-mkGSDSec (GSDProg l) = SRS.genSysDes [GSD.genSysIntro] $ map mkSubs l
-   where
-     mkSubs :: GSDSub -> Section
-     mkSubs (SysCntxt cs)            = GSD.sysContxt cs
-     mkSubs (UsrChars intro)         = GSD.usrCharsF intro
-     mkSubs (SystCons cntnts subsec) = GSD.systCon cntnts subsec
+mkGSDSec (GSDProg _) = SRS.genSysDes 0 [GSD.genSysIntro]
+
+mkSysCntxtSub :: SysCntxtSub -> Section
+mkSysCntxtSub (SysCntxtProg cs) = GSD.sysContxt cs
+
+mkUsrCharsSub :: UsrCharsSub -> Section
+mkUsrCharsSub (UsrCharsProg intro) = GSD.usrCharsF intro
+
+mkSystConsSub :: SystConsSub -> Section
+mkSystConsSub (SystConsProg cntnts) = GSD.systCon cntnts
 
 {--}
 

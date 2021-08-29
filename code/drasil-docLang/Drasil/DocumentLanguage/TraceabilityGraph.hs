@@ -22,8 +22,9 @@ import Data.Char (isSpace, toLower)
 -- | Wrapper for 'traceMIntro' and 'traceGIntro'. Turns references ('LabelledContent's),
 -- trailing notes ('Sentence's), and any other needed contents to create a Traceability 'Section'.
 -- Traceability graphs generate as both a link and a figure for convenience.
-traceMGF :: [LabelledContent] -> [Sentence] -> [Contents] -> String -> [Section] -> Section
-traceMGF refs trailing otherContents ex = SRS.traceyMandG (traceMIntro refs trailing : otherContents 
+-- ref: used to be [LabelledContent] -> [Sentence] -> [Contents] -> String -> [Section] -> Section
+traceMGF :: [LabelledContent] -> [Sentence] -> [Contents] -> String -> Section
+traceMGF refs trailing otherContents ex = SRS.traceyMandG 0 (traceMIntro refs trailing : otherContents 
   ++ map UlC (traceGIntro traceGUIDs (trailing ++ [allvsallDesc])) ++ traceGCon ex)
 
 -- | Generalized traceability graph introduction: appends references to the traceability graphs in 'Sentence' form

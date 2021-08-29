@@ -29,11 +29,11 @@ mkSections si = map doit
   where
     doit :: DocSection -> Section
     doit (IntrodSec is)      = mkIntroSec is
-    doit (InPurposeSub is)   = mkInPurpSub is
+    doit (InPurposeSub ips)  = mkInPurpSub ips
     doit (BodySec bs)        = mkBodySec bs
     doit (ReviewSub rs)      = mkReviewSub rs
-    doit (MainIdeaSub ms)    = mkMainIdeaSub ms
-    doit (MethsAnlsSub ms)   = mkMethAnlSub ms   
+    doit (MainIdeaSub mis)   = mkMainIdeaSub mis
+    doit (MethsAnlsSub mas)  = mkMethAnlSub mas   
     doit (ExampleSub es)     = mkExpSub es  
     doit (SmmrySec ss)       = mkSmmrySec ss
     doit BibSec              = mkBib (citeDB si)

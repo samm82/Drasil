@@ -23,8 +23,18 @@ type DocDesc = [DocSection]
 data DocSection = TableOfContents
                 | RefSec RefSec
                 | IntroSec IntroSec
+                | IPurposeSub IPurposeSub
+                | IScopeSub IScopeSub
+                | ICharSub ICharSub
+                | IOrgSub IOrgSub
                 | StkhldrSec StkhldrSec
+                | ClientSub ClientSub 
+                | CstmrSub CstmrSub
                 | GSDSec GSDSec
+                | SysCntxtSub SysCntxtSub
+                | UsrCharsSub UsrCharsSub
+                | SystConsSub SystConsSub
+
                 | SSDSec SSDSec
                 | ReqrmntSec ReqrmntSec
                 | LCsSec LCsSec
@@ -99,45 +109,42 @@ data LFunc where
 
 -- | Introduction section. Contents are top level followed by a list of
 -- subsections.
-data IntroSec = IntroProg Sentence Sentence [IntroSub]
+data IntroSec = IntroProg Sentence Sentence 
   -- ^ Temporary, will be modified once we've figured out more about the section.
 
 -- | Introduction subsections.
-data IntroSub where
-  -- | Describes purpose of the system.
-  IPurpose :: [Sentence] -> IntroSub
-  -- | Describes scope of the system.
-  IScope   :: Sentence -> IntroSub
-  -- | Describes characteristics of the system.
-  IChar   :: [Sentence] -> [Sentence] -> [Sentence] -> IntroSub
-  -- | Organises the section.
-  IOrgSec  :: Sentence -> CI -> Section -> Sentence -> IntroSub
+-- | Describes purpose of the system.
+newtype IPurposeSub = IPurposeProg [Sentence] 
+-- | Describes scope of the system.
+newtype IScopeSub = IScopeProg Sentence 
+-- | Describes characteristics of the system.
+data ICharSub = ICharProg [Sentence] [Sentence] [Sentence]
+-- | Organises the section.
+data IOrgSub = IOrgProg Sentence CI Section Sentence
 
 {--}
 
 -- | Stakeholders section (wraps stakeholders subsections 'StkhldrSub').
-newtype StkhldrSec = StkhldrProg [StkhldrSub]
+newtype StkhldrSec = StkhldrProg Sentence
 
 -- | Stakeholders subsections.
-data StkhldrSub where
-  -- | May have a client.
-  Client :: CI -> Sentence -> StkhldrSub 
-  -- | May have a customer.
-  Cstmr  :: CI -> StkhldrSub 
+-- | May have a client.
+data ClientSub = ClientProg CI Sentence
+-- | May have a customer.
+newtype CstmrSub = CstmrProg CI 
 
 {--}
 
 -- | General System Description section (wraps 'GSDSub' subsections).
-newtype GSDSec = GSDProg [GSDSub]
+newtype GSDSec = GSDProg Sentence
 
 -- | General System Description subsections.
-data GSDSub where
-  -- | System context.
-  SysCntxt   :: [Contents] -> GSDSub --FIXME: partially automate
-  -- | User characteristics.
-  UsrChars   :: [Contents] -> GSDSub 
-  -- | System constraints.
-  SystCons   :: [Contents] -> [Section] -> GSDSub 
+-- | System context.
+newtype SysCntxtSub = SysCntxtProg [Contents] --FIXME: partially automate
+-- | User characteristics.
+newtype UsrCharsSub = UsrCharsProg [Contents]  
+-- | System constraints. **used to be [Contents] [Section] 
+newtype SystConsSub = SystConsProg [Contents] 
 
 {--}
 
@@ -248,11 +255,18 @@ data DLPlate f = DLPlate {
   docSec :: DocSection -> f DocSection,
   refSec :: RefSec -> f RefSec,
   introSec :: IntroSec -> f IntroSec,
-  introSub :: IntroSub -> f IntroSub,
+  iPurposeSub :: IPurposeSub -> f IPurposeSub,
+  iScopeSub :: IScopeSub -> f IScopeSub,
+  iCharSub :: ICharSub -> f ICharSub,
+  iOrgSub :: IOrgSub -> f IOrgSub,
   stkSec :: StkhldrSec -> f StkhldrSec,
-  stkSub :: StkhldrSub -> f StkhldrSub,
+  clientSub :: ClientSub -> f ClientSub,
+  cstmrSub :: CstmrSub -> f CstmrSub,
   gsdSec :: GSDSec -> f GSDSec,
-  gsdSub :: GSDSub -> f GSDSub,
+  sysCntxtSub :: SysCntxtSub -> f SysCntxtSub,
+  usrCharsSub :: UsrCharsSub -> f UsrCharsSub,
+  systConsSub :: SystConsSub -> f SystConsSub,
+
   ssdSec :: SSDSec -> f SSDSec,
   ssdSub :: SSDSub -> f SSDSub,
   pdSec :: ProblemDescription -> f ProblemDescription,
@@ -270,13 +284,24 @@ data DLPlate f = DLPlate {
 
 -- | Holds boilerplate code to make getting sections easier.
 instance Multiplate DLPlate where
-  multiplate p = DLPlate ds res intro intro' stk stk' gs gs' ss ss' pd pd' sc
+  multiplate p = DLPlate ds res intro ipurp iscope ichar iorg stk client cstmr gs syscnt uschr syscon
+   ss ss' pd pd' sc
     rs rs' lcp ucp ts es acs aps where
     ds TableOfContents = pure TableOfContents
     ds (RefSec x) = RefSec <$> refSec p x
     ds (IntroSec x) = IntroSec <$> introSec p x
+    ds (IPurposeSub x) = IPurposeSub <$> iPurposeSub p x
+    ds (IScopeSub x) = IScopeSub <$> iScopeSub p x
+    ds (ICharSub x) = ICharSub <$> iCharSub p x
+    ds (IOrgSub x) = IOrgSub <$> iOrgSub p x
     ds (StkhldrSec x) = StkhldrSec <$> stkSec p x
+    ds (ClientSub x) = ClientSub <$> clientSub p x
+    ds (CstmrSub x) = CstmrSub <$> cstmrSub p x
     ds (GSDSec x) = GSDSec <$> gsdSec p x
+    ds (SysCntxtSub x) = SysCntxtSub <$> sysCntxtSub p x
+    ds (UsrCharsSub x) = UsrCharsSub <$> usrCharsSub p x
+    ds (SystConsSub x) = SystConsSub <$> systConsSub p x
+
     ds (SSDSec x) = SSDSec <$> ssdSec p x
     ds (ReqrmntSec x) = ReqrmntSec <$> reqSec p x
     ds (LCsSec x) = LCsSec <$> lcsSec p x
@@ -288,19 +313,19 @@ instance Multiplate DLPlate where
     ds Bibliography = pure Bibliography
 
     res (RefProg c x) = pure $ RefProg c x
-    intro (IntroProg s1 s2 progs) = IntroProg s1 s2 <$>
-      traverse (introSub p) progs
-    intro' (IPurpose s) = pure $ IPurpose s
-    intro' (IScope s) = pure $ IScope s
-    intro' (IChar s1 s2 s3) = pure $ IChar s1 s2 s3
-    intro' (IOrgSec s1 c sect s2) = pure $ IOrgSec s1 c sect s2
-    stk (StkhldrProg progs) = StkhldrProg <$> traverse (stkSub p) progs
-    stk' (Client c s) = pure $ Client c s
-    stk' (Cstmr c) = pure (Cstmr c)
-    gs (GSDProg x) = GSDProg <$> traverse (gsdSub p) x
-    gs' (SysCntxt c) = pure $ SysCntxt c
-    gs' (UsrChars c) = pure $ UsrChars c
-    gs' (SystCons c s) = pure $ SystCons c s
+    intro (IntroProg s1 s2) = pure $ IntroProg s1 s2 
+    ipurp (IPurposeProg s) = pure $ IPurposeProg s
+    iscope (IScopeProg s) = pure $ IScopeProg s
+    ichar (ICharProg s1 s2 s3) = pure $ ICharProg s1 s2 s3
+    iorg (IOrgProg s1 c sect s2) = pure $ IOrgProg s1 c sect s2
+    stk (StkhldrProg s) = pure $ StkhldrProg s
+    client (ClientProg c s) = pure $ ClientProg c s
+    cstmr (CstmrProg c) = pure (CstmrProg c)
+    gs (GSDProg s) = pure $ GSDProg s
+    syscnt (SysCntxtProg c) = pure $ SysCntxtProg c
+    uschr (UsrCharsProg c) = pure $ UsrCharsProg c
+    syscon (SystConsProg c) = pure $ SystConsProg c
+
     ss (SSDProg progs) = SSDProg <$> traverse (ssdSub p) progs
     ss' (SSDProblem prog) = SSDProblem <$> pdSec p prog
     ss' (SSDSolChSpec (SCSProg spec)) = SSDSolChSpec . SCSProg <$> traverse (scsSub p) spec
@@ -325,7 +350,11 @@ instance Multiplate DLPlate where
     es (OffShelfSolnsProg contents) = pure $ OffShelfSolnsProg contents
     acs (AuxConsProg ci qdef) = pure $ AuxConsProg ci qdef
     aps (AppndxProg con) = pure $ AppndxProg con
-  mkPlate b = DLPlate (b docSec) (b refSec) (b introSec) (b introSub) (b stkSec)
-    (b stkSub) (b gsdSec) (b gsdSub) (b ssdSec) (b ssdSub) (b pdSec) (b pdSub)
+  mkPlate b = DLPlate (b docSec) (b refSec) (b introSec) (b iPurposeSub) (b iScopeSub)
+    (b iCharSub) (b iOrgSub) (b stkSec) (b clientSub) (b cstmrSub)
+    (b gsdSec) (b sysCntxtSub) (b usrCharsSub) (b systConsSub) 
+    (b ssdSec) (b ssdSub) (b pdSec) (b pdSub)
     (b scsSub) (b reqSec) (b reqSub) (b lcsSec) (b ucsSec)
     (b traceSec) (b offShelfSec) (b auxConsSec) (b appendSec)
+
+
