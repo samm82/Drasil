@@ -5,8 +5,11 @@ module Language.Drasil.Chunk.UncertainQuantity (
   UncertQ, UncertainChunk(..),
   -- * Constructors
   uq, uqc,
-  uqcND, uncrtnChunk, uvc, uncrtnw) where
+  uqcND, uncrtnChunk, uvc, uncrtnw
+) where
  
+import Database.Drasil (HasUID(..))
+
 import Language.Drasil.Chunk.DefinedQuantity (dqdWr)
 import Language.Drasil.Chunk.Constrained (ConstrConcept(..), ConstrainedChunk, cuc', cnstrw, cvc)
 import Language.Drasil.Symbol
@@ -20,7 +23,6 @@ import Language.Drasil.Expr.Class (sy)
 import Language.Drasil.NounPhrase.Core (NP)
 import Language.Drasil.Space (Space, HasSpace(..))
 import Language.Drasil.Uncertainty
-import Language.Drasil.UID (HasUID(..))
 
 import Control.Lens ((^.), makeLenses, view)
 
@@ -34,9 +36,9 @@ data UncertainChunk  = UCh { _conc :: ConstrainedChunk , _unc' :: Uncertainty }
 makeLenses ''UncertainChunk
 
 -- | Finds 'UID' of the 'ConstrainedChunk' used to make the 'UncertainChunk'.
-instance HasUID            UncertainChunk where uid = conc . uid
+instance HasUID            UncertainChunk where uid = uid . _conc
 -- | Equal if 'UID's are equal.
-instance Eq                UncertainChunk where c1 == c2 = (c1 ^. uid) == (c2 ^. uid)
+instance Eq                UncertainChunk where c1 == c2 = uid c1 == uid c2
 -- | Finds term ('NP') of the 'ConstrainedChunk' used to make the 'UncertainChunk'.
 instance NamedIdea         UncertainChunk where term = conc . term
 -- | Finds the idea contained in the 'ConstrainedChunk' used to make the 'UncertainChunk'.
@@ -79,9 +81,9 @@ data UncertQ = UQ { _coco :: ConstrConcept , _unc'' :: Uncertainty }
 makeLenses ''UncertQ
   
 -- | Equal if 'UID's are equal.
-instance Eq             UncertQ where a == b = (a ^. uid) == (b ^. uid)
+instance Eq             UncertQ where a == b = uid a == uid b
 -- | Finds 'UID' of the 'ConstrConcept' used to make the 'UncertQ'.
-instance HasUID         UncertQ where uid = coco . uid
+instance HasUID         UncertQ where uid = uid . _coco
 -- | Finds term ('NP') of the 'ConstrConcept' used to make the 'UncertQ'.
 instance NamedIdea      UncertQ where term = coco . term
 -- | Finds the idea contained in the 'ConstrConcept' used to make the 'UncertQ'.

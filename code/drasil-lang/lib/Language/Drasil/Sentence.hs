@@ -10,9 +10,11 @@ module Language.Drasil.Sentence (
   -- * Functions
   (+:+), (+:+.), (+:), (!.), capSent, ch, eS, eS', sC, sDash, sParen,
   sentencePlural, sentenceShort,
-  sentenceSymb, sentenceTerm) where
+  sentenceSymb, sentenceTerm
+) where
 
-import Language.Drasil.UID (HasUID(..), UID)
+import Database.Drasil (UID, HasUID(..))
+
 import Language.Drasil.Symbol (HasSymbol, Symbol)
 import Language.Drasil.ModelExpr.Lang (ModelExpr)
 import Language.Drasil.ExprClasses (Express(express))
@@ -83,7 +85,7 @@ eS' = E . express
 -- The HasSymbol is redundant, but on purpose
 -- | Gets a symbol and places it in a 'Sentence'.
 ch :: (HasUID c, HasSymbol c) => c -> Sentence
-ch x = SyCh (x ^. uid)
+ch = SyCh . uid
 
 -- | Sentences can be concatenated.
 instance Semigroup Sentence where

@@ -2,9 +2,9 @@
 -- | Contains types and functions common to aspects of generating documents.
 module Language.Drasil.Document.Core where
 
-import Language.Drasil.Chunk.Citation (BibRef)
+import Database.Drasil (HasUID(..))
 
-import Language.Drasil.UID (HasUID(..))
+import Language.Drasil.Chunk.Citation (BibRef)
 import Language.Drasil.ShortName (HasShortName(shortname))
 import Language.Drasil.ModelExpr.Lang (ModelExpr)
 import Language.Drasil.Label.Type (getAdd, prepend, IRefProg,
@@ -96,9 +96,9 @@ class HasContents c where
   accessContents :: Lens' c RawContent
 
 -- | Finds 'UID' of the 'LabelledContent'.
-instance HasUID        LabelledContent where uid = ref . uid
+instance HasUID        LabelledContent where uid = uid . (^. ref)
 -- | 'LabelledContent's are equal if their reference 'UID's are equal.
-instance Eq            LabelledContent where a == b = (a ^. uid) == (b ^. uid) 
+instance Eq            LabelledContent where a == b = (uid a) == (uid b) 
 -- | Finds the reference address contained in the 'Reference' of 'LabelledContent'.
 instance HasRefAddress LabelledContent where getRefAdd (LblC lb c) = RP (prependLabel c) $ getAdd $ getRefAdd lb
 -- | Access the 'RawContent' within the 'LabelledContent'.

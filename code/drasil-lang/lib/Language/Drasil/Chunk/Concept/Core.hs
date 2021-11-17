@@ -5,8 +5,11 @@ module Language.Drasil.Chunk.Concept.Core(
   -- * Concept-related Datatypes
   ConceptChunk(ConDict), CommonConcept(ComConDict)
   , ConceptInstance(ConInst)
-  , sDom)
-  where
+  , sDom
+) where
+
+import Database.Drasil (UID, HasUID(..))
+
 import Language.Drasil.ShortName (HasShortName(..), ShortName)
 import Language.Drasil.Classes (NamedIdea(term), Idea(getA),
   Definition(defn), ConceptDomain(cdom), CommonIdea(abrv))
@@ -15,9 +18,8 @@ import Language.Drasil.Chunk.NamedIdea (IdeaDict)
 import Language.Drasil.Label.Type ((+::+), defer, name, raw,
   LblType(..), Referable(..), HasRefAddress(..))
 import Language.Drasil.Sentence (Sentence)
-import Language.Drasil.UID (UID, HasUID(..))
 
-import Control.Lens (makeLenses, (^.), view)
+import Control.Lens (makeLenses, (^.), view, to)
 
 -- | Check if something has one domain. Throws an error if there is more than one.
 sDom :: [UID] -> UID
@@ -36,9 +38,9 @@ data ConceptChunk = ConDict { _idea :: IdeaDict -- ^ Contains the idea of the co
 makeLenses ''ConceptChunk
 
 -- | Equal if 'UID's are equal.
-instance Eq            ConceptChunk where c1 == c2 = (c1 ^. uid) == (c2 ^. uid)
+instance Eq            ConceptChunk where c1 == c2 = uid c1 == uid c2
 -- | Finds 'UID' of the 'IdeaDict' used to make the 'ConceptChunk'.
-instance HasUID        ConceptChunk where uid = idea . uid
+instance HasUID        ConceptChunk where uid = uid . _idea
 -- | Finds term ('NP') of the 'IdeaDict' used to make the 'ConceptChunk'.
 instance NamedIdea     ConceptChunk where term = idea . term
 -- | Finds the idea contained in the 'IdeaDict' used to make the 'ConceptChunk'.
@@ -54,9 +56,9 @@ data CommonConcept = ComConDict { _comm :: CI, _def :: Sentence}
 makeLenses ''CommonConcept
 
 -- | Equal if 'UID's are equal.
-instance Eq            CommonConcept where c1 == c2 = (c1 ^. uid) == (c2 ^. uid)
+instance Eq            CommonConcept where c1 == c2 = uid c1 == uid c2
 -- | Finds 'UID' of the 'CI' used to make the 'CommonConcept'.
-instance HasUID        CommonConcept where uid = comm . uid
+instance HasUID        CommonConcept where uid = uid . _comm
 -- | Finds term ('NP') of the 'CI' used to make the 'CommonConcept'.
 instance NamedIdea     CommonConcept where term = comm . term
 -- | Finds the idea contained in the 'CI' used to make the 'CommonConcept'.
@@ -79,9 +81,9 @@ data ConceptInstance = ConInst { _cc :: ConceptChunk , ra :: String, shnm :: Sho
 makeLenses ''ConceptInstance
 
 -- | Equal if 'UID's are equal.
-instance Eq            ConceptInstance where c1 == c2 = (c1 ^. uid) == (c2 ^. uid)
+instance Eq            ConceptInstance where c1 == c2 = uid c1 == uid c2
 -- | Finds 'UID' of the 'ConceptChunk' used to make the 'ConceptInstance'.
-instance HasUID        ConceptInstance where uid = cc . idea . uid
+instance HasUID        ConceptInstance where uid = uid . (^. idea) . (^. cc)
 -- | Finds term ('NP') of the 'ConceptChunk' used to make the 'ConceptInstance'.
 instance NamedIdea     ConceptInstance where term = cc . idea . term
 -- | Finds the idea contained in the 'ConceptChunk' used to make the 'ConceptInstance'.

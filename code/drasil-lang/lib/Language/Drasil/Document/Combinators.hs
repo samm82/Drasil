@@ -19,6 +19,8 @@ module Language.Drasil.Document.Combinators (
   zipSentList
 ) where
 
+import Database.Drasil (HasUID)
+
 import Language.Drasil.Chunk.Concept.Core ( ConceptChunk )
 import Language.Drasil.Chunk.UnitDefn ( UnitDefn, MayHaveUnit(..) )
 import Language.Drasil.Chunk.Unital ( UnitalChunk )
@@ -57,7 +59,6 @@ import Language.Drasil.Uncertainty
 import Language.Drasil.Symbol
 import Language.Drasil.Sentence.Fold
 import qualified Language.Drasil.Sentence.Combinators as S (are, in_, is, toThe)
-import Language.Drasil.UID ( HasUID )
 import Language.Drasil.Label.Type
 
 import Control.Lens ((^.))

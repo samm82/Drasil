@@ -2,6 +2,8 @@
 -- | Document Description Language.
 module Language.Drasil.Document where
 
+import Database.Drasil (UID, HasUID(..), (+++.), mkUid)
+
 import Language.Drasil.ShortName (HasShortName(..), ShortName, shortname')
 import Language.Drasil.Document.Core (UnlabelledContent(UnlblC),
   LabelledContent(LblC), RawContent(Figure, Paragraph),
@@ -11,7 +13,6 @@ import Language.Drasil.Label.Type (getAdd, prepend, LblType(..),
 import Language.Drasil.Misc (repUnd)
 import Language.Drasil.Reference (Reference(Reference))
 import Language.Drasil.Sentence (Sentence(..))
-import Language.Drasil.UID (UID, HasUID(..), (+++.), mkUid)
 
 import Control.Lens ((^.), makeLenses, view)
 
@@ -46,9 +47,9 @@ data SecHeader = SecHeader Title Reference
 data Content   = Content   Contents
 -}
 -- | Finds the 'UID' of a 'Section'.
-instance HasUID        Section where uid = lab . uid
+instance HasUID        Section where uid = uid . _lab
 -- | 'Section's are equal if 'UID's are equal.
-instance Eq Section where a == b = (a ^. uid) == (b ^. uid)
+instance Eq Section where a == b = uid a == uid b
 -- | Finds the short name of a 'Section'.
 instance HasShortName  Section where shortname = shortname . view lab
 -- | Finds the reference information of a 'Section'.

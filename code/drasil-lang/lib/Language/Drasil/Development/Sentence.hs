@@ -13,15 +13,16 @@ module Language.Drasil.Development.Sentence (
 
 import Control.Lens ((^.))
 
+import Database.Drasil (HasUID(..))
+
 import Language.Drasil.Classes (NamedIdea(term), Idea)
 import Language.Drasil.Sentence ((+:+), Sentence((:+:), S), sParen, sentenceTerm,
   sentencePlural, sentenceShort)
 import qualified Language.Drasil.NounPhrase as NP
-import Language.Drasil.UID (HasUID(..))
 
 -- | Get short form (if it exists), else get term of an 'Idea'.
 short :: (Idea c, HasUID c) => c -> Sentence
-short c = sentenceShort (c ^. uid)
+short = sentenceShort . uid
 
 -- | Helper for common pattern of introducing the title-case version of a 
 -- noun phrase (from an Idea)
@@ -47,11 +48,11 @@ titleize' n = NP.titleizeNP' (n ^. term)
 
 -- | Helper for getting the phrase from a 'NamedIdea' using it's UID.
 phrase :: (HasUID n, NamedIdea n) => n -> Sentence
-phrase n = sentenceTerm (n ^. uid)
+phrase = sentenceTerm . uid
 
 -- | Helper for getting the plural of a phrase from a 'NamedIdea'.
 plural :: (HasUID n, NamedIdea n) => n -> Sentence
-plural n = sentencePlural (n ^. uid)
+plural = sentencePlural . uid      -- TODO: This doesn't quite match up with the description.
 --plural n = NP.plural (n ^. term)
 
 -- | Helper for getting the possesive cases from the term of a 'NamedIdea'.

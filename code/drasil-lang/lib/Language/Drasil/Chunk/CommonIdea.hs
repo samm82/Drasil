@@ -8,13 +8,14 @@ module Language.Drasil.Chunk.CommonIdea (
   -- * Functions
   getAcc, getAccStr, prependAbrv) where
 
+import Database.Drasil (UID, HasUID(..))
+
 import Language.Drasil.Chunk.NamedIdea (IdeaDict, NamedChunk, nc)
 import Language.Drasil.Classes (NamedIdea(term), Idea(getA),
  CommonIdea(abrv), ConceptDomain(cdom))
 import Language.Drasil.Misc (repUnd)
 import Language.Drasil.NounPhrase.Core (NP)
 import Language.Drasil.Sentence (Sentence(S))
-import Language.Drasil.UID (UID, HasUID(uid))
 
 import Control.Lens (makeLenses, (^.), view)
 
@@ -28,7 +29,7 @@ data CI = CI { _nc' :: NamedChunk, _ab :: String, cdom' :: [UID]}
 makeLenses ''CI
 
 -- | Finds 'UID' of the 'NamedChunk' used to make the 'CI'.
-instance HasUID        CI where uid  = nc' . uid
+instance HasUID        CI where uid  = uid . _nc'
 -- | Finds term ('NP') of the 'NamedChunk' used to make the 'CI'.
 instance NamedIdea     CI where term = nc' . term
 -- | Finds the idea of a 'CI' (abbreviation).
@@ -45,7 +46,7 @@ commonIdea s np = CI (nc s np)
 
 -- | Similar to 'commonIdea', but takes a list of 'IdeaDict' (often a domain).
 commonIdeaWithDict :: String -> NP -> String -> [IdeaDict] -> CI
-commonIdeaWithDict x y z = commonIdea x y z . map (^.uid)
+commonIdeaWithDict x y z = commonIdea x y z . map uid
 
 -- | Get abbreviation in 'Sentence' form from a 'CI'.
 getAcc :: CI -> Sentence

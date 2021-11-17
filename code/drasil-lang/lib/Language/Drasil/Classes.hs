@@ -25,6 +25,8 @@ module Language.Drasil.Classes (
   , DefiningExpr(defnExpr)
   ) where
 
+import Database.Drasil (UID)
+
 -- some classes are so 'core' that they are defined elsewhere
 -- also helps with cycles...
 import Language.Drasil.Symbol (HasSymbol)
@@ -36,7 +38,6 @@ import Language.Drasil.Expr.Lang (Expr)
 import Language.Drasil.ExprClasses (Express(express))
 import Language.Drasil.Space (HasSpace)
 import Language.Drasil.Sentence (Sentence)
-import Language.Drasil.UID (UID)
 
 import Control.Lens (Lens')
 

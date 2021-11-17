@@ -14,6 +14,8 @@ module Language.Drasil.Chunk.Citation (
   cProceedings, cTechReport, cUnpublished
 ) where
 
+import Database.Drasil (UID, HasUID(..), showUID, mkUid)
+
 import Language.Drasil.People (People)
 
 import Language.Drasil.ShortName (HasShortName(..), ShortName, shortname')
@@ -22,7 +24,6 @@ import Language.Drasil.Data.Citation (HasFields(..), CitationKind(..), CiteField
   year, school, journal, institution, note, publisher)
 import Language.Drasil.Sentence (Sentence(S))
 import Language.Drasil.Label.Type (LblType(Citation), Referable(..), HasRefAddress(..))
-import Language.Drasil.UID (UID, HasUID(..), showUID, mkUid)
 
 import Control.Lens (makeLenses, Lens')
 
@@ -40,7 +41,7 @@ type EntryID = String
 data Citation = Cite
   { _citeKind :: CitationKind
   , _fields   :: [CiteField]
-  , _citeID   :: UID
+  ,  citeID   :: UID
   ,  sn       :: ShortName
   }
 makeLenses ''Citation

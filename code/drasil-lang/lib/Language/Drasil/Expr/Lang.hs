@@ -3,9 +3,10 @@
 -- | The Drasil Expression language 
 module Language.Drasil.Expr.Lang where
 
+import Database.Drasil (UID)
+
 import Language.Drasil.Literal.Lang (Literal(..))
 import Language.Drasil.Space (DiscreteDomainDesc, RealInterval)
-import Language.Drasil.UID (UID)
 import Language.Drasil.Literal.Class (LiteralC(..))
 
 -- * Expression Types

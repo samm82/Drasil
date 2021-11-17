@@ -23,6 +23,8 @@ module Language.Drasil.Chunk.UnitDefn (
 import Control.Lens ((^.), makeLenses, view)
 import Control.Arrow (second)
 
+import Database.Drasil (HasUID(..), mkUid, UID)
+
 import Language.Drasil.Chunk.Concept (ConceptChunk, dcc, cc')
 import Language.Drasil.Classes (NamedIdea(term), Idea(getA),
   Definition(defn), ConceptDomain(cdom), HasUnitSymbol(usymb), IsUnit(udefn, getUnits))
@@ -30,7 +32,6 @@ import Language.Drasil.NounPhrase (cn,cn',NP)
 import Language.Drasil.Symbol (Symbol(Label))
 import Language.Drasil.UnitLang (USymb(US), UDefn(UScale, USynonym, UShift), 
   compUSymb, fromUDefn, getUSymb, getDefn, UnitSymbol(BaseSI, DerivedSI, Defined))
-import Language.Drasil.UID (UID, HasUID(..), mkUid)
 
 -- | For defining units.
 -- It has a 'ConceptChunk' (that defines what kind of unit it is),
@@ -45,7 +46,7 @@ data UnitDefn = UD { _vc :: ConceptChunk
 makeLenses ''UnitDefn
 
 -- | Finds 'UID' of the 'ConceptChunk' used to make the 'UnitDefn'.
-instance HasUID        UnitDefn where uid = vc . uid
+instance HasUID        UnitDefn where uid = uid . _vc
 -- | Finds term ('NP') of the 'ConceptChunk' used to make the 'UnitDefn'.
 instance NamedIdea     UnitDefn where term   = vc . term
 -- | Finds the idea contained in the 'ConceptChunk' used to make the 'UnitDefn'.
@@ -134,7 +135,7 @@ getSecondSymb c = get_symb2 $ view cas c
 -- | Helper to break down unit symbols into 'BaseSI' units.
 helperUnit :: UnitDefn -> [UID]
 helperUnit a = case getSecondSymb a of
-  Just _ -> [a ^. uid]
+  Just _ -> [uid a]
   Nothing -> getUnits a
 
 --- These conveniences go here, because we need the class

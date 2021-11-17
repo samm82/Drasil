@@ -9,20 +9,20 @@ module Language.Drasil.Reference (
   ref, refS, namedRef, complexRef, namedComplexRef
 ) where
 
+import Database.Drasil (UID, HasUID(..))
+
 import Language.Drasil.Label.Type (LblType, HasRefAddress(..))
 import Language.Drasil.ShortName (HasShortName(..), ShortName)
 import Language.Drasil.Sentence (Sentence(Ref, EmptyS), RefInfo(..))
-import Language.Drasil.UID (UID, HasUID(..))
 
 import Control.Lens ((^.), makeLenses, Lens')
 
 -- | A Reference contains the identifier ('UID'), a reference address ('LblType'),
 -- a human-readable shortname ('ShortName'), and any extra information about the reference ('RefInfo').
 data Reference = Reference
-  { _ui :: UID
+  {  ui :: UID
   ,  ra :: LblType
   ,  sn :: ShortName}
-makeLenses ''Reference
 
 -- | A class that contains a list of 'Reference's.
 class HasReference c where
@@ -30,7 +30,7 @@ class HasReference c where
   getReferences :: Lens' c [Reference]
 
 -- | Equal if 'UID's are equal.
-instance Eq            Reference where a == b = (a ^. uid) == (b ^. uid)
+instance Eq            Reference where a == b = uid a == uid b
 -- | Finds the 'UID' of a 'Reference'.
 instance HasUID        Reference where uid = ui
 -- | Finds the reference address contained in a 'Reference' (through a 'LblType').
@@ -46,23 +46,23 @@ instance Referable Reference where
 
 -- | Projector function that creates a 'Reference' from something 'Referable'.
 ref :: (HasUID r, HasRefAddress r, HasShortName r) => r -> Reference
-ref r = Reference (r ^. uid) (getRefAdd r) (shortname r)
+ref r = Reference (uid r) (getRefAdd r) (shortname r) -- TODO: This looks like it should've altered the UID in creating a new chunk...
 
 -- Maybe just use r ^. uid without 'ref'?
 -- | Takes the reference 'UID' and wraps it into a 'Sentence'.
 refS :: (HasUID r, HasRefAddress r, HasShortName r) => r -> Sentence
-refS r = namedRef r EmptyS
+refS r = namedRef r EmptyS -- TODO: This looks like it should've altered the UID in creating a new chunk...
 
 -- | Takes a 'Reference' with a name to be displayed and wraps it into a 'Sentence'.
 -- Does not overwrite the shortname contained in the reference, but will only display as the given 'Sentence'.
 namedRef :: (HasUID r, HasRefAddress r, HasShortName r) => r -> Sentence -> Sentence
-namedRef r s = namedComplexRef r s None
+namedRef r s = namedComplexRef r s None -- TODO: This looks like it should've altered the UID in creating a new chunk...
 
 -- | Takes a 'Reference' with additional display info. Uses the internal shortname for its display name.
 complexRef :: (HasUID r, HasRefAddress r, HasShortName r) => r -> RefInfo -> Sentence
-complexRef r = Ref (ref r ^. uid) EmptyS
+complexRef r = Ref (uid $ ref r) EmptyS -- TODO: This looks like it should've altered the UID in creating a new chunk...
 
 -- | Takes a 'Reference' with a name to be displayed and any additional information and wraps it into a 'Sentence'.
 -- Does not overwrite the shortname contained in the reference, but will only display as the given 'Sentence' along with the given 'RefInfo'.
 namedComplexRef :: (HasUID r, HasRefAddress r, HasShortName r) => r -> Sentence -> RefInfo -> Sentence
-namedComplexRef r = Ref (ref r ^. uid)
+namedComplexRef r = Ref (uid $ ref r) -- TODO: This looks like it should've altered the UID in creating a new chunk...

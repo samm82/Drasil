@@ -6,6 +6,8 @@ module Language.Drasil.Chunk.Unitary (
   -- * Constructors
   mkUnitary, unitary, unitary', unit_symb) where
 
+import Database.Drasil (HasUID(..))
+
 import Language.Drasil.Symbol
 import Language.Drasil.Classes (NamedIdea(term), Idea(getA),
   IsUnit, usymb, Quantity)
@@ -15,7 +17,6 @@ import Language.Drasil.Chunk.UnitDefn (MayHaveUnit(getUnit), UnitDefn, unitWrapp
 import Language.Drasil.Space (Space, HasSpace(..))
 import Language.Drasil.Stages (Stage)
 import Language.Drasil.NounPhrase.Core (NP)
-import Language.Drasil.UID (HasUID(..))
 
 import Control.Lens ((^.), makeLenses)
 
@@ -32,7 +33,7 @@ data UnitaryChunk = UC { _quant :: QuantityDict
 makeLenses ''UnitaryChunk
 
 -- | Finds 'UID' of the 'QuantityDict' used to make the 'UnitaryChunk'.
-instance HasUID        UnitaryChunk where uid = quant . uid
+instance HasUID        UnitaryChunk where uid = uid . _quant
 -- | Finds term ('NP') of the 'QuantityDict' used to make the 'UnitaryChunk'.
 instance NamedIdea     UnitaryChunk where term = quant . term
 -- | Finds the idea contained in the 'QuantityDict' used to make the 'UnitaryChunk'.

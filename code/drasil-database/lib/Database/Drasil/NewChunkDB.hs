@@ -1,12 +1,10 @@
 module Database.Drasil.NewChunkDB (
       ChunkDB
     , mkChunkDB
-    , lookup, lookupOrErr
+    , find, findOrErr
     , findAll
     , insert
 ) where
-
-import Prelude hiding (lookup)
 
 import Database.Drasil.Chunk (Chunk, mkChunk, unChunk, chunkType)
 import Database.Drasil.UID (UID, HasUID(..))
@@ -21,13 +19,13 @@ type ChunksByTypeRep = M.Map TypeRep [Chunk]
 
 newtype ChunkDB = ChunkDB (ChunkByUID, ChunksByTypeRep)
 
-lookup :: Typeable a => UID -> ChunkDB -> Maybe a
-lookup u (ChunkDB tc) = do
+find :: Typeable a => UID -> ChunkDB -> Maybe a
+find u (ChunkDB tc) = do
     c' <- M.lookup u $ fst tc
     unChunk c'
 
-lookupOrErr :: Typeable a => UID -> ChunkDB -> a
-lookupOrErr u = fromMaybe (error $ "Failed to find chunk " ++ show u) . lookup u
+findOrErr :: Typeable a => UID -> ChunkDB -> a
+findOrErr u = fromMaybe (error $ "Failed to find chunk " ++ show u) . find u
 
 -- Is this TypeRep really needed? Well, for now, it's like a hack to shorten our lists a bit and pre-cache our type lists by their typerep.
 -- Justified, but not optimal. It would be nice if we could have the chunks pre-unChunked.

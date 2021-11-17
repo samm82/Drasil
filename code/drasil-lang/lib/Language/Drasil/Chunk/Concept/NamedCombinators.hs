@@ -35,6 +35,8 @@ module Language.Drasil.Chunk.Concept.NamedCombinators (
   compoundNCPS, compoundNCPSPP, compoundNCGenP,
   combineNINP, combineNPNI, combineNINI) where
 
+import Database.Drasil ((+++!))
+
 import Language.Drasil.Chunk.NamedIdea ( NamedChunk, ncUID )
 import Language.Drasil.Classes ( Idea, NamedIdea(..) )
 import Language.Drasil.Development.Sentence ( phrase, plural )
@@ -47,7 +49,6 @@ import Language.Drasil.NounPhrase
       compoundPhrase'',
       compoundPhrase''' )
 import Language.Drasil.Sentence ( Sentence(S), (+:+) )
-import Language.Drasil.UID ( (+++!) )
 import qualified Language.Drasil.NounPhrase as D
     ( NounPhrase(pluralNP, phraseNP) )
 import Control.Lens ((^.))

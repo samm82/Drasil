@@ -7,6 +7,8 @@ module Language.Drasil.Chunk.DefinedQuantity (
   dqd, dqdNoUnit, dqd',
   dqdQd, dqdWr, tempdqdWr') where
 
+import Database.Drasil (HasUID(..))
+
 import Language.Drasil.Symbol (HasSymbol(symbol), Symbol)
 import Language.Drasil.Classes (NamedIdea(term), Idea(getA), Concept, Express(..),
   Definition(defn), ConceptDomain(cdom), IsUnit, Quantity)
@@ -16,7 +18,6 @@ import Language.Drasil.Chunk.UnitDefn (UnitDefn, unitWrapper,
   MayHaveUnit(getUnit))
 import Language.Drasil.Space (Space, HasSpace(..))
 import Language.Drasil.Stages (Stage)
-import Language.Drasil.UID (HasUID(uid))
 
 import Control.Lens ((^.), makeLenses, view)
 
@@ -34,9 +35,9 @@ data DefinedQuantityDict = DQD { _con :: ConceptChunk
 makeLenses ''DefinedQuantityDict
 
 -- | Finds the 'UID' of the 'ConceptChunk' used to make the 'DefinedQuantityDict'.
-instance HasUID        DefinedQuantityDict where uid = con . uid
+instance HasUID        DefinedQuantityDict where uid = uid . _con
 -- | Equal if 'UID's are equal.
-instance Eq            DefinedQuantityDict where a == b = (a ^. uid) == (b ^. uid)
+instance Eq            DefinedQuantityDict where a == b = uid a == uid b
 -- | Finds the term ('NP') of the 'ConceptChunk' used to make the 'DefinedQuantityDict'.
 instance NamedIdea     DefinedQuantityDict where term = con . term
 -- | Finds the idea contained in the 'ConceptChunk' used to make the 'DefinedQuantityDict'.

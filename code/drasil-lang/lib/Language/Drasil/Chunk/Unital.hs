@@ -8,6 +8,8 @@ module Language.Drasil.Chunk.Unital (
 
 import Control.Lens (makeLenses, view, (^.))
 
+import Database.Drasil (HasUID(..))
+
 import Language.Drasil.Chunk.Concept (dcc, dccWDS,cw)
 import Language.Drasil.Chunk.DefinedQuantity (DefinedQuantityDict, dqd, dqd', tempdqdWr')
 import Language.Drasil.Chunk.Unitary (Unitary(..))
@@ -20,7 +22,6 @@ import Language.Drasil.NounPhrase.Core (NP)
 import Language.Drasil.Space (Space(..), HasSpace(..))
 import Language.Drasil.Sentence (Sentence)
 import Language.Drasil.Stages (Stage)
-import Language.Drasil.UID (HasUID(..))
 
 -- | Similar to a `DefinedQuantityDict`, UnitalChunks are concepts
 -- with quantities that must have a unit definition.
@@ -33,7 +34,7 @@ data UnitalChunk = UC { _defq' :: DefinedQuantityDict
 makeLenses ''UnitalChunk
 
 -- | Finds 'UID' of the 'DefinedQuantityDict' used to make the 'UnitalChunk'.
-instance HasUID        UnitalChunk where uid = defq' . uid
+instance HasUID        UnitalChunk where uid = uid . _defq'
 -- | Finds term ('NP') of the 'DefinedQuantityDict' used to make the 'UnitalChunk'.
 instance NamedIdea     UnitalChunk where term = defq' . term
 -- | Finds the idea contained in the 'DefinedQuantityDict' used to make the 'UnitalChunk'.
@@ -45,7 +46,7 @@ instance ConceptDomain UnitalChunk where cdom = cdom . view defq'
 -- | Finds the 'Space' of the 'DefinedQuantityDict' used to make the 'UnitalChunk'.
 instance HasSpace      UnitalChunk where typ = defq' . typ
 -- | Finds the 'Symbol' of the 'DefinedQuantityDict' used to make the 'UnitalChunk'.
-instance HasSymbol     UnitalChunk where symbol c = symbol (c^.defq')
+instance HasSymbol     UnitalChunk where symbol c = symbol (c ^. defq')
 -- | 'UnitalChunk's have a 'Quantity'.
 instance Quantity      UnitalChunk where 
 -- | Finds the unit definition of a 'UnitalChunk'.
@@ -55,7 +56,7 @@ instance MayHaveUnit   UnitalChunk where getUnit = Just . view uni
 -- | Finds the units used to make the 'UnitalChunk'.
 instance TempHasUnit       UnitalChunk where findUnit = view uni   
 -- | Equal if 'UID's are equal.
-instance Eq            UnitalChunk where c1 == c2 = (c1 ^. uid) == (c2 ^. uid)
+instance Eq            UnitalChunk where c1 == c2 = uid c1 == uid c2
 -- | Convert the symbol of the 'UnitalChunk' to a 'ModelExpr'.
 instance Express       UnitalChunk where express = sy
 

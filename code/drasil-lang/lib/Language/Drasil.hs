@@ -304,7 +304,7 @@ import Language.Drasil.Document.Contents (lbldExpr, unlbldExpr
   , enumBullet, enumBulletU, enumSimple, enumSimpleU, mkEnumSimpleD)
 import Language.Drasil.Document.Combinators
 import Language.Drasil.Unicode (RenderSpecial(..), Special(..))
-import Language.Drasil.UID
+import Database.Drasil -- TODO: Remove this, because it's re-exporting from Database.Drasil.
     (UID, HasUID(..), (+++), (+++.), (+++!), mkUid)
 import Language.Drasil.Symbol (HasSymbol(symbol), Decoration, Symbol)
 import Language.Drasil.Classes (Definition(defn), ConceptDomain(cdom), Concept, HasUnitSymbol(usymb),

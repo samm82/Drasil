@@ -8,13 +8,14 @@ module Language.Drasil.Chunk.Relation (
 
 import Control.Lens (makeLenses, (^.), view, set)
 
+import Database.Drasil (HasUID(..), mkUid)
+
 import Language.Drasil.Chunk.Concept (ConceptChunk, dccWDS, cw)
 import Language.Drasil.Classes (Express(..), Concept,
   ConceptDomain(..), Definition(..), Idea(..), NamedIdea(..))
 import Language.Drasil.ModelExpr.Lang (ModelExpr)
 import Language.Drasil.NounPhrase.Core (NP)
 import Language.Drasil.Sentence (Sentence)
-import Language.Drasil.UID (HasUID(..), mkUid)
 
 -- | For a concept ('ConceptChunk') that also has a 'Relation' ('ModelExpr') attached.
 --
@@ -25,9 +26,9 @@ data RelationConcept = RC { _conc :: ConceptChunk
 makeLenses ''RelationConcept
 
 -- | Finds the 'UID' of the 'ConceptChunk' used to make the 'RelationConcept'.
-instance HasUID        RelationConcept where uid = conc . uid
+instance HasUID        RelationConcept where uid = uid . _conc
 -- | Equal if 'UID's are equal.
-instance Eq            RelationConcept where a == b = (a ^. uid) == (b ^. uid)
+instance Eq            RelationConcept where a == b = uid a == uid b
 -- | Finds the term ('NP') of the 'ConceptChunk' used to make the 'RelationConcept'.
 instance NamedIdea     RelationConcept where term = conc . term
 -- | Finds the idea contained in the 'ConceptChunk' used to make the 'RelationConcept'.
@@ -46,4 +47,5 @@ makeRC rID rTerm rDefn = RC (dccWDS rID rTerm rDefn) . express
 -- FIXME: Doesn't check UIDs. See TODOs in NamedIdea.hs
 -- | Create a new 'RelationConcept' from an old 'Concept'. Takes a 'Concept', new 'UID' and relation.
 addRelToCC :: (Express e, Concept c) => c -> String -> e -> RelationConcept
-addRelToCC c rID = RC (set uid (mkUid rID) (cw c)) . express
+addRelToCC c rID _ = RC undefined undefined -- (set uid (mkUid rID) (cw c)) . express
+-- TODO: I'll need to fix this first.

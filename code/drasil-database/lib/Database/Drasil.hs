@@ -1,5 +1,26 @@
 -- | Re-export database types and functions to simplify external use.
 module Database.Drasil (
+    -- * Chunk
+      Chunk
+    , mkChunk
+    , unChunk
+    , chunkType
+    
+    -- * ChunkDB
+    , ChunkDB
+    , mkChunkDB
+    , find, findOrErr
+    , findAll
+    , insert
+
+    -- * UID
+    , UID
+    , HasUID(uid)
+    , mkUid, (+++), (+++.), (+++!)
+    , showUID
+) where
+
+{-
   -- * Chunk Database
   -- ** Types
   ChunkDB(symbolTable, termTable, defTable, CDB), RefbyMap, TraceMap, UMap
@@ -23,8 +44,13 @@ module Database.Drasil (
   -- * Reference Database
   , ReferenceDB, RefMap, citeDB, rdb, simpleMap
   , citationDB, conceptDB
-) where
+
 
 import Database.Drasil.ChunkDB
 import Database.Drasil.ChunkDB.GetChunk
 import Database.Drasil.SystemInformation
+-}
+
+import Database.Drasil.Chunk
+import Database.Drasil.NewChunkDB
+import Database.Drasil.UID

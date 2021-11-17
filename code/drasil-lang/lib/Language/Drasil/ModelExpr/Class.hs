@@ -5,7 +5,8 @@ import Prelude hiding (sqrt, log, sin, cos, tan, exp)
 
 import Control.Lens ((^.))
 
-import Language.Drasil.UID (HasUID(..))
+import Database.Drasil (HasUID(..))
+
 import Language.Drasil.ModelExpr.Lang (ModelExpr(..), DerivType(..),
   SpaceBinOp(..), StatBinOp(..), AssocBoolOper(..), AssocArithOper(..))
 import Language.Drasil.Space (DomainDesc(..), RTopology(..), Space)
@@ -48,8 +49,8 @@ class ModelExprC r where
   intAll, sumAll, prodAll :: Symbol -> r -> r
 
 instance ModelExprC ModelExpr where
-  deriv e c  = Deriv Total e (c ^. uid)
-  pderiv e c = Deriv Part  e (c ^. uid)
+  deriv e c  = Deriv Total e (uid c)
+  pderiv e c = Deriv Part  e (uid c)
   
   defines = StatBinaryOp Defines
 

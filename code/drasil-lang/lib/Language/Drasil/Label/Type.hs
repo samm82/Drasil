@@ -11,7 +11,7 @@ module Language.Drasil.Label.Type(
   , name, (+::+), raw, defer, prepend
 ) where
 
-import Language.Drasil.UID (UID, HasUID)
+import Database.Drasil (UID, HasUID(..))
 
 -- | Applying different pieces of information for a reference.
 -- An RP is a decorated internal reference.

@@ -3,7 +3,9 @@
 module Language.Drasil.Sentence.Extract(sdep, shortdep, lnames, lnames') where
 
 import Data.List (nub)
-import Language.Drasil.UID (UID)
+
+import Database.Drasil (UID)
+
 import Language.Drasil.Sentence(Sentence(..), SentenceStyle(..))
 import Language.Drasil.ModelExpr.Extract (meNames)
 

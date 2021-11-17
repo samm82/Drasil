@@ -6,13 +6,14 @@ module Language.Drasil.Chunk.NamedArgument (
   -- * Constructor
   narg) where
 
+import Database.Drasil (HasUID(..))
+
 import Language.Drasil.Space (HasSpace(..))
 import Language.Drasil.Symbol (HasSymbol(symbol))
 import Language.Drasil.Classes (NamedIdea(term), Idea(getA),
   Quantity, IsArgumentName)
 import Language.Drasil.Chunk.Quantity (QuantityDict, qw)
 import Language.Drasil.Chunk.UnitDefn(MayHaveUnit(getUnit))
-import Language.Drasil.UID (HasUID(..))
 
 import Control.Lens ((^.), makeLenses, view)
 
@@ -22,7 +23,7 @@ newtype NamedArgument = NA {_qtd :: QuantityDict}
 makeLenses ''NamedArgument
 
 -- | Finds the 'UID' of the 'QuantityDict' used to make the 'NamedArgument'.
-instance HasUID         NamedArgument where uid = qtd . uid
+instance HasUID         NamedArgument where uid = uid . _qtd
 -- | Finds the term ('NP') of the 'QuantityDict' used to make the 'NamedArgument'.
 instance NamedIdea      NamedArgument where term = qtd . term
 -- | Finds the idea contained in the 'QuantityDict' used to make the 'NamedArgument'.
@@ -36,7 +37,7 @@ instance Quantity       NamedArgument where
 -- | 'NamedArgument's have an argument name.
 instance IsArgumentName NamedArgument where
 -- | Equal if 'UID's are equal.
-instance Eq             NamedArgument where a == b = (a ^. uid) == (b ^. uid)
+instance Eq             NamedArgument where a == b = uid a == uid b
 -- | Finds the units of the 'QuantityDict' used to make the 'NamedArgument'.
 instance MayHaveUnit    NamedArgument where getUnit = getUnit . view qtd
   

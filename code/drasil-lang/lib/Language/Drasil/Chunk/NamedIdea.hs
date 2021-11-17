@@ -9,11 +9,11 @@ module Language.Drasil.Chunk.NamedIdea (
   nc, ncUID, nw, mkIdea, mkIdeaUID
 ) where
 
-import Language.Drasil.UID (mkUid, UID, HasUID(..))
-import Control.Lens ((^.), makeLenses)
+import Control.Lens (Lens', (^.), makeLenses)
 
-import Language.Drasil.NounPhrase.Core ( NP )
-import Control.Lens.Lens (Lens')
+import Database.Drasil (mkUid, UID, HasUID(..))
+
+import Language.Drasil.NounPhrase.Core (NP)
 
 -- TODO: Why does a NamedIdea need a UID? It might need a UID to be registered in the chunk map.
 -- | A NamedIdea is a 'term' that we've identified (has a 'UID') as 
@@ -38,13 +38,13 @@ class NamedIdea c => Idea c where
 -- Ex. Anything worth naming must start out somewhere. Before we can assign equations
 -- and values and symbols to something like the arm of a pendulum, we must first give it a name. 
 data NamedChunk = NC {
-  _uu :: UID,
+  uu  :: UID,
   _np :: NP
 }
 makeLenses ''NamedChunk
 
 -- | Equal if 'UID's are equal.
-instance Eq        NamedChunk where c1 == c2 = (c1 ^. uid) == (c2 ^. uid)
+instance Eq        NamedChunk where l == r = (uu l) == (uu r)
 -- | Finds the 'UID' of the 'NamedChunk'.
 instance HasUID    NamedChunk where uid = uu
 -- | Finds the term ('NP') of the 'NamedChunk'.
@@ -75,9 +75,9 @@ data IdeaDict = IdeaDict {
 makeLenses ''IdeaDict
 
 -- | Equal if 'UID's are equal.
-instance Eq        IdeaDict where a == b = a ^. uid == b ^. uid
+instance Eq        IdeaDict where a == b = uid a == uid b
 -- | Finds the 'UID' of the 'NamedChunk' used to make the 'IdeaDict'.
-instance HasUID    IdeaDict where uid = nc' . uid
+instance HasUID    IdeaDict where uid = uid . _nc'
 -- | Finds the term ('NP') of the 'NamedChunk' used to make the 'IdeaDict'.
 instance NamedIdea IdeaDict where term = nc' . term
 -- | Finds the abbreviation of the 'IdeaDict'.
@@ -98,4 +98,4 @@ mkIdeaUID s np' = IdeaDict (ncUID s np')
 -- an 'Idea' and places its 'UID' and 'NP' into an 'IdeaDict' with
 -- 'Nothing' for an abbreviation.
 nw :: Idea c => c -> IdeaDict
-nw c = IdeaDict (NC (c ^. uid) (c ^. term)) (getA c)
+nw c = IdeaDict (NC (uid c) (c ^. term)) (getA c) -- TODO: Shouldn't this be altering the UID when pushing out an IdeaDict?

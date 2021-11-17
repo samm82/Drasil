@@ -10,4 +10,5 @@ module Language.Drasil.Development (
 
 import Language.Drasil.NounPhrase (NounPhrase(..))
 import Language.Drasil.Sentence.Extract (sdep, shortdep, lnames, lnames')
-import Language.Drasil.UID (showUID)
+
+import Database.Drasil (showUID) -- TODO: Why is this also exported here?

@@ -9,6 +9,8 @@ module Language.Drasil.Chunk.Quantity (
 
 import Control.Lens ((^.),makeLenses,view)
 
+import Database.Drasil (UID, HasUID(..))
+
 import Language.Drasil.Classes (NamedIdea(term), Idea(getA),
   Quantity, Express(..))
 import Language.Drasil.Chunk.NamedIdea (IdeaDict, nw, mkIdea, nc, ncUID, mkIdeaUID)
@@ -18,7 +20,6 @@ import Language.Drasil.NounPhrase.Core (NP)
 import Language.Drasil.Space (Space, HasSpace(..))
 import Language.Drasil.Stages (Stage(..))
 import Language.Drasil.Symbol
-import Language.Drasil.UID (UID, HasUID(..))
 
 -- | QuantityDict is a combination of an 'IdeaDict' with a quantity.
 -- Contains an 'IdeaDict', 'Space', a function from 
@@ -34,7 +35,7 @@ data QuantityDict = QD { _id' :: IdeaDict
 makeLenses ''QuantityDict
 
 -- | Finds the 'UID' of the 'IdeaDict' used to make the 'QuantityDict'.
-instance HasUID        QuantityDict where uid = id' . uid
+instance HasUID        QuantityDict where uid = uid . _id'
 -- | Finds the term ('NP') of the 'IdeaDict' used to make the 'QuantityDict'.
 instance NamedIdea     QuantityDict where term = id' . term
 -- | Finds the idea contained in the 'IdeaDict' used to make the 'QuantityDict'.
@@ -46,7 +47,7 @@ instance HasSymbol     QuantityDict where symbol = view symb'
 -- | 'QuantityDict's have a 'Quantity'. 
 instance Quantity      QuantityDict where
 -- | Equal if 'UID's are equal.
-instance Eq            QuantityDict where a == b = (a ^. uid) == (b ^. uid)
+instance Eq            QuantityDict where a == b = uid a == uid b
 -- | Finds the units of the 'QuantityDict'.
 instance MayHaveUnit   QuantityDict where getUnit = view unit'
 -- | Convert the symbol of the 'QuantityDict' to a 'ModelExpr'.

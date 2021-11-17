@@ -3,9 +3,10 @@ module Language.Drasil.Expr.Extract where
 
 import Data.List (nub)
 
+import Database.Drasil (UID)
+
 import Language.Drasil.Expr.Lang (Expr(..))
 import Language.Drasil.Space (RealInterval(..))
-import Language.Drasil.UID (UID)
 
 -- | Generic traverse of all expressions that could lead to names.
 eNames :: Expr -> [UID]

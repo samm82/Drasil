@@ -11,6 +11,8 @@ import Prelude hiding (sqrt, log, sin, cos, tan, exp)
 
 import Control.Lens ((^.))
 
+import Database.Drasil (HasUID(..))
+
 import Language.Drasil.Symbol
 import Language.Drasil.Expr.Lang
 import Language.Drasil.Literal.Lang
@@ -18,7 +20,6 @@ import Language.Drasil.Space (DomainDesc(..), RTopology(..), RealInterval)
 import Language.Drasil.Classes (IsArgumentName)
 import qualified Language.Drasil.ModelExpr.Lang as M
 import Language.Drasil.Literal.Class (LiteralC(..))
-import Language.Drasil.UID (HasUID(..))
 
 -- TODO: figure out which ones can be moved outside of the ExprC class
 
@@ -349,7 +350,7 @@ instance ExprC Expr where
   defprod v low high = Operator MulRe (BoundedDD v Discrete low high)
   
   -- | Smart constructor for 'real interval' membership.
-  realInterval c = RealI (c ^. uid)
+  realInterval = RealI . uid
   
   -- | Euclidean function : takes a vector and returns the sqrt of the sum-of-squares.
   euclidean = sqrt . foldr1 addRe . map square
@@ -385,15 +386,15 @@ instance ExprC Expr where
   -- FIXME: These constructors should check that the UID is associated with a
   -- chunk that is actually callable.
   -- | Applies a given function with a list of parameters.
-  apply f ps = FCall (f ^. uid) ps []
+  apply f ps = FCall (uid f) ps []
   
   -- | Similar to 'apply', but takes a relation to apply to 'FCall'.
-  applyWithNamedArgs f ps ns = FCall (f ^. uid) ps (zip (map ((^. uid) . fst) ns) 
+  applyWithNamedArgs f ps ns = FCall (uid f) ps (zip (map (uid . fst) ns) 
     (map snd ns))
   
   -- Note how |sy| 'enforces' having a symbol
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.
-  sy x = C (x ^. uid)
+  sy = C . uid
   
 instance ExprC M.ModelExpr where
   lit = M.Lit
@@ -539,7 +540,7 @@ instance ExprC M.ModelExpr where
   defprod v low high = M.Operator M.MulRe (BoundedDD v Discrete low high)
 
   -- | Smart constructor for 'real interval' membership.
-  realInterval c = M.RealI (c ^. uid)
+  realInterval = M.RealI . uid
 
   -- | Euclidean function : takes a vector and returns the sqrt of the sum-of-squares.
   euclidean = sqrt . foldr1 addRe . map square
@@ -575,12 +576,12 @@ instance ExprC M.ModelExpr where
   -- FIXME: These constructors should check that the UID is associated with a
   -- chunk that is actually callable.
   -- | Applies a given function with a list of parameters.
-  apply f ps = M.FCall (f ^. uid) ps []
+  apply f ps = M.FCall (uid f) ps []
 
   -- | Similar to 'apply', but takes a relation to apply to 'FCall'.
-  applyWithNamedArgs f ps ns = M.FCall (f ^. uid) ps (zip (map ((^. uid) . fst) ns) 
+  applyWithNamedArgs f ps ns = M.FCall (uid f) ps (zip (map (uid . fst) ns) 
     (map snd ns))
 
   -- Note how |sy| 'enforces' having a symbol
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.
-  sy x = M.C (x ^. uid)
+  sy = M.C . uid

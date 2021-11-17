@@ -12,6 +12,9 @@ module Language.Drasil.Chunk.Eq (
 ) where
 
 import Control.Lens ((^.), view, lens, Lens')
+
+import Database.Drasil (UID, HasUID(..))
+
 import Language.Drasil.Chunk.UnitDefn (unitWrapper, MayHaveUnit(getUnit), UnitDefn)
 
 import Language.Drasil.Symbol (HasSymbol(symbol), Symbol)
@@ -29,7 +32,6 @@ import Language.Drasil.NounPhrase.Core (NP)
 import Language.Drasil.Space (mkFunction, Space, Space, HasSpace(..))
 import Language.Drasil.Sentence (Sentence(EmptyS))
 import Language.Drasil.Stages (Stage)
-import Language.Drasil.UID (UID, HasUID(..))
 
 data QDefinition e where
   QD :: DefinedQuantityDict -> [UID] -> e -> QDefinition e
@@ -43,14 +45,14 @@ qdInputs = lens (\(QD _ ins _) -> ins) (\(QD qua _ e) ins' -> QD qua ins' e)
 qdExpr :: Lens' (QDefinition e) e
 qdExpr = lens (\(QD _ _ e) -> e) (\(QD qua ins _) e' -> QD qua ins e')
 
-instance HasUID        (QDefinition e) where uid = qdQua . uid
+instance HasUID        (QDefinition e) where uid = uid . (^. qdQua)
 instance NamedIdea     (QDefinition e) where term = qdQua . term
 instance Idea          (QDefinition e) where getA = getA . (^. qdQua)
 instance HasSpace      (QDefinition e) where typ = qdQua . typ
 instance HasSymbol     (QDefinition e) where symbol = symbol . (^. qdQua)
 instance Definition    (QDefinition e) where defn = qdQua . defn
 instance Quantity      (QDefinition e) where
-instance Eq            (QDefinition e) where a == b = a ^. uid == b ^. uid
+instance Eq            (QDefinition e) where a == b = uid a == uid b
 instance MayHaveUnit   (QDefinition e) where getUnit = getUnit . view qdQua
 instance DefiningExpr   QDefinition    where defnExpr = qdExpr
 instance Express e => Express (QDefinition e) where
@@ -95,14 +97,16 @@ mkQDefSt :: UID -> NP -> Sentence -> (Stage -> Symbol) -> Space ->
 mkQDefSt u n s symb sp (Just ud) e = fromEqnSt u n s symb sp ud e
 mkQDefSt u n s symb sp Nothing   e = fromEqnSt' u n s symb sp e
 
+-- TODO: For these below ones, it looks like we should be altering the UIDs.
+
 -- | Used to help make 'QDefinition's when 'UID', term, and 'Symbol' come from the same source.
 mkQuantDef :: (Quantity c, MayHaveUnit c) => c -> e -> QDefinition e
-mkQuantDef c = mkQDefSt (c ^. uid) (c ^. term) EmptyS (symbol c) (c ^. typ) (getUnit c)
+mkQuantDef c = mkQDefSt (uid c) (c ^. term) EmptyS (symbol c) (c ^. typ) (getUnit c)
 
 -- FIXME: See #2788.
 -- | Used to help make 'QDefinition's when 'UID' and 'Symbol' come from the same source, with the term separate.
 mkQuantDef' :: (Quantity c, MayHaveUnit c) => c -> NP -> e -> QDefinition e
-mkQuantDef' c t = mkQDefSt (c ^. uid) t EmptyS (symbol c) (c ^. typ) (getUnit c)
+mkQuantDef' c t = mkQDefSt (uid c) t EmptyS (symbol c) (c ^. typ) (getUnit c)
 
 -- HACK - makes the definition EmptyS !!! FIXME
 -- | Smart constructor for QDefinitions. Requires a quantity and its defining 
@@ -115,8 +119,8 @@ mkFuncDef0 :: (HasUID f, HasSymbol f, HasSpace f,
                HasUID i, HasSymbol i, HasSpace i) =>
   f -> NP -> Sentence -> Maybe UnitDefn -> [i] -> e -> QDefinition e
 mkFuncDef0 f n s u is = QD
-  (dqd' (cc' (nw (ncUID (f ^. uid) n)) s) (symbol f)
-    (mkFunction (map (^. typ) is) (f ^. typ)) u) (map (^. uid) is)
+  (dqd' (cc' (nw (ncUID (uid f) n)) s) (symbol f)
+    (mkFunction (map (^. typ) is) (f ^. typ)) u) (map uid is)
 
 -- | Create a 'QDefinition' function with a symbol, name, term, list of inputs, resultant units, and a defining Expr
 mkFuncDef :: (HasUID f, HasSymbol f, HasSpace f,
