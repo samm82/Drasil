@@ -14,7 +14,7 @@ import Language.Drasil
 import Language.Drasil.Development (showUID)
 import Data.Drasil.TheoryConcepts (thModel)
 
-import Theory.Drasil.ModelKinds
+import Theory.Drasil.ModelKinds hiding (_mk)
 
 -- | Theories are the basis for building models with context,
 -- spaces, quantities, operations, invariants, etc.
@@ -64,7 +64,7 @@ data TheoryModel = TM
 makeLenses ''TheoryModel
 
 -- | Finds the 'UID' of a 'TheoryModel'.
-instance HasUID             TheoryModel where uid = mk . uid
+instance HasUID             TheoryModel where uid = uid . _mk
 -- | Finds the term ('NP') of the 'TheoryModel'.
 instance NamedIdea          TheoryModel where term = mk . term
 -- | Finds the idea of the 'ConceptChunk' contained in the 'TheoryModel'.

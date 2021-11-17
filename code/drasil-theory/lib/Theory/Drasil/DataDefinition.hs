@@ -50,7 +50,9 @@ ddPkt lpkt = lens g s
     s (DDME qd pkt) a' = DDME qd (pkt & lpkt .~ a')
 
 -- | Finds the 'UID' of a 'DataDefinition where'.
-instance HasUID             DataDefinition where uid = ddQD uid uid
+instance HasUID             DataDefinition where
+  uid (DDE qd _)  = uid qd
+  uid (DDME qd _) = uid qd
 -- | Finds the term ('NP') of the 'QDefinition' used to make the 'DataDefinition where'.
 instance NamedIdea          DataDefinition where term = ddQD term term
 -- | Finds the idea contained in the 'QDefinition' used to make the 'DataDefinition where'.
@@ -69,7 +71,7 @@ instance HasReference       DataDefinition where getReferences = rf-}
 -- | Finds 'DecRef's contained in the 'DataDefinition where'.
 instance HasDecRef          DataDefinition where getDecRefs = ddPkt pktDR
 -- | Equal if 'UID's are equal.
-instance Eq                 DataDefinition where a == b = (a ^. uid) == (b ^. uid)
+instance Eq                 DataDefinition where a == b = uid a == uid b
 -- | Finds the derivation of the 'DataDefinition where'. May contain Nothing.
 instance HasDerivation      DataDefinition where derivations = ddPkt pktMD
 -- | Finds any additional notes for the 'DataDefinition where'.

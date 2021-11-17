@@ -20,7 +20,7 @@ data ConstraintSet e = CL {
 makeLenses ''ConstraintSet
 
 -- | Finds the 'UID' of the 'ConstraintSet'.
-instance HasUID        (ConstraintSet e) where uid   = con . uid
+instance HasUID        (ConstraintSet e) where uid   = uid . (^. con)
 -- | Finds the term ('NP') of the 'ConstraintSet'.
 instance NamedIdea     (ConstraintSet e) where term  = con . term
 -- | Finds the idea of the 'ConstraintSet'.

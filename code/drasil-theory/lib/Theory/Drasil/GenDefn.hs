@@ -28,7 +28,7 @@ data GenDefn = GD { _mk    :: ModelKind ModelExpr
 makeLenses ''GenDefn
 
 -- | Finds the 'UID' of a 'GenDefn'.
-instance HasUID             GenDefn where uid         = mk . uid
+instance HasUID             GenDefn where uid         = uid . (^. mk)
 -- | Finds the term ('NP') of the 'GenDefn'.
 instance NamedIdea          GenDefn where term        = mk . term
 -- | Finds the idea contained in the 'GenDefn'.

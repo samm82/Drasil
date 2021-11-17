@@ -37,7 +37,7 @@ data InstanceModel = IM { _mk       :: ModelKind Expr
 makeLenses ''InstanceModel
 
 -- | Finds the 'UID' of an 'InstanceModel'.
-instance HasUID             InstanceModel where uid = mk . uid
+instance HasUID             InstanceModel where uid = uid . (^. mk)
 -- | Finds the term ('NP') of the 'InstanceModel'.
 instance NamedIdea          InstanceModel where term = mk . term
 -- | Finds the idea contained in the 'InstanceModel'.
