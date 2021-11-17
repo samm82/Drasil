@@ -29,7 +29,8 @@ lookup u (ChunkDB tc) = do
 lookupOrErr :: Typeable a => UID -> ChunkDB -> a
 lookupOrErr u = fromMaybe (error $ "Failed to find chunk " ++ show u) . lookup u
 
--- Is this TypeRep really needed? Well, for now, it's just a hacky to shorten our lists a bit.
+-- Is this TypeRep really needed? Well, for now, it's like a hack to shorten our lists a bit and pre-cache our type lists by their typerep.
+-- Justified, but not optimal. It would be nice if we could have the chunks pre-unChunked.
 findAll :: Typeable a => TypeRep -> ChunkDB -> [a]
 findAll tr (ChunkDB (_, trm)) = maybe [] (mapMaybe unChunk) (M.lookup tr trm)
 
