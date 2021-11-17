@@ -16,15 +16,15 @@ import Data.Maybe (mapMaybe)
 import Control.Lens ((^.))
 
 import Language.Drasil
-import Database.Drasil (SystemInformation, _sysinfodb, citeDB, conceptinsLookup,
-  conceptinsTable, dataDefnTable, datadefnLookup, gendefLookup, gendefTable,
-  insmodelLookup, insmodelTable, labelledconLookup, labelledcontentTable,
-  refbyLookup, refbyTable, sectionLookup, sectionTable, theoryModelLookup,
-  theoryModelTable, vars)
+import Database.Drasil
+import Temp.Drasil.SystemInformation (SystemInformation(..), _sysinfodb, citeDB, sysinfodb)
+import Temp.Drasil.GetChunk (vars)
+
 import Theory.Drasil (DataDefinition, GenDefn, InstanceModel, Theory(..),
   TheoryModel, HasInputs(inputs), HasOutput(output, out_constraints), qdFromDD)
 
 import Drasil.DocumentLanguage.Units (toSentenceUnitless)
+import Data.Typeable
 
 -- | Synonym for a list of 'Field's.
 type Fields = [Field]
@@ -111,27 +111,30 @@ mkTMField _ _ l _ = error $ "Label " ++ show l ++ " not supported " ++
 
 -- | Helper function to make a list of 'Sentence's from the current system information and something that has a 'UID'.
 helperRefs :: HasUID t => t -> SystemInformation -> Sentence
-helperRefs t s = foldlList Comma List $ map (`helpToRefField` s) $ nub $
-  refbyLookup (t ^. uid) (_sysinfodb s ^. refbyTable)
+helperRefs t s = foldlList Comma List $ map (`helpToRefField` s) $ nub $ undefined -- TODO; jason pause
+  -- refbyLookup (uid t) (_sysinfodb s ^. refbyTable)
 
 -- | Creates a reference as a 'Sentence' by finding if the 'UID' is in one of the possible data sets contained in the 'SystemInformation' database.
 helpToRefField :: UID -> SystemInformation -> Sentence
 helpToRefField t si
-  | Just _ <- lookupIndex t (s ^. dataDefnTable)        = refS $ datadefnLookup    t (s ^. dataDefnTable)
-  | Just _ <- lookupIndex t (s ^. insmodelTable)        = refS $ insmodelLookup    t (s ^. insmodelTable)
-  | Just _ <- lookupIndex t (s ^. gendefTable)          = refS $ gendefLookup      t (s ^. gendefTable)
-  | Just _ <- lookupIndex t (s ^. theoryModelTable)     = refS $ theoryModelLookup t (s ^. theoryModelTable)
-  | Just _ <- lookupIndex t (s ^. conceptinsTable)      = refS $ conceptinsLookup  t (s ^. conceptinsTable)
-  | Just _ <- lookupIndex t (s ^. sectionTable)         = refS $ sectionLookup     t (s ^. sectionTable)
-  | Just _ <- lookupIndex t (s ^. labelledcontentTable) = refS $ labelledconLookup t (s ^. labelledcontentTable)
-  | t `elem` map  (^. uid) (citeDB si) = EmptyS
-  | otherwise = error $ show t ++ "Caught."
-  where s = _sysinfodb si
+  | Just x <- typedFind = refS x
+  -- | Just _ <- lookupIndex t (s ^. dataDefnTable)        = refS $ datadefnLookup    t (s ^. dataDefnTable)
+  -- | Just _ <- lookupIndex t (s ^. insmodelTable)        = refS $ insmodelLookup    t (s ^. insmodelTable)
+  -- | Just _ <- lookupIndex t (s ^. gendefTable)          = refS $ gendefLookup      t (s ^. gendefTable)
+  -- | Just _ <- lookupIndex t (s ^. theoryModelTable)     = refS $ theoryModelLookup t (s ^. theoryModelTable)
+  -- | Just _ <- lookupIndex t (s ^. conceptinsTable)      = refS $ conceptinsLookup  t (s ^. conceptinsTable)
+  -- | Just _ <- lookupIndex t (s ^. sectionTable)         = refS $ sectionLookup     t (s ^. sectionTable)
+  -- | Just _ <- lookupIndex t (s ^. labelledcontentTable) = refS $ labelledconLookup t (s ^. labelledcontentTable)
+  | t `elem` map uid (citeDB si) = EmptyS
+  | otherwise = error $ show t ++ " caught."
+  where
+    s = si ^. sysinfodb
+    typedFind = find t s :: (HasUID r, HasRefAddress r, HasShortName r, Typeable r) => Maybe r
 
 -- | Helper that makes a list of 'Reference's into a 'Sentence'. Then wraps into 'Contents'.
 helperSources :: [DecRef] -> [Contents]
 helperSources [] = [mkParagraph $ S "--"]
-helperSources rs  = [mkParagraph $ foldlList Comma List $ map (\r -> Ref (r ^. uid) EmptyS $ refInfo r) rs]
+helperSources rs  = [mkParagraph $ foldlList Comma List $ map (\r -> Ref (uid r) EmptyS $ refInfo r) rs]
 
 -- | Creates the fields for a definition from a 'QDefinition' (used by 'ddefn').
 mkDDField :: DataDefinition -> SystemInformation -> Field -> ModRow -> ModRow
