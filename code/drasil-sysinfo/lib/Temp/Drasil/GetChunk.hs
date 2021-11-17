@@ -1,22 +1,22 @@
 -- | Utilities to get grab certain chunks (from 'Expr', 'Sentence', etc) by 'UID' and
 -- dereference the chunk it refers to.
-module Database.Drasil.ChunkDB.GetChunk (ccss, ccss', combine, getIdeaDict, vars) where
+module Temp.Drasil.GetChunk (ccss, ccss', combine, getIdeaDict, vars) where
 
 import Language.Drasil
 import Language.Drasil.Development
 import Language.Drasil.ModelExpr.Development (meDep)
 
-import Database.Drasil.ChunkDB (ChunkDB, defResolve, symbResolve, termResolve)
+import Database.Drasil
 
 import Data.List (nub)
 
 -- | Gets a list of quantities ('QuantityDict') from an equation in order to print.
 vars :: ModelExpr -> ChunkDB -> [QuantityDict]
-vars e m = map (symbResolve m) $ meDep e
+vars e m = map (`findOrErr` m) $ meDep e
 
 -- | Gets a list of quantities ('QuantityDict') from a 'Sentence' in order to print.
 vars' :: Sentence -> ChunkDB -> [QuantityDict]
-vars' a m = map (symbResolve m) $ sdep a
+vars' a m = map (`findOrErr` m) $ sdep a
 
 -- | Combines the functions of 'vars' and 'concpt' to create a list of 'DefinedQuantityDict's from a 'Sentence'.
 combine :: Sentence -> ChunkDB -> [DefinedQuantityDict]
@@ -36,12 +36,12 @@ ccss' s e c = nub $ concatMap (`vars'` c) s ++ concatMap (`vars` c) e
 
 -- | Gets a list of concepts ('ConceptChunk') from a 'Sentence' in order to print.
 concpt :: Sentence -> ChunkDB -> [ConceptChunk]
-concpt a m = map (defResolve m) $ sdep a
+concpt a m = map (`findOrErr` m) $ sdep a
 
 -- | Gets a list of concepts ('ConceptChunk') from an expression in order to print.
 concpt' :: ModelExpr -> ChunkDB -> [ConceptChunk]
-concpt' a m = map (defResolve m) $ meDep a
+concpt' a m = map (`findOrErr` m) $ meDep a
 
 -- | Gets a list of ideas ('IdeaDict') from a 'Sentence' in order to print.
 getIdeaDict :: Sentence -> ChunkDB -> [IdeaDict]
-getIdeaDict a m = map (termResolve m) $ shortdep a
+getIdeaDict a m = map (`findOrErr` m) $ shortdep a

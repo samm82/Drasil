@@ -19,6 +19,7 @@ dependencies:
 - drasil-code-base
 - drasil-database
 - drasil-lang
+- drasil-sysinfo
 - drasil-theory
 - drasil-utils
 - json
@@ -32,7 +33,6 @@ library:
   source-dirs: lib
   exposed-modules:
   - Language.Drasil.Printers
-  - Temp.Drasil.SystemInformation
   when:
   - condition: false
     other-modules: Paths_drasil_printers
