@@ -1,4 +1,4 @@
-{-# Language GADTs #-}
+{-# Language GADTs, NoMonomorphismRestriction #-}
 -- | Defines helper functions for creating subsections within the Solution Characteristics Specification.
 -- Namely, for theory models, general definitions, data definitions, and instance models.
 module Drasil.DocumentLanguage.Definitions (
@@ -25,6 +25,7 @@ import Theory.Drasil (DataDefinition, GenDefn, InstanceModel, Theory(..),
 
 import Drasil.DocumentLanguage.Units (toSentenceUnitless)
 import Data.Typeable
+import Unsafe.Coerce
 
 -- | Synonym for a list of 'Field's.
 type Fields = [Field]
@@ -111,25 +112,23 @@ mkTMField _ _ l _ = error $ "Label " ++ show l ++ " not supported " ++
 
 -- | Helper function to make a list of 'Sentence's from the current system information and something that has a 'UID'.
 helperRefs :: HasUID t => t -> SystemInformation -> Sentence
-helperRefs t s = foldlList Comma List $ map (`helpToRefField` s) $ nub $ undefined -- TODO; jason pause
+helperRefs t s = foldlList Comma List $ map (`helpToRefField` s) $ nub undefined -- TODO; jason pause
   -- refbyLookup (uid t) (_sysinfodb s ^. refbyTable)
 
 -- | Creates a reference as a 'Sentence' by finding if the 'UID' is in one of the possible data sets contained in the 'SystemInformation' database.
 helpToRefField :: UID -> SystemInformation -> Sentence
-helpToRefField t si
-  | Just x <- typedFind = refS x
-  -- | Just _ <- lookupIndex t (s ^. dataDefnTable)        = refS $ datadefnLookup    t (s ^. dataDefnTable)
-  -- | Just _ <- lookupIndex t (s ^. insmodelTable)        = refS $ insmodelLookup    t (s ^. insmodelTable)
-  -- | Just _ <- lookupIndex t (s ^. gendefTable)          = refS $ gendefLookup      t (s ^. gendefTable)
-  -- | Just _ <- lookupIndex t (s ^. theoryModelTable)     = refS $ theoryModelLookup t (s ^. theoryModelTable)
-  -- | Just _ <- lookupIndex t (s ^. conceptinsTable)      = refS $ conceptinsLookup  t (s ^. conceptinsTable)
-  -- | Just _ <- lookupIndex t (s ^. sectionTable)         = refS $ sectionLookup     t (s ^. sectionTable)
-  -- | Just _ <- lookupIndex t (s ^. labelledcontentTable) = refS $ labelledconLookup t (s ^. labelledcontentTable)
+helpToRefField t si -- TODO: Is there any way that we can collapse this?
+  | Just x <- find t s :: Maybe DataDefinition  = refS x
+  | Just x <- find t s :: Maybe InstanceModel   = refS x
+  | Just x <- find t s :: Maybe GenDefn         = refS x
+  | Just x <- find t s :: Maybe TheoryModel     = refS x
+  | Just x <- find t s :: Maybe ConceptInstance = refS x
+  | Just x <- find t s :: Maybe Section         = refS x
+  | Just x <- find t s :: Maybe LabelledContent = refS x
   | t `elem` map uid (citeDB si) = EmptyS
   | otherwise = error $ show t ++ " caught."
   where
     s = si ^. sysinfodb
-    typedFind = find t s :: (HasUID r, HasRefAddress r, HasShortName r, Typeable r) => Maybe r
 
 -- | Helper that makes a list of 'Reference's into a 'Sentence'. Then wraps into 'Contents'.
 helperSources :: [DecRef] -> [Contents]
