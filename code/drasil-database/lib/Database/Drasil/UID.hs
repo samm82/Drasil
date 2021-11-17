@@ -20,6 +20,7 @@ newtype UID = UID String
 instance Show UID where
   show (UID u) = u
 
+-- TODO: UndecidableInstances to get an `instance HasUID t => Eq t where` defined for all things with UIDs? Might be problematic, but it seems we often have this implementation.
 
 -- | Smart constructor for making a 'UID' from a 'String'.
 mkUid :: String -> UID

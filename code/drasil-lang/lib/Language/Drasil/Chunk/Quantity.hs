@@ -19,7 +19,7 @@ import Language.Drasil.Expr.Class (sy)
 import Language.Drasil.NounPhrase.Core (NP)
 import Language.Drasil.Space (Space, HasSpace(..))
 import Language.Drasil.Stages (Stage(..))
-import Language.Drasil.Symbol
+import Language.Drasil.Symbol (HasSymbol(..), Symbol(Empty))
 
 -- | QuantityDict is a combination of an 'IdeaDict' with a quantity.
 -- Contains an 'IdeaDict', 'Space', a function from 

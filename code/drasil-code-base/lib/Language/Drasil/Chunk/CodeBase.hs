@@ -5,7 +5,7 @@ module Language.Drasil.Chunk.CodeBase where
 import Control.Lens ((^.), view, makeLenses, Lens')
 
 import Language.Drasil
-import Database.Drasil (ChunkDB, symbResolve)
+import Database.Drasil (ChunkDB, findOrErr)
 
 import Language.Drasil.Code.Expr (CodeExpr)
 import Language.Drasil.Code.Expr.Extract (eDep, eDep')
@@ -46,7 +46,7 @@ data CodeChunk = CodeC { _qc  :: QuantityDict
 makeLenses ''CodeChunk
 
 -- | Finds the 'UID' of the 'QuantityDict' used to make the 'CodeChunk'.
-instance HasUID      CodeChunk where uid = qc . uid
+instance HasUID      CodeChunk where uid = uid . _qc
 -- | Finds the term ('NP') of the 'QuantityDict' used to make the 'CodeChunk'.
 instance NamedIdea   CodeChunk where term = qc . term
 -- | Finds the idea contained in the 'QuantityDict' used to make the 'CodeChunk'.
@@ -58,7 +58,7 @@ instance HasSymbol   CodeChunk where symbol = symbol . view qc
 -- | 'CodeChunk's have a 'Quantity'.
 instance Quantity    CodeChunk
 -- | Equal if 'UID's are equal.
-instance Eq          CodeChunk where c1 == c2 = (c1 ^. uid) == (c2 ^. uid)
+instance Eq          CodeChunk where a == b = uid a == uid b
 -- | Finds the units of the 'QuantityDict' used to make the 'CodeChunk'.
 instance MayHaveUnit CodeChunk where getUnit = getUnit . view qc
 
@@ -69,7 +69,7 @@ data CodeVarChunk = CodeVC {_ccv :: CodeChunk,
 makeLenses ''CodeVarChunk
 
 -- | Finds the 'UID' of the 'CodeChunk' used to make the 'CodeVarChunk'.
-instance HasUID      CodeVarChunk where uid = ccv . uid
+instance HasUID      CodeVarChunk where uid = uid . _ccv
 -- | Finds the term ('NP') of the 'CodeChunk' used to make the 'CodeVarChunk'.
 instance NamedIdea   CodeVarChunk where term = ccv . term
 -- | Finds the idea contained in the 'CodeChunk' used to make the 'CodeVarChunk'.
@@ -81,7 +81,7 @@ instance HasSymbol   CodeVarChunk where symbol = symbol . view ccv
 -- | 'CodeVarChunk's have a 'Quantity'.
 instance Quantity    CodeVarChunk
 -- | Equal if 'UID's are equal.
-instance Eq          CodeVarChunk where c1 == c2 = (c1 ^. uid) == (c2 ^. uid)
+instance Eq          CodeVarChunk where a == b = uid a == uid b
 -- | Finds the units of the 'CodeChunk' used to make the 'CodeVarChunk'.
 instance MayHaveUnit CodeVarChunk where getUnit = getUnit . view ccv
 
@@ -90,7 +90,7 @@ newtype CodeFuncChunk = CodeFC {_ccf :: CodeChunk}
 makeLenses ''CodeFuncChunk
 
 -- | Finds the 'UID' of the 'CodeChunk' used to make the 'CodeFuncChunk'.
-instance HasUID      CodeFuncChunk where uid = ccf . uid
+instance HasUID      CodeFuncChunk where uid = uid . _ccf
 -- | Finds the term ('NP') of the 'CodeChunk' used to make the 'CodeFuncChunk'.
 instance NamedIdea   CodeFuncChunk where term = ccf . term
 -- | Finds the idea contained in the 'CodeChunk' used to make the 'CodeFuncChunk'.
@@ -104,7 +104,7 @@ instance Quantity    CodeFuncChunk
 -- | Functions are Callable.
 instance Callable    CodeFuncChunk
 -- | Equal if 'UID's are equal.
-instance Eq          CodeFuncChunk where c1 == c2 = (c1 ^. uid) == (c2 ^. uid)
+instance Eq          CodeFuncChunk where a == b = uid a == uid b
 -- | Finds the units of the 'CodeChunk' used to make the 'CodeFuncChunk'.
 instance MayHaveUnit CodeFuncChunk where getUnit = getUnit . view ccf
 
@@ -125,12 +125,12 @@ codevars' :: CodeExpr -> ChunkDB -> [CodeVarChunk]
 codevars' e m = map (varResolve m) $ nub $ eDep' e
 
 -- | Make a 'CodeVarChunk' from a 'UID' in the 'ChunkDB'.
-varResolve :: ChunkDB -> UID -> CodeVarChunk
-varResolve  m x = quantvar $ symbResolve m x
+varResolve :: ChunkDB -> UID -> CodeVarChunk -- TODO: Something about this seems odd (not just because of the explicit type informatiom, but because we're not creating a new UID on creation).
+varResolve  m x = quantvar (findOrErr x m :: QuantityDict)
 
 -- | Make a 'CodeFuncChunk' from a 'UID' in the 'ChunkDB'.
 funcResolve :: ChunkDB -> UID -> CodeFuncChunk
-funcResolve m x = quantfunc $ symbResolve m x
+funcResolve m x = quantfunc (findOrErr x m :: QuantityDict)
 
 -- FIXME: use show for the UID here? Perhaps need a different implVar function for UIDs
 -- Changes a 'CodeVarChunk'\'s space from 'Vect' to 'Array'.

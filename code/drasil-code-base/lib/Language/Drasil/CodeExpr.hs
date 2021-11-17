@@ -31,7 +31,7 @@ import Control.Lens ((^.))
 
 -- | Smart constructor for chunk symbols.
 sy :: (HasUID u, HasSymbol u) => u -> CodeExpr
-sy = C . (^. uid)
+sy = C . uid
 
 -- | Smart constructor for matrices.
 matrix :: [[CodeExpr]] -> CodeExpr
@@ -123,19 +123,19 @@ idx = LABinaryOp Index
 
 -- | Constructs a CodeExpr for actor creation (constructor call)
 new :: (Callable f, HasUID f, CodeIdea f) => f -> [CodeExpr] -> CodeExpr
-new c ps = New (c ^. uid) ps []
+new c ps = New (uid c) ps []
 
 -- | Constructs a CodeExpr for actor creation (constructor call) that uses named arguments
 newWithNamedArgs :: (Callable f, HasUID f, CodeIdea f, HasUID a, 
   IsArgumentName a) => f -> [CodeExpr] -> [(a, CodeExpr)] -> CodeExpr
-newWithNamedArgs c ps ns = New (c ^. uid) ps (zip (map ((^. uid) . fst) ns) 
+newWithNamedArgs c ps ns = New (uid c) ps (zip (map (uid . fst) ns) 
   (map snd ns))
 
 -- | Constructs a CodeExpr for actor messaging (method call)
 message :: (Callable f, HasUID f, CodeIdea f, HasUID c, HasSpace c, CodeIdea c) 
   => c -> f -> [CodeExpr] -> CodeExpr
 message o m ps = checkObj (o ^. typ)
-  where checkObj (Actor _) = Message (o ^. uid) (m ^. uid) ps []
+  where checkObj (Actor _) = Message (uid o) (uid m) ps []
         checkObj _ = error $ "Invalid actor message: Actor should have " ++ 
           "Actor space"
 
@@ -144,15 +144,15 @@ msgWithNamedArgs :: (Callable f, HasUID f, CodeIdea f, HasUID c, HasSpace c,
   CodeIdea c, HasUID a, IsArgumentName a) => c -> f -> [CodeExpr] -> [(a, CodeExpr)] -> 
   CodeExpr
 msgWithNamedArgs o m ps as = checkObj (o ^. typ)
-  where checkObj (Actor _) = Message (o ^. uid) (m ^. uid) ps 
-          (zip (map ((^. uid) . fst) as) (map snd as))
+  where checkObj (Actor _) = Message (uid o) (uid m) ps 
+          (zip (map (uid . fst) as) (map snd as))
         checkObj _ = error $ "Invalid actor message: Actor should have " ++ 
           "Actor space"
 
 -- | Constructs a CodeExpr representing the field of an actor
 field :: CodeVarChunk -> CodeVarChunk -> CodeExpr
 field o f = checkObj (o ^. typ)
-  where checkObj (Actor _) = Field (o ^. uid) (f ^. uid)
+  where checkObj (Actor _) = Field (uid o) (uid f)
         checkObj _ = error $ "Invalid actor field: Actor should have " ++
           "Actor space"
 
@@ -161,21 +161,21 @@ field o f = checkObj (o ^. typ)
 -- chunk that is actually callable.
 -- | Applies a given function with a list of parameters.
 apply :: (HasUID f, HasSymbol f) => f -> [CodeExpr] -> CodeExpr
-apply f ps = FCall (f ^. uid) ps []
+apply f ps = FCall (uid f) ps []
 
 -- | Similar to 'apply', but converts second argument into 'Symbol's.
 apply1 :: (HasUID f, HasSymbol f, HasUID a, HasSymbol a) => f -> a -> CodeExpr
-apply1 f a = FCall (f ^. uid) [sy a] []
+apply1 f a = FCall (uid f) [sy a] []
 
 -- | Similar to 'apply', but the applied function takes two parameters (which are both 'Symbol's).
 apply2 :: (HasUID f, HasSymbol f, HasUID a, HasSymbol a, HasUID b, HasSymbol b) 
   => f -> a -> b -> CodeExpr
-apply2 f a b = FCall (f ^. uid) [sy a, sy b] []
+apply2 f a b = FCall (uid f) [sy a, sy b] []
 
 -- | Similar to 'apply', but takes a relation to apply to 'FCall'.
 applyWithNamedArgs :: (HasUID f, HasSymbol f, HasUID a, IsArgumentName a) => f 
   -> [CodeExpr] -> [(a, CodeExpr)] -> CodeExpr
-applyWithNamedArgs f ps ns = FCall (f ^. uid) ps (zip (map ((^. uid) . fst) ns) 
+applyWithNamedArgs f ps ns = FCall (uid f) ps (zip (map (uid . fst) ns) 
   (map snd ns))
 
 ($&&), ($-), ($/), ($^), ($=>), ($<=>), ($=), ($!=), ($<), ($>), ($<=), ($>=)
