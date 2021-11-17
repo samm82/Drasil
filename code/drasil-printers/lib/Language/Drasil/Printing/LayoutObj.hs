@@ -1,7 +1,7 @@
 -- | Defines types similar to content types in "Language.Drasil" but better suited for printing.
 module Language.Drasil.Printing.LayoutObj where
 
-import Language.Drasil hiding (ListType, Contents, BibRef)
+import Language.Drasil (DType, MaxWidthPercent)
 
 import Language.Drasil.Printing.AST (ListType, Spec, Title, Label)
 import Language.Drasil.Printing.Citation (BibRef)
@@ -38,5 +38,5 @@ data LayoutObj =
    | Graph [(Spec, Spec)] (Maybe Width) (Maybe Height) Caption Label -- ^ Holds all information needed for a graph.
    | HDiv Tags [LayoutObj] Label                                     -- ^ Holds tags, more contents, and a label.
    | Cell [LayoutObj] 
-   -- this shouldn't be here, it should have been expanded.
+   -- TODO: this shouldn't be here, it should have been expanded.
    | Bib BibRef                                                      -- ^ Bibliography section.

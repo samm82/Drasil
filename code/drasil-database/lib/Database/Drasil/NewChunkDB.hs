@@ -41,19 +41,19 @@ insert (ChunkDB (cu, ctr)) c
         where
             c' :: Chunk
             c' = mkChunk c
-            
+
             cu' :: ChunkByUID
             cu' = M.insert (uid c) c' cu
-            
+
             ctr' :: ChunksByTypeRep
-            ctr' = M.alter (maybe (Just [c']) (Just . (++) [c'])) (typeOf c) ctr
+            ctr' = M.alter (Just . maybe [c'] ([c'] ++)) (typeOf c) ctr
 
 mkChunkDB :: [Chunk] -> ChunkDB
 mkChunkDB cs = ChunkDB (cbu, csbtr)
     where
         cbu :: ChunkByUID
         cbu = M.fromListWithKey (\k _ _ -> error $ "At least 2 chunks provided contain the same UID; `" ++ show k ++ "`") $ map (\c -> (uid c, c)) cs
-        
+
         trs :: [TypeRep]
         trs = nub $ map chunkType cs
 
