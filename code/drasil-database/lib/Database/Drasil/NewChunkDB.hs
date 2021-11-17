@@ -8,13 +8,13 @@ module Database.Drasil.NewChunkDB (
 
 import Prelude hiding (lookup)
 
-import Database.Drasil.Chunk
-import Database.Drasil.UID
+import Database.Drasil.Chunk (Chunk, mkChunk, unChunk, chunkType)
+import Database.Drasil.UID (UID, HasUID(..))
 
 import qualified Data.Map as M
-import Data.List hiding (lookup, insert)
-import Data.Maybe
-import Data.Typeable
+import Data.List (nub)
+import Data.Maybe (fromMaybe, mapMaybe)
+import Data.Typeable (Typeable, typeOf, TypeRep)
 
 type ChunkByUID      = M.Map UID Chunk
 type ChunksByTypeRep = M.Map TypeRep [Chunk]
