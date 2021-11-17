@@ -21,7 +21,6 @@ import Language.Drasil.Mod (Description)
 import Data.Map (member)
 import qualified Data.Map as Map (filter, lookup, null)
 import Data.Maybe (mapMaybe)
-import Control.Lens ((^.))
 import Control.Monad.State (get)
 
 -- | Returns a module description based on a list of descriptions of what is
@@ -210,7 +209,7 @@ woFuncDesc = do
 physAndSfwrCons :: GenState Description
 physAndSfwrCons = do
   g <- get
-  let cns = concat $ mapMaybe ((`Map.lookup` (cMap $ codeSpec g)) . (^. uid)) 
+  let cns = concat $ mapMaybe ((`Map.lookup` (cMap $ codeSpec g)) . uid) 
         (inputs $ codeSpec g)
   return $ stringList [
     if not (any isPhysC cns) then "" else "physical constraints",

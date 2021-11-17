@@ -293,7 +293,7 @@ solveFromToStep = quantfunc $ implVar "SolveFromToStep_oslo" (nounPhrase
   solT (label "SolveFromToStep")
 
 vecDepVar :: ODEInfo -> CodeVarChunk
-vecDepVar info = quantvar $ implVarUID (dv ^. uid) (dv ^. term) vecT
+vecDepVar info = quantvar $ implVarUID (uid dv) (dv ^. term) vecT
   (sub (symbol dv Implementation) (label "vec"))
   where dv = depVar info
 
@@ -616,8 +616,8 @@ diffCodeChunk c = quantvar $ implVarUID' (c +++ "d" )
 modifiedODESyst :: String -> ODEInfo -> [CodeExpr]
 modifiedODESyst sufx info = map replaceDepVar (odeSyst info)
   where
-    replaceDepVar cc@(C c) | c == depVar info ^. uid = C $ depVar info +++ ("_" ++ sufx)
-                           | otherwise               = cc
+    replaceDepVar cc@(C c) | c == uid (depVar info) = C $ depVar info +++ ("_" ++ sufx)
+                           | otherwise              = cc
     replaceDepVar (AssocA a es)           = AssocA a (map replaceDepVar es)
     replaceDepVar (AssocB b es)           = AssocB b (map replaceDepVar es)
     replaceDepVar (FCall u es nes)        = FCall u (map replaceDepVar es)

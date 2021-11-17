@@ -12,12 +12,12 @@ import Control.Lens ((^.), makeLenses, view)
 data PassBy = Val | Ref
 
 -- | Chunk representing a parameter.
-data ParameterChunk = PC {_pcc :: CodeChunk
-                         , passBy :: PassBy}
+data ParameterChunk = PC { _pcc :: CodeChunk
+                         , passBy :: PassBy  }
 makeLenses ''ParameterChunk
 
 -- | Finds the 'UID' of the 'CodeChunk' used to make the 'ParameterChunk'.
-instance HasUID      ParameterChunk where uid = pcc . uid
+instance HasUID      ParameterChunk where uid = uid . _pcc
 -- | Finds the term ('NP') of the 'CodeChunk' used to make the 'ParameterChunk'.
 instance NamedIdea   ParameterChunk where term = pcc . term
 -- | Finds the idea contained in the 'CodeChunk' used to make the 'ParameterChunk'.
@@ -33,7 +33,7 @@ instance CodeIdea    ParameterChunk where
   codeName = codeName . view pcc
   codeChunk = codeChunk . view pcc
 -- | Equal if 'UID's are equal.
-instance Eq          ParameterChunk where c1 == c2 = (c1 ^. uid) == (c2 ^. uid)
+instance Eq          ParameterChunk where c1 == c2 = uid c1 == uid c2
 -- | Finds the units of the 'CodeChunk' used to make the 'ParameterChunk'.
 instance MayHaveUnit ParameterChunk where getUnit = getUnit . view pcc
 

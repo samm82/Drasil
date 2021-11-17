@@ -2,8 +2,8 @@ module Language.Drasil.Code.Imperative.Helpers (
   liftS, lookupC
 ) where
 
-import Language.Drasil (UID, QuantityDict)
-import Database.Drasil (symbResolve)
+import Language.Drasil (QuantityDict)
+import Database.Drasil (UID, findOrErr)
 import Language.Drasil.Code.Imperative.DrasilState (DrasilState(..))
 import Language.Drasil.CodeSpec (CodeSpec(..))
 
@@ -14,5 +14,5 @@ liftS :: State a b -> State a [b]
 liftS = fmap (: [])
 
 -- | Gets the 'QuantityDict' corresponding to a 'UID'.
-lookupC :: DrasilState -> UID -> QuantityDict
-lookupC g = symbResolve (sysinfodb $ codeSpec g)
+lookupC :: DrasilState -> UID -> QuantityDict -- TODO: This is a duplicate of a similarly named function from another package. We should create "chunk util functions" for each chunk type, in the same file the chunk is defined.
+lookupC g u = findOrErr u (sysinfodb $ codeSpec g)

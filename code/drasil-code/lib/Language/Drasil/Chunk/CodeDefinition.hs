@@ -24,7 +24,7 @@ data CodeDefinition = CD { _cchunk   :: CodeChunk
 makeLenses ''CodeDefinition
 
 -- | Finds the 'UID' of the 'CodeChunk' used to make the 'CodeDefinition'.
-instance HasUID           CodeDefinition where uid = cchunk . uid
+instance HasUID           CodeDefinition where uid = uid . _cchunk
 -- | Finds the term ('NP') of the 'CodeChunk' used to make the 'CodeDefinition'.
 instance NamedIdea        CodeDefinition where term = cchunk . term
 -- | Finds the idea contained in the 'CodeChunk' used to make the 'CodeDefinition'.
@@ -43,7 +43,7 @@ instance CodeIdea         CodeDefinition where
   codeName (CD c@(CodeC _ Func) _ _ _) = funcPrefix ++ codeName c
   codeChunk = view cchunk
 -- | Equal if 'UID's are equal.
-instance Eq               CodeDefinition where c1 == c2 = (c1 ^. uid) == (c2 ^. uid)
+instance Eq               CodeDefinition where c1 == c2 = uid c1 == uid c2
 -- | Finds the units of the 'CodeChunk' used to make the 'CodeDefinition'.
 instance MayHaveUnit      CodeDefinition where getUnit = getUnit . view cchunk
 -- | Finds the defining expression of a CodeDefinition.

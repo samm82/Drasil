@@ -4,13 +4,12 @@ module Language.Drasil.Code.Imperative.Comments (
 ) where
 
 import Language.Drasil
-import Database.Drasil (defTable)
+import Database.Drasil (find)
 import Language.Drasil.Chunk.Code (CodeIdea(..))
 import Language.Drasil.Code.Imperative.DrasilState (GenState, DrasilState(..))
 import Language.Drasil.CodeSpec (CodeSpec(..))
 import Language.Drasil.Printers (Linearity(Linear), sentenceDoc, unitDoc)
 
-import qualified Data.Map as Map (lookup)
 import Control.Monad.State (get)
 import Control.Lens ((^.))
 import Text.PrettyPrint.HughesPJ (Doc, (<+>), colon, empty, parens, render)
@@ -30,7 +29,8 @@ getDefnDoc c = do
   g <- get
   let db = sysinfodb $ codeSpec g
   return $ maybe empty ((<+>) colon . sentenceDoc db Implementation Linear . 
-    (^. defn) . fst) (Map.lookup (codeChunk c ^. uid) $ defTable db)
+    (^. defn)) (find (uid $ codeChunk c) db :: Maybe ConceptChunk)
+    -- (Map.lookup (uid $ codeChunk c) $ defTable db)
 
 -- | Gets a plain rendering of the unit of a chunk in parentheses, 
 -- or empty if it has no unit.

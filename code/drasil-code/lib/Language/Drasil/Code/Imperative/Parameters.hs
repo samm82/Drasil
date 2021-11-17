@@ -88,7 +88,7 @@ getConstraintParams = do
   g <- get
   let cm = cMap $ codeSpec g
       db = sysinfodb $ codeSpec g
-      varsList = filter (\i -> member (i ^. uid) cm) (inputs $ codeSpec g)
+      varsList = filter (\i -> member (uid i) cm) (inputs $ codeSpec g)
       reqdVals = nub $ varsList ++ map quantvar (concatMap (`constraintvars` db)
         (getConstraints cm varsList))
   getParams "input_constraints" In reqdVals
@@ -120,7 +120,7 @@ getParams n pt cs' = do
       cnsnts = map quantvar $ constants $ codeSpec g
       inpVars = filter (`elem` ins) cs
       conVars = filter (`elem` cnsnts) cs
-      csSubIns = filter ((`notMember` concMatches g) . (^. uid)) 
+      csSubIns = filter ((`notMember` concMatches g) . uid) 
         (cs \\ (ins ++ cnsnts))
   inVs <- getInputVars n pt (inStruct g) Var inpVars
   conVs <- getConstVars n pt (conStruct g) (conRepr g) conVars

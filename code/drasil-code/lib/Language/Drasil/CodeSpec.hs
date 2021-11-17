@@ -5,9 +5,8 @@ module Language.Drasil.CodeSpec where
 import Language.Drasil
 import Language.Drasil.Development (showUID)
 import Language.Drasil.Display (Symbol(Variable))
-import Database.Drasil (ChunkDB, SystemInformation(SI),
-  _authors, _constants, _constraints, _datadefs, _instModels,
-  _configFiles, _inputs, _outputs, _sys, _sysinfodb)
+import Database.Drasil (ChunkDB)
+import Temp.Drasil.SystemInformation (SystemInformation(..))
 import Theory.Drasil (DataDefinition, qdEFromDD, getEqModQdsFromIm)
 
 import Language.Drasil.Chunk.Code (CodeChunk, CodeVarChunk, CodeIdea(codeChunk),
@@ -42,34 +41,34 @@ type Def = CodeDefinition
 -- | Code specifications. Holds information needed to generate code.
 data CodeSpec where
   CodeSpec :: (HasName a) => {
-  -- | Program name.
-  pName :: Name,
-  -- | Authors.
-  authors :: [a],
-  -- | All inputs.
-  inputs :: [Input],
-  -- | Explicit inputs (values to be supplied by a file).
-  extInputs :: [Input],
-  -- | Derived inputs (each calculated from explicit inputs in a single step).
-  derivedInputs :: [Derived],
-  -- | All outputs.
-  outputs :: [Output],
-  -- | List of files that must be in same directory for running the executable.
-  configFiles :: [FilePath],
-  -- | Mathematical definitions, ordered so that they form a path from inputs to 
-  -- outputs.
-  execOrder :: [Def],
-  -- | Map from 'UID's to constraints for all constrained chunks used in the problem.
-  cMap :: ConstraintCEMap,
-  -- | List of all constants used in the problem.
-  constants :: [Const],
-  -- | Map containing all constants used in the problem.
-  constMap :: ConstantMap,
-  -- | Additional modules required in the generated code, which Drasil cannot yet 
-  -- automatically define.
-  mods :: [Mod],  -- medium hack
-  -- | The database of all chunks used in the problem.
-  sysinfodb :: ChunkDB
+    -- | Program name.
+    pName :: Name,
+    -- | Authors.
+    authors :: [a],
+    -- | All inputs.
+    inputs :: [Input],
+    -- | Explicit inputs (values to be supplied by a file).
+    extInputs :: [Input],
+    -- | Derived inputs (each calculated from explicit inputs in a single step).
+    derivedInputs :: [Derived],
+    -- | All outputs.
+    outputs :: [Output],
+    -- | List of files that must be in same directory for running the executable.
+    configFiles :: [FilePath],
+    -- | Mathematical definitions, ordered so that they form a path from inputs to 
+    -- outputs.
+    execOrder :: [Def],
+    -- | Map from 'UID's to constraints for all constrained chunks used in the problem.
+    cMap :: ConstraintCEMap,
+    -- | List of all constants used in the problem.
+    constants :: [Const],
+    -- | Map containing all constants used in the problem.
+    constMap :: ConstantMap,
+    -- | Additional modules required in the generated code, which Drasil cannot yet 
+    -- automatically define.
+    mods :: [Mod],  -- medium hack
+    -- | The database of all chunks used in the problem.
+    sysinfodb :: ChunkDB
   } -> CodeSpec
 
 -- | Maps constants to their respective 'CodeDefinition'.
@@ -77,11 +76,11 @@ type ConstantMap = Map.Map UID CodeDefinition
 
 -- | Converts a list of chunks that have 'UID's to a Map from 'UID' to the associated chunk.
 assocToMap :: HasUID a => [a] -> Map.Map UID a
-assocToMap = Map.fromList . map (\x -> (x ^. uid, x))
+assocToMap = Map.fromList . map (\x -> (uid x, x))
 
 -- | Defines a 'CodeSpec' based on the 'SystemInformation', 'Choices', and 'Mod's
 -- defined by the user.
-codeSpec :: SystemInformation -> Choices -> [Mod] -> CodeSpec
+codeSpec :: SystemInformation -> Choices -> [Mod] -> CodeSpec -- TODO: Realistically, all of these chunks we're grabbing, from the SI, should be grabbed from the ChunkDB directly.
 codeSpec SI {_sys         = sys
            , _authors     = as
            , _instModels  = ims
@@ -94,7 +93,7 @@ codeSpec SI {_sys         = sys
            , _sysinfodb   = db} chs ms =
   let n = programName sys
       inputs' = map quantvar ins
-      const' = map qtov (filter ((`Map.notMember` conceptMatch chs) . (^. uid))
+      const' = map qtov (filter ((`Map.notMember` conceptMatch chs) . uid)
         cnsts)
       derived = map qtov $ getDerivedInputs ddefs inputs' const' db
       rels = (map qtoc (getEqModQdsFromIm ims ++ mapMaybe qdEFromDD ddefs) \\ derived)
@@ -120,7 +119,7 @@ codeSpec SI {_sys         = sys
         sysinfodb = db
       }
 
--- medium hacks ---
+-- FIXME: medium hacks ---
 
 -- | Convert a 'Func' to an implementation-stage 'QuantityDict' representing the 
 -- function.
@@ -131,12 +130,12 @@ asVC (FData (FuncData n _ _))     = implVar n (nounPhraseSP n) Real (Variable n)
 
 -- | Get a 'UID' of a chunk corresponding to a 'Func'.
 funcUID :: Func -> UID
-funcUID f = asVC f ^. uid
+funcUID = uid . asVC
 
 -- FIXME: hack. 
 -- | Used for implementation-stage functions that need to be displayed in the SRS.
 funcUID' :: Func -> UID
-funcUID' f = asVC' f ^. uid
+funcUID' = uid . asVC'
 
 -- FIXME: Part of above hack
 -- | Helper for 'funcUID''.
@@ -182,7 +181,7 @@ getExecOrder d k' n' sm  = getExecOrder' [] d k' (n' \\ k')
 
 -- | Get a list of 'Constraint's for a list of 'CodeChunk's.
 getConstraints :: (HasUID c) => ConstraintCEMap -> [c] -> [ConstraintCE]
-getConstraints cm cs = concat $ mapMaybe (\c -> Map.lookup (c ^. uid) cm) cs
+getConstraints cm cs = concat $ mapMaybe (\c -> Map.lookup (uid c) cm) cs
 
 -- | Get a list of 'CodeChunk's from a constraint.
 constraintvars :: ConstraintCE -> ChunkDB -> [CodeChunk]

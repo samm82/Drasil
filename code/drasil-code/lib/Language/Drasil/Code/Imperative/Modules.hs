@@ -302,7 +302,7 @@ genInputConstraints s = do
       genConstraints False = return Nothing
       genConstraints _ = do
         parms <- getConstraintParams
-        let varsList = filter (\i -> member (i ^. uid) cm) (inputs $ codeSpec g)
+        let varsList = filter (\i -> member (uid i) cm) (inputs $ codeSpec g)
             sfwrCs   = map (sfwrLookup cm) varsList
             physCs   = map (physLookup cm) varsList
         sf <- sfwrCBody sfwrCs
