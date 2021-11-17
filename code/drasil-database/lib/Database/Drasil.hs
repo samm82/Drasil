@@ -12,6 +12,7 @@ module Database.Drasil (
     , find, findOrErr
     , findAll
     , insert
+    , registered
 
     -- * UID
     , UID

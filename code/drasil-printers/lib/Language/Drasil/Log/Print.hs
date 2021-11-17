@@ -1,15 +1,16 @@
+{-# LANGUAGE TypeApplications #-}
+
 -- | Defines functions to help debug examples. Generated files appear in ./code/debug.
 module Language.Drasil.Log.Print where
 
 import Language.Drasil hiding (symbol)
-import Language.Drasil.Development (showUID)
 import qualified Language.Drasil as L (symbol)
 import Database.Drasil
 import Utils.Drasil (stringList)
 
 import qualified Data.Map as Map
 import Control.Lens ((^.), view)
-import Data.List (nub, sort, sortBy)
+import Data.List (sortBy)
 import Data.Maybe (fromMaybe)
 import Data.Bifunctor (second)
 import Data.Function (on)
@@ -18,12 +19,14 @@ import Text.PrettyPrint.HughesPJ
 import Language.Drasil.Plain.Print
 import Language.Drasil.Printing.PrintingInformation
 import Prelude hiding ((<>))
+import Data.Typeable
+import Theory.Drasil
 
 -- * Main Function
 
 -- | Gathers all printing functions and creates the debugging tables from them.
 printAllDebugInfo :: PrintingInformation -> [Doc]
-printAllDebugInfo pinfo = map (cdbSection . ($ pinfo)) [mkTableReferencedChunks, mkTableDepChunks, mkTableDepReffedChunks,
+printAllDebugInfo pinfo = map (cdbSection . ($ pinfo)) [-- TODO: mkTableReferencedChunks, mkTableDepChunks, mkTableDepReffedChunks,
   mkTableSymb, mkTableOfTerms, mkTableConcepts, mkTableUnitDefn,
   mkTableDataDef, mkTableGenDef, mkTableTMod, mkTableIMod, mkTableCI,
   mkTableSec, mkTableLC, mkTableRef, renderUsedUIDs . mkListShowUsedUIDs]
@@ -39,26 +42,28 @@ cdbSection dd = text (replicate 100 '#' ++ "\n") $$ dd $$ text "\n"
 header :: Doc -> Doc
 header d = text (replicate 100 '-') $$ d $$ text (replicate 100 '-')
 
+-- TODO: These below should be simplified by factoring out code.
+
 -- ** Table Generators
 -- | General function to make the debugging tables. Takes in printing information, a function
 -- that extracts a certain field from the printing information, a title, three column headers,
 -- and three functions that sort the data from the printing information field into the 
 -- required display formats (often 'UID's, terms, shortnames, definitions, etc.).
-mkTableFromLenses :: PrintingInformation -> (ChunkDB -> UMap a)
+mkTableFromLenses :: Typeable a => PrintingInformation -> Proxy a
   -> String -> String -> String -> String -> (a -> Doc) -> (a -> Doc) -> (a -> Doc) -> Doc
-mkTableFromLenses PI{_ckdb = db} tableLens ttle h1 h2 h3 l1 l2 l3 =
+mkTableFromLenses pm pa ttle h1 h2 h3 l1 l2 l3 =
   text ttle <> colon
   $$ header (text h1 $$ nest nestNum (text h2) $$ nest (nestNum*3) (text h3))
   $$ vcat (map chunkLayout chunks)
   where
     chunkLayout x = l1 x $$ nest nestNum (l2 x)
       $$ nest (nestNum*3) (l3 x)
-    chunks = map (fst.snd) (Map.assocs $ tableLens db)
+    chunks = findAll (typeRep pa) $ pm ^. ckdb -- map (fst . snd) (Map.assocs $ tableLens db)
     nestNum = 30
 
 -- | Makes a table with all symbolic quantities in the SRS.
 mkTableSymb :: PrintingInformation -> Doc
-mkTableSymb pinfo = mkTableFromLenses pinfo symbolTable
+mkTableSymb pinfo = mkTableFromLenses pinfo (Proxy @QuantityDict)
   "Symbol Chunks" "UID" "Term" "Symbol"
       (text . showUID)
         (sentenceDoc (pinfo ^. ckdb) (pinfo ^. stg) Nonlinear . phraseNP . view term)
@@ -66,7 +71,7 @@ mkTableSymb pinfo = mkTableFromLenses pinfo symbolTable
 
 -- | Makes a table with terms in the SRS.
 mkTableOfTerms :: PrintingInformation -> Doc
-mkTableOfTerms pinfo = mkTableFromLenses pinfo termTable
+mkTableOfTerms pinfo = mkTableFromLenses pinfo (Proxy @IdeaDict)
   "Term Chunks" "UID" "Term" "Abbreviation"
     (text . showUID)
       (sentenceDoc (pinfo ^. ckdb) (pinfo ^. stg) Nonlinear . phraseNP . view term)
@@ -74,7 +79,7 @@ mkTableOfTerms pinfo = mkTableFromLenses pinfo termTable
 
 -- | Makes a table with all concepts in the SRS.
 mkTableConcepts :: PrintingInformation -> Doc
-mkTableConcepts pinfo = mkTableFromLenses pinfo defTable
+mkTableConcepts pinfo = mkTableFromLenses pinfo (Proxy @ConceptChunk)
   "Concepts" "UID" "Term" "Definition"
     (text . showUID)
       (sentenceDoc (pinfo ^. ckdb) (pinfo ^. stg) Nonlinear . phraseNP . view term)
@@ -82,7 +87,7 @@ mkTableConcepts pinfo = mkTableFromLenses pinfo defTable
 
 -- | Makes a table with all units used in the SRS.
 mkTableUnitDefn :: PrintingInformation -> Doc
-mkTableUnitDefn pinfo = mkTableFromLenses pinfo (view unitTable)
+mkTableUnitDefn pinfo = mkTableFromLenses pinfo (Proxy @UnitDefn)
   "Unit Definitions" "UID" "Term" "Unit Symbol"
     (text . showUID)
       (sentenceDoc (pinfo ^. ckdb) (pinfo ^. stg) Nonlinear . phraseNP . view term)
@@ -90,7 +95,7 @@ mkTableUnitDefn pinfo = mkTableFromLenses pinfo (view unitTable)
 
 -- | Makes a table with all data definitions in the SRS.
 mkTableDataDef :: PrintingInformation -> Doc
-mkTableDataDef pinfo = mkTableFromLenses pinfo (view dataDefnTable)
+mkTableDataDef pinfo = mkTableFromLenses pinfo (Proxy @DataDefinition)
   "Data Definitions" "UID" "Term" "Symbol"
     (text . showUID)
       (sentenceDoc (pinfo ^. ckdb) (pinfo ^. stg) Nonlinear . phraseNP . view term)
@@ -98,7 +103,7 @@ mkTableDataDef pinfo = mkTableFromLenses pinfo (view dataDefnTable)
 
 -- | Makes a table with all general definitions in the SRS.
 mkTableGenDef :: PrintingInformation -> Doc
-mkTableGenDef pinfo = mkTableFromLenses pinfo (view gendefTable)
+mkTableGenDef pinfo = mkTableFromLenses pinfo (Proxy @GenDefn)
   "General Definitions" "UID" "Term" "Definition"
     (text . showUID)
       (sentenceDoc (pinfo ^. ckdb) (pinfo ^. stg) Nonlinear . phraseNP . view term)
@@ -106,7 +111,7 @@ mkTableGenDef pinfo = mkTableFromLenses pinfo (view gendefTable)
 
 -- | Makes a table with all theoretical models in the SRS.
 mkTableTMod :: PrintingInformation -> Doc
-mkTableTMod pinfo = mkTableFromLenses pinfo (view theoryModelTable)
+mkTableTMod pinfo = mkTableFromLenses pinfo (Proxy @TheoryModel)
   "Theory Models" "UID" "Term" "Definition"
     (text . showUID)
       (sentenceDoc (pinfo ^. ckdb) (pinfo ^. stg) Nonlinear . phraseNP . view term)
@@ -114,7 +119,7 @@ mkTableTMod pinfo = mkTableFromLenses pinfo (view theoryModelTable)
 
 -- | Makes a table with all instance models in the SRS.
 mkTableIMod :: PrintingInformation -> Doc
-mkTableIMod pinfo = mkTableFromLenses pinfo (view insmodelTable)
+mkTableIMod pinfo = mkTableFromLenses pinfo (Proxy @InstanceModel)
   "Instance Models" "UID" "Term" "Definition"
     (text . showUID)
       (sentenceDoc (pinfo ^. ckdb) (pinfo ^. stg) Nonlinear . phraseNP . view term)
@@ -122,7 +127,7 @@ mkTableIMod pinfo = mkTableFromLenses pinfo (view insmodelTable)
 
 -- | Makes a table with all concept instances in the SRS.
 mkTableCI :: PrintingInformation -> Doc
-mkTableCI pinfo = mkTableFromLenses pinfo (view conceptinsTable)
+mkTableCI pinfo = mkTableFromLenses pinfo (Proxy @ConceptInstance)
   "ConceptInstance" "UID" "Term" "ShortName"
     (text . showUID)
       (sentenceDoc (pinfo ^. ckdb) (pinfo ^. stg) Nonlinear . phraseNP . view term)
@@ -130,7 +135,7 @@ mkTableCI pinfo = mkTableFromLenses pinfo (view conceptinsTable)
 
 -- | Makes a table with all sections in the SRS.
 mkTableSec :: PrintingInformation -> Doc
-mkTableSec pinfo = mkTableFromLenses pinfo (view sectionTable)
+mkTableSec pinfo = mkTableFromLenses pinfo (Proxy @Section)
   "Sections" "UID" "Title" "ShortName"
     (text . showUID)
       (sentenceDoc (pinfo ^. ckdb) (pinfo ^. stg) Nonlinear . tle)
@@ -138,7 +143,7 @@ mkTableSec pinfo = mkTableFromLenses pinfo (view sectionTable)
 
 -- | Makes a table with all labelled content in the SRS.
 mkTableLC :: PrintingInformation -> Doc
-mkTableLC pinfo = mkTableFromLenses pinfo (view labelledcontentTable)
+mkTableLC pinfo = mkTableFromLenses pinfo (Proxy @LabelledContent)
   "LabelledContent" "UID" "ShortName" "Type of Content"
     (text . showUID)
       (sentenceDoc (pinfo ^. ckdb) (pinfo ^. stg) Linear . getSentSN . shortname)
@@ -157,11 +162,13 @@ mkTableLC pinfo = mkTableFromLenses pinfo (view labelledcontentTable)
 
 -- | Makes a table with all references in the SRS.
 mkTableRef :: PrintingInformation -> Doc
-mkTableRef pinfo = mkTableFromLenses pinfo (view refTable)
+mkTableRef pinfo = mkTableFromLenses pinfo (Proxy @Reference)
   "Reference" "UID" "Reference Address" "ShortName"
     (text . showUID)
       (text . getAdd . getRefAdd)
         (sentenceDoc (pinfo ^. ckdb) (pinfo ^. stg) Linear . getSentSN . shortname)
+
+{- TODO: Fix later. I'll need to do a full analysis of this.
 
 -- | Chunks that depend on other chunks. An empty list means the chunks do not depend on anything.
 mkTableDepChunks :: PrintingInformation -> Doc
@@ -202,6 +209,8 @@ mkTableDepReffedChunks PI{_ckdb = db} = text "Dependent and Referenced Chunks (c
     refByUIDs = Map.fromList $ map (\(x, y) -> (x, ([], y))) $ Map.assocs $ db ^. refbyTable
     nestNum = 30
 
+-}
+
 -- ** 'UID' Manipulation
 -- | Creates a table of all UIDs and their "highest" recorded level of information. See 'mkListShowUsedUIDs'
 -- for more details.
@@ -217,35 +226,18 @@ renderUsedUIDs chs = header (text "UIDs" $$ nest 40 (text "Associated Chunks")) 
 -- Also, some chunks may have been "downgraded" when put into the database (for example, mapping a
 -- 'QuantityDict' wrapper onto things like Constrained and Unital chunks happens often).
 mkListShowUsedUIDs :: PrintingInformation -> [(UID, String)]
-mkListShowUsedUIDs PI{_ckdb = db} = sortBy (compare `on` fst) $ map (second stringList) $ Map.toList $ Map.fromListWith (++) $
-  map (\x -> (fst x, ["QuantityDict"])) (Map.assocs $ symbolTable db) ++
-  map (\x -> (fst x, ["IdeaDict"])) (Map.assocs $ termTable db) ++
-  map (\x -> (fst x, ["ConceptChunk"])) (Map.assocs $ defTable db) ++
-  map (\x -> (fst x, ["UnitDefn"])) (Map.assocs $ db ^. unitTable) ++
-  map (\x -> (fst x, ["DataDefinition"])) (Map.assocs $ db ^. dataDefnTable) ++
-  map (\x -> (fst x, ["InstanceModel"])) (Map.assocs $ db ^. insmodelTable) ++
-  map (\x -> (fst x, ["GeneralDefinition"])) (Map.assocs $ db ^. gendefTable) ++
-  map (\x -> (fst x, ["TheoryModel"])) (Map.assocs $ db ^. theoryModelTable) ++
-  map (\x -> (fst x, ["ConceptInstance"])) (Map.assocs $ db ^. conceptinsTable) ++
-  map (\x -> (fst x, ["Section"])) (Map.assocs $ db ^. sectionTable) ++
-  map (\x -> (fst x, ["LabelledContent"])) (Map.assocs $ db ^. labelledcontentTable) ++
-  map (\x -> (fst x, ["Reference"])) (Map.assocs $ db ^. refTable)
-
--- Currently Unused
--- | Get all 'UID's from a database ('ChunkDB').
-mkListAll :: ChunkDB -> [UID]
-mkListAll db = nub $ sort $
-  map fst (Map.assocs $ symbolTable db) ++
-  map fst (Map.assocs $ termTable db) ++
-  map fst (Map.assocs $ defTable db) ++
-  map fst (Map.assocs $ db ^. unitTable) ++
-  map fst (Map.assocs $ db ^. traceTable) ++
-  map fst (Map.assocs $ db ^. refbyTable) ++
-  map fst (Map.assocs $ db ^. dataDefnTable) ++
-  map fst (Map.assocs $ db ^. insmodelTable) ++
-  map fst (Map.assocs $ db ^. gendefTable) ++
-  map fst (Map.assocs $ db ^. theoryModelTable) ++
-  map fst (Map.assocs $ db ^. conceptinsTable) ++
-  map fst (Map.assocs $ db ^. sectionTable) ++
-  map fst (Map.assocs $ db ^. labelledcontentTable) ++
-  map fst (Map.assocs $ db ^. refTable)
+-- TODO: This function should be simplified.
+mkListShowUsedUIDs PI{_ckdb = db} = sortBy (compare `on` fst) $
+  map (second stringList) $ Map.toList $ Map.fromListWith (++) $
+    map (\x -> (uid x, ["QuantityDict"]))      (findAll (typeRep (Proxy @QuantityDict))    db :: [QuantityDict]) ++
+    map (\x -> (uid x, ["IdeaDict"]))          (findAll (typeRep (Proxy @IdeaDict))        db :: [IdeaDict]) ++
+    map (\x -> (uid x, ["ConceptChunk"]))      (findAll (typeRep (Proxy @ConceptChunk))    db :: [ConceptChunk]) ++
+    map (\x -> (uid x, ["UnitDefn"]))          (findAll (typeRep (Proxy @UnitDefn))        db :: [UnitDefn]) ++
+    map (\x -> (uid x, ["DataDefinition"]))    (findAll (typeRep (Proxy @DataDefinition))  db :: [DataDefinition]) ++
+    map (\x -> (uid x, ["InstanceModel"]))     (findAll (typeRep (Proxy @InstanceModel))   db :: [InstanceModel]) ++
+    map (\x -> (uid x, ["GeneralDefinition"])) (findAll (typeRep (Proxy @GenDefn))         db :: [GenDefn]) ++
+    map (\x -> (uid x, ["TheoryModel"]))       (findAll (typeRep (Proxy @TheoryModel))     db :: [TheoryModel]) ++
+    map (\x -> (uid x, ["ConceptInstance"]))   (findAll (typeRep (Proxy @ConceptInstance)) db :: [ConceptInstance]) ++
+    map (\x -> (uid x, ["Section"]))           (findAll (typeRep (Proxy @Section))         db :: [Section]) ++
+    map (\x -> (uid x, ["LabelledContent"]))   (findAll (typeRep (Proxy @LabelledContent)) db :: [LabelledContent]) ++
+    map (\x -> (uid x, ["Reference"]))         (findAll (typeRep Reference)                db :: [Reference])

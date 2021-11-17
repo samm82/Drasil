@@ -4,6 +4,7 @@ module Database.Drasil.NewChunkDB (
     , find, findOrErr
     , findAll
     , insert
+    , registered
 ) where
 
 import Database.Drasil.Chunk (Chunk, mkChunk, unChunk, chunkType)
@@ -27,8 +28,9 @@ find u (ChunkDB tc) = do
 findOrErr :: Typeable a => UID -> ChunkDB -> a
 findOrErr u = fromMaybe (error $ "Failed to find chunk " ++ show u) . find u
 
--- Is this TypeRep really needed? Well, for now, it's like a hack to shorten our lists a bit and pre-cache our type lists by their typerep.
--- Justified, but not optimal. It would be nice if we could have the chunks pre-unChunked.
+-- Is this TypeRep really needed? Well, for now, it's a hack to shorten our lists a bit and pre-cache our type lists by their typerep.
+-- Justified,... but not optimal. It would be nice if we could have the chunks pre-unChunked or if we could avoid the TypeRep altogether!
+-- On the bright side, we get order lists (by insertion order) for cheap!
 findAll :: Typeable a => TypeRep -> ChunkDB -> [a]
 findAll tr (ChunkDB (_, trm)) = maybe [] (mapMaybe unChunk) (M.lookup tr trm)
 
@@ -44,7 +46,7 @@ insert (ChunkDB (cu, ctr)) c
             cu' = M.insert (uid c) c' cu
 
             ctr' :: ChunksByTypeRep
-            ctr' = M.alter (Just . maybe [c'] ([c'] ++)) (typeOf c) ctr
+            ctr' = M.alter (Just . maybe [c'] (++ [c'])) (typeOf c) ctr
 
 mkChunkDB :: [Chunk] -> ChunkDB
 mkChunkDB cs = ChunkDB (cbu, csbtr)
@@ -60,3 +62,6 @@ mkChunkDB cs = ChunkDB (cbu, csbtr)
 
         csbtr :: ChunksByTypeRep
         csbtr = M.fromList trcs
+
+registered :: ChunkDB -> [UID]
+registered (ChunkDB (x, _)) = M.keys x
