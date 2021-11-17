@@ -33,4 +33,4 @@ tableOfConstants f = llcc tableOfConstantsRef $ Table
 
 -- | Table of constants reference label.
 tableOfConstantsRef :: Reference
-tableOfConstantsRef = makeTabRef' (tAuxConsts ^. uid)
+tableOfConstantsRef = makeTabRef' (uid tAuxConsts)

@@ -5,7 +5,6 @@ module Drasil.Sections.TableOfAbbAndAcronyms
 import Language.Drasil
 import Data.Drasil.Concepts.Documentation (abbreviation, fullForm, abbAcc)
 
-import Control.Lens ((^.))
 import Data.List (sortBy)
 import Data.Function (on)
 
@@ -28,6 +27,6 @@ tableAbbAccGen ls = let chunks = sortBy (compare `on` fst) $ select ls in
 
 -- | Table of abbreviations and acronyms reference.
 tableAbbAccRef :: Reference
-tableAbbAccRef = makeTabRef' $ abbAcc ^. uid
+tableAbbAccRef = makeTabRef' $ uid abbAcc
 
 

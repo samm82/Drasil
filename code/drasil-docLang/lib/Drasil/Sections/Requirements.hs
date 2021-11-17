@@ -24,7 +24,6 @@ import qualified Drasil.DocLang.SRS as SRS
 import Drasil.DocumentLanguage.Units (toSentence)
 import Data.List (nub)
 
-import Control.Lens ((^.))
 import Data.Bifunctor (bimap)
 
 -- | Wrapper for 'reqIntro'.
@@ -104,7 +103,7 @@ mkInputPropsTable reqInputs req = llcc reqInputsRef $
 
 -- | Reference for the Required Inputs table.
 reqInputsRef :: Reference
-reqInputsRef = makeTabRef' (reqInput ^. uid)
+reqInputsRef = makeTabRef' (uid reqInput)
 
 -- | Creates a table for use in the Functional Requirments section. Takes a list of tuples containing variables and sources, a label, and a caption. 
 mkValsSourceTable :: (Quantity i, MayHaveUnit i) => 
