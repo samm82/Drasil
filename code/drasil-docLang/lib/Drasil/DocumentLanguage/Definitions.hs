@@ -10,7 +10,6 @@ module Drasil.DocumentLanguage.Definitions (
   -- * Helpers
   helperRefs, helpToRefField) where
 
-import Data.Map (lookupIndex)
 import Data.List (nub)
 import Data.Maybe (mapMaybe)
 import Control.Lens ((^.))
@@ -25,7 +24,6 @@ import Theory.Drasil (DataDefinition, GenDefn, InstanceModel, Theory(..),
 
 import Drasil.DocumentLanguage.Units (toSentenceUnitless)
 import Data.Typeable
-import Unsafe.Coerce
 
 -- | Synonym for a list of 'Field's.
 type Fields = [Field]
@@ -103,7 +101,7 @@ mkTMField t _ l@Label fs  = (show l, [mkParagraph $ atStart t]) : fs
 mkTMField t _ l@DefiningEquation fs = (show l, map unlbldExpr $ tmDispExprs t) : fs
 mkTMField t m l@(Description v u) fs = (show l,
   foldr ((\x -> buildDescription v u x m) . express) [] $ tmDispExprs t) : fs
-mkTMField t m l@RefBy fs = (show l, [mkParagraph $ helperRefs t m]) : fs --FIXME: fill this in
+mkTMField t m l@RefBy fs = (show l, [mkParagraph $ helperRefs t m]) : fs -- FIXME: fill this in
 mkTMField t _ l@Source fs = (show l, helperSources $ t ^. getDecRefs) : fs
 mkTMField t _ l@Notes fs =
   nonEmpty fs (\ss -> (show l, map mkParagraph ss) : fs) (t ^. getNotes)
@@ -112,8 +110,8 @@ mkTMField _ _ l _ = error $ "Label " ++ show l ++ " not supported " ++
 
 -- | Helper function to make a list of 'Sentence's from the current system information and something that has a 'UID'.
 helperRefs :: HasUID t => t -> SystemInformation -> Sentence
-helperRefs t s = foldlList Comma List $ map (`helpToRefField` s) $ nub undefined -- TODO; jason pause
-  -- refbyLookup (uid t) (_sysinfodb s ^. refbyTable)
+helperRefs t s = foldlList Comma List $ map (`helpToRefField` s) $ nub -- todo; jason pause
+  refbyLookup (uid t) (_sysinfodb s ^. refbyTable)
 
 -- | Creates a reference as a 'Sentence' by finding if the 'UID' is in one of the possible data sets contained in the 'SystemInformation' database.
 helpToRefField :: UID -> SystemInformation -> Sentence

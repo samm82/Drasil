@@ -33,15 +33,19 @@ dependencyPlate = preorderFold $ purePlate {
     (NonFReqsSub c) -> c,
   lcsSec = Constant . getDependenciesOf [defs] <$> \(LCsProg c) -> c,
   ucsSec = Constant . getDependenciesOf [defs] <$> \(UCsProg c) -> c
-} where
-  getDependenciesOf :: HasUID a => [a -> [Sentence]] -> [a] -> [(UID, [UID])]
-  getDependenciesOf fs = map (\x -> (x ^. uid, concatMap (lnames' . ($ x)) fs))
-  defs :: Definition a => a -> [Sentence]
-  defs x = [x ^. defn]
-  derivs :: HasDerivation a => a -> [Sentence]
-  derivs x = maybe [] (\(Derivation h d) -> h : d) $ x ^. derivations
-  notes :: HasAdditionalNotes a => a -> [Sentence]
-  notes = (^. getNotes)
+}
+  where
+    getDependenciesOf :: HasUID a => [a -> [Sentence]] -> [a] -> [(UID, [UID])]
+    getDependenciesOf fs = map (\x -> (x ^. uid, concatMap (lnames' . ($ x)) fs))
+    
+    defs :: Definition a => a -> [Sentence]
+    defs x = [x ^. defn]
+    
+    derivs :: HasDerivation a => a -> [Sentence]
+    derivs x = maybe [] (\(Derivation h d) -> h : d) $ x ^. derivations
+    
+    notes :: HasAdditionalNotes a => a -> [Sentence]
+    notes = (^. getNotes)
 
 -- | Creates a traceability map from document sections.
 generateTraceMap :: [DocSection] -> TraceMap
