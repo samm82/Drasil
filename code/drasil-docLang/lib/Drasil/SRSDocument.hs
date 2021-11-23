@@ -4,8 +4,8 @@
 module Drasil.SRSDocument (
   -- * Chunk database types and functions
   -- | Imported from "Database.Drasil"
-  Block(Parallel), ChunkDB, ReferenceDB, SystemInformation(..),
-  cdb, rdb,
+  Block(Parallel), ChunkDB, ReferenceDB, SystemInformation(..), -- FIXME: These shouldn't need to be re-exported here
+  rdb,
   -- * Printing Information needed to generate all documents
   -- | Imported from "Language.Drasil.Printers"
   PrintingInformation(..), defaultConfiguration, piSys,
@@ -37,8 +37,8 @@ module Drasil.SRSDocument (
   ) where
 
 import Language.Drasil.Printers (PrintingInformation(..), defaultConfiguration, piSys)
-import Database.Drasil (Block(Parallel), ChunkDB, ReferenceDB, SystemInformation(..),
-  cdb, rdb)
+import Database.Drasil
+import Temp.Drasil.SystemInformation
 import Drasil.DocLang (
   -- Drasil.DocumentLanguage.Core
   AppndxSec(..), AuxConstntSec(..),

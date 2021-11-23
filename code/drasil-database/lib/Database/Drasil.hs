@@ -13,7 +13,7 @@ module Database.Drasil (
     , find, findOrErr
     , findRefs, findRefsOrErr
     , findAll
-    , insert
+    , insert, insertAll, insertAllOrIgnore
     , registered, isRegistered
     , refbyTable
 

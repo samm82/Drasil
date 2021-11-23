@@ -1,6 +1,9 @@
 -- | Utilities to get grab certain chunks (from 'Expr', 'Sentence', etc) by 'UID' and
 -- dereference the chunk it refers to.
-module Temp.Drasil.GetChunk (ccss, ccss', combine, getIdeaDict, vars) where
+module Temp.Drasil.GetChunk (
+    ccss, ccss', combine, getIdeaDict, vars,
+    collectUnits, getUnitLup
+) where
 
 import Language.Drasil
 import Language.Drasil.Development
@@ -9,6 +12,7 @@ import Language.Drasil.ModelExpr.Development (meDep)
 import Database.Drasil
 
 import Data.List (nub)
+import Data.Maybe
 
 -- | Gets a list of quantities ('QuantityDict') from an equation in order to print.
 vars :: ModelExpr -> ChunkDB -> [QuantityDict]
@@ -45,3 +49,12 @@ concpt' a m = map (`findOrErr` m) $ meDep a
 -- | Gets a list of ideas ('IdeaDict') from a 'Sentence' in order to print.
 getIdeaDict :: Sentence -> ChunkDB -> [IdeaDict]
 getIdeaDict a m = map (`findOrErr` m) $ shortdep a
+
+-- | Gets the units of a 'Quantity' as 'UnitDefn's.
+collectUnits :: Quantity c => ChunkDB -> [c] -> [UnitDefn]
+collectUnits m = map (unitWrapper . ((`findOrErr` m) :: UID -> UnitDefn) {-flip unitLookup (m ^. unitTable)-})
+    . concatMap getUnits . mapMaybe (getUnitLup m)
+
+-- | Gets a unit if it exists, or Nothing.        
+getUnitLup :: HasUID c => ChunkDB -> c -> Maybe UnitDefn
+getUnitLup m c = getUnit (findOrErr (uid c) m :: QuantityDict)

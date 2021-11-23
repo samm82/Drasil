@@ -2,7 +2,7 @@
 -- | Document Description Language.
 module Language.Drasil.Document where
 
-import Database.Drasil (UID, HasUID(..), (+++.), mkUid)
+import Database.Drasil (UID, HasUID(..), (+++.), mkUid, HasChunkRefs (chunkRefs))
 
 import Language.Drasil.ShortName (HasShortName(..), ShortName, shortname')
 import Language.Drasil.Document.Core (UnlabelledContent(UnlblC),
@@ -58,6 +58,8 @@ instance Referable Section where
   renderRef (Section _ _ lb)  = RP (prepend "Sec") (getAdd $ getRefAdd lb)
 -- | Finds the reference address of a 'Section'.
 instance HasRefAddress Section where getRefAdd (Section _ _ lb) = RP (prepend "Sec") (getAdd $ getRefAdd lb)
+
+instance HasChunkRefs Section where chunkRefs = const [] --FIXME:
 
 -- | A Document has a Title ('Sentence'), Author(s) ('Sentence'), and 'Section's
 -- which hold the contents of the document.

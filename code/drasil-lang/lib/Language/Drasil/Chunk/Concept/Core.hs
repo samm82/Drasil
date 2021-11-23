@@ -8,7 +8,7 @@ module Language.Drasil.Chunk.Concept.Core(
   , sDom
 ) where
 
-import Database.Drasil (UID, HasUID(..))
+import Database.Drasil (UID, HasUID(..), HasChunkRefs (chunkRefs))
 
 import Language.Drasil.ShortName (HasShortName(..), ShortName)
 import Language.Drasil.Classes (NamedIdea(term), Idea(getA),
@@ -19,7 +19,7 @@ import Language.Drasil.Label.Type ((+::+), defer, name, raw,
   LblType(..), Referable(..), HasRefAddress(..))
 import Language.Drasil.Sentence (Sentence)
 
-import Control.Lens (makeLenses, (^.), view, to)
+import Control.Lens (makeLenses, (^.), view)
 
 -- | Check if something has one domain. Throws an error if there is more than one.
 sDom :: [UID] -> UID
@@ -49,6 +49,8 @@ instance Idea          ConceptChunk where getA = getA . view idea
 instance Definition    ConceptChunk where defn = defn'
 -- | Finds the domain of 'UID's of a 'ConceptChunk'.
 instance ConceptDomain ConceptChunk where cdom = cdom'
+
+instance HasChunkRefs ConceptChunk where chunkRefs = cdom'
 
 -- | Contains a common idea ('CI') with a definition ('Sentence').
 -- Similar to 'ConceptChunk', but must have an abbreviation.
@@ -92,6 +94,7 @@ instance Idea          ConceptInstance where getA = getA . view (cc . idea)
 instance Definition    ConceptInstance where defn = cc . defn'
 -- | Finds the domain contained in the 'ConceptChunk' used to make the 'ConceptInstance'.
 instance ConceptDomain ConceptInstance where cdom = cdom' . view cc
+instance HasChunkRefs  ConceptInstance where chunkRefs = cdom' . view cc
 -- | Finds the 'ShortName' contained in a 'ConceptInstance'.
 instance HasShortName  ConceptInstance where shortname = shnm
 -- | Finds the reference address contained in a 'ConceptInstance'.

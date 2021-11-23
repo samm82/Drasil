@@ -88,7 +88,8 @@ mkDoc dd comb si@SI {_sys = sys, _kind = kind, _authors = authors} =
 -- | Assuming a given 'ChunkDB' with no traces and minimal/no references, fill in for rest of system information.
 -- Currently fills in references, traceability matrix information and 'IdeaDict's.
 fillcdbSRS :: SRSDecl -> SystemInformation -> SystemInformation
-fillcdbSRS srsDec si = fillSecAndLC srsDec $ fillReferences srsDec $ fillTraceSI srsDec si
+-- fillcdbSRS srsDec si = fillSecAndLC srsDec $ fillReferences srsDec $ fillTraceSI srsDec si
+fillcdbSRS = fillSecAndLC
 
 {-Don't want to manually add concepts here, Drasil should do it automatically. Perhaps through traversal?
 fillConcepts :: SystemInformation -> SystemInformation
@@ -139,26 +140,33 @@ fillSecAndLC dd si = si2
     -- extract sections and labelledcontent
     allSections = concatMap findAllSec $ mkSections si $ mkDocDesc si dd
     allLC = concatMap findAllLC allSections
-    existingSections = sortByUID (findAll (typeRep (Proxy @Section)) chkdb :: [Section])
-    -- existingSections = map (fst.snd) $ Map.assocs $ chkdb ^. sectionTable
-    existingLC = map (fst.snd) $ Map.assocs $ chkdb ^. labelledcontentTable
+
+    -- existingSections = sortByUID (findAll (typeRep (Proxy @Section)) chkdb :: [Section])
+    -- existingLC = sortByUID (findAll (typeRep (Proxy @LabelledContent)) chkdb :: [LabelledContent])
+
     -- fill in the appropriate chunkdb fields
-    chkdb2 = set labelledcontentTable (idMap $ nub $ existingLC ++ allLC)
-      $ set sectionTable (idMap $ nub $ existingSections ++ allSections) chkdb
+    chkdb' = insertAllOrIgnore chkdb allSections
+    chkdb'' = insertAllOrIgnore chkdb' allLC
+    -- chkdb' = foldr (\nextSec c -> if isRegistered (uid nextSec) c then c else insert c nextSec) chkdb allSections
+    -- chkdb'' = foldr (\nextLC c -> if isRegistered (uid nextLC) c then c else insert c nextLC) chkdb' allLC
+    
+    -- chkdb2 = set labelledcontentTable (idMap $ nub $ existingLC ++ allLC)
+    -- $ set sectionTable (idMap $ nub $ existingSections ++ allSections) chkdb
+    
     -- return the filled in system information
-    si2 = set sysinfodb chkdb2 si
+    si2 = set sysinfodb chkdb'' si
 
     -- Helper and finder functions
     findAllSec :: Section -> [Section]
     findAllSec s@(Section _ cs _) = s : concatMap findAllSubSec cs
-    
+
     findAllSubSec :: SecCons -> [Section]
     findAllSubSec (Sub s) = findAllSec s
     findAllSubSec _ = []
-    
+
     findAllLC :: Section -> [LabelledContent]
     findAllLC (Section _ cs _) = concatMap findLCSecCons cs
-    
+
     findLCSecCons :: SecCons -> [LabelledContent]
     findLCSecCons (Sub s) = findAllLC s
     findLCSecCons (Con (LlC lblcons)) = [lblcons]
@@ -213,6 +221,7 @@ findAllRefs (Section _ cs r) = r : concatMap findRefSecCons cs
     findRefSecCons (Con (LlC (LblC rf _))) = [rf]
     findRefSecCons _ = []
 
+{-
 -- | Helper for filling in the traceability matrix and graph information into the system.
 fillTraceSI :: SRSDecl -> SystemInformation -> SystemInformation
 fillTraceSI dd si = fillTraceMaps l $ fillReqs l si
@@ -224,6 +233,7 @@ fillTraceMaps :: DocDesc -> SystemInformation -> SystemInformation
 fillTraceMaps dd si@SI{_sysinfodb = db} = si {_sysinfodb =
   set refbyTable (generateRefbyMap tdb) $ set traceTable tdb db} where
   tdb = generateTraceMap dd
+-}
 
 -- | Fills in the requirements section of the system information using the document description.
 fillReqs :: DocDesc -> SystemInformation -> SystemInformation
@@ -231,8 +241,9 @@ fillReqs [] si = si
 fillReqs (ReqrmntSec (ReqsProg x):_) si@SI{_sysinfodb = db} = genReqs x
   where
     genReqs [] = si
-    genReqs (FReqsSub c _:_) = si {_sysinfodb = set conceptinsTable newCI db} where
-        newCI = idMap $ nub $ c ++ map fst (sortOn snd $ map snd $ Map.toList $ db ^. conceptinsTable)
+    genReqs (FReqsSub c _:_) = si {_sysinfodb = newCDB}
+      where
+        newCDB = insertAllOrIgnore db c
     genReqs (_:xs) = genReqs xs
 fillReqs (_:xs) si = fillReqs xs si
 
@@ -252,7 +263,7 @@ mkSections si dd = map doit dd
     doit (IntroSec is)        = mkIntroSec si is
     doit (StkhldrSec sts)     = mkStkhldrSec sts
     doit (SSDSec ss)          = mkSSDSec si ss
-    doit (AuxConstntSec acs)  = mkAuxConsSec acs 
+    doit (AuxConstntSec acs)  = mkAuxConsSec acs
     doit Bibliography         = mkBib (citeDB si)
     doit (GSDSec gs')         = mkGSDSec gs'
     doit (ReqrmntSec r)       = mkReqrmntSec r
@@ -289,16 +300,21 @@ mkRefSec si dd (RefProg c l) = SRS.refMat [c] (map (mkSubRef si) l)
     -- error out because some of the symbols in tables are only `QuantityDict`s, and thus
     -- missing a `Concept`.
     mkSubRef SI {_quants = v, _sysinfodb = cdb} (TSymb con) =
-      SRS.tOfSymb 
+      SRS.tOfSymb
       [tsIntro con,
                 LlC $ table Equational (sortBySymbol
-                $ filter (`hasStageSymbol` Equational) 
+                $ filter (`hasStageSymbol` Equational)
                 (nub $ map qw v ++ ccss' (getDocDesc dd) (egetDocDesc dd) cdb))
                 atStart] []
     mkSubRef SI {_sysinfodb = cdb} (TSymb' f con) =
       mkTSymb (ccss (getDocDesc dd) (egetDocDesc dd) cdb) f con
     mkSubRef SI {_usedinfodb = db} TAandA =
-      SRS.tOfAbbAcc [LlC $ tableAbbAccGen $ nub $ map fst $ Map.elems $ termTable db] []
+      SRS.tOfAbbAcc [LlC $ tableAbbAccGen $ (findAll (typeRep (Proxy @IdeaDict)) db :: [IdeaDict])] []
+
+--    SRS.tOfAbbAcc [LlC $ tableAbbAccGen $ nub $ map fst $ Map.elems $ termTable db] []
+
+-- IdeaDict
+--       SRS.tOfAbbAcc [LlC $ tableAbbAccGen $ nub $ map uid (findAll (typeRep (Proxy @IdeaDict)) db :: [IdeaDict])] []
 
 -- | Helper for creating the table of symbols.
 mkTSymb :: (Quantity e, Concept e, Eq e, MayHaveUnit e) =>
@@ -306,7 +322,7 @@ mkTSymb :: (Quantity e, Concept e, Eq e, MayHaveUnit e) =>
 mkTSymb v f c = SRS.tOfSymb [tsIntro c,
   LlC $ table Equational
     (sortBy (compsy `on` eqSymb) $ filter (`hasStageSymbol` Equational) (nub v))
-    (lf f)] 
+    (lf f)]
     []
   where lf Term = atStart
         lf Defn = capSent . (^. defn)
@@ -449,7 +465,7 @@ mkTraceabilitySec (TraceabilityProg progs) si@SI{_sys = sys} = TG.traceMGF trace
 
 -- | Helper for making the Off-the-Shelf Solutions section.
 mkOffShelfSolnSec :: OffShelfSolnsSec -> Section
-mkOffShelfSolnSec (OffShelfSolnsProg cs) = SRS.offShelfSol cs [] 
+mkOffShelfSolnSec (OffShelfSolnsProg cs) = SRS.offShelfSol cs []
 
 -- ** Auxiliary Constants
 

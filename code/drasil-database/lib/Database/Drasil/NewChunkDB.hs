@@ -6,7 +6,7 @@ module Database.Drasil.NewChunkDB (
     , find, findOrErr
     , findRefs, findRefsOrErr
     , findAll
-    , insert
+    , insert, insertAll, insertAllOrIgnore
     , union
     , registered, isRegistered
     , refbyTable -- FIXME: This function should be re-examined. Some functions can probably be moved here!
@@ -88,6 +88,12 @@ insert (ChunkDB (cu, ctr)) c
 
             ctr' :: ChunksByTypeRep
             ctr' = M.alter (Just . maybe [c'] (++ [c'])) (typeOf c) ctr
+
+insertAll :: (HasUID a, HasChunkRefs a, Typeable a) => ChunkDB -> [a] -> ChunkDB
+insertAll = foldr (flip insert)
+
+insertAllOrIgnore :: (HasUID a, HasChunkRefs a, Typeable a) => ChunkDB -> [a] -> ChunkDB
+insertAllOrIgnore cdb = foldr (\next old -> if isRegistered (uid next) cdb then old else insert old next) cdb
 
 union :: ChunkDB -> ChunkDB -> ChunkDB
 union (ChunkDB (lum, ltrm)) (ChunkDB (rum, rtrm)) = ChunkDB (um, trm)

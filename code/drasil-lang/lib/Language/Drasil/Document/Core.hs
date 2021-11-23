@@ -2,7 +2,7 @@
 -- | Contains types and functions common to aspects of generating documents.
 module Language.Drasil.Document.Core where
 
-import Database.Drasil (HasUID(..))
+import Database.Drasil (HasUID(..), HasChunkRefs (chunkRefs))
 
 import Language.Drasil.Chunk.Citation (BibRef)
 import Language.Drasil.ShortName (HasShortName(shortname))
@@ -98,13 +98,15 @@ class HasContents c where
 -- | Finds 'UID' of the 'LabelledContent'.
 instance HasUID        LabelledContent where uid = uid . (^. ref)
 -- | 'LabelledContent's are equal if their reference 'UID's are equal.
-instance Eq            LabelledContent where a == b = (uid a) == (uid b) 
+instance Eq            LabelledContent where a == b = uid a == uid b
 -- | Finds the reference address contained in the 'Reference' of 'LabelledContent'.
 instance HasRefAddress LabelledContent where getRefAdd (LblC lb c) = RP (prependLabel c) $ getAdd $ getRefAdd lb
 -- | Access the 'RawContent' within the 'LabelledContent'.
 instance HasContents   LabelledContent where accessContents = ctype
 -- | Find the shortname of the reference address used for the 'LabelledContent'.
 instance HasShortName  LabelledContent where shortname = shortname . view ref
+
+instance HasChunkRefs LabelledContent where chunkRefs = const []
 
 -- | Access the 'RawContent' within the 'UnlabelledContent'.
 instance HasContents  UnlabelledContent where accessContents = cntnts
@@ -116,8 +118,8 @@ instance HasContents Contents where
 
 -- | Finds the reference information of 'LabelledContent'.
 instance Referable LabelledContent where
-  refAdd       = getAdd . getRefAdd
-  renderRef   = getRefAdd
+  refAdd    = getAdd . getRefAdd
+  renderRef = getRefAdd
 
 -- * Helper
 
@@ -131,6 +133,6 @@ prependLabel EqnBlock{}     = prepend "EqnB"
 prependLabel DerivBlock{}   = prepend "Deriv"
 prependLabel Enumeration{}  = prepend "Lst"
 prependLabel Paragraph{}    = error "Shouldn't reference paragraphs"
-prependLabel Bib{}          = error $ 
+prependLabel Bib{}          = error $
     "Bibliography list of references cannot be referenced. " ++
     "You must reference the Section or an individual citation."

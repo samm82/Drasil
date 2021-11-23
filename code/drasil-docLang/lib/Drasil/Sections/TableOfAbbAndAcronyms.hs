@@ -16,14 +16,17 @@ select (x:xs) = case getA x of
   Just y  -> (y, x) : select xs
 
 -- | The actual table creation function.
-tableAbbAccGen :: (Idea s) => [s] -> LabelledContent
-tableAbbAccGen ls = let chunks = sortBy (compare `on` fst) $ select ls in
-  llcc tableAbbAccRef $ Table
-  (map titleize [abbreviation, fullForm]) (mkTable
-  [\(a,_) -> S a,
-   \(_,b) -> titleize b]
-  chunks)
-  (titleize' abbAcc) True
+tableAbbAccGen :: Idea s => [s] -> LabelledContent
+tableAbbAccGen ls =
+  let
+    chunks = sortBy (compare `on` fst) $ select ls
+  in
+    llcc tableAbbAccRef $ Table
+      (map titleize [abbreviation, fullForm]) (mkTable
+      [\(a,_) -> S a,
+       \(_,b) -> titleize b]
+      chunks)
+      (titleize' abbAcc) True
 
 -- | Table of abbreviations and acronyms reference.
 tableAbbAccRef :: Reference
