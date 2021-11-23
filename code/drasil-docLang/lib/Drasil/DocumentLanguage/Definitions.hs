@@ -24,6 +24,7 @@ import Theory.Drasil (DataDefinition, GenDefn, InstanceModel, Theory(..),
 
 import Drasil.DocumentLanguage.Units (toSentenceUnitless)
 import Data.Typeable
+import Database.Drasil (findRefsOrErr)
 
 -- | Synonym for a list of 'Field's.
 type Fields = [Field]
@@ -110,9 +111,9 @@ mkTMField _ _ l _ = error $ "Label " ++ show l ++ " not supported " ++
 
 -- | Helper function to make a list of 'Sentence's from the current system information and something that has a 'UID'.
 helperRefs :: HasUID t => t -> SystemInformation -> Sentence
-helperRefs t s = foldlList Comma List $ map (`helpToRefField` s) $ nub -- todo; jason pause
-  refbyLookup (uid t) (_sysinfodb s ^. refbyTable)
+helperRefs t s = foldlList Comma List $ map (`helpToRefField` s) $ nub $ findRefsOrErr (uid t) (_sysinfodb s) -- refbyLookup (uid t) (_sysinfodb s ^. refbyTable)
 
+-- TODO: This function + the above are very dubious, we will likely need to re-design the reference system later.
 -- | Creates a reference as a 'Sentence' by finding if the 'UID' is in one of the possible data sets contained in the 'SystemInformation' database.
 helpToRefField :: UID -> SystemInformation -> Sentence
 helpToRefField t si -- TODO: Is there any way that we can collapse this?
@@ -123,7 +124,7 @@ helpToRefField t si -- TODO: Is there any way that we can collapse this?
   | Just x <- find t s :: Maybe ConceptInstance = refS x
   | Just x <- find t s :: Maybe Section         = refS x
   | Just x <- find t s :: Maybe LabelledContent = refS x
-  | t `elem` map uid (citeDB si) = EmptyS
+  | t `elem` map uid (citeDB si)                = EmptyS
   | otherwise = error $ show t ++ " caught."
   where
     s = si ^. sysinfodb

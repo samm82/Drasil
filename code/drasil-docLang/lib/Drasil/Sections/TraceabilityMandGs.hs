@@ -1,4 +1,4 @@
-{-# LANGUAGE PostfixOperators #-}
+{-# LANGUAGE PostfixOperators, TypeApplications #-}
 -- | Defines functions used to create the Traceability Matrices and Graphs section.
 module Drasil.Sections.TraceabilityMandGs (
   -- * Main Functions
@@ -17,15 +17,21 @@ import Data.Drasil.Concepts.Documentation (assumption, assumpDom, chgProbDom,
   goalStmt, goalStmtDom, requirement, reqDom, item, section_, likelyChg,
   unlikelyChg)
 import qualified Data.Drasil.TheoryConcepts as Doc (genDefn, dataDefn, inModel, thModel)
-import Database.Drasil(SystemInformation, _sysinfodb, gendefTable, dataDefnTable,
-  insmodelTable, theoryModelTable)
+import Database.Drasil
+import Temp.Drasil.SystemInformation
+-- (SystemInformation, _sysinfodb, gendefTable, dataDefnTable,
+--   insmodelTable, theoryModelTable)
 import Language.Drasil
 import Language.Drasil.Chunk.Concept.NamedCombinators
+import Theory.Drasil
+import Data.Typeable (typeRep, Proxy (Proxy))
 
 -- | Makes a Traceability Table/Matrix that contains Items of Different Sections.
 generateTraceTable :: SystemInformation -> LabelledContent
 generateTraceTable = generateTraceTableView (mkUid "Tracey")
   (titleize' item +:+ S "of Different" +:+ titleize' section_) [tvEverything] [tvEverything]
+
+-- TODO: We should figure out how to make all of these easier to make later!
 
 -- | Traceabiliy viewing everything. Takes a 'UID' and a 'ChunkDB'. Returns a list of 'UID's.
 tvEverything :: TraceViewCat
@@ -37,19 +43,19 @@ tvAssumps = traceViewCC assumpDom
 
 -- | Traceabiliy viewing data definitions. Takes a 'UID' and a 'ChunkDB'. Returns a list of 'UID's.
 tvDataDefns :: TraceViewCat
-tvDataDefns = traceView dataDefnTable
+tvDataDefns = traceView (\cd -> (findAll (typeRep (Proxy @DataDefinition)) cd :: [DataDefinition]))
 
 -- | Traceabiliy viewing general definitions. Takes a 'UID' and a 'ChunkDB'. Returns a list of 'UID's.
 tvGenDefns :: TraceViewCat
-tvGenDefns = traceView gendefTable
+tvGenDefns = traceView (\cd -> (findAll (typeRep (Proxy @GenDefn)) cd :: [GenDefn]))
 
 -- | Traceabiliy viewing theory models. Takes a 'UID' and a 'ChunkDB'. Returns a list of 'UID's.
 tvTheoryModels :: TraceViewCat
-tvTheoryModels = traceView theoryModelTable
+tvTheoryModels = traceView (\cd -> (findAll (typeRep (Proxy @TheoryModel)) cd :: [TheoryModel]))
 
 -- | Traceabiliy viewing instance models. Takes a 'UID' and a 'ChunkDB'. Returns a list of 'UID's.
 tvInsModels :: TraceViewCat
-tvInsModels = traceView insmodelTable
+tvInsModels = traceView (\cd -> (findAll (typeRep (Proxy @InstanceModel)) cd :: [InstanceModel]))
 
 -- | Traceabiliy viewing goals. Takes a 'UID' and a 'ChunkDB'. Returns a list of 'UID's.
 tvGoals :: TraceViewCat

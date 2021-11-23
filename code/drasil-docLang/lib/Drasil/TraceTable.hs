@@ -6,12 +6,13 @@ import Drasil.DocumentLanguage.Core
 
 import Language.Drasil
 import Language.Drasil.Development (lnames')
-import Database.Drasil (TraceMap, traceMap)
+import Database.Drasil
 import Theory.Drasil (Theory(..))
 
 import Control.Lens ((^.))
 import Data.Functor.Constant (Constant(Constant))
 import Data.Generics.Multiplate (foldFor, preorderFold, purePlate)
+import Data.Map (Map, fromList)
 
 -- | Creates a dependency plate for 'UID's.
 dependencyPlate :: DLPlate (Constant [(UID, [UID])])
@@ -36,7 +37,7 @@ dependencyPlate = preorderFold $ purePlate {
 }
   where
     getDependenciesOf :: HasUID a => [a -> [Sentence]] -> [a] -> [(UID, [UID])]
-    getDependenciesOf fs = map (\x -> (x ^. uid, concatMap (lnames' . ($ x)) fs))
+    getDependenciesOf fs = map (\x -> (uid x, concatMap (lnames' . ($ x)) fs))
     
     defs :: Definition a => a -> [Sentence]
     defs x = [x ^. defn]
@@ -48,5 +49,5 @@ dependencyPlate = preorderFold $ purePlate {
     notes = (^. getNotes)
 
 -- | Creates a traceability map from document sections.
-generateTraceMap :: [DocSection] -> TraceMap
-generateTraceMap = traceMap . concatMap (foldFor docSec dependencyPlate)
+generateTraceMap :: [DocSection] -> Map UID [UID]
+generateTraceMap = fromList . concatMap (foldFor docSec dependencyPlate)

@@ -4,7 +4,10 @@ module Database.Drasil.UID (
   , HasUID(uid)
   , mkUid, (+++), (+++.), (+++!)
   , showUID
+  , sortByUID
 ) where
+
+import Data.List (sortBy)
 
 -- | The most basic item: having a unique identifier key, here a UID.
 class HasUID c where
@@ -54,3 +57,6 @@ a +++! b
 -- | Grabs the UID from something that has a UID and displays it as a String.
 showUID :: HasUID a => a -> String
 showUID = show . uid
+
+sortByUID :: HasUID a => [a] -> [a]
+sortByUID = sortBy (\l r -> compare (uid l) (uid r))

@@ -37,7 +37,7 @@ import Data.Drasil.Concepts.Documentation (assumption, column, constraint, corSo
 import qualified Data.Drasil.Concepts.Documentation as DCD (sec)
 import Data.Drasil.Concepts.Math (equation, parameter)
 import Data.Drasil.TheoryConcepts (inModel, thModel, dataDefn, genDefn)
-import Database.Drasil(SystemInformation)
+import Temp.Drasil.SystemInformation (SystemInformation)
 import Drasil.DocumentLanguage.Definitions (helperRefs)
 import qualified Drasil.DocLang.SRS as SRS
 
@@ -226,7 +226,7 @@ inDataConstTbl qlst = mkDataConstraintTable [(S "Var", map ch $ sortBySymbol qls
             (titleize' physicalConstraint, map fmtPhys $ sortBySymbol qlst),
             (titleize' softwareConstraint, map fmtSfwr $ sortBySymbol qlst),
             (S "Typical Value", map (\q -> fmtU (eS $ express $ getRVal q) q) $ sortBySymbol qlst),
-            (short typUnc, map typUncr $ sortBySymbol qlst)] (inDatumConstraint ^. uid) $
+            (short typUnc, map typUncr $ sortBySymbol qlst)] (uid inDatumConstraint) $
             titleize' inDatumConstraint
   where
     getRVal c = fromMaybe (error $ "getRVal found no Expr for " ++ showUID c) (c ^. reasVal)
@@ -235,14 +235,14 @@ inDataConstTbl qlst = mkDataConstraintTable [(S "Var", map ch $ sortBySymbol qls
 outDataConstTbl :: (Quantity c, Constrained c) => [c] -> LabelledContent
 outDataConstTbl qlst = mkDataConstraintTable [(S "Var", map ch qlst),
             (titleize' physicalConstraint, map fmtPhys qlst),
-            (titleize' softwareConstraint, map fmtSfwr qlst)] (outDatumConstraint ^. uid) $
+            (titleize' softwareConstraint, map fmtSfwr qlst)] (uid outDatumConstraint) $
             titleize' outDatumConstraint
 
 --Not actually used here, for exporting references
 -- | Input/Output Data Constraint Table references.
 tInDataCstRef, tOutDataCstRef :: Reference
-tInDataCstRef  = makeTabRef' (inDatumConstraint ^. uid)
-tOutDataCstRef = makeTabRef' (outDatumConstraint ^. uid)
+tInDataCstRef  = makeTabRef' (uid inDatumConstraint)
+tOutDataCstRef = makeTabRef' (uid outDatumConstraint)
 
 -- | Formats Physical Constraints into a 'Sentence'.
 fmtPhys :: (Constrained c, Quantity c) => c -> Sentence

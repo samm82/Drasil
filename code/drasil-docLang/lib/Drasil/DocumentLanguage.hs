@@ -1,4 +1,4 @@
-{-# Language TupleSections #-}
+{-# Language TupleSections, TypeApplications #-}
 ---------------------------------------------------------------------------
 -- | Start the process of moving away from Document as the main internal
 -- representation of information, to something more informative.
@@ -23,12 +23,16 @@ import Drasil.TraceTable (generateTraceMap)
 import Language.Drasil
 import Language.Drasil.Display (compsy)
 
-import Database.Drasil(ChunkDB, SystemInformation(SI), _authors, _kind,
-  _quants, _sys, _sysinfodb, _usedinfodb, ccss, ccss', citeDB, collectUnits,
-  termTable, conceptinsTable, idMap, refbyTable, conceptDB,
-  refTable, labelledcontentTable, sectionTable, theoryModelTable,
-  insmodelTable, gendefTable, dataDefnTable, refdb, sysinfodb, traceTable,
-  generateRefbyMap)
+import Database.Drasil
+import Temp.Drasil.GetChunk
+import Temp.Drasil.SystemInformation
+
+-- (ChunkDB, SystemInformation(SI), _authors, _kind,
+--   _quants, _sys, _sysinfodb, _usedinfodb, ccss, ccss', citeDB, collectUnits,
+--   termTable, conceptinsTable, idMap, refbyTable, conceptDB,
+--   refTable, labelledcontentTable, sectionTable, theoryModelTable,
+--   insmodelTable, gendefTable, dataDefnTable, refdb, sysinfodb, traceTable,
+--   generateRefbyMap)
 
 import Drasil.Sections.TableOfAbbAndAcronyms (tableAbbAccGen)
 import Drasil.Sections.TableOfContents (toToC, findToC)
@@ -66,6 +70,8 @@ import Data.List (nub, sortBy, sortOn)
 import qualified Data.Map as Map (elems, toList, assocs)
 import Data.Char (isSpace)
 
+import Data.Typeable
+
 -- * Main Function
 -- | Creates a document from a document description, a title combinator function, and system information.
 mkDoc :: SRSDecl -> (IdeaDict -> IdeaDict -> Sentence) -> SystemInformation -> Document
@@ -75,7 +81,7 @@ mkDoc dd comb si@SI {_sys = sys, _kind = kind, _authors = authors} =
     fullSI = fillcdbSRS dd si
     l = mkDocDesc fullSI dd
 
--- * Functions to Fill 'CunkDB'
+-- * Functions to Fill 'ChunkDB'
 
 -- TODO: Move all of these "filler" functions to a new file?
 -- TODO: Add in 'fillTermMap' once #2775 is complete.
@@ -133,26 +139,32 @@ fillSecAndLC dd si = si2
     -- extract sections and labelledcontent
     allSections = concatMap findAllSec $ mkSections si $ mkDocDesc si dd
     allLC = concatMap findAllLC allSections
-    existingSections = map (fst.snd) $ Map.assocs $ chkdb ^. sectionTable
+    existingSections = sortByUID (findAll (typeRep (Proxy @Section)) chkdb :: [Section])
+    -- existingSections = map (fst.snd) $ Map.assocs $ chkdb ^. sectionTable
     existingLC = map (fst.snd) $ Map.assocs $ chkdb ^. labelledcontentTable
     -- fill in the appropriate chunkdb fields
     chkdb2 = set labelledcontentTable (idMap $ nub $ existingLC ++ allLC)
       $ set sectionTable (idMap $ nub $ existingSections ++ allSections) chkdb
     -- return the filled in system information
     si2 = set sysinfodb chkdb2 si
+
     -- Helper and finder functions
     findAllSec :: Section -> [Section]
     findAllSec s@(Section _ cs _) = s : concatMap findAllSubSec cs
+    
     findAllSubSec :: SecCons -> [Section]
     findAllSubSec (Sub s) = findAllSec s
     findAllSubSec _ = []
+    
     findAllLC :: Section -> [LabelledContent]
     findAllLC (Section _ cs _) = concatMap findLCSecCons cs
+    
     findLCSecCons :: SecCons -> [LabelledContent]
     findLCSecCons (Sub s) = findAllLC s
     findLCSecCons (Con (LlC lblcons)) = [lblcons]
     findLCSecCons _ = []
 
+{-
 -- | Takes in existing information from the Chunk database to construct a database of references.
 fillReferences :: SRSDecl -> SystemInformation -> SystemInformation
 fillReferences dd si@SI{_sys = sys} = si2
@@ -186,6 +198,7 @@ fillReferences dd si@SI{_sys = sys} = si2
       ++ refs) chkdb
     -- set new chunk database into system information
     si2 = set sysinfodb chkdb2 si
+-}
 
 -- | Helper that gets references from definitions and models.
 dRefToRef :: HasDecRef a => a -> [Reference]
@@ -193,7 +206,7 @@ dRefToRef r = map ref $ r ^. getDecRefs
 
 -- | Recursively find all references in a section (meant for getting at 'LabelledContent').
 findAllRefs :: Section -> [Reference]
-findAllRefs (Section _ cs r) = r: concatMap findRefSecCons cs
+findAllRefs (Section _ cs r) = r : concatMap findRefSecCons cs
   where
     findRefSecCons :: SecCons -> [Reference]
     findRefSecCons (Sub s) = findAllRefs s
@@ -297,10 +310,10 @@ mkTSymb v f c = SRS.tOfSymb [tsIntro c,
     []
   where lf Term = atStart
         lf Defn = capSent . (^. defn)
-        lf (TermExcept cs) = \x -> if (x ^. uid) `elem` map (^. uid) cs then
+        lf (TermExcept cs) = \x -> if uid x `elem` map uid cs then
           capSent (x ^. defn) else atStart x --Compare chunk uids, since we don't
           --actually care about the chunks themselves in LFunc.
-        lf (DefnExcept cs) = \x -> if (x ^. uid) `elem` map (^.uid) cs then
+        lf (DefnExcept cs) = \x -> if uid x `elem` map uid cs then
           atStart x else capSent (x ^. defn)
         lf TAD = \tDef -> titleize tDef +: EmptyS +:+. capSent (tDef ^. defn)
 

@@ -9,7 +9,7 @@ import Data.List (sortBy)
 import Data.Function (on)
 
 -- | Helper function that gets the acronym out of an 'Idea'.
-select :: (Idea s) => [s] -> [(String, s)]
+select :: Idea s => [s] -> [(String, s)]
 select [] = []
 select (x:xs) = case getA x of
   Nothing -> select xs

@@ -27,7 +27,7 @@ table st ls f
     where 
         filteredChunks = filter (`hasStageSymbol`st) ls
         symbolsCol     = map (`symbol` st) filteredChunks
-        uidCol         = map (view uid)    filteredChunks
+        uidCol         = map uid filteredChunks
         symUidPair     = zip symbolsCol uidCol
         symDuplicates  = nub (symbolsCol \\ nub symbolsCol)
         noDuplicate    = null symDuplicates

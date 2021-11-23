@@ -3,9 +3,7 @@
 module Drasil.DocumentLanguage.TraceabilityGraph where
 
 import Language.Drasil
-import Database.Drasil hiding (cdb)
-import Control.Lens ((^.))
-import qualified Data.Map as Map
+import Database.Drasil (find, findOrErr, isRegistered, ChunkDB)
 import Drasil.DocumentLanguage.TraceabilityMatrix (TraceViewCat, traceMReferees, traceMReferrers,
   traceMColumns, ensureItems, layoutUIDs, traceMIntro)
 import Drasil.Sections.TraceabilityMandGs (tvAssumps,
@@ -18,6 +16,8 @@ import Data.Drasil.Concepts.Math (graph)
 import Data.Drasil.Concepts.Documentation (traceyGraph, component, dependency, reference, purpose)
 import qualified Language.Drasil.Sentence.Combinators as S
 import Data.Char (isSpace, toLower)
+import Temp.Drasil.SystemInformation
+import Theory.Drasil
 
 -- * Main Functions
 
@@ -41,6 +41,9 @@ traceGIntro refs trailings = map ulcc [Paragraph $ foldlSent
         S "is changed, the", plural component, S "that it points to should also be changed"] +:+
         foldlSent_ (zipWith graphShows refs trailings)]
 
+-- TODO: This is interesting! This looks like it's a "colour dictionary" / `Map TypeRep Colour`.
+--       It would be very nice for us to abstract it over the types so
+--       that we could re-use it for other components/projects we might be interested in.
 -- | Extracts traceability graph inforomation from filled-in 'SystemInformation'.
 mkGraphInfo :: SystemInformation -> GraphInfo
 mkGraphInfo si = GI {
@@ -90,48 +93,45 @@ makeTGraph rowName rows cols = zip rowName [zipFTable' x cols | x <- rows]
   where
     zipFTable' content = filter (`elem` content)
 
+-- TODO: These 3 functions below look like they should be avoided entirely somehow.
+
 -- | Checker for uids by finding if the 'UID' is in one of the possible data sets contained in the 'SystemInformation' database.
 checkUID :: UID -> SystemInformation -> UID
 checkUID t si
-  | Just _ <- Map.lookupIndex t (s ^. dataDefnTable)        = t
-  | Just _ <- Map.lookupIndex t (s ^. insmodelTable)        = t
-  | Just _ <- Map.lookupIndex t (s ^. gendefTable)          = t
-  | Just _ <- Map.lookupIndex t (s ^. theoryModelTable)     = t
-  | Just _ <- Map.lookupIndex t (s ^. conceptinsTable)      = t
-  | Just _ <- Map.lookupIndex t (s ^. sectionTable)         = t
-  | Just _ <- Map.lookupIndex t (s ^. labelledcontentTable) = t
-  | t `elem` map  (^. uid) (citeDB si) = mkUid ""
+  | isRegistered t (_sysinfodb si) = t
+  | t `elem` map  uid (citeDB si) = mkUid "" -- FIXME: If something isn't registered in the ChunkDB but has a UID, we should register it in the ChunkDB.
   | otherwise = error $ show t ++ "Caught."
-  where s = _sysinfodb si
 
 -- | Similar to 'checkUID' but prepends domain for labelling.
 checkUIDAbbrev :: SystemInformation -> UID -> String
 checkUIDAbbrev si t
-  | Just (x, _) <- Map.lookup t (s ^. dataDefnTable)        = abrv x
-  | Just (x, _) <- Map.lookup t (s ^. insmodelTable)        = abrv x
-  | Just (x, _) <- Map.lookup t (s ^. gendefTable)          = abrv x
-  | Just (x, _) <- Map.lookup t (s ^. theoryModelTable)     = abrv x
-  | Just (x, _) <- Map.lookup t (s ^. conceptinsTable)      = fromMaybe "" $ getA $ defResolve s $ sDom $ cdom x
-  | Just _ <- Map.lookup t (s ^. sectionTable)              = show t -- shouldn't really reach these cases
-  | Just _ <- Map.lookup t (s ^. labelledcontentTable)      = show t
-  | t `elem` map  (^. uid) (citeDB si) = ""
-  | otherwise = error $ show t ++ "Caught."
-  where s = _sysinfodb si
+  | Just x <- find t s :: Maybe DataDefinition  = abrv x
+  | Just x <- find t s :: Maybe InstanceModel   = abrv x
+  | Just x <- find t s :: Maybe GenDefn         = abrv x
+  | Just x <- find t s :: Maybe TheoryModel     = abrv x
+  | Just x <- find t s :: Maybe ConceptInstance = fromMaybe "" $ getA $ ((`findOrErr` s) :: UID -> ConceptChunk) $ sDom $ cdom x
+  | Just _ <- find t s :: Maybe Section         = show t  -- shouldn't really reach these cases -- FIXME: Then why are we searching for them?
+  | Just _ <- find t s :: Maybe LabelledContent = show t
+  | t `elem` map uid (citeDB si) = "" -- TODO: Why is this empty?
+  | otherwise = error $ show t ++ "Caught." -- TODO: What is caught?
+  where
+    s = _sysinfodb si
 
 -- | Similar to 'checkUID' but gets reference addresses for display.
 checkUIDRefAdd :: SystemInformation -> UID -> String
 checkUIDRefAdd si t
-  | Just (x, _) <- Map.lookup t (s ^. dataDefnTable)        = getAdd $ getRefAdd x
-  | Just (x, _) <- Map.lookup t (s ^. insmodelTable)        = getAdd $ getRefAdd x
-  | Just (x, _) <- Map.lookup t (s ^. gendefTable)          = getAdd $ getRefAdd x
-  | Just (x, _) <- Map.lookup t (s ^. theoryModelTable)     = getAdd $ getRefAdd x
+  | Just x <- find t s :: Maybe DataDefinition  = getAdd $ getRefAdd x -- FIXME: `getAdd . getRefAdd` appears to be a `unwrap . wrap` operation. Can this be avoided?
+  | Just x <- find t s :: Maybe InstanceModel   = getAdd $ getRefAdd x
+  | Just x <- find t s :: Maybe GenDefn         = getAdd $ getRefAdd x
+  | Just x <- find t s :: Maybe TheoryModel     = getAdd $ getRefAdd x
   -- Concept instances can range from likely changes to non-functional requirements, so use domain abbreviations for labelling in addition to the reference address.
-  | Just (x, _) <- Map.lookup t (s ^. conceptinsTable)      = fromMaybe "" (getA $ defResolve s $ sDom $ cdom x) ++ ":" ++ getAdd (getRefAdd x)
-  | Just _ <- Map.lookup t (s ^. sectionTable)              = show t -- shouldn't really reach these cases
-  | Just _ <- Map.lookup t (s ^. labelledcontentTable)      = show t
-  | t `elem` map  (^. uid) (citeDB si) = ""
-  | otherwise = error $ show t ++ "Caught."
-  where s = _sysinfodb si
+  | Just x <- find t s :: Maybe ConceptInstance = fromMaybe "" (getA $ ((`findOrErr` s) :: UID -> ConceptChunk) $ sDom $ cdom x) ++ ":" ++ getAdd (getRefAdd x)
+  | Just _ <- find t s :: Maybe Section         = show t  -- shouldn't really reach these cases  -- FIXME: Then why are we searching for them?
+  | Just _ <- find t s :: Maybe LabelledContent = show t
+  | t `elem` map uid (citeDB si) = ""  -- TODO: Why is this empty?
+  | otherwise = error $ show t ++ "Caught."  -- TODO: What is caught?
+  where
+    s = _sysinfodb si
 
 -- | Helper that finds the header of a traceability matrix.
 -- However, here we use this to get a list of 'UID's for a traceability graph instead.

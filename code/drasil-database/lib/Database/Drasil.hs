@@ -8,17 +8,21 @@ module Database.Drasil (
     
     -- * ChunkDB
     , ChunkDB
+    , HasChunkRefs(..)
     , mkChunkDB
     , find, findOrErr
+    , findRefs, findRefsOrErr
     , findAll
     , insert
-    , registered
+    , registered, isRegistered
+    , refbyTable
 
     -- * UID
     , UID
     , HasUID(uid)
     , mkUid, (+++), (+++.), (+++!)
     , showUID
+    , sortByUID
 ) where
 
 {-
