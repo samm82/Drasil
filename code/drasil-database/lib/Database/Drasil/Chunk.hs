@@ -27,7 +27,7 @@ mkChunk :: (HasUID a, HasChunkRefs a, Typeable a) => a -> Chunk
 mkChunk = Chunk
 
 unChunk :: Typeable a => Chunk -> Maybe a
-unChunk = cast
+unChunk (Chunk c) = cast c
 
 chunkType :: Chunk -> TypeRep
 chunkType (Chunk c) = typeOf c

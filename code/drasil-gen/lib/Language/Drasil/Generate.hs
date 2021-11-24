@@ -86,8 +86,8 @@ prntCSS docType fn body = do
 writeDoc :: PrintingInformation -> Format -> Filename -> Document -> Doc
 writeDoc s TeX  _  doc = genTeX doc s
 writeDoc s HTML fn doc = genHTML s fn doc
-writeDoc s JSON _ doc  = genJSON s doc
-writeDoc _    _  _   _ = error "we can only write TeX/HTML (for now)"
+writeDoc s JSON _  doc = genJSON s doc
+writeDoc _    _ _  _   = error "we can only write TeX/HTML (for now)"
 
 -- | Generates traceability graphs as .dot files.
 genDot :: SystemInformation -> IO ()
@@ -117,11 +117,11 @@ genCode chs spec = do
     (extInputs spec)) (getSampleData chs)
   createDirectoryIfMissing False "src"
   setCurrentDirectory "src"
-  let genLangCode Java = genCall Java unJC unJP
+  let genLangCode Java   = genCall Java unJC unJP
       genLangCode Python = genCall Python unPC unPP
       genLangCode CSharp = genCall CSharp unCSC unCSP
-      genLangCode Cpp = genCall Cpp unCPPC unCPPP
-      genLangCode Swift = genCall Swift unSC unSP
+      genLangCode Cpp    = genCall Cpp unCPPC unCPPP
+      genLangCode Swift  = genCall Swift unSC unSP
       genCall lng unProgRepr unPackRepr = generateCode lng unProgRepr 
         unPackRepr $ generator lng (showGregorian $ utctDay time) sampData chs spec
   mapM_ genLangCode (lang chs)
