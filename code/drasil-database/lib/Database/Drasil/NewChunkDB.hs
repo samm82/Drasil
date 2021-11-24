@@ -2,6 +2,7 @@
 
 module Database.Drasil.NewChunkDB (
       ChunkDB
+    , empty
     , mkChunkDB
     , find, findOrErr
     , findRefs, findRefsOrErr
@@ -25,6 +26,9 @@ type ChunkByUID      = M.Map UID (Chunk, ReferredBy)
 type ChunksByTypeRep = M.Map TypeRep [Chunk]
 
 newtype ChunkDB = ChunkDB (ChunkByUID, ChunksByTypeRep)
+
+empty :: ChunkDB
+empty = ChunkDB (M.empty, M.empty)
 
 {-
 TODO: Discuss important design decisions. These will become rather critical to Drasil projects that rely on ChunkDBs.

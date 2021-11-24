@@ -9,6 +9,7 @@ module Database.Drasil (
     -- * ChunkDB
     , ChunkDB
     , HasChunkRefs(..)
+    , empty
     , mkChunkDB
     , find, findOrErr
     , findRefs, findRefsOrErr
