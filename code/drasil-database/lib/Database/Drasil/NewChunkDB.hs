@@ -64,7 +64,7 @@ findRefsOrErr u = fromMaybe (error $ "Failed to find references for unknown chun
 
 insert :: (HasUID a, HasChunkRefs a, Typeable a) => ChunkDB -> a -> ChunkDB
 insert (ChunkDB (cu, ctr)) c
-    | typeRep cu == typeRep (Proxy @ChunkDB) =
+    | typeOf c == typeRep (Proxy @ChunkDB) =
         error "Insertion of ChunkDBs in ChunkDBs is disallowed; please perform unions with them instead."
     | M.member (uid c) cu =
         error $ "Attempting to register a chunk which already contains a UID; `" ++ show (uid c) ++ "`"
