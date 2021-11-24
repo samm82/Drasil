@@ -76,15 +76,15 @@ insert (ChunkDB (cu, ctr)) c
             cu' :: ChunkByUID
             cu' = M.insert (uid c) (c', []) cu -- insert our chunk, it is not currently referred by anything.
 
-            insertWithExpectation :: UID -> ChunkByUID -> ChunkByUID
-            insertWithExpectation u cbu = if isJust prev
+            insertRefExpectingExistence :: UID -> ChunkByUID -> ChunkByUID
+            insertRefExpectingExistence u cbu = if isJust prev
                                             then cbu'
-                                            else error $ "Referred knowledge is missing for `" ++ show (uid c) ++ "`; `" ++ show u ++ "`"
+                                            else error $ "Referred knowledge is missing for `" ++ show (uid c) ++ "`; needs `" ++ show u ++ "`"
                 where
                     (prev, cbu') = M.insertLookupWithKey (\_ _ (rcc, rcref) -> (rcc, u : rcref)) u (undefined, []) cbu
 
             finalCu :: ChunkByUID
-            finalCu = foldr insertWithExpectation cu' $ chunkRefs c
+            finalCu = foldr insertRefExpectingExistence cu' $ chunkRefs c
 
             ctr' :: ChunksByTypeRep
             ctr' = M.alter (Just . maybe [c'] (++ [c'])) (typeOf c) ctr
