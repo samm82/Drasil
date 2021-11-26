@@ -182,10 +182,10 @@ cdb ::
     [QuantityDict] -> [IdeaDict] -> [ConceptChunk] -> [UnitDefn] -> [DataDefinition] -> [InstanceModel] ->
     [GenDefn] -> [TheoryModel] -> [ConceptInstance] -> [Section] ->
     [LabelledContent] -> [Reference] -> ChunkDB
-cdb s t c u d ins gd tm ci sect lc r = mkChunkDB (
-        map mkChunk s  ++ map mkChunk t    ++ map mkChunk c  ++ map mkChunk u
-    ++  map mkChunk d  ++ map mkChunk ins  ++ map mkChunk gd ++ map mkChunk tm
-    ++  map mkChunk ci ++ map mkChunk sect ++ map mkChunk lc ++ map mkChunk r
+cdb ss ts cs us ds inss gds tms cis sects lcs rs = mkChunkDB (
+        map mkChunk ss  ++ map mkChunk ts    ++ map mkChunk cs  ++ map mkChunk us
+    ++  map mkChunk ds  ++ map mkChunk inss  ++ map mkChunk gds ++ map mkChunk tms
+    ++  map mkChunk cis ++ map mkChunk sects ++ map mkChunk lcs ++ map mkChunk rs
   )
 
 {-

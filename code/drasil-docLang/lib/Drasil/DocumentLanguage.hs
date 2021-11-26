@@ -14,18 +14,19 @@ import Drasil.DocumentLanguage.Core (AppndxSec(..), AuxConstntSec(..),
   PDSub(..), ProblemDescription(..), RefSec(..), RefTab(..), ReqrmntSec(..),
   ReqsSub(..), SCSSub(..), StkhldrSec(..), StkhldrSub(..), SolChSpec(..),
   SSDSec(..), SSDSub(..), TraceabilitySec(..), TraceConfig(..),
-  TSIntro(..), UCsSec(..), getTraceConfigUID)
+  TSIntro(..), UCsSec(..))
 import Drasil.DocumentLanguage.Definitions (ddefn, derivation, instanceModel,
   gdefn, tmodel)
 import Drasil.ExtractDocDesc (getDocDesc, egetDocDesc)
-import Drasil.TraceTable (generateTraceMap)
 
 import Language.Drasil
 import Language.Drasil.Display (compsy)
 
-import Database.Drasil
-import Temp.Drasil.GetChunk
+import Database.Drasil (findAll, insertAllOrIgnore, ChunkDB)
+import Temp.Drasil.GetChunk (collectUnits, ccss', ccss)
 import Temp.Drasil.SystemInformation
+    (SystemInformation(SI, _kind, _authors, _quants, _sysinfodb,
+                        _usedinfodb, _sys), citeDB, sysinfodb)
 
 -- (ChunkDB, SystemInformation(SI), _authors, _kind,
 --   _quants, _sys, _sysinfodb, _usedinfodb, ccss, ccss', citeDB, collectUnits,
@@ -42,7 +43,7 @@ import qualified Drasil.DocLang.SRS as SRS (appendix, genDefn,
   genSysDes, likeChg, unlikeChg, reference, solCharSpec,
   stakeholder, tOfCont, tOfSymb, tOfUnit, userChar, offShelfSol, refMat,
   tOfAbbAcc)
-import Drasil.DocLang.References (secRefs)
+-- import Drasil.DocLang.References (secRefs)
 import qualified Drasil.Sections.AuxiliaryConstants as AC (valsOfAuxConstantsF)
 import qualified Drasil.Sections.GeneralSystDesc as GSD (genSysIntro,
   systCon, usrCharsF, sysContxt)
@@ -58,16 +59,15 @@ import qualified Drasil.Sections.Stakeholders as Stk (stakeholderIntro,
 import qualified Drasil.DocumentLanguage.TraceabilityMatrix as TM (
   generateTraceTableView)
 import qualified Drasil.DocumentLanguage.TraceabilityGraph as TG (traceMGF)
-import Drasil.DocumentLanguage.TraceabilityGraph (traceyGraphGetRefs)
-import Drasil.Sections.TraceabilityMandGs (traceMatStandard)
+-- import Drasil.DocumentLanguage.TraceabilityGraph (traceyGraphGetRefs)
+-- import Drasil.Sections.TraceabilityMandGs (traceMatStandard)
 
 import qualified Data.Drasil.Concepts.Documentation as Doc (likelyChg, section_,
   software, unlikelyChg)
 
 import Control.Lens ((^.), set)
 import Data.Function (on)
-import Data.List (nub, sortBy, sortOn)
-import qualified Data.Map as Map (elems, toList, assocs)
+import Data.List (nub, sortBy)
 import Data.Char (isSpace)
 
 import Data.Typeable

@@ -17,7 +17,7 @@ import Database.Drasil.Chunk (Chunk, mkChunk, unChunk, chunkType, HasChunkRefs (
 import Database.Drasil.UID (UID, HasUID(..))
 
 import qualified Data.Map as M
-import Data.List (nub)
+import Data.List (nub, (\\))
 import Data.Maybe (fromMaybe, mapMaybe, isJust)
 import Data.Typeable
 
@@ -88,7 +88,7 @@ insert (ChunkDB (cu, ctr)) c
                     (prev, cbu') = M.insertLookupWithKey (\_ _ (rcc, rcref) -> (rcc, u : rcref)) u (undefined, []) cbu
 
             finalCu :: ChunkByUID
-            finalCu = foldr insertRefExpectingExistence cu' $ chunkRefs c
+            finalCu = foldr insertRefExpectingExistence cu' $ nub (chunkRefs c) \\ [uid c]
 
             ctr' :: ChunksByTypeRep
             ctr' = M.alter (Just . maybe [c'] (++ [c'])) (typeOf c) ctr

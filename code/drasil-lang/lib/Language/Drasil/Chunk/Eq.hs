@@ -63,7 +63,7 @@ instance Express e => Express (QDefinition e) where
         is -> defines $ apply q (map C is)
 instance ConceptDomain (QDefinition e) where cdom = cdom . view qdQua
 instance HasChunkRefs e => HasChunkRefs (QDefinition e) where
-  chunkRefs (QD dqd uis e) = chunkRefs dqd ++ uis ++ chunkRefs e
+  chunkRefs (QD dq uis e) = chunkRefs dq ++ uis ++ chunkRefs e
 
 -- | Create a 'QDefinition' with a 'UID' (as a 'String'), term ('NP'), definition ('Sentence'), 'Symbol',
 -- 'Space', unit, and defining expression.

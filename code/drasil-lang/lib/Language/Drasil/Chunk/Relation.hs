@@ -8,7 +8,7 @@ module Language.Drasil.Chunk.Relation (
 
 import Control.Lens (makeLenses, (^.), view, set)
 
-import Database.Drasil (HasUID(..), mkUid, HasChunkRefs(..))
+import Database.Drasil (HasUID(..), mkUid, HasChunkRefs(..), UID)
 
 import Language.Drasil.Chunk.Concept (ConceptChunk, dccWDS, cw)
 import Language.Drasil.Classes (Express(..), Concept,
@@ -20,13 +20,14 @@ import Language.Drasil.Sentence (Sentence)
 -- | For a concept ('ConceptChunk') that also has a 'Relation' ('ModelExpr') attached.
 --
 -- Ex. We can describe a pendulum arm and then apply an associated equation so that we know its behaviour.
-data RelationConcept = RC { _conc :: ConceptChunk
+data RelationConcept = RC { _rcUid  :: UID
+                          , _conc :: ConceptChunk
                           , _rel  :: ModelExpr
                           }
 makeLenses ''RelationConcept
 
 -- | Finds the 'UID' of the 'ConceptChunk' used to make the 'RelationConcept'.
-instance HasUID        RelationConcept where uid = uid . _conc
+instance HasUID        RelationConcept where uid = (^. rcUid)
 -- | Equal if 'UID's are equal.
 instance Eq            RelationConcept where a == b = uid a == uid b
 -- | Finds the term ('NP') of the 'ConceptChunk' used to make the 'RelationConcept'.
@@ -43,10 +44,9 @@ instance Express       RelationConcept where express = (^. rel)
 
 -- | Create a 'RelationConcept' from a given 'UID', term ('NP'), definition ('Sentence'), and 'Relation'.
 makeRC :: Express e => String -> NP -> Sentence -> e -> RelationConcept
-makeRC rID rTerm rDefn = RC (dccWDS rID rTerm rDefn) . express
+makeRC rID rTerm rDefn = RC (mkUid rID) (dccWDS rID rTerm rDefn) . express
 
 -- FIXME: Doesn't check UIDs. See TODOs in NamedIdea.hs
 -- | Create a new 'RelationConcept' from an old 'Concept'. Takes a 'Concept', new 'UID' and relation.
 addRelToCC :: (Express e, Concept c) => c -> String -> e -> RelationConcept
-addRelToCC c rID _ = RC undefined undefined -- (set uid (mkUid rID) (cw c)) . express
--- TODO: I'll need to fix this first.
+addRelToCC c rID = RC (mkUid rID) (cw c) . express -- (set uid (mkUid rID) (cw c)) . express
