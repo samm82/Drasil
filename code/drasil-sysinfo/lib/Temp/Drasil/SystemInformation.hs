@@ -183,11 +183,9 @@ cdb ::
     [GenDefn] -> [TheoryModel] -> [ConceptInstance] -> [Section] ->
     [LabelledContent] -> [Reference] -> ChunkDB
 cdb s t c u d ins gd tm ci sect lc r = mkChunkDB (
-    -- FIXME: missing: s t c u
-        map mkChunk s ++ map mkChunk t ++ map mkChunk c ++ map mkChunk u
-    ++  map mkChunk d ++ map mkChunk ins
-    ++  map mkChunk gd ++ map mkChunk tm ++ map mkChunk ci ++ map mkChunk sect
-    ++  map mkChunk lc ++ map mkChunk r
+        map mkChunk s  ++ map mkChunk t    ++ map mkChunk c  ++ map mkChunk u
+    ++  map mkChunk d  ++ map mkChunk ins  ++ map mkChunk gd ++ map mkChunk tm
+    ++  map mkChunk ci ++ map mkChunk sect ++ map mkChunk lc ++ map mkChunk r
   )
 
 {-

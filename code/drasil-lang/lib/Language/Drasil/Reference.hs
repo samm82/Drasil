@@ -38,7 +38,7 @@ instance HasUID        Reference where uid = ui
 instance HasRefAddress Reference where getRefAdd = ra
 -- | Finds the shortname of the reference address used for the 'Reference'.
 instance HasShortName  Reference where shortname = sn
-instance HasChunkRefs  Reference where chunkRefs = const [] -- TODO
+instance HasChunkRefs  Reference where chunkRefs = const [] -- FIXME: placeholder.
 {--- Finds the reference information of a 'Reference'.
 instance Referable Reference where
   refAdd r = r ^. ui
