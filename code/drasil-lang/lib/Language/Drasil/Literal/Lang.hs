@@ -2,6 +2,8 @@
 
 module Language.Drasil.Literal.Lang where
 
+import Database.Drasil (HasChunkRefs (chunkRefs))
+
 data Literal where
     Int      :: Integer -> Literal
     Str      :: String -> Literal
@@ -9,6 +11,9 @@ data Literal where
     ExactDbl :: Integer -> Literal
     Perc     :: Integer -> Integer -> Literal
     deriving Eq
+
+instance HasChunkRefs Literal where
+    chunkRefs _ = []
 
 {- TODO: When typing the Expression language, this will be usable
 instance Eq (Literal a) where

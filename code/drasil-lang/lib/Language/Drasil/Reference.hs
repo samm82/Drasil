@@ -9,7 +9,7 @@ module Language.Drasil.Reference (
   ref, refS, namedRef, complexRef, namedComplexRef
 ) where
 
-import Database.Drasil (UID, HasUID(..))
+import Database.Drasil (UID, HasUID(..), HasChunkRefs (chunkRefs))
 
 import Language.Drasil.Label.Type (LblType, HasRefAddress(..))
 import Language.Drasil.ShortName (HasShortName(..), ShortName)
@@ -22,7 +22,8 @@ import Control.Lens ((^.), makeLenses, Lens')
 data Reference = Reference
   {  ui :: UID
   ,  ra :: LblType
-  ,  sn :: ShortName}
+  ,  sn :: ShortName
+  }
 
 -- | A class that contains a list of 'Reference's.
 class HasReference c where
@@ -37,6 +38,7 @@ instance HasUID        Reference where uid = ui
 instance HasRefAddress Reference where getRefAdd = ra
 -- | Finds the shortname of the reference address used for the 'Reference'.
 instance HasShortName  Reference where shortname = sn
+instance HasChunkRefs  Reference where chunkRefs = const [] -- TODO
 {--- Finds the reference information of a 'Reference'.
 instance Referable Reference where
   refAdd r = r ^. ui

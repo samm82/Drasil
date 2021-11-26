@@ -2,11 +2,15 @@
 module Language.Drasil.ShortName where
 
 import Language.Drasil.Sentence
+import Database.Drasil
 
 -- * Type
 
 -- | Used for holding the short form of a name (as a 'Sentence' with a wrapper).
 newtype ShortName = ShortNm Sentence
+
+instance HasChunkRefs ShortName where
+  chunkRefs (ShortNm s) = chunkRefs s
 
 -- * Class
 

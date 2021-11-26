@@ -11,14 +11,14 @@ module Theory.Drasil.ModelKinds (
   setMk, elimMk, lensMk,
   -- * Functions
   getEqModQds
-  ) where
+) where
 
 import Control.Lens (makeLenses, set, lens, to, (^.), Setter', Getter, Lens')
 import Data.Maybe (mapMaybe)
 
-import Language.Drasil (NamedIdea(..), NP, QDefinition, HasUID(..), Expr,
-  RelationConcept, ConceptDomain(..), Definition(..), Idea(..), Express(..),
-  UID, mkUid)
+import Database.Drasil
+import Language.Drasil (NamedIdea(..), NP, QDefinition, Expr,
+  RelationConcept, ConceptDomain(..), Definition(..), Idea(..), Express(..))
 import Theory.Drasil.ConstraintSet (ConstraintSet)
 import Theory.Drasil.MultiDefn (MultiDefn)
 
@@ -43,7 +43,6 @@ data ModelKind e = MK {
   _mkUID  :: UID,
   _mkTerm :: NP
 }
-
 makeLenses ''ModelKind
 
 -- | Smart constructor for 'DEModel's
@@ -104,12 +103,12 @@ othModel' :: RelationConcept -> ModelKind e
 othModel' rc = MK (OthModel rc) (uid rc) (rc ^. term)
 
 -- | Finds the 'UID' of the 'ModelKinds'.
-instance HasUID        (ModelKinds e) where -- TODO: Clean up.
-  uid (DEModel x) = uid x
-  uid (EquationalConstraints x) = uid x
-  uid (EquationalModel x) = uid x
-  uid (EquationalRealm x) = uid x
-  uid (OthModel x) = uid x
+instance HasUID (ModelKinds e) where uid = elimMk (to uid) (to uid) (to uid) (to uid)
+--  uid (DEModel x) = uid x
+--  uid (EquationalConstraints x) = uid x
+--  uid (EquationalModel x) = uid x
+--  uid (EquationalRealm x) = uid x
+--  uid (OthModel x) = uid x
 
 -- | Finds the term ('NP') of the 'ModelKinds'.
 instance NamedIdea     (ModelKinds e) where term    = lensMk term term term term
@@ -119,6 +118,8 @@ instance Idea          (ModelKinds e) where getA    = elimMk (to getA) (to getA)
 instance Definition    (ModelKinds e) where defn    = lensMk defn defn defn defn
 -- | Finds the domain of the 'ModelKinds'.
 instance ConceptDomain (ModelKinds e) where cdom    = elimMk (to cdom) (to cdom) (to cdom) (to cdom)
+instance HasChunkRefs e => HasChunkRefs  (ModelKinds e) where chunkRefs = elimMk (to chunkRefs) (to chunkRefs) (to chunkRefs) (to chunkRefs)
+
 -- | Rewrites the underlying model using 'ModelExpr'
 instance Express e => Express (ModelKinds e) where
   express = elimMk (to express) (to express) (to express) (to express)
@@ -135,6 +136,7 @@ instance Idea          (ModelKind e) where getA    = getA . (^. mk)
 instance Definition    (ModelKind e) where defn    = mk . defn
 -- | Finds the domain of the 'ModelKind'.
 instance ConceptDomain (ModelKind e) where cdom    = cdom . (^. mk)
+instance HasChunkRefs e => HasChunkRefs  (ModelKind e) where chunkRefs = chunkRefs . (^. mk)
 -- | Rewrites the underlying model using 'ModelExpr'
 instance Express e => Express (ModelKind e) where
   express = express . (^. mk)

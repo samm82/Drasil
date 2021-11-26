@@ -5,7 +5,7 @@ module Language.Drasil.ModelExpr.Lang where
 
 import Prelude hiding (sqrt)
 
-import Database.Drasil (UID)
+import Database.Drasil (UID, HasChunkRefs (chunkRefs))
 
 import Language.Drasil.Expr.Lang (Completeness)
 import Language.Drasil.Literal.Lang (Literal(..))
@@ -211,3 +211,30 @@ instance LiteralC ModelExpr where
   dbl = Lit . dbl
   exactDbl = Lit . exactDbl
   perc l r = Lit $ perc l r
+
+instance HasChunkRefs ModelExpr where
+  chunkRefs (Lit lit) = chunkRefs lit
+  chunkRefs (Spc sp) = chunkRefs sp
+  chunkRefs (AssocA _ mes) = concatMap chunkRefs mes
+  chunkRefs (AssocB _ mes) = concatMap chunkRefs mes
+  chunkRefs (Deriv _ me uid) = uid : chunkRefs me
+  chunkRefs (C uid) = [uid]
+  chunkRefs (FCall uid mes x) = uid : (concatMap chunkRefs mes ++ map fst x ++ concatMap (chunkRefs . snd) x)
+  chunkRefs (Case _ xs) = concatMap (\(l, r) -> chunkRefs l ++ chunkRefs r) xs
+  chunkRefs (Matrix mess) = concatMap (concatMap chunkRefs) mess
+  chunkRefs (UnaryOp _ me) = chunkRefs me
+  chunkRefs (UnaryOpB _ me) = chunkRefs me
+  chunkRefs (UnaryOpVV _ me) = chunkRefs me
+  chunkRefs (UnaryOpVN _ me) = chunkRefs me
+  chunkRefs (ArithBinaryOp _ me me') = chunkRefs me ++ chunkRefs me'
+  chunkRefs (BoolBinaryOp _ me me') = chunkRefs me ++ chunkRefs me'
+  chunkRefs (EqBinaryOp _ me me') = chunkRefs me ++ chunkRefs me'
+  chunkRefs (LABinaryOp _ me me') = chunkRefs me ++ chunkRefs me'
+  chunkRefs (OrdBinaryOp _ me me') = chunkRefs me ++ chunkRefs me'
+  chunkRefs (SpaceBinaryOp _ me me') = chunkRefs me ++ chunkRefs me'
+  chunkRefs (StatBinaryOp _ me me') = chunkRefs me ++ chunkRefs me'
+  chunkRefs (VVVBinaryOp _ me me') = chunkRefs me ++ chunkRefs me'
+  chunkRefs (VVNBinaryOp _ me me') = chunkRefs me ++ chunkRefs me'
+  chunkRefs (Operator _ dd me) = chunkRefs dd ++ chunkRefs me
+  chunkRefs (RealI uid ri) = uid : chunkRefs ri
+  chunkRefs (ForAll uid sp me) = uid : (chunkRefs sp ++ chunkRefs me)

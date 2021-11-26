@@ -14,6 +14,7 @@ import Data.Drasil.TheoryConcepts (genDefn)
 import Theory.Drasil.ModelKinds (ModelKind, getEqModQds)
 
 import Control.Lens ((^.), view, makeLenses)
+import Database.Drasil
 
 -- | A general definition is a 'ModelKind' that may have units, a derivation,
 -- references (as 'DecRef's), a shortname, a reference address, and notes.
@@ -37,6 +38,7 @@ instance Idea               GenDefn where getA        = getA . (^. mk)
 instance Definition         GenDefn where defn        = mk . defn
 -- | Finds the domain of the 'GenDefn'.
 instance ConceptDomain      GenDefn where cdom        = cdom . (^. mk)
+instance HasChunkRefs       GenDefn where chunkRefs   = cdom . (^. mk) -- FIXME: placeholder (it's not entirely wrong!).
 -- | Converts the 'GenDefn's related expression into a 'ModelExpr'.
 instance Express            GenDefn where express     = express . (^. mk)
 -- | Finds the derivation of the 'GenDefn'. May contain Nothing.

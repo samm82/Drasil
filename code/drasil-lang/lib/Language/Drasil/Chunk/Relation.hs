@@ -8,7 +8,7 @@ module Language.Drasil.Chunk.Relation (
 
 import Control.Lens (makeLenses, (^.), view, set)
 
-import Database.Drasil (HasUID(..), mkUid)
+import Database.Drasil (HasUID(..), mkUid, HasChunkRefs(..))
 
 import Language.Drasil.Chunk.Concept (ConceptChunk, dccWDS, cw)
 import Language.Drasil.Classes (Express(..), Concept,
@@ -37,6 +37,7 @@ instance Idea          RelationConcept where getA = getA . view conc
 instance Definition    RelationConcept where defn = conc . defn
 -- | Finds the domain of the 'ConceptChunk' used to make the 'RelationConcept'.
 instance ConceptDomain RelationConcept where cdom = cdom . view conc
+instance HasChunkRefs  RelationConcept where chunkRefs r = chunkRefs (_conc r) ++ chunkRefs (_rel r)
 -- | Convert the 'RelationConcept' into the model expression language.
 instance Express       RelationConcept where express = (^. rel)
 

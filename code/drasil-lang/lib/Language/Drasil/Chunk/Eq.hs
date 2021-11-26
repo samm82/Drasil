@@ -13,7 +13,7 @@ module Language.Drasil.Chunk.Eq (
 
 import Control.Lens ((^.), view, lens, Lens')
 
-import Database.Drasil (UID, HasUID(..))
+import Database.Drasil (UID, HasUID(..), HasChunkRefs, HasChunkRefs(chunkRefs))
 
 import Language.Drasil.Chunk.UnitDefn (unitWrapper, MayHaveUnit(getUnit), UnitDefn)
 
@@ -62,6 +62,8 @@ instance Express e => Express (QDefinition e) where
         [] -> defines (sy q)
         is -> defines $ apply q (map C is)
 instance ConceptDomain (QDefinition e) where cdom = cdom . view qdQua
+instance HasChunkRefs e => HasChunkRefs (QDefinition e) where
+  chunkRefs (QD dqd uis e) = chunkRefs dqd ++ uis ++ chunkRefs e
 
 -- | Create a 'QDefinition' with a 'UID' (as a 'String'), term ('NP'), definition ('Sentence'), 'Symbol',
 -- 'Space', unit, and defining expression.

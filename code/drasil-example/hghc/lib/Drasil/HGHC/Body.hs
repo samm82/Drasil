@@ -12,7 +12,9 @@ import Data.Drasil.People (spencerSmith)
 import Data.Drasil.Concepts.Documentation (doccon, doccon')
 import Data.Drasil.Concepts.Math (mathcon)
 import qualified Data.Drasil.Concepts.Documentation as Doc (srs)
-  
+
+import Temp.Drasil.SystemInformation
+
 srs :: Document
 srs = mkDoc mkSRS S.forT si
 

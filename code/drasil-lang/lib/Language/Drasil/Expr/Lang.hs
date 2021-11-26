@@ -3,7 +3,7 @@
 -- | The Drasil Expression language 
 module Language.Drasil.Expr.Lang where
 
-import Database.Drasil (UID)
+import Database.Drasil (UID, HasChunkRefs (chunkRefs))
 
 import Language.Drasil.Literal.Lang (Literal(..))
 import Language.Drasil.Space (DiscreteDomainDesc, RealInterval)
@@ -193,3 +193,25 @@ instance LiteralC Expr where
   dbl = Lit . dbl
   exactDbl = Lit . exactDbl
   perc l r = Lit $ perc l r
+
+instance HasChunkRefs Expr where
+  chunkRefs (Lit lit) = chunkRefs lit
+  chunkRefs (AssocA _ exs) = concatMap chunkRefs exs
+  chunkRefs (AssocB _ exs) = concatMap chunkRefs exs
+  chunkRefs (C uid) = [uid]
+  chunkRefs (FCall uid exs x) = uid : (concatMap chunkRefs exs ++ map fst x ++ concatMap (chunkRefs . snd) x)
+  chunkRefs (Case _ xs) = concatMap (\(l, r) -> chunkRefs l ++ chunkRefs r) xs
+  chunkRefs (Matrix exss) = concatMap (concatMap chunkRefs) exss
+  chunkRefs (UnaryOp _ ex) = chunkRefs ex
+  chunkRefs (UnaryOpB _ ex) = chunkRefs ex
+  chunkRefs (UnaryOpVV _ ex) = chunkRefs ex
+  chunkRefs (UnaryOpVN _ ex) = chunkRefs ex
+  chunkRefs (ArithBinaryOp _ l r) = chunkRefs l ++ chunkRefs r
+  chunkRefs (BoolBinaryOp _ l r) = chunkRefs l ++ chunkRefs r
+  chunkRefs (EqBinaryOp _ l r) = chunkRefs l ++ chunkRefs r
+  chunkRefs (LABinaryOp _ l r) = chunkRefs l ++ chunkRefs r
+  chunkRefs (OrdBinaryOp _ l r) = chunkRefs l ++ chunkRefs r
+  chunkRefs (VVVBinaryOp _ l r) = chunkRefs l ++ chunkRefs r
+  chunkRefs (VVNBinaryOp _ l r) = chunkRefs l ++ chunkRefs r
+  chunkRefs (Operator _ dd ex) = chunkRefs dd ++ chunkRefs ex
+  chunkRefs (RealI uid ri) = uid : chunkRefs ri

@@ -13,7 +13,7 @@ module Language.Drasil.Sentence (
   sentenceSymb, sentenceTerm
 ) where
 
-import Database.Drasil (UID, HasUID(..))
+import Database.Drasil (UID, HasUID(..), HasChunkRefs (chunkRefs))
 
 import Language.Drasil.Symbol (HasSymbol, Symbol)
 import Language.Drasil.ModelExpr.Lang (ModelExpr)
@@ -95,6 +95,19 @@ instance Semigroup Sentence where
 instance Monoid Sentence where
   mempty = EmptyS
   mappend = (:+:)
+
+instance HasChunkRefs Sentence where
+  chunkRefs (Ch _ _ ui) = [ui]
+  chunkRefs (SyCh ui) = [ui]
+  chunkRefs (Sy _) = []
+  chunkRefs (S _) = []
+  chunkRefs (P _) = []
+  chunkRefs (E me) = chunkRefs me
+  chunkRefs (Ref ui sen _) = ui : chunkRefs sen
+  chunkRefs (Quote sen) = chunkRefs sen
+  chunkRefs Percent = []
+  chunkRefs (l :+: r) = chunkRefs l ++ chunkRefs r
+  chunkRefs EmptyS = []
 
 -- | Smart constructors for turning a 'UID' into a 'Sentence'.
 sentencePlural, sentenceShort, sentenceSymb, sentenceTerm :: UID -> Sentence

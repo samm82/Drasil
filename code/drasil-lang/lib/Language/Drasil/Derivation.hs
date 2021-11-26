@@ -3,6 +3,7 @@ module Language.Drasil.Derivation where
 
 import Language.Drasil.Sentence (Sentence(EmptyS, S), (+:))
 import Control.Lens (Lens')
+import Database.Drasil (HasChunkRefs (chunkRefs))
 
 -- * Type
 
@@ -10,6 +11,9 @@ import Control.Lens (Lens')
 -- They are rendered in order as paragraphs and equation blocks to display
 -- the derivation.
 data Derivation = Derivation Sentence [Sentence]
+
+instance HasChunkRefs Derivation where
+  chunkRefs (Derivation s ss) = chunkRefs s ++ concatMap chunkRefs ss
 
 -- * Class
 

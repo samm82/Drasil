@@ -6,6 +6,8 @@ import Control.Lens
 import Language.Drasil
 import Language.Drasil.Development (showUID)
 import Data.Drasil.TheoryConcepts (dataDefn)
+import Database.Drasil (HasChunkRefs(chunkRefs))
+import Data.Maybe (fromMaybe)
 
 -- * Types
 
@@ -19,7 +21,7 @@ data ScopeType =
 
 data DDPkt = DDPkt {
   _pktST :: ScopeType,
-  _pktDR :: [DecRef],
+  _pktDR :: [DecRef], -- TODO: Why does a DataDefinition contain DecoratedReference information?
   _pktMD :: Maybe Derivation,
   _pktSN :: ShortName,
   _pktS  :: String,
@@ -27,11 +29,16 @@ data DDPkt = DDPkt {
 }
 makeLenses ''DDPkt
 
+instance HasChunkRefs DDPkt where
+  chunkRefs p = maybe [] chunkRefs (_pktMD p)
+    ++ chunkRefs (_pktSN p)
+    ++ concatMap chunkRefs (_pktSS p)
+
 -- | A data definition is a 'QDefinition' that may have additional notes: 
 -- the scope, any references (as 'DecRef's), maybe a derivation, a label ('ShortName'), a reference address, and other notes ('Sentence's).
 data DataDefinition where
   DDE  :: SimpleQDef -> DDPkt -> DataDefinition
-  DDME :: ModelQDef -> DDPkt -> DataDefinition
+  DDME :: ModelQDef  -> DDPkt -> DataDefinition
 
 ddQD :: Lens' SimpleQDef a -> Lens' ModelQDef a -> Lens' DataDefinition a
 ddQD lqde lqdme = lens g s
@@ -84,6 +91,9 @@ instance HasShortName       DataDefinition where shortname = (^. ddPkt pktSN)
 instance HasRefAddress      DataDefinition where getRefAdd l = RP (prepend $ abrv l) (l ^. ddPkt pktS)
 -- | Finds the domain of the 'QDefinition' used to make the 'DataDefinition where'.
 instance ConceptDomain      DataDefinition where cdom _ = cdom dataDefn
+instance HasChunkRefs       DataDefinition where
+  chunkRefs (DDE x pkt)  = chunkRefs x ++ chunkRefs pkt
+  chunkRefs (DDME x pkt) = chunkRefs x ++ chunkRefs pkt
 -- | Finds the idea of a 'DataDefinition where' (abbreviation).
 instance CommonIdea         DataDefinition where abrv _ = abrv dataDefn
 -- | Finds the reference address of a 'DataDefinition where'.

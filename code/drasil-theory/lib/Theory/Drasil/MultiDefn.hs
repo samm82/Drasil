@@ -15,6 +15,7 @@ import qualified Data.List.NonEmpty as NE
 
 import Language.Drasil hiding (DefiningExpr)
 import Language.Drasil.Development (showUID)
+import Database.Drasil (HasChunkRefs (chunkRefs))
 
 -- | 'DefiningExpr' are the data that make up a (quantity) definition, namely
 --   the description, the defining (rhs) expression and the context domain(s).
@@ -31,15 +32,16 @@ instance Eq            (DefiningExpr e) where a == b = uid a == uid b
 instance HasUID        (DefiningExpr e) where uid    = _deUid
 instance ConceptDomain (DefiningExpr e) where cdom   = (^. cd)
 instance Definition    (DefiningExpr e) where defn   = rvDesc
+instance (HasChunkRefs e) => HasChunkRefs (DefiningExpr e) where
+  chunkRefs d = (d ^. cd) ++ chunkRefs (d ^. rvDesc) ++ chunkRefs (d ^. expr)
 
 -- | 'MultiDefn's are QDefinition factories, used for showing one or more ways we
 --   can define a QDefinition.
 data MultiDefn e = MultiDefn {
-    _rUid  :: UID,                                      -- ^ UID
-    _qd    :: QuantityDict,                             -- ^ Underlying quantity it defines
-    _rDesc :: Sentence,                                 -- ^ Defining description/statement
+    _rUid  :: UID,                         -- ^ UID
+    _qd    :: QuantityDict,                -- ^ Underlying quantity it defines
+    _rDesc :: Sentence,                    -- ^ Defining description/statement
     _rvs   :: NE.NonEmpty (DefiningExpr e) -- ^ All possible/omitted ways we can define the related quantity
-           -- TODO: Why is this above constraint redundant according to the smart constructors?
 }
 makeLenses ''MultiDefn
 
@@ -53,6 +55,8 @@ instance Quantity      (MultiDefn e) where
 instance MayHaveUnit   (MultiDefn e) where getUnit = getUnit . view qd
 -- | The concept domain of a MultiDefn is the union of the concept domains of the underlying variants.
 instance ConceptDomain (MultiDefn e) where cdom    = foldr1 union . NE.toList . NE.map (^. cd) . (^. rvs)
+instance (HasChunkRefs e) => HasChunkRefs (MultiDefn e) where
+  chunkRefs m = chunkRefs (m ^. qd) ++ chunkRefs (m ^. rDesc) ++ concatMap chunkRefs (_rvs m)
 instance Definition    (MultiDefn e) where defn    = rDesc
 -- | The complete Relation of a MultiDefn is defined as the quantity and the related expressions being equal
 --   e.g., `q $= a $= b $= ... $= z`

@@ -17,6 +17,7 @@ import Data.Drasil.TheoryConcepts (inModel)
 
 import Control.Lens ((^.), view, makeLenses, _1, _2) 
 import Theory.Drasil.ModelKinds (ModelKind, getEqModQds)
+import Database.Drasil (HasChunkRefs(chunkRefs))
 
 type Input = (QuantityDict, Maybe (RealInterval Expr Expr))
 type Inputs = [Input]
@@ -46,6 +47,7 @@ instance Idea               InstanceModel where getA = getA . (^. mk)
 instance Definition         InstanceModel where defn = mk . defn
 -- | Finds the domain of the 'InstanceModel'.
 instance ConceptDomain      InstanceModel where cdom = cdom . (^. mk)
+instance HasChunkRefs       InstanceModel where chunkRefs = chunkRefs . (^. mk)
 -- | Converts the 'InstanceModel's related expression into the display language.
 instance Express            InstanceModel where express = express . (^. mk)
 -- | Finds the derivation of the 'InstanceModel'. May contain Nothing.

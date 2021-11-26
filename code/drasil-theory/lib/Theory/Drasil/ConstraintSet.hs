@@ -5,12 +5,14 @@ module Theory.Drasil.ConstraintSet (
   -- * Type
   ConstraintSet,
   -- * Constructor
-  mkConstraintSet) where
+  mkConstraintSet
+) where
 
 import Control.Lens ((^.), makeLenses)
 
 import Language.Drasil
 import qualified Data.List.NonEmpty as NE
+import Database.Drasil (HasChunkRefs(chunkRefs))
 
 -- | 'ConstraintSet's are sets of invariants that always hold for underlying domains.
 data ConstraintSet e = CL {
@@ -29,6 +31,8 @@ instance Idea          (ConstraintSet e) where getA  = getA . (^. con)
 instance Definition    (ConstraintSet e) where defn  = con . defn
 -- | Finds the domain of the 'ConstraintSet'.
 instance ConceptDomain (ConstraintSet e) where cdom  = cdom . (^. con)
+instance (HasChunkRefs e) => HasChunkRefs (ConstraintSet e) where
+  chunkRefs x = chunkRefs (_con x) ++ concatMap chunkRefs (_invs x)
 -- | The complete 'ModelExpr' of a ConstraintSet is the logical conjunction of
 --   all the underlying relations (e.g., `a $&& b $&& ... $&& z`).
 instance Express e => Express (ConstraintSet e) where

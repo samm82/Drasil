@@ -5,6 +5,7 @@ module Language.Drasil.NounPhrase.Core (
   PluralForm, PluralRule(..)) where
 
 import Language.Drasil.Sentence (Sentence)
+import Database.Drasil
 
 -- | Synonym for 'Sentence' typically used for plural forms.
 type PluralForm = Sentence  -- These might change.
@@ -37,3 +38,6 @@ data NP =
   --capitalization, one of the two cannot be capitalized right now.
   --The two capitalization rules are for sentenceCase / titleCase respectively
 
+instance HasChunkRefs NP where
+  chunkRefs (Phrase sen _ _ _) = chunkRefs sen
+  chunkRefs _                  = []

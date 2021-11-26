@@ -49,8 +49,7 @@ instance Idea          ConceptChunk where getA = getA . view idea
 instance Definition    ConceptChunk where defn = defn'
 -- | Finds the domain of 'UID's of a 'ConceptChunk'.
 instance ConceptDomain ConceptChunk where cdom = cdom'
-
-instance HasChunkRefs ConceptChunk where chunkRefs = cdom'
+instance HasChunkRefs ConceptChunk where chunkRefs x = cdom' x ++ chunkRefs (_defn' x) ++ chunkRefs (_idea x)
 
 -- | Contains a common idea ('CI') with a definition ('Sentence').
 -- Similar to 'ConceptChunk', but must have an abbreviation.

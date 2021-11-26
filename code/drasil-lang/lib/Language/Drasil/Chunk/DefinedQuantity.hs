@@ -7,7 +7,7 @@ module Language.Drasil.Chunk.DefinedQuantity (
   dqd, dqdNoUnit, dqd',
   dqdQd, dqdWr, tempdqdWr') where
 
-import Database.Drasil (HasUID(..))
+import Database.Drasil (HasUID(..), HasChunkRefs (chunkRefs))
 
 import Language.Drasil.Symbol (HasSymbol(symbol), Symbol)
 import Language.Drasil.Classes (NamedIdea(term), Idea(getA), Concept, Express(..),
@@ -46,6 +46,7 @@ instance Idea          DefinedQuantityDict where getA = getA . view con
 instance Definition    DefinedQuantityDict where defn = con . defn
 -- | Finds the domain of the 'ConceptChunk' used to make the 'DefinedQuantityDict'.
 instance ConceptDomain DefinedQuantityDict where cdom = cdom . view con
+instance HasChunkRefs  DefinedQuantityDict where chunkRefs = chunkRefs . view con
 -- | Finds the 'Space' of the 'DefinedQuantityDict'.
 instance HasSpace      DefinedQuantityDict where typ = spa
 -- | Finds the 'Stage' -> 'Symbol' of the 'DefinedQuantityDict'.

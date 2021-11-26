@@ -15,6 +15,7 @@ module Language.Drasil.Space (
 
 import qualified Data.List.NonEmpty as NE
 
+import Database.Drasil (HasChunkRefs (chunkRefs))
 import Language.Drasil.Symbol (Symbol)
 import Control.Lens (Lens')
 
@@ -42,6 +43,9 @@ data Space =
   | Void
   deriving (Eq, Show)
 
+instance HasChunkRefs Space where
+  chunkRefs _ = []
+
 -- | HasSpace is anything which has a 'Space'.
 class HasSpace c where
   -- | Provides a 'Lens' to the 'Space'.
@@ -63,6 +67,10 @@ data DomainDesc (tplgy :: RTopology) a b where
   BoundedDD :: Symbol -> RTopology -> a -> b -> DomainDesc 'Discrete a b
   AllDD     :: Symbol -> RTopology -> DomainDesc 'Continuous a b
 
+instance (HasChunkRefs a, HasChunkRefs b) => HasChunkRefs (DomainDesc tplgy a b) where
+  chunkRefs (BoundedDD _ _ a b) = chunkRefs a ++ chunkRefs b
+  chunkRefs (AllDD _ _) = []
+
 type DiscreteDomainDesc a b = DomainDesc 'Discrete a b
 type ContinuousDomainDesc a b = DomainDesc 'Continuous a b
 
@@ -76,6 +84,11 @@ data RealInterval a b where
   Bounded :: (Inclusive, a) -> (Inclusive, b) -> RealInterval a b -- ^ Interval from (x .. y).
   UpTo    :: (Inclusive, a) -> RealInterval a b                   -- ^ Interval from (-infinity .. x).
   UpFrom  :: (Inclusive, b) -> RealInterval a b                   -- ^ Interval from (x .. infinity).
+
+instance (HasChunkRefs a, HasChunkRefs b) => HasChunkRefs (RealInterval a b) where
+  chunkRefs (Bounded (_, a) (_, b)) = chunkRefs a ++ chunkRefs b
+  chunkRefs (UpTo (_, a)) = chunkRefs a
+  chunkRefs (UpFrom (_, b)) = chunkRefs b
 
 -- | Gets the name of an 'Actor'.
 getActorName :: Space -> String

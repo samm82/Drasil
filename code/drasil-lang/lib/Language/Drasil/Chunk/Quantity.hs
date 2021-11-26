@@ -9,7 +9,7 @@ module Language.Drasil.Chunk.Quantity (
 
 import Control.Lens ((^.),makeLenses,view)
 
-import Database.Drasil (UID, HasUID(..))
+import Database.Drasil (UID, HasUID(..), HasChunkRefs (chunkRefs))
 
 import Language.Drasil.Classes (NamedIdea(term), Idea(getA),
   Quantity, Express(..))
@@ -52,6 +52,7 @@ instance Eq            QuantityDict where a == b = uid a == uid b
 instance MayHaveUnit   QuantityDict where getUnit = view unit'
 -- | Convert the symbol of the 'QuantityDict' to a 'ModelExpr'.
 instance Express       QuantityDict where express = sy
+instance HasChunkRefs  QuantityDict where chunkRefs = chunkRefs . (^. id')
 
 -- | Smart constructor for a 'QuantityDict' from another 'Quantity' with units.
 qw :: (Quantity q, MayHaveUnit q) => q -> QuantityDict

@@ -15,6 +15,7 @@ import Language.Drasil.Development (showUID)
 import Data.Drasil.TheoryConcepts (thModel)
 
 import Theory.Drasil.ModelKinds hiding (_mk)
+import Database.Drasil
 
 -- | Theories are the basis for building models with context,
 -- spaces, quantities, operations, invariants, etc.
@@ -79,6 +80,8 @@ instance HasDecRef          TheoryModel where getDecRefs = rf
 instance ConceptDomain      TheoryModel where cdom = cdom . view mk
 -- | Finds any additional notes for the 'TheoryModel'.
 instance HasAdditionalNotes TheoryModel where getNotes = notes
+
+instance HasChunkRefs TheoryModel where chunkRefs = cdom . view mk -- FIXME: placeholder (it's not entirely wrong!).
 
 -- TODO: I think we should be gathering these from the ModelKinds of the TheoryModel.
 --       If we need "more than 1 ModelKind" in the TheoryModel, we may need to create 

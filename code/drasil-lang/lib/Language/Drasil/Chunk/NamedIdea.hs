@@ -11,7 +11,7 @@ module Language.Drasil.Chunk.NamedIdea (
 
 import Control.Lens (Lens', (^.), makeLenses)
 
-import Database.Drasil (mkUid, UID, HasUID(..))
+import Database.Drasil (mkUid, UID, HasUID(..), HasChunkRefs (chunkRefs))
 
 import Language.Drasil.NounPhrase.Core (NP)
 
@@ -44,13 +44,14 @@ data NamedChunk = NC {
 makeLenses ''NamedChunk
 
 -- | Equal if 'UID's are equal.
-instance Eq        NamedChunk where l == r = (uu l) == (uu r)
+instance Eq        NamedChunk where l == r = uu l == uu r
 -- | Finds the 'UID' of the 'NamedChunk'.
 instance HasUID    NamedChunk where uid = uu
 -- | Finds the term ('NP') of the 'NamedChunk'.
 instance NamedIdea NamedChunk where term = np
 -- | Finds the idea of a 'NamedChunk' (always 'Nothing').
 instance Idea      NamedChunk where getA _ = Nothing
+instance HasChunkRefs NamedChunk where chunkRefs = chunkRefs . _np
 
 -- TODO: Add in function to check UIDs (see #2788).
 -- TODO: Any constructor that takes in a UID should be built off of this one so that
@@ -82,7 +83,8 @@ instance HasUID    IdeaDict where uid = uid . _nc'
 instance NamedIdea IdeaDict where term = nc' . term
 -- | Finds the abbreviation of the 'IdeaDict'.
 instance Idea      IdeaDict where getA = mabbr
-  
+instance HasChunkRefs IdeaDict where chunkRefs _ = []
+
 -- | 'IdeaDict' constructor, takes a 'UID', 'NP', and 
 -- an abbreviation in the form of 'Maybe' 'String'.
 mkIdea :: String -> NP -> Maybe String -> IdeaDict

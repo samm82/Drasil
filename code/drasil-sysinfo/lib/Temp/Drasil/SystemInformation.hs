@@ -13,14 +13,14 @@ module Temp.Drasil.SystemInformation (
   -- ** Types
   ReferenceDB, RefMap,
   -- ** Constructors
-  rdb, simpleMap,
+  rdb, simpleMap, cdb, -- FIXME: cdb should be removed.
   -- ** Lenses
   citationDB, conceptDB,
 ) where
 
 import Language.Drasil
 import Theory.Drasil
-import Database.Drasil (ChunkDB)
+import Database.Drasil hiding (find)
 
 import Control.Lens ((^.), makeLenses)
 import Data.Function (on)
@@ -161,3 +161,35 @@ uidSort :: HasUID c => c -> c -> Ordering
 uidSort = compare `on` uid
 
 makeLenses ''SystemInformation -- TODO: The things that block this from being defined "higher up" should be moved elsewhere.
+
+
+-- FIXME: Old ChunkDB creation should be removed.
+
+-- | Smart constructor for chunk databases. Takes in the following:
+--
+--     * ['Quantity'] (for 'SymbolMap'), 
+--     * 'NamedIdea's (for 'TermMap'),
+--     * 'Concept's (for 'ConceptMap'),
+--     * Units (something that 'IsUnit' for 'UnitMap'),
+--     * 'DataDefinition's (for 'DatadefnMap'),
+--     * 'InstanceModel's (for 'InsModelMap'),
+--     * 'GenDefn's (for 'GendefMap'),
+--     * 'TheoryModel's (for 'TheoryModelMap'),
+--     * 'ConceptInstance's (for 'ConceptInstanceMap'),
+--     * 'Section's (for 'SectionMap'),
+--     * 'LabelledContent's (for 'LabelledContentMap').
+cdb :: (Quantity q, MayHaveUnit q, Idea t, Concept c, IsUnit u) =>
+    [q] -> [t] -> [c] -> [u] -> [DataDefinition] -> [InstanceModel] ->
+    [GenDefn] -> [TheoryModel] -> [ConceptInstance] -> [Section] ->
+    [LabelledContent] -> [Reference] -> ChunkDB
+cdb s t c u d ins gd tm ci sect lc r = mkChunkDB (
+       map mkChunk d ++ map mkChunk ins
+    ++ map mkChunk gd ++ map mkChunk tm ++ map mkChunk ci ++ map mkChunk sect
+    ++ map mkChunk lc ++ map mkChunk r
+  )
+
+{-
+CDB (symbolMap s) (termMap t) (conceptMap c)
+  (unitMap u) Map.empty Map.empty (idMap d) (idMap ins) (idMap gd) (idMap tm)
+  (idMap ci) (idMap sect) (idMap lc) (idMap r)
+-}
