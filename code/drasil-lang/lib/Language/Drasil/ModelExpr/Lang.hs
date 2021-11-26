@@ -80,7 +80,9 @@ data SpaceBinOp = IsIn
 data DerivType = Part | Total
   deriving Eq
 
--- | Drasil expressions.
+-- | Expression language where all terms are supposed to have a meaning, but
+--   that meaning may not be that of a definite value. For example,
+--   specification expressions, especially with quantifiers, belong here.
 data ModelExpr where
   -- | Brings a literal into the expression language.
   Lit       :: Literal -> ModelExpr
@@ -95,7 +97,7 @@ data ModelExpr where
   -- | Derivative syntax is:
   --   Type ('Part'ial or 'Total') -> principal part of change -> with respect to
   --   For example: Deriv Part y x1 would be (dy/dx1).
-  Deriv     :: DerivType -> ModelExpr -> UID -> ModelExpr
+  Deriv     :: Integer -> DerivType -> ModelExpr -> UID -> ModelExpr
   -- | C stands for "Chunk", for referring to a chunk in an expression.
   --   Implicitly assumes that the chunk has a symbol.
   C         :: UID -> ModelExpr
@@ -180,7 +182,7 @@ instance Eq ModelExpr where
   -- Lit a               == Lit b               =   a == b -- TODO: When we have typed expressions, I think this will be possible.
   AssocA o1 l1        == AssocA o2 l2        =  o1 == o2 && l1 == l2
   AssocB o1 l1        == AssocB o2 l2        =  o1 == o2 && l1 == l2
-  Deriv t1 a b        == Deriv t2 c d        =  t1 == t2 && a == c && b == d
+  Deriv a t1 b c      == Deriv d t2 e f      =   a == d && t1 == t2 && b == e && c == f
   C a                 == C b                 =   a == b
   FCall a b c         == FCall d e f         =   a == d && b == e && c == f
   Case a b            == Case c d            =   a == c && b == d 
@@ -217,7 +219,7 @@ instance HasChunkRefs ModelExpr where
   chunkRefs (Spc sp) = chunkRefs sp
   chunkRefs (AssocA _ mes) = concatMap chunkRefs mes
   chunkRefs (AssocB _ mes) = concatMap chunkRefs mes
-  chunkRefs (Deriv _ me uid) = uid : chunkRefs me
+  chunkRefs (Deriv _ _ me uid) = uid : chunkRefs me
   chunkRefs (C uid) = [uid]
   chunkRefs (FCall uid mes x) = uid : (concatMap chunkRefs mes ++ map fst x ++ concatMap (chunkRefs . snd) x)
   chunkRefs (Case _ xs) = concatMap (\(l, r) -> chunkRefs l ++ chunkRefs r) xs

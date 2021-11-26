@@ -12,7 +12,7 @@ import Language.Drasil.Space (RealInterval(..))
 meNames :: ModelExpr -> [UID]
 meNames (AssocA _ l)          = concatMap meNames l
 meNames (AssocB _ l)          = concatMap meNames l
-meNames (Deriv _ a b)         = b : meNames a
+meNames (Deriv _ _ a b)       = b : meNames a
 meNames (C c)                 = [c]
 meNames Lit{}                 = []
 meNames Spc{}                 = []
@@ -49,7 +49,7 @@ meNamesRI (UpFrom (_, il))          = meNames il
 meNames' :: ModelExpr -> [UID]
 meNames' (AssocA _ l)          = concatMap meNames' l
 meNames' (AssocB _ l)          = concatMap meNames' l
-meNames' (Deriv _ a b)         = b : meNames' a
+meNames' (Deriv _ _ a b)       = b : meNames' a
 meNames' (C c)                 = [c]
 meNames' Lit{}                 = []
 meNames' Spc{}                 = []
