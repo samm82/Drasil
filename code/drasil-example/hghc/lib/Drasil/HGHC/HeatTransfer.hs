@@ -39,8 +39,8 @@ htTransCladCool, htTransCladFuel :: SimpleQDef
 ---
 
 htTransCladCoolDD :: DataDefinition
-htTransCladCoolDD = ddENoRefs htTransCladCool Nothing "htTransCladCool"--Label
-  []--no additional notes
+htTransCladCoolDD = ddENoRefs htTransCladCool Nothing "htTransCladCool" --Label
+  [] --no additional notes
 
 htTransCladCool = fromEqn "htTransCladCool" (nounPhraseSP
   "convective heat transfer coefficient between clad and coolant")

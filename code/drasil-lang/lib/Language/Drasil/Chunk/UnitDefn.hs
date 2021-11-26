@@ -23,7 +23,7 @@ module Language.Drasil.Chunk.UnitDefn (
 import Control.Lens ((^.), makeLenses, view)
 import Control.Arrow (second)
 
-import Database.Drasil (HasUID(..), mkUid, UID)
+import Database.Drasil (HasUID(..), mkUid, UID, HasChunkRefs (chunkRefs))
 
 import Language.Drasil.Chunk.Concept (ConceptChunk, dcc, cc')
 import Language.Drasil.Classes (NamedIdea(term), Idea(getA),
@@ -57,6 +57,7 @@ instance Definition    UnitDefn where defn = vc . defn
 instance Eq            UnitDefn where a == b = usymb a == usymb b
 -- | Finds the domain contained in the 'ConceptChunk' used to make the 'UnitDefn'.
 instance ConceptDomain UnitDefn where cdom = cdom . view vc
+instance HasChunkRefs  UnitDefn where chunkRefs = cdom . view vc -- FIXME: placeholder (but not entirely wrong!).
 -- | Finds unit symbol of the 'ConceptChunk' used to make the 'UnitDefn'.
 instance HasUnitSymbol UnitDefn where usymb = getUSymb . view cas
 -- | Gets the UnitDefn and contributing units. 
