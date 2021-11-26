@@ -113,7 +113,12 @@ mkChunkDB :: [Chunk] -> ChunkDB
 mkChunkDB cs = ChunkDB (cbu, csbtr)
     where
         cbu :: ChunkByUID -- TODO: build a proper reference list, post-facto
-        cbu = M.fromListWithKey (\k _ _ -> error $ "At least 2 chunks provided contain the same UID; `" ++ show k ++ "`") $ map (\c -> (uid c, (c, []))) cs
+        cbu = M.fromListWithKey (\k (r1, _) (r2, _) ->
+                error $ "At least 2 chunks provided contain the same UID, `"
+                ++ show k ++ "`, with types: " ++ show (chunkType r1)
+                ++ " and " ++ show (chunkType r2)
+            )
+            $ map (\c -> (uid c, (c, []))) cs
 
         trs :: [TypeRep]
         trs = nub $ map chunkType cs
