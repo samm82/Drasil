@@ -2,6 +2,7 @@ module Drasil.NoPCM.Body (si, srs, printSetting, noPCMODEInfo, fullSI) where
 
 import Language.Drasil hiding (section)
 import Drasil.SRSDocument
+import Temp.Drasil.SystemInformation (cdb)
 import qualified Drasil.DocLang.SRS as SRS (inModel)
 import Theory.Drasil (TheoryModel)
 import Language.Drasil.Chunk.Concept.NamedCombinators

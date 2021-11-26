@@ -81,7 +81,7 @@ mcShrStrgth = tm (equationalModelU "mcShrSrgth" mcShrStrgthQD)
 
 ------------------------------------
 mcShrStrgthQD :: ModelQDef
-mcShrStrgthQD = fromEqnSt' (shrStress ^. uid) (nounPhraseSP "Mohr-Coulumb shear strength")
+mcShrStrgthQD = fromEqnSt' (uid shrStress) (nounPhraseSP "Mohr-Coulumb shear strength")
  mcShrStrgthDesc (symbol shrStress) Real mcShrStrgthExpr
 
 mcShrStrgthExpr :: PExpr
@@ -111,7 +111,7 @@ effStress = tm (equationalModelU "effectiveStressTM" effStressQD)
 
 ------------------------------------
 effStressQD :: ModelQDef
-effStressQD = fromEqnSt' (effectiveStress ^. uid) (nounPhraseSP "effective stress")
+effStressQD = fromEqnSt' (uid effectiveStress) (nounPhraseSP "effective stress")
  effStressDesc (symbol effectiveStress) Real effStressExpr
 
 effStressExpr :: PExpr

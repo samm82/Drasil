@@ -3,6 +3,7 @@ module Drasil.SSP.Body (srs, si, symbMap, printSetting, fullSI) where
 
 import Language.Drasil hiding (Verb, number, organization, section, variable)
 import Drasil.SRSDocument
+import Temp.Drasil.SystemInformation (cdb)
 import qualified Drasil.DocLang.SRS as SRS (inModel, assumpt,
   genDefn, dataDefn, datCon)
 import Theory.Drasil (qdEFromDD)

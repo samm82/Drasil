@@ -2,6 +2,7 @@ module Drasil.Template.Body where
 
 import Language.Drasil
 import Drasil.SRSDocument
+import Temp.Drasil.SystemInformation (cdb)
 import Theory.Drasil (DataDefinition, GenDefn, InstanceModel, TheoryModel)
 import qualified Language.Drasil.Sentence.Combinators as S
 

@@ -11,7 +11,8 @@ import Language.Drasil.Generate (genCode)
 import GOOL.Drasil (CodeType(..))
 import Data.Drasil.Quantities.Math (piConst)
 import Drasil.Projectile.Body (fullSI)
-import Database.Drasil (SystemInformation(SI,_sys))
+import Database.Drasil
+import Temp.Drasil.SystemInformation
 
 import Data.List (intercalate)
 import System.Directory (createDirectoryIfMissing, getCurrentDirectory, 

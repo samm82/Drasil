@@ -3,6 +3,7 @@ module Drasil.SWHS.Body where
 
 import Language.Drasil hiding (organization, section, variable)
 import Drasil.SRSDocument
+import Temp.Drasil.SystemInformation (cdb)
 import qualified Drasil.DocLang.SRS as SRS (inModel)
 import Theory.Drasil (GenDefn, InstanceModel)
 import Language.Drasil.Chunk.Concept.NamedCombinators
