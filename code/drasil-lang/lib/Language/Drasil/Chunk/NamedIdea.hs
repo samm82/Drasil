@@ -101,3 +101,4 @@ mkIdeaUID s np' = IdeaDict (ncUID s np')
 -- 'Nothing' for an abbreviation.
 nw :: Idea c => c -> IdeaDict
 nw c = IdeaDict (NC (uid c) (c ^. term)) (getA c) -- TODO: Shouldn't this be altering the UID when pushing out an IdeaDict?
+-- nw c = IdeaDict (NC (mkUid (show (uid c) ++ "ID")) (c ^. term)) (getA c) -- TODO: Shouldn't this be altering the UID when pushing out an IdeaDict?

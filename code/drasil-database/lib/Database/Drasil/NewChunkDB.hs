@@ -1,4 +1,5 @@
 {-# LANGUAGE TypeApplications#-}
+{-# LANGUAGE GADTs #-}
 
 module Database.Drasil.NewChunkDB (
       ChunkDB
@@ -49,6 +50,7 @@ find u (ChunkDB (tc, _)) = do
     (c', _) <- M.lookup u tc
     unChunk c'
 
+-- TODO: We should remove these "OrErr" functions because they print without context of where it was expected...
 findOrErr :: Typeable a => UID -> ChunkDB -> a
 findOrErr u = fromMaybe (error $ "Failed to find chunk " ++ show u) . find u
 

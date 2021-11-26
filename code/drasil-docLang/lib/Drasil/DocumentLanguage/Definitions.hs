@@ -23,8 +23,6 @@ import Theory.Drasil (DataDefinition, GenDefn, InstanceModel, Theory(..),
   TheoryModel, HasInputs(inputs), HasOutput(output, out_constraints), qdFromDD)
 
 import Drasil.DocumentLanguage.Units (toSentenceUnitless)
-import Data.Typeable
-import Database.Drasil (findRefsOrErr)
 
 -- | Synonym for a list of 'Field's.
 type Fields = [Field]

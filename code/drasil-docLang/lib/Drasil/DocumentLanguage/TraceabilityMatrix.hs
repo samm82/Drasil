@@ -4,7 +4,7 @@ module Drasil.DocumentLanguage.TraceabilityMatrix where
 
 import Language.Drasil
 import Database.Drasil
-import Temp.Drasil.SystemInformation
+import Temp.Drasil.SystemInformation (SystemInformation(_sysinfodb))
 -- (ChunkDB, SystemInformation, UMap, _sysinfodb, asOrderedList,
 --   conceptinsTable, defResolve, refbyTable, traceTable, traceLookup)
 
@@ -15,10 +15,8 @@ import Data.Drasil.Concepts.Documentation (purpose, component, dependency,
 
 import Drasil.DocumentLanguage.Definitions (helpToRefField)
 
-import Control.Lens ((^.), Getting)
 import Data.List (nub)
 import qualified Data.Map as Map
-import Data.Map (Map)
 import Data.Typeable (typeRep, Proxy (Proxy))
 
 -- * Types
