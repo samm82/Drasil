@@ -3,7 +3,6 @@ module Drasil.PDController.Body (pidODEInfo, printSetting, si, srs, fullSI) wher
 import Language.Drasil
 import Drasil.SRSDocument
 import qualified Drasil.DocLang.SRS as SRS (inModel)
-import Theory.Drasil (DataDefinition, GenDefn, InstanceModel, TheoryModel)
 import qualified Language.Drasil.Sentence.Combinators as S
 
 import Data.Drasil.Concepts.Documentation (doccon, doccon', srsDomains)
@@ -104,7 +103,7 @@ si
        _configFiles = [], _inputs = inputs, _outputs = outputs,
        _defSequence = [] :: [Block SimpleQDef],
        _constraints = map cnstrw inpConstrained, _constants = pidConstants,
-       _sysinfodb = symbMap, _usedinfodb = usedDB, refdb = refDB}
+       _sysinfodb = symbMap, refdb = refDB}
 
 symbolsAll :: [QuantityDict]
 symbolsAll
@@ -136,20 +135,6 @@ symbMap
       genDefns
       theoreticalModels
       conceptInstances
-      ([] :: [Section])
-      ([] :: [LabelledContent])
-      ([] :: [Reference])
-
-usedDB :: ChunkDB
-usedDB
-  = cdb ([] :: [QuantityDict]) (map nw acronyms ++ map nw symbolsAll)
-      ([] :: [ConceptChunk])
-      ([] :: [UnitDefn])
-      ([] :: [DataDefinition])
-      ([] :: [InstanceModel])
-      ([] :: [GenDefn])
-      ([] :: [TheoryModel])
-      ([] :: [ConceptInstance])
       ([] :: [Section])
       ([] :: [LabelledContent])
       ([] :: [Reference])

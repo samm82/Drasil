@@ -85,7 +85,6 @@ si = SI {
   _constraints = constrained,
   _constants   = [],
   _sysinfodb   = symbMap,
-  _usedinfodb  = usedDB,
    refdb       = refDB
 }
   
@@ -159,10 +158,6 @@ symbMap = cdb (map qw SSP.iMods ++ map qw symbols) (map nw symbols
   ++ map nw compcon ++ [nw algorithm, nw ssp] ++ map nw units)
   (map cw SSP.iMods ++ map cw symbols ++ srsDomains) units SSP.dataDefs SSP.iMods
   generalDefinitions tMods concIns section labCon []
-
-usedDB :: ChunkDB
-usedDB = cdb ([] :: [QuantityDict]) (map nw symbols ++ map nw acronyms)
- ([] :: [ConceptChunk]) ([] :: [UnitDefn]) [] [] [] [] [] [] [] ([] :: [Reference])
 
 refDB :: ReferenceDB
 refDB = rdb citations concIns

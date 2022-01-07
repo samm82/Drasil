@@ -36,18 +36,11 @@ si = SI {
   _constraints = [] :: [ConstrainedChunk],
   _constants   = [] :: [ConstQDef],
   _sysinfodb   = symbMap,
-  _usedinfodb  = usedDB,
    refdb       = refDB
 }
 
 symbMap :: ChunkDB
 symbMap = cdb ([] :: [QuantityDict]) [nw example] ([] :: [ConceptChunk])
-  ([] :: [UnitDefn]) ([] :: [DataDefinition]) ([] :: [InstanceModel])
-  ([] :: [GenDefn]) ([] :: [TheoryModel]) ([] :: [ConceptInstance])
-  ([] :: [Section]) ([] :: [LabelledContent]) ([] :: [Reference])
-
-usedDB :: ChunkDB
-usedDB = cdb ([] :: [QuantityDict]) ([] :: [IdeaDict]) ([] :: [ConceptChunk])
   ([] :: [UnitDefn]) ([] :: [DataDefinition]) ([] :: [InstanceModel])
   ([] :: [GenDefn]) ([] :: [TheoryModel]) ([] :: [ConceptInstance])
   ([] :: [Section]) ([] :: [LabelledContent]) ([] :: [Reference])

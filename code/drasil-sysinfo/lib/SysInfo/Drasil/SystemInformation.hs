@@ -6,7 +6,7 @@ module SysInfo.Drasil.SystemInformation (
   SystemInformation(..), Block(..),
   -- ** Lenses
   instModels, datadefs, configFiles, inputs,
-  defSequence, constraints, constants, sysinfodb, usedinfodb,
+  defSequence, constraints, constants, sysinfodb,
   -- ** Lookup Functions
   citeDB, citationsFromBibMap,
   -- * Reference Database
@@ -53,7 +53,6 @@ data SystemInformation where
   , _constraints :: [j] --TODO: Add SymbolMap OR enough info to gen SymbolMap
   , _constants   :: [ConstQDef]
   , _sysinfodb   :: ChunkDB
-  , _usedinfodb  :: ChunkDB
   , refdb        :: ReferenceDB
   } -> SystemInformation
 

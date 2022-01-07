@@ -63,7 +63,6 @@ si = SI {
   _constraints = [] :: [ConstrainedChunk],
   _constants   = [] :: [ConstQDef],
   _sysinfodb   = symbMap,
-  _usedinfodb  = usedDB,
    refdb       = refDB
 }
 
@@ -71,11 +70,6 @@ symbMap :: ChunkDB
 symbMap = cdb (map qw physicscon) (nw projectileMotion : map nw doccon ++ 
   map nw doccon' ++ map nw physicCon ++ concepts ++ map nw mathcon) 
   ([] :: [ConceptChunk]) ([] :: [UnitDefn]) [] [] [] [] [] [] [] allRefs
-
-usedDB :: ChunkDB
-usedDB = cdb ([] :: [QuantityDict]) ([] :: [IdeaDict]) ([] :: [ConceptChunk])
-  ([] :: [UnitDefn]) [] [] [] [] ([] :: [ConceptInstance])
-  ([] :: [Section]) ([] :: [LabelledContent]) ([] :: [Reference])
 
 refDB :: ReferenceDB
 refDB = rdb [] []

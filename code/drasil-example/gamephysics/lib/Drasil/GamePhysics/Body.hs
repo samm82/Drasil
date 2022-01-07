@@ -118,7 +118,6 @@ si = SI {
   _constraints = inputConstraints,
   _constants   = [],
   _sysinfodb   = symbMap,
-  _usedinfodb  = usedDB,
    refdb       = refDB
 }
   where qDefs = mapMaybe qdEFromDD dataDefs
@@ -150,10 +149,6 @@ symbMap = cdb (map qw iMods ++ map qw symbolsAll) (map nw symbolsAll
   ++ map nw fundamentals ++ map nw CM.mathcon ++ map nw CM.mathcon') 
   (map cw defSymbols ++ srsDomains ++ map cw iMods) units dataDefs
   iMods generalDefns tMods concIns section [] []
-
-usedDB :: ChunkDB
-usedDB = cdb ([] :: [QuantityDict]) (map nw symbolsAll ++ map nw acronyms)
-  ([] :: [ConceptChunk]) ([] :: [UnitDefn]) [] [] [] [] [] [] [] ([] :: [Reference])
 
 --FIXME: The SRS has been partly switched over to the new docLang, so some of
 -- the sections below are now redundant. I have not removed them yet, because

@@ -114,7 +114,6 @@ si = SI {
   _constraints = inConstraints,
   _constants   = [] :: [ConstQDef],
   _sysinfodb   = symbMap,
-  _usedinfodb  = usedDB,
    refdb       = refDB
 }
 
@@ -127,10 +126,6 @@ symbMap = cdb (map qw iMods ++ map qw symbols)
    [nw algorithm] ++ map nw compcon ++ map nw educon ++ map nw prodtcon)
   (map cw iMods ++ srsDomains) (map unitWrapper [metre, second, newton, kilogram, degree, radian, hertz])
   dataDefs iMods genDefns tMods concIns [] [] ([] :: [Reference])
-
-usedDB :: ChunkDB
-usedDB = cdb ([] :: [QuantityDict]) (map nw acronyms ++ map nw symbols) ([] :: [ConceptChunk])
-  ([] :: [UnitDefn]) [] [] [] [] [] [] [] ([] :: [Reference])
 
 stdFields :: Fields
 stdFields = [DefiningEquation, Description Verbose IncludeUnits, Notes, Source, RefBy]

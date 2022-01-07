@@ -280,7 +280,7 @@ mkRefSec si dd (RefProg c l) = SRS.refMat [c] (map (mkSubRef si) l)
                 atStart] []
     mkSubRef SI {_sysinfodb = cdb} (TSymb' f con) =
       mkTSymb (ccss (getDocDesc dd) (egetDocDesc dd) cdb) f con
-    mkSubRef SI {_usedinfodb = db} TAandA =
+    mkSubRef SI {_sysinfodb = db} TAandA =
       SRS.tOfAbbAcc [LlC $ tableAbbAccGen $ nub $ map fst $ Map.elems $ termTable db] []
 
 -- | Helper for creating the table of symbols.

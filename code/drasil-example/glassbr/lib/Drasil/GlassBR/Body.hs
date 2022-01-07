@@ -77,7 +77,6 @@ si = SI {
   _constraints = constrained,
   _constants   = constants,
   _sysinfodb   = symbMap,
-  _usedinfodb  = usedDB,
    refdb       = refDB
 }
   --FIXME: All named ideas, not just acronyms.
@@ -141,10 +140,6 @@ concIns = assumptions ++ goals ++ likelyChgs ++ unlikelyChgs ++ funcReqs ++ nonf
 
 labCon :: [LabelledContent]
 labCon = funcReqsTables ++ [demandVsSDFig, dimlessloadVsARFig]
-
-usedDB :: ChunkDB
-usedDB = cdb ([] :: [QuantityDict]) (map nw acronyms ++ map nw thisSymbols)
- ([] :: [ConceptChunk]) ([] :: [UnitDefn]) [] [] [] [] [] [] [] ([] :: [Reference])
 
 refDB :: ReferenceDB
 refDB = rdb citations concIns
