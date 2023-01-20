@@ -397,15 +397,15 @@ ifCond :: (RenderSym r) => (Doc -> Doc) -> Doc -> Doc -> Doc ->
 ifCond _ _ _ _ [] _ = error "if condition created with no cases"
 ifCond f ifStart elif bEnd (c:cs) eBody =
     let ifSect (v, b) = on2StateValues (\val bd -> vcat [
-          ifLabel <+> f (RC.value val) <+> ifStart,
+          ifLabel <+> f (RC.value val) <> ifStart,
           indent $ RC.body bd,
           bEnd]) (zoom lensMStoVS v) b
         elseIfSect (v, b) = on2StateValues (\val bd -> vcat [
-          elif <+> f (RC.value val) <+> ifStart,
+          elif <+> f (RC.value val) <> ifStart,
           indent $ RC.body bd,
           bEnd]) (zoom lensMStoVS v) b
         elseSect = onStateValue (\bd -> emptyIfEmpty (RC.body bd) $ vcat [
-          elseLabel <+> ifStart,
+          elseLabel <> ifStart,
           indent $ RC.body bd,
           bEnd]) eBody
     in sequence (ifSect c : map elseIfSect cs ++ [elseSect]) 

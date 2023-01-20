@@ -85,7 +85,7 @@ import GOOL.Drasil.AST (Terminator(..), FileType(..), FileData(..), fileD,
   vard)
 import GOOL.Drasil.Helpers (angles, hicat, toCode, toState, onCodeValue, 
   onStateValue, on2CodeValues, on2StateValues, on3CodeValues, on3StateValues, 
-  on2StateWrapped, onCodeList, onStateList)
+  on2StateWrapped, onCodeList, onStateList, preSpace)
 import GOOL.Drasil.State (VS, lensGStoFS, lensMStoVS, modifyReturn, revFiles,
   addLangImport, addLangImportVS, setFileType, getClassName, setCurrMain)
 
@@ -522,7 +522,7 @@ instance ControlStatement CSharpCode where
     modify (addLangImport csSystem)
     G.throw csThrowDoc Semi msg
 
-  ifCond = G.ifCond parens bodyStart elseIfLabel bodyEnd
+  ifCond = G.ifCond parens (preSpace bodyStart) elseIfLabel bodyEnd
   switch = C.switch parens break
 
   ifExists = M.ifExists

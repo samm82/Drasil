@@ -2,7 +2,7 @@ module GOOL.Drasil.Helpers (angles, doubleQuotedText, hicat, vicat, vibcat,
   vmap, vimap, emptyIfEmpty, emptyIfNull, toCode, toState, onCodeValue, 
   onStateValue, on2CodeValues, on2StateValues, on3CodeValues, on3StateValues, 
   onCodeList, onStateList, on2StateLists, getInnerType, on2StateWrapped, 
-  getNestDegree
+  getNestDegree, preSpace,
 ) where
 
 import Utils.Drasil (blank)
@@ -15,7 +15,7 @@ import Control.Monad (liftM2, liftM3)
 import Control.Monad.State (State)
 import Data.List (intersperse)
 import Text.PrettyPrint.HughesPJ (Doc, vcat, hcat, text, char, doubleQuotes, 
-  (<>), empty, isEmpty)
+  (<>), empty, isEmpty, space)
 
 angles :: Doc -> Doc
 angles d = char '<' <> d <> char '>'
@@ -94,3 +94,8 @@ getInnerType _ = error "Attempt to extract inner type of list from a non-list ty
 getNestDegree :: Integer -> C.CodeType -> Integer
 getNestDegree n (C.List t) = getNestDegree (n+1) t
 getNestDegree n _ = n
+
+
+-- Prepends optional Space to Doc
+preSpace :: Doc -> Doc 
+preSpace x = space <> x

@@ -83,7 +83,7 @@ import GOOL.Drasil.AST (Terminator(..), ScopeTag(..), qualName, FileType(..),
   MethodData(..), mthd, updateMthd, OpData(..), ParamData(..), pd, ProgData(..),
   progD, TypeData(..), td, ValData(..), vd, Binding(..), VarData(..), vard)
 import GOOL.Drasil.Helpers (hicat, emptyIfNull, toCode, toState, onCodeValue, 
-  onStateValue, on2CodeValues, on2StateValues, onCodeList, onStateList)
+  onStateValue, on2CodeValues, on2StateValues, onCodeList, onStateList, preSpace)
 import GOOL.Drasil.State (MS, VS, lensGStoFS, lensFStoCS, lensFStoMS, 
   lensCStoVS, lensMStoFS, lensMStoVS, lensVStoFS, revFiles, addLangImportVS, 
   getLangImports, getLibImports, setFileType, getClassName, setModuleName, 
@@ -560,7 +560,7 @@ instance ControlStatement SwiftCode where
     modify setThrowUsed
     G.throw swiftThrowDoc Empty msg
 
-  ifCond = G.ifCond id bodyStart elseIfLabel bodyEnd
+  ifCond = G.ifCond id (preSpace bodyStart) elseIfLabel bodyEnd
   switch = C.switch (space <>) emptyStmt
 
   ifExists = M.ifExists

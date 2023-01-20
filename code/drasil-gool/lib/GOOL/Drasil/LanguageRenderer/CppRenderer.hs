@@ -86,7 +86,7 @@ import GOOL.Drasil.Classes (Pair(..))
 import GOOL.Drasil.Helpers (angles, doubleQuotedText, hicat, vibcat, 
   emptyIfEmpty, toCode, toState, onCodeValue, onStateValue, on2CodeValues, 
   on2StateValues, on3CodeValues, on3StateValues, onCodeList, onStateList, 
-  on2StateLists, on2StateWrapped)
+  on2StateLists, on2StateWrapped, preSpace)
 import GOOL.Drasil.State (CS, MS, VS, lensGStoFS, lensFStoCS, lensFStoMS, 
   lensCStoMS, lensCStoVS, lensMStoCS, lensCStoFS, lensMStoVS, lensVStoMS, 
   modifyReturn, revFiles, addLangImport, addLangImportVS, getLangImports, 
@@ -1431,7 +1431,7 @@ instance ControlStatement CppSrcCode where
 
   throw = G.throw cppThrowDoc Semi
 
-  ifCond = G.ifCond parens bodyStart elseIfLabel bodyEnd
+  ifCond = G.ifCond parens (preSpace bodyStart) elseIfLabel bodyEnd
   switch = C.switch parens break
 
   ifExists _ ifBody _ = do 

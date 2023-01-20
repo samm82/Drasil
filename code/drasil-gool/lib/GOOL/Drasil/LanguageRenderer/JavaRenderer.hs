@@ -89,7 +89,7 @@ import GOOL.Drasil.CodeAnalysis (Exception(..), ExceptionType(..), exception,
   stdExc, HasException(..))
 import GOOL.Drasil.Helpers (emptyIfNull, toCode, toState, onCodeValue, 
   onStateValue, on2CodeValues, on2StateValues, on3CodeValues, on3StateValues, 
-  onCodeList, onStateList, on2StateWrapped)
+  onCodeList, onStateList, on2StateWrapped, preSpace)
 import GOOL.Drasil.State (VS, lensGStoFS, lensMStoFS, lensMStoVS, lensVStoFS, 
   lensVStoMS, modifyReturn, modifyReturnList, revFiles, addProgNameToPaths, 
   addLangImport, addLangImportVS, addExceptionImports, getModuleName, 
@@ -552,7 +552,7 @@ instance ControlStatement JavaCode where
   
   throw = G.throw jThrowDoc Semi
 
-  ifCond = G.ifCond parens bodyStart elseIfLabel bodyEnd
+  ifCond = G.ifCond parens (preSpace bodyStart) elseIfLabel bodyEnd
   switch  = C.switch parens break
 
   ifExists = M.ifExists
