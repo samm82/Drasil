@@ -222,6 +222,7 @@
   Feb. 14, 2023       & 1.1.0         & Improve mathematical notation
   (remove ``$\times 1$'' from vector types, define $\mathbb{R}$) and citations                               \\
                       & 1.1.1         & Improve requirements based on feedback                               \\
+  Feb. 22, 2023       & 1.1.2         & Add element \hyperref[sec_datatypes]{data type}                      \\
   \bottomrule
 \end{tabularx}
 
@@ -885,44 +886,37 @@ There are no data definitions.
 %\end{tabular}
 %\end{minipage}\\
 
-% \subsubsection{Data Types}\label{sec_datatypes}
+\subsubsection{Data Types}\label{sec_datatypes}
 
-% \plt{This section is optional.  In many scientific computing programs it isn't
-%   necessary, since the inputs and outputs are straightforward types, like reals,
-%   integers, and sequences of reals and integers.  However, for some problems it
-%   is very helpful to capture the type information.}
+This section collects and defines all the data types needed to document the
+models.
 
-% \plt{The data types are not derived; they are simply stated and used by other
-%   models.}
+~\newline
 
-% \plt{All data types must be used by at least one of the models.}
+\noindent
+\begin{minipage}{\textwidth}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
+    Type Name   & Element                                                    \\
+    \hline
+    Type Def    & $E$ = \{ H, He, Li, Be, B, C, N, O, F, Ne, Na, Mg, Al, Si,
+    P, S, Cl, Ar, K, Ca, Sc, Ti, V, Cr, Mn, Fe, Co, Ni, Cu, Zn, Ga, Ge, As, Se,
+    Br, Kr, Rb, Sr, Y, Zr, Nb, Mo, Tc, Ru, Rh, Pd, Ag, Cd, In, Sn, Sb, Te, I,
+    Xe, Cs, Ba, La, Ce, Pr, Nd, Pm, Sm, Eu, Gd, Tb, Dy, Ho, Er, Tm, Yb, Lu, Hf,
+    Ta, W, Re, Os, Ir, Pt, Au, Hg, Tl, Pb, Bi, Po, At, Rn, Fr, Ra, Ac, Th, Pa,
+    U, Np, Pu, Am, Cm, Bk, Cf, Es, Fm, Md, No, Lr, Rf, Db, Sg, Bh, Hs, Mt, Ds,
+    Rg, Cn, Nh, Fl, Mc, Lv, Ts, Og \}                                        \\
 
-% \plt{For the mathematical notation for expressing types, the recommendation is
-%   to use the notation of~\cite{HoffmanAndStrooper1995}.}
-
-% This section collects and defines all the data types needed to document the
-% models. \plt{Modify the examples below for your problem, and add additional
-%   definitions as appropriate.}
-
-% ~\newline
-
-% \noindent
-% \begin{minipage}{\textwidth}
-%   \renewcommand*{\arraystretch}{1.5}
-%   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-%     \hline
-%     \rowcolor[gray]{0.9}
-%     Type Name   & Name for Type                                              \\
-%     \hline
-%     Type Def    & mathematical definition of the type                        \\
-%     \hline
-%     Description & description here
-%     \\
-%     \hline
-%     Sources     & Citation here, if the type is borrowed from another source \\
-%     \hline
-%   \end{tabular}
-% \end{minipage}\\
+    \hline
+    Description & A type representing each element from
+    \cite{wikipedia_list_2023}.                                              \\
+    \hline
+    Sources     & \cite{smith_assignment_2020}                               \\
+    \hline
+  \end{tabular}
+\end{minipage}\\
 
 \subsubsection{Instance Models} \label{sec_instance}
 
