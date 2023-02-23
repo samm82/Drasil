@@ -224,6 +224,7 @@
                       & 1.1.1         & Improve requirements based on feedback                               \\
   Feb. 22, 2023       & 1.1.2         & Add equation to \tmref{TM_ConsMass}, including relevant
   \nameref{sec_datatypes}                                                                                    \\
+                      & 1.1.3         & Improve \tmref{TM_MatEq} based on feedback                           \\
   \bottomrule
 \end{tabularx}
 
@@ -557,6 +558,9 @@ easier to correctly understand the requirements:
         or products in a chemical reaction using the relationships found in a balanced
         chemical equation'' \cite[p. 337]{lund_introduction_2023}.
 
+  \item \textbf{Underdetermined}: (Referring to a system of linear equations)
+        having ``more unknowns than equations'' \cite{colbry_matrix_2023}.
+
         %\item \textbf{Reduced Row Echelon Form}: A form of a matrix where every row
         %with only zeros is at the bottom and every column but the rightmost one
         %has all zeroes except for one one (which has only zeroes to its left)
@@ -703,16 +707,16 @@ on.
 % #5 description
 {
   The above equation gives the general form of the matrix equation where
-  $\textbf{A}$ is of type $\mathbb{R}^{m\times n}$, $\textbf{b}$ is of type
-  $\mathbb{R}^{m}$, and $\textbf{x}$ is of type
-  $\mathbb{R}^{n}$. \sjc{Is this type information redundant to have
-    here?} The values of $\textbf{x}$ are unknown
+  $\textbf{A}$ is a generic matrix of type $\mathbb{R}^{m\times n}$ and
+  $\textbf{b}$ and $\textbf{x}$ are generic vectors of type $\mathbb{R}^{m}$
+  and $\mathbb{R}^{n}$, respectively. The values of $\textbf{x}$ are unknown
   and will be solved for \cite{margalit_matrix_2019}.
 }
 % #6 Notes
 {
   For any $\textbf{A}$ and $\textbf{b}$, there is either zero, one, or infinite
-  values for $\textbf{x}$ \cite{zwick_math_2012}.
+  values for $\textbf{x}$ \cite{zwick_math_2012}. Underdetermined systems do
+  not have unique solutions \cite{colbry_matrix_2023}.
 }
 % #7 Source
 {
