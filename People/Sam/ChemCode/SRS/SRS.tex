@@ -1211,7 +1211,9 @@ The equation from \iref{balance} can be used as a ``sanity'' check, using the
 original input (formatted as a matrix according to \iref{convert}) as
 $\textbf{E}$ and the outputted vector of coefficients as $\textbf{c}$.
 Performing this matrix multiplication should result in the zero matrix,
-$\textbf{0}$.
+$\textbf{0}$. Additionally, since the coefficients should be as small as
+possible by convention \cite{lund_introduction_2023}, the greatest common
+factor of these coefficients should be ``1''.
 
 % A correct solution must exhibit \plt{fill in the details}.  \plt{These
 %   properties are in addition to the stated requirements.  There is no need to
