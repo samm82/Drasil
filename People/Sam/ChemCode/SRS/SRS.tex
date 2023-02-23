@@ -367,10 +367,11 @@ set of real numbers is denoted by $\mathbb{R}$ and consists of every number
 
 \section{Introduction} \label{sec_intro}
 Chemical equations are common ways of representing chemical reactions (as
-described in \nameref{sec_phySystDesc}), but must be balanced for use in other
-calculations \cite{lund_introduction_2023}. Therefore, it is useful to have a
-tool to automatically balance these chemical reactions for efficiency and
-accuracy.
+described in \nameref{sec_phySystDesc}), but must be balanced before they can
+be used \cite{lund_introduction_2023}. Therefore, it is useful to have a
+tool to automatically balance these chemical reactions to improve the
+productivity of scientists and engineers and reduce the potential for human
+error.
 
 The following section provides an overview of the Software Requirements
 Specification (SRS) for \progname{}. This section explains the purpose of this
@@ -394,10 +395,10 @@ are to be realized, including decisions on the numerical algorithms and
 programming environment. The VnV Plan will show the steps that will be used to
 increase confidence in the software documentation and the implementation.
 Although the SRS fits in a series of documents that follow the so-called
-``waterfall model'', the actual development process is not constrained in any
-way. Even when the waterfall model is not followed, as Parnas and Clements point
-out in \cite{ParnasAndClements1986}, the most logical way to present the
-documentation is still to ``fake'' a rational design process.
+``waterfall model,'' the actual development process is not constrained in any
+way. Even when the waterfall model is not followed, the most logical way to
+present the documentation is to ``fake'' a rational design process
+\cite{ParnasAndClements1986}.
 
 \subsection{Scope of Requirements} \label{sec_scope}
 
@@ -410,10 +411,11 @@ place in a real-world setting.
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 Reviewers of this documentation should have an understanding of high-school level
 chemistry, namely stoichiometry (see \nameref{sec_termsDefs}), and undergraduate
-Level 1 linear algebra, namely solving systems of linear equations. The end user
-of \progname{}, as described in \nameref{sec_userChars}, does not require
-knowledge of linear algebra, since relevant concepts will be implemented by the
-code and hidden from the user.
+Level 1 linear algebra, namely solving systems of linear equations.
+% The end user
+% of \progname{}, as described in \nameref{sec_userChars}, does not require
+% knowledge of linear algebra, since relevant concepts will be implemented by the
+% code and hidden from the user.
 
 \subsection{Organization of Document}
 The organization of this document is based on a template from
@@ -481,14 +483,14 @@ and its environment.
           \item Detect data type mismatch, such as a string of characters instead of a
                 rational number
           \item Detect improperly formatted chemical equations
-          \item Format inputted chemical equation as a matrix
+          \item Format the inputted chemical equation as a matrix
           \item Determine if the inputted chemical equation is feasible
           \item If the inputted chemical equation is feasible, find its balanced form with
                 the smallest whole number coefficients
         \end{itemize}
   \item External Library Responsibilities:
         \begin{itemize}
-          \item Process the chemical equation matrix \sjc{Can this be more descriptive?}
+          \item Solve the system of linear equations for the chemical equation
         \end{itemize}
 \end{itemize}
 
@@ -589,15 +591,14 @@ substance(s) present at the beginning of the reaction---on the left-hand side
 and the product(s)---the substance(s) formed by the reaction---on the right. An
 example of a chemical equation representing the combustion of methane in the
 presence of oxygen to form carbon dioxide and water vapour is shown below. The
-subscripts indicate how many of each element is present in the given chemical
-compound.
+subscripts indicate how many atoms of each element are present in the given
+chemical compound.
 $$
   \ce{CH4} + \ce{O2} \rightarrow \ce{CO2} + \ce{H2O}
 $$
 
-\sjc{Is this paragraph helpful/needed?} As mentioned in
-\nameref{sec_probDesc}, chemical formulas must be balanced to be
-useful in other reactions \cite{lund_introduction_2023}. This means that there
+As mentioned in \nameref{sec_probDesc}, chemical formulas must be balanced to be
+useful \cite{lund_introduction_2023}. This means that there
 must be the same number of each element before and after the reaction takes
 place to satisfy the Law of Conservation of Mass (\tmref{TM_ConsMass}). Since
 changing the subscripts in a formula will change the type of molecule (for
@@ -639,8 +640,7 @@ of \progname{} are:
     a given chemical reaction is feasible (see \nameref{sec_termsDefs}).
 
   \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_balance}:] Balance the
-    inputted chemical equation with the smallest whole number coefficients
-    possible.
+    chemical equation with the smallest whole number coefficients possible.
 
 \end{itemize}
 
@@ -694,8 +694,6 @@ is used.
     and subscripts.	[\iref{convert}, \lcref{LC_complexForms}]
 
 \end{itemize}
-
-\newpage
 
 \subsubsection{Theoretical Models}\label{sec_theoretical}
 
