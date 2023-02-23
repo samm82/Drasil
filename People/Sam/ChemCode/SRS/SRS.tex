@@ -62,7 +62,7 @@
 \newcommand{\ddref}[1]{DD\ref{#1}}
 \newcounter{theorynum} %Theory Number
 \newcommand{\tthetheorynum}{TM\thetheorynum}
-\newcommand{\tref}[1]{TM\ref{#1}}
+\newcommand{\tmref}[1]{TM\ref{#1}}
 \newcounter{tablenum} %Table Number
 \newcommand{\tbthetablenum}{TB\thetablenum}
 \newcommand{\tbref}[1]{TB\ref{#1}}
@@ -120,7 +120,7 @@
 
 #8
 
-\paragraph{Derivation for \tref{#2}:}
+\paragraph{Derivation for \tmref{#2}:}
 
 #9
 
@@ -169,14 +169,14 @@
   (\iref{convert}), along with relevant reference information                                                \\
                       & 0.2.6         & Rename and add input constraint to \iref{balance}                    \\
                       & 0.2.7         & Add note about \iref{balance} returning the smallest solution        \\
-                      & 0.2.8         & Add TM for matrix equation (\tref{TM_MatEq})                         \\
+                      & 0.2.8         & Add TM for matrix equation (\tmref{TM_MatEq})                        \\
                       & 0.2.9         & Improve referencing, mainly for TMs, and add note about
   potential TM for Conservation of Mass                                                                      \\
                       & 0.3.0         & Add check for Conservation of Mass in \iref{feasible}                \\
   Jan. 26, 2023       & 0.3.1         & Add \nameref{sec_LCs} from Problem Statement, add
   assumption about difference between number of elements and compounds
   (\aref{A_elemCompDiff}), and add mole to \nameref{sec_ToU}                                                 \\
-                      & 0.3.2         & Update \tref{TM_MatEq} (and TM function) from feedback from
+                      & 0.3.2         & Update \tmref{TM_MatEq} (and TM function) from feedback from
   presentation                                                                                               \\
                       & 0.3.3         & Fill in \nameref{sec_scope}, fix \aref{A_elemCompDiff} and
   change ``infeasible'' to ``feasible''                                                                      \\
@@ -185,7 +185,7 @@
   Jan. 28, 2023       & 0.4.2         & Fill in main \nameref{sec_nonfuncReqs}, along with
   relevant reference information                                                                             \\
                       & 0.4.3         & Add TM for the Law of Conservation of Mass
-  (\tref{TM_ConsMass})                                                                                       \\
+  (\tmref{TM_ConsMass})                                                                                      \\
                       & 0.4.4         & Represent input to \iref{convert} as two sequences of chemical
   formulas, add assumptions about user input, and remove infeasible
   likely change                                                                                              \\
@@ -222,7 +222,8 @@
   Feb. 14, 2023       & 1.1.0         & Improve mathematical notation
   (remove ``$\times 1$'' from vector types, define $\mathbb{R}$) and citations                               \\
                       & 1.1.1         & Improve requirements based on feedback                               \\
-  Feb. 22, 2023       & 1.1.2         & Add element \hyperref[sec_datatypes]{data type}                      \\
+  Feb. 22, 2023       & 1.1.2         & Add equation to \tmref{TM_ConsMass}, including relevant
+  \nameref{sec_datatypes}                                                                                    \\
   \bottomrule
 \end{tabularx}
 
@@ -272,18 +273,23 @@ their units and types. The choice of symbols was made to be consistent with
 linear algebra conventions while distinguishing between specific matrices.  The
 symbols are listed in alphabetical order.
 
+\sjc{Should symbols for data types be included here?}
+
 % \renewcommand{\arraystretch}{1.2}
 \noindent \begin{tabularx}{\textwidth}{l l l X} \toprule
   \textbf{symbol} & \textbf{unit} & \textbf{type}             & \textbf{description}                             \\
   \midrule
   $\textbf{0}$    & --            & $\mathbb{N}^{m}$          & zero vector                                      \\
   $\textbf{A}$    & --            & $\mathbb{R}^{m \times n}$ & generic matrix                                   \\
-  $\textbf{E}$    & --            & $\mathbb{R}^{m \times n}$ & matrix representation of a chemical equation     \\
   $\textbf{b}$    & --            & $\mathbb{R}^{m}$          & generic vector                                   \\
   $\textbf{c}$    & --            & $(\mathbb{Z^+})^{n}$      & vector of the smallest coefficients that balance
   a chemical equation                                                                                            \\
+  $\textbf{E}$    & --            & $\mathbb{R}^{m \times n}$ & matrix representation of a chemical equation     \\
+  $e$             & --            & $E$                       & general element                                  \\
   $m$             & --            & $\mathbb{Z}^+$            & generic whole number                             \\
   $n$             & --            & $\mathbb{Z}^+$            & generic whole number                             \\
+  $p$             & --            & $\langle C \rangle$       & product side of a chemical equation              \\
+  $r$             & --            & $\langle C \rangle$       & reactant side of a chemical equation             \\
   $\textbf{x}$    & --            & $\mathbb{R}^{n}$          & generic vector                                   \\
   \bottomrule
 \end{tabularx}
@@ -576,7 +582,7 @@ $$
 \nameref{sec_probDesc}, chemical formulas must be balanced to be
 useful in other reactions \cite{lund_introduction_2023}. This means that there
 must be the same number of each element before and after the reaction takes
-place to satisfy the Law of Conservation of Mass (\tref{TM_ConsMass}). Since
+place to satisfy the Law of Conservation of Mass (\tmref{TM_ConsMass}). Since
 changing the subscripts in a formula will change the type of molecule (for
 example, \ce{O3} is ozone, not oxygen), equations are balanced by introducing
 coefficients before each compound. If no coefficient is present, there is an
@@ -727,7 +733,10 @@ on.
 % #3 label
 {Law of Conservation of Mass}
 % #4 equation
-{Not Applicable}
+{$\forall\, e : E,\, r, p : \langle C\rangle ~|~ r.\text{count}(e) =
+    p.\text{count}(e)$, where $r$ represents the reactant side of a chemical
+  equation, $p$ represents the product side, and $\text{count}(e)$ returns the
+  number of atoms of element $e$ on the respective side of the equation.}
 % #5 description
 {
   This law states that ``matter can neither be created nor destroyed in a
@@ -899,21 +908,41 @@ models.
   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
     \hline
     \rowcolor[gray]{0.9}
-    Type Name   & Element                                                    \\
+    Type Name   & Element                                                   \\
     \hline
-    Type Def    & $E$ = \{ H, He, Li, Be, B, C, N, O, F, Ne, Na, Mg, Al, Si,
+    Type Def    & $E$ = \{H, He, Li, Be, B, C, N, O, F, Ne, Na, Mg, Al, Si,
     P, S, Cl, Ar, K, Ca, Sc, Ti, V, Cr, Mn, Fe, Co, Ni, Cu, Zn, Ga, Ge, As, Se,
     Br, Kr, Rb, Sr, Y, Zr, Nb, Mo, Tc, Ru, Rh, Pd, Ag, Cd, In, Sn, Sb, Te, I,
     Xe, Cs, Ba, La, Ce, Pr, Nd, Pm, Sm, Eu, Gd, Tb, Dy, Ho, Er, Tm, Yb, Lu, Hf,
     Ta, W, Re, Os, Ir, Pt, Au, Hg, Tl, Pb, Bi, Po, At, Rn, Fr, Ra, Ac, Th, Pa,
     U, Np, Pu, Am, Cm, Bk, Cf, Es, Fm, Md, No, Lr, Rf, Db, Sg, Bh, Hs, Mt, Ds,
-    Rg, Cn, Nh, Fl, Mc, Lv, Ts, Og \}                                        \\
+    Rg, Cn, Nh, Fl, Mc, Lv, Ts, Og\}                                        \\
 
     \hline
     Description & A type representing each element from
-    \cite{wikipedia_list_2023}.                                              \\
+    \cite{wikipedia_list_2023}.                                             \\
     \hline
-    Sources     & \cite{smith_assignment_2020}                               \\
+    Sources     & \cite{smith_assignment_2020}                              \\
+    \hline
+  \end{tabular}
+\end{minipage}\\
+~\newline
+
+\noindent
+\begin{minipage}{\textwidth}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
+    Type Name   & Compound                                                     \\
+    \hline
+    Type Def    & $C = \langle (E, \mathbb{Z}^+) \rangle$                      \\
+
+    \hline
+    Description & A type representing a compound (a sequence of elements, each
+    with a specified quantity).                                                \\
+    \hline
+    Sources     & --                                                           \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -1038,7 +1067,7 @@ and \iref{balance}, respectively.
     If a row of $\textbf{E}$ only has either a positive or negative entry, then
     there is an element that is either a reactant or a product but not both,
     which breaks the Law of Conservation of
-    Mass (\tref{TM_ConsMass}). \sjc{Is this a good place for this?}                    \\
+    Mass (\tmref{TM_ConsMass}). \sjc{Is this a good place for this?}                   \\
     %  &$\textbf{R}$ is the $m \times n$ matrix $(\textbf{A} \vert \textbf{0})$
     %  as close to reduced row echelon form (see \nameref{sec_termsDefs}) as possible
     %  from \iref{epcm}.
@@ -1082,7 +1111,7 @@ and \iref{balance}, respectively.
     \sjc{Is this correct?}                                                             \\
     \hline
     Output      & $\textbf{c}$, such that it is the smallest solution to               \\
-                & $\textbf{E}\textbf{c} = \textbf{0}$ from \tref{TM_MatEq}
+                & $\textbf{E}\textbf{c} = \textbf{0}$ from \tmref{TM_MatEq}
     %  \sjc{TM refs not working.}
     \sjc{Is this sufficient?}                                                          \\
     \hline
@@ -1405,13 +1434,13 @@ shows the dependencies of requirements on instance models.
   \centering
   \begin{tabular}{|c|c|c|c|c|c|c|c|}
     \hline
-                       & \tref{TM_MatEq} & \tref{TM_ConsMass} & \iref{convert} & \iref{feasible} & \iref{balance} & \ref{sec_DataConst} & \ref{sec_PropsCorrSol} \\
+                        & \tmref{TM_MatEq} & \tmref{TM_ConsMass} & \iref{convert} & \iref{feasible} & \iref{balance} & \ref{sec_DataConst} & \ref{sec_PropsCorrSol} \\
     \hline
-    \tref{TM_MatEq}    &                 &                    &                &                 &                &                     &                        \\ \hline
-    \tref{TM_ConsMass} &                 &                    &                &                 &                &                     &                        \\ \hline
-    \iref{convert}     &                 &                    &                &                 &                &                     & X                      \\ \hline
-    \iref{feasible}    &                 & X                  & X              &                 &                &                     &                        \\ \hline
-    \iref{balance}     & X               &                    & X              & X               &                &                     & X                      \\ \hline
+    \tmref{TM_MatEq}    &                  &                     &                &                 &                &                     &                        \\ \hline
+    \tmref{TM_ConsMass} &                  &                     &                &                 &                &                     &                        \\ \hline
+    \iref{convert}      &                  &                     &                &                 &                &                     & X                      \\ \hline
+    \iref{feasible}     &                  & X                   & X              &                 &                &                     &                        \\ \hline
+    \iref{balance}      & X                &                     & X              & X               &                &                     & X                      \\ \hline
   \end{tabular}
   \caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
   \label{Table:srs_trace}
@@ -1452,8 +1481,8 @@ shows the dependencies of requirements on instance models.
       \hline
                                       & \aref{A_elemCompDiff} & \aref{A_validInput} & \aref{A_correctInputFormat} & \aref{A_simpleForms} \\
       \hline
-      \tref{TM_MatEq}                 &                       &                     &                             &                      \\ \hline
-      \tref{TM_ConsMass}              &                       &                     &                             &                      \\ \hline
+      \tmref{TM_MatEq}                &                       &                     &                             &                      \\ \hline
+      \tmref{TM_ConsMass}             &                       &                     &                             &                      \\ \hline
       \iref{convert}                  & X                     & X                   & X                           & X                    \\ \hline
       \iref{feasible}                 &                       &                     &                             &                      \\ \hline
       \iref{balance}                  &                       &                     &                             &                      \\ \hline
