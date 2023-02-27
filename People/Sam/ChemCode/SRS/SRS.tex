@@ -28,6 +28,9 @@
 
 %\usepackage{refcheck}
 
+\newcommand*{\defDesc}{\mathbf{I}}
+% \newcommand*{\defDesc}{\rotatebox[origin=c]{180}{$\iota$}}
+
 \crefformat{footnote}{#2\footnotemark[#1]#3}
 
 \hypersetup{
@@ -226,6 +229,7 @@
   \nameref{sec_datatypes}                                                                                    \\
                       & 1.1.3         & Improve \tmref{TM_MatEq} based on feedback                           \\
                       & 1.1.4         & Add \progname{} abbreviation and missing definitions                 \\
+  Feb. 26, 2023       & 1.1.5         & Add \ddref{count}                                                    \\
   \bottomrule
 \end{tabularx}
 
@@ -286,13 +290,15 @@ symbols are listed in alphabetical order.
   $\textbf{b}$    & --            & $\mathbb{R}^{m}$          & generic vector                                   \\
   $\textbf{c}$    & --            & $(\mathbb{Z^+})^{n}$      & vector of the smallest coefficients that balance
   a chemical equation                                                                                            \\
+  $c$             & --            & $C$                       & generic compound                                 \\
   $\textbf{E}$    & --            & $\mathbb{R}^{m \times n}$ & matrix representation of a chemical equation     \\
-  $e$             & --            & $E$                       & general element                                  \\
+  $e$             & --            & $E$                       & generic element                                  \\
   $m$             & --            & $\mathbb{Z}^+$            & generic whole number                             \\
   $n$             & --            & $\mathbb{Z}^+$            & generic whole number                             \\
-  $p$             & --            & $\langle C \rangle$       & product side of a chemical equation              \\
-  $r$             & --            & $\langle C \rangle$       & reactant side of a chemical equation             \\
+  $P$             & --            & $\langle C \rangle$       & product side of a chemical equation              \\
+  $R$             & --            & $\langle C \rangle$       & reactant side of a chemical equation             \\
   $\textbf{x}$    & --            & $\mathbb{R}^{n}$          & generic vector                                   \\
+  $x$             & --            & $\mathbb{N}$              & generic natural number                           \\
   \bottomrule
 \end{tabularx}
 
@@ -349,6 +355,10 @@ $\mathbb{Z}^+$ and consists of the positive integers (excluding zero). The
 set of real numbers is denoted by $\mathbb{R}$ and consists of every number
 ``that can be expressed as an infinite decimal expansion''
 \cite{the_editors_of_encyclopaedia_britannica_real_2022}.
+
+The notation for definite description ($\defDesc$) is taken from
+% \cite{russell25}.
+\cite{farmer_simple_2023}.
 
 % \plt{If symbols are used to show mathematical operations,
 %   these should be summarized here.  In some cases the easiest way to summarize
@@ -748,10 +758,10 @@ on.
 % #3 label
 {Law of Conservation of Mass}
 % #4 equation
-{$\forall\, e : E,\, r, p : \langle C\rangle ~|~ r.\text{count}(e) =
-    p.\text{count}(e)$, where $r$ represents the reactant side of a chemical
-  equation, $p$ represents the product side, and $\text{count}(e)$ returns the
-  number of atoms of element $e$ on the respective side of the equation.}
+{$\forall\, e : E,\, R, P : \langle C\rangle ~|~ \sum\limits_{c \in R}
+    \text{count}(e, c) = \sum\limits_{c \in P} \text{count}(e,c)$, where $R$
+  represents the reactant side of a chemical equation, $P$ represents the
+  product side, and $\text{count}(e,c)$ is from \ddref{count}.}
 % #5 description
 {
   This law states that ``matter can neither be created nor destroyed in a
@@ -862,53 +872,49 @@ There are no general definitions.
 %\plt{Derivations are important for justifying a given GD.  You want it to be
 %  clear where the equation came from.}
 
+\newpage
+
 \subsubsection{Data Definitions}\label{sec_datadef}
 
-%\plt{The Data Definitions are definitions of symbols and equations that are
-%  given for the problem.  They are not derived; they are simply used by other
-%  models.}
-%
-%This section collects and defines all the data needed to build the instance
-%models. The dimension of each quantity is also given.
+This section collects and defines all the data needed to build the instance
+models. The dimension of each quantity is also given.
 
-There are no data definitions.
-
-%\noindent
-%\begin{minipage}{\textwidth}
-%\renewcommand*{\arraystretch}{1.5}
-%\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-%\hline
-%\rowcolor[gray]{0.9}
-%Number& DD\refstepcounter{datadefnum}\thedatadefnum \label{FluxCoil}\\
-%\hline
-%Label& \bf Heat flux out of coil\\
-%\hline
-%Symbol &$q_C$\\
-%\hline
-%% Units& $Mt^{-3}$\\
-%% \hline
-%  SI Units & \si{\watt\per\square\metre}\\
-%  \hline
-%  Equation&$q_C(t) = h_C (T_C - T_W(t))$, over area $A_C$\\
-%  \hline
-%  Description & 
-%                $T_C$ is the temperature of the coil (\si{\celsius}).  $T_W$ is the temperature of the water (\si{\celsius}).  
-%                The heat flux out of the coil, $q_C$ (\si{\watt\per\square\metre}), is found by
-%                assuming that Newton's Law 
-%                of Cooling applies (\aref{A_Newt_coil}).  This law (\dref{NL}) is used on the surface of
-%                the coil, which has area $A_C$ (\si{\square\metre}) and heat 
-%                transfer coefficient $h_C$
-%                (\si{\watt\per\square\metre\per\celsius}).  This equation
-%                assumes that the temperature of the coil is constant over time (\aref{A_tcoil}) and that it does not vary along the length
-%                of the coil (\aref{A_tlcoil}).
-%  \\
-%  \hline
-%  Sources& Citation here \\
-%  \hline
-%  Ref.\ By & \iref{ewat}\\
-%  \hline
-%\end{tabular}
-%\end{minipage}\\
+~\newline
+\noindent
+\begin{minipage}{\textwidth}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
+    Number      & DD\refstepcounter{datadefnum}\thedatadefnum \label{count} \\
+    \hline
+    Label       & \bf Count of an element in a compound                     \\
+    \hline
+    Symbol      & $\text{count}(e,c)$                                       \\
+    \hline
+    % Units& $Mt^{-3}$\\
+    % \hline
+    SI Units    & --                                                        \\
+    \hline
+    Equation    & \vspace{-3mm}
+    $\text{count}(e,c) = \begin{cases}
+                             \begin{aligned}
+           & \defDesc\, x : \mathbb{Z}^+ ~|~ (e, x) \in c, &  & \exists\,x : \mathbb{Z}^+ ~|~ (e, x) \in c \\
+           & 0, ~                                          &  & \text{otherwise}
+        \end{aligned}
+                           \end{cases}$
+    \vspace{1.5mm}                                                          \\
+    \hline
+    Description & The output of $\text{count}(e,c)$ is of type $\mathbb{N}$
+    and represents the number of atoms of a given element $e$ (of type $E$)
+    in a given compound $c$ (of type $C$).                                  \\
+    \hline
+    Sources     & --                                                        \\
+    \hline
+    Ref.\ By    & \tmref{TM_ConsMass}                                       \\
+    \hline
+  \end{tabular}
+\end{minipage}\\
 
 \subsubsection{Data Types}\label{sec_datatypes}
 
@@ -916,7 +922,6 @@ This section collects and defines all the data types needed to document the
 models.
 
 ~\newline
-
 \noindent
 \begin{minipage}{\textwidth}
   \renewcommand*{\arraystretch}{1.5}
@@ -974,7 +979,6 @@ The goals \gsref{G_feasible} and \gsref{G_balance} are solved by \iref{feasible}
 and \iref{balance}, respectively.
 
 ~\newline
-
 %\noindent
 %\begin{minipage}{\textwidth}
 %\renewcommand*{\arraystretch}{1.5}
@@ -1017,7 +1021,6 @@ and \iref{balance}, respectively.
 %\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
 %  where the derivation cannot be described under the Description field, it will
 %  be necessary to include this subsection.}
-
 \noindent
 \begin{minipage}{\textwidth}
   \renewcommand*{\arraystretch}{1.5}
@@ -1446,6 +1449,8 @@ shows the dependencies of theoretical models,
 general definitions, data definitions, instance models, likely changes, and
 unlikely changes on the assumptions. Table~\ref{Table:R_trace}
 shows the dependencies of requirements on instance models.
+
+\sjc{Add \ddref{count}}
 
 \begin{table}[h!]
   \centering
