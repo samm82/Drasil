@@ -62,9 +62,9 @@
 \newcommand{\colHwidth}{0.28\textwidth}
 
 % Used so that cross-references have a meaningful prefix
-\newcounter{defnum} %Definition Number
-\newcommand{\dthedefnum}{GD\thedefnum}
-\newcommand{\dref}[1]{GD\ref{#1}}
+\newcounter{gendefnum} %Definition Number
+\newcommand{\gdthegendefnum}{GD\thegendefnum}
+\newcommand{\gdref}[1]{GD\ref{#1}}
 \newcounter{datadefnum} %Datadefinition Number
 \newcommand{\ddthedatadefnum}{DD\thedatadefnum}
 \newcommand{\ddref}[1]{DD\ref{#1}}
@@ -100,6 +100,7 @@
 
 \newcommand{\deftheory}[9][Not Applicable]
 {
+  \vspace{-2mm}
 \noindent \rule{\textwidth}{0.5mm}
 \paragraph{Number: } TM\refstepcounter{theorynum}\thetheorynum
 \phantomsection \label{#2}
@@ -237,6 +238,7 @@
   Feb. 26, 2023       & 1.1.5         & Add \ddref{count}                                                    \\
   Feb. 27, 2023       & 1.1.6         & Add \ddref{matRep} and clarify \nameref{sec_mathNot} for types       \\
                       & 1.1.7         & Add \ddref{elems}                                                    \\
+                      & 1.1.8         & Add \gdref{chemMatEq}                                                \\
   \bottomrule
 \end{tabularx}
 
@@ -758,7 +760,7 @@ on.
 }
 % #8 Referenced by
 {
-  \iref{balance}
+  \gdref{chemMatEq}, \iref{balance}
 }
 % #9 derivation - not applicable by default
 {Not Applicable}
@@ -789,7 +791,7 @@ on.
 }
 % #8 Referenced by
 {
-  \iref{feasible}
+  \gdref{chemMatEq}, \iref{feasible}
 }
 % #9 derivation - not applicable by default
 {Not Applicable}
@@ -826,7 +828,7 @@ on.
 %}
 %% #8 Referenced by
 %{
-%  \dref{ROCT}
+%  \gdref{ROCT}
 %}
 %% #9 derivation - not applicable by default
 %{Not Applicable}
@@ -838,54 +840,50 @@ on.
 %  For instance, the TM could be Newton's Law of Cooling stated abstracting.  The
 %  GD could take the general law and apply it to get a 1D equation.}
 
-%This section collects the laws and equations that will be used in building the
-%instance models.
+This section collects the laws and equations that will be used in building the
+instance models.
 
-There are no general definitions.
+% There are no general definitions.
 
-%\noindent
-%\begin{minipage}{\textwidth}
-%\renewcommand*{\arraystretch}{1.5}
-%\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-%\hline
-%\rowcolor[gray]{0.9}
-%Number& GD\refstepcounter{defnum}\thedefnum \label{NL}\\
-%\hline
-%Label &\bf Newton's law of cooling \\
-%\hline
-%% Units&$MLt^{-3}T^0$\\
-%% \hline
-%SI Units&\si{\watt\per\square\metre}\\
-%\hline
-%Equation&$ q(t) = h \Delta T(t)$  \\
-%\hline
-%Description &
-%Newton's law of cooling describes convective cooling from a surface.  The law is
-%stated as: the rate of heat loss from a body is proportional to the difference
-%in temperatures between the body and its surroundings.
-%\\
-%& $q(t)$ is the thermal flux (\si{\watt\per\square\metre}).\\
-%& $h$ is the heat transfer coefficient, assumed independent of $T$ (\aref{A_hcoeff})
-%	(\si{\watt\per\square\metre\per\celsius}).\\
-%&$\Delta T(t)$= $T(t) - T_{\text{env}}(t)$ is the time-dependent thermal gradient
-%between the environment and the object (\si{\celsius}).
-%\\
-%\hline
-%  Source & Citation here \\
-%  \hline
-%  Ref.\ By & \ddref{FluxCoil}, \ddref{FluxPCM}\\
-%  \hline
-%\end{tabular}
-%\end{minipage}\\
-%
-%\subsubsection*{Detailed derivation of simplified rate of change of temperature}
+~\newline
+\noindent
+\begin{minipage}{\textwidth}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
+    Number      & GD\refstepcounter{gendefnum}\thegendefnum \label{chemMatEq} \\
+    \hline
+    Label       & \bf Matrix equation for chemical equation                   \\
+    \hline
+    % Units&$MLt^{-3}T^0$\\
+    % \hline
+    SI Units    & --                                                          \\
+    \hline
+    Equation    & $\textbf{E}\textbf{c} = \textbf{0}$                         \\
+    \hline
+    Description &
+    This is a specific instance of the matrix equation from \tmref{TM_MatEq}
+    with $\textbf{A} = \textbf{E}$ (from \ddref{matRep}),
+    $\textbf{x} = \textbf{c}$, and $\textbf{b} = \textbf{0}$ (since there
+    should be no difference between the number of atoms of each element on each
+    side of the equation). $\textbf{c}$ is the vector of the smallest
+    non-negative integers so that the Law of Conservation of Mass
+    (\tmref{TM_ConsMass}) is satisfied.                                       \\
+    \hline
+    Source      & \cite{hamid_balancing_2019}                                 \\
+    \hline
+    Ref.\ By    & \sjc{Fill in}                                               \\
+    \hline
+  \end{tabular}
+\end{minipage}\\
+
+% \subsubsection*{Detailed derivation of simplified rate of change of temperature}
 %
 %\plt{This may be necessary when the necessary information does not fit in the
 %  description field.}
 %\plt{Derivations are important for justifying a given GD.  You want it to be
 %  clear where the equation came from.}
-
-\newpage
 
 \subsubsection{Data Definitions}\label{sec_datadef}
 
