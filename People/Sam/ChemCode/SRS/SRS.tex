@@ -31,6 +31,11 @@
 \newcommand*{\defDesc}{\mathbf{I}}
 % \newcommand*{\defDesc}{\rotatebox[origin=c]{180}{$\iota$}}
 
+\newcommand*{\nonnegInt}{\mathbb{Z}_{\geq 0}}
+\newcommand*{\posInt}{\mathbb{Z}_{> 0}}
+\newcommand*{\nonnegReal}{\mathbb{R}_{\geq 0}}
+\newcommand*{\posReal}{\mathbb{R}_{> 0}}
+
 \crefformat{footnote}{#2\footnotemark[#1]#3}
 
 \hypersetup{
@@ -230,6 +235,7 @@
                       & 1.1.3         & Improve \tmref{TM_MatEq} based on feedback                           \\
                       & 1.1.4         & Add \progname{} abbreviation and missing definitions                 \\
   Feb. 26, 2023       & 1.1.5         & Add \ddref{count}                                                    \\
+  Feb. 27, 2023       & 1.1.6         & Add \ddref{matRep} and clarify \nameref{sec_mathNot} for types       \\
   \bottomrule
 \end{tabularx}
 
@@ -283,22 +289,24 @@ symbols are listed in alphabetical order.
 
 % \renewcommand{\arraystretch}{1.2}
 \noindent \begin{tabularx}{\textwidth}{l l l X} \toprule
-  \textbf{symbol} & \textbf{unit} & \textbf{type}             & \textbf{description}                             \\
+  \textbf{symbol} & \textbf{unit} & \textbf{type}             & \textbf{description}                         \\
   \midrule
-  $\textbf{0}$    & --            & $\mathbb{N}^{m}$          & zero vector                                      \\
-  $\textbf{A}$    & --            & $\mathbb{R}^{m \times n}$ & generic matrix                                   \\
-  $\textbf{b}$    & --            & $\mathbb{R}^{m}$          & generic vector                                   \\
-  $\textbf{c}$    & --            & $(\mathbb{Z^+})^{n}$      & vector of the smallest coefficients that balance
-  a chemical equation                                                                                            \\
-  $c$             & --            & $C$                       & generic compound                                 \\
-  $\textbf{E}$    & --            & $\mathbb{R}^{m \times n}$ & matrix representation of a chemical equation     \\
-  $e$             & --            & $E$                       & generic element                                  \\
-  $m$             & --            & $\mathbb{Z}^+$            & generic whole number                             \\
-  $n$             & --            & $\mathbb{Z}^+$            & generic whole number                             \\
-  $P$             & --            & $\langle C \rangle$       & product side of a chemical equation              \\
-  $R$             & --            & $\langle C \rangle$       & reactant side of a chemical equation             \\
-  $\textbf{x}$    & --            & $\mathbb{R}^{n}$          & generic vector                                   \\
-  $x$             & --            & $\mathbb{N}$              & generic natural number                           \\
+  $\textbf{0}$    & --            & $\nonnegInt^{m}$          & zero vector                                  \\
+  $\textbf{A}$    & --            & $\mathbb{R}^{m \times n}$ & generic matrix                               \\
+  $\textbf{b}$    & --            & $\mathbb{R}^{m}$          & generic vector                               \\
+  $\textbf{c}$    & --            & $\posInt^{n}$             & vector of the smallest coefficients
+  that balance a chemical equation                                                                           \\
+  $c$             & --            & $C$                       & generic compound                             \\
+  $\textbf{E}$    & --            & $\mathbb{R}^{m \times n}$ & matrix representation of a chemical equation \\
+  $e$             & --            & $E$                       & generic element                              \\
+  $i$             & --            & $\nonnegInt$              & generic non-negative integer                 \\
+  $j$             & --            & $\nonnegInt$              & generic non-negative integer                 \\
+  $m$             & --            & $\posInt$                 & generic positive integer                     \\
+  $n$             & --            & $\posInt$                 & generic positive integer                     \\
+  $P$             & --            & $\langle C \rangle$       & product side of a chemical equation          \\
+  $R$             & --            & $\langle C \rangle$       & reactant side of a chemical equation         \\
+  $\textbf{x}$    & --            & $\mathbb{R}^{n}$          & generic vector                               \\
+  $x$             & --            & $\nonnegInt$              & generic non-negative integer                 \\
   \bottomrule
 \end{tabularx}
 
@@ -327,34 +335,38 @@ symbols are listed in alphabetical order.
 
 \subsection{Mathematical Notation} \label{sec_mathNot}
 
-Matrices are written in bold uppercase letters (for example $\textbf{A}$), while
-vectors (one-dimensional matrices) are written in bold lowercase letters, (for
-example
+The set of non-negative integers (including zero) is denoted by $\nonnegInt$
+and the set of positive integers (excluding zero) is denoted by $\posInt$
+\cite{wikipedia_natural_2023}. The
+set of real numbers is denoted by $\mathbb{R}$ and consists of every number
+``that can be expressed as an infinite decimal expansion''
+\cite{the_editors_of_encyclopaedia_britannica_real_2022}. The sets of
+non-negative (including zero) and positive (excluding zero) real numbers are
+denoted by $\nonnegReal$ and $\posReal$, respectively
+\cite{wikipedia_positive_2023}.
+
+Matrices are written in bold uppercase letters (for example $\textbf{A}$),
+while vectors (one-dimensional matrices) are written in bold lowercase letters,
+(for example
 $\textbf{x}$) \cite{osullivan_appendix_2010}. The type of a matrix will be
 denoted by the type of each value in the matrix with the matrix's dimensions
-as a superscript; for example, a matrix of natural numbers with two rows and
-three columns is of type $\mathbb{N}^{2 \times 3}$
+as a superscript; for example, a matrix of real numbers with two rows and
+three columns is of type $\mathbb{R}^{2 \times 3}$
 \cite[p.~3]{golub_matrix_2013}. Since vectors are one-dimensional
 matrices, their types only have one dimension; for example, a row vector with
-four entries is denoted by $\mathbb{N}^{4}$ \cite[p.~4]{golub_matrix_2013}.
-The zero matrix is a special
+four real number entries is denoted by $\mathbb{R}^{4}$
+\cite[p.~4]{golub_matrix_2013}. The zero matrix is a special
 type of matrix where each element is zero and is denoted by $\textbf{0}$
 \cite{weisstein_zero_2023}.
-% Individual entries in a matrix are written in
-% lowercase letters with their row and column number, in that order, written as
-% subscripts (for example $a_{12}$) \cite{osullivan_appendix_2010}; these
+Individual entries in a matrix are written in
+lowercase letters with their row and column number, in that order, written as
+subscripts (for example $a_{12}$) \cite{osullivan_appendix_2010}.
+% ; these
 % subscripts are sometimes separated by a comma for clarity (for example
-% $a_{12,34}$) \cite{latecki_matrices_2018}. 
+% $a_{12,34}$) \cite{latecki_matrices_2018}.
 Two (or more) matrices with the same
 number of rows can be joined together to form an ``augmented matrix'', written
 as $\left(\textbf{A}\vert \textbf{B}\right)$ \cite{taboga_augmented_2021}.
-
-The set of natural numbers is denoted by $\mathbb{N}$ and consists of the
-non-negative integers (including zero). The set of whole numbers is denoted by
-$\mathbb{Z}^+$ and consists of the positive integers (excluding zero). The
-set of real numbers is denoted by $\mathbb{R}$ and consists of every number
-``that can be expressed as an infinite decimal expansion''
-\cite{the_editors_of_encyclopaedia_britannica_real_2022}.
 
 The notation for definite description ($\defDesc$) is taken from
 % \cite{russell25}.
@@ -414,7 +426,7 @@ present the documentation is to ``fake'' a rational design process
 
 The scope of the requirements includes determining if a given chemical equation
 is feasible (see \nameref{sec_termsDefs}) and, if it is, balancing it using the
-smallest whole number coefficients possible, regardless of whether or not the
+smallest positive integer coefficients possible, regardless of whether or not the
 chemical formulas in the equation are correct or if the reaction would take
 place in a real-world setting.
 
@@ -496,7 +508,7 @@ and its environment.
           \item Format the inputted chemical equation as a matrix
           \item Determine if the inputted chemical equation is feasible
           \item If the inputted chemical equation is feasible, find its balanced form with
-                the smallest whole number coefficients
+                the smallest positive integer coefficients
         \end{itemize}
   \item External Library Responsibilities:
         \begin{itemize}
@@ -544,7 +556,7 @@ the instance models.
 \progname{} is intended to balance chemical equations (including ones with
 nonstoichiometric compounds; see \nameref{sec_termsDefs}) so
 they can be useful for other computations \cite{lund_introduction_2023}.
-Additionally, since molecules only exist in whole numbers (since dividing a
+Additionally, since molecules only exist in positive integers (since dividing a
 molecule changes its composition into new types of molecules), the coefficients
 used to balance the equation must be whole
 numbers, and by convention should be as small as possible
@@ -576,7 +588,7 @@ easier to correctly understand the requirements:
 
   \item \textbf{Nonstoichiometric Compound}: ``Any solid chemical compound in
         which the numbers of atoms of the elements present cannot be expressed as a
-        ratio of small whole numbers''
+        ratio of small positive integers''
         \cite{the_editors_of_encyclopaedia_britannica_nonstoichiometric_2010}.
 
   \item \textbf{Stoichiometry}: ``The calculation of the quantities of reactants
@@ -650,7 +662,7 @@ of \progname{} are:
     a given chemical reaction is feasible (see \nameref{sec_termsDefs}).
 
   \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_balance}:] Balance the
-    chemical equation with the smallest whole number coefficients possible.
+    chemical equation with the smallest positive integer coefficients possible.
 
 \end{itemize}
 
@@ -886,32 +898,76 @@ models. The dimension of each quantity is also given.
   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
     \hline
     \rowcolor[gray]{0.9}
-    Number      & DD\refstepcounter{datadefnum}\thedatadefnum \label{count} \\
+    Number      & DD\refstepcounter{datadefnum}\thedatadefnum \label{count}  \\
     \hline
-    Label       & \bf Count of an element in a compound                     \\
+    Label       & \bf Count of an element in a compound                      \\
     \hline
-    Symbol      & $\text{count}(e,c)$                                       \\
+    Symbol      & $\text{count}(e,c)$                                        \\
     \hline
     % Units& $Mt^{-3}$\\
     % \hline
-    SI Units    & --                                                        \\
+    SI Units    & --                                                         \\
     \hline
     Equation    & \vspace{-3mm}
     $\text{count}(e,c) = \begin{cases}
                              \begin{aligned}
-           & \defDesc\, x : \mathbb{Z}^+ ~|~ (e, x) \in c, &  & \exists\,x : \mathbb{Z}^+ ~|~ (e, x) \in c \\
-           & 0, ~                                          &  & \text{otherwise}
+           & \defDesc\, x : \posReal ~|~ (e, x) \in c, &  & \exists\,x : \posReal ~|~ (e, x) \in c \\
+           & 0, ~                                      &  & \text{otherwise}
         \end{aligned}
                            \end{cases}$
-    \vspace{1.5mm}                                                          \\
+    \vspace{1.5mm}                                                           \\
     \hline
-    Description & The output of $\text{count}(e,c)$ is of type $\mathbb{N}$
+    Description & The output of $\text{count}(e,c)$ is of type $\nonnegReal$
     and represents the number of atoms of a given element $e$ (of type $E$)
-    in a given compound $c$ (of type $C$).                                  \\
+    in a given compound $c$ (of type $C$).                                   \\
     \hline
-    Sources     & --                                                        \\
+    Sources     & --                                                         \\
     \hline
-    Ref.\ By    & \tmref{TM_ConsMass}                                       \\
+    Ref.\ By    & \tmref{TM_ConsMass}, \ddref{matRep}                        \\
+    \hline
+  \end{tabular}
+\end{minipage}\\
+
+~\newline
+\noindent
+\begin{minipage}{\textwidth}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
+    Number      & DD\refstepcounter{datadefnum}\thedatadefnum \label{matRep} \\
+    \hline
+    Label       & \bf Matrix representation of a chemical equation           \\
+    \hline
+    Symbol      & $\textbf{E}$                                               \\
+    \hline
+    % Units& $Mt^{-3}$\\
+    % \hline
+    SI Units    & --                                                         \\
+    \hline
+    Equation    & \vspace{-3mm}
+    $ \forall\, e_i : E, c_j \in R \cup P ~|~ e_{ij} = \begin{cases}
+                                                           \begin{aligned}
+           & \text{count}(e_i, c_j),  &  & e_i \in c_j \land c_j \in R \\
+           & -\text{count}(e_i, c_j), &  & \text{otherwise}
+        \end{aligned}
+                                                         \end{cases}$
+    \vspace{1.5mm}                                                           \\
+    \hline
+    Description & $\mathbf{E}$ is a matrix of type
+    $\nonnegReal^{
+        \sjc{\text{Use set of elements in equation}} \times |R\, \cup\, P|}$
+    where $R$ represents the reactant side of a chemical equation, $P$
+    represents the product side, and $\text{count}(e,c)$ is from \ddref{count}.
+    It represents a given chemical equation as a matrix where each row
+    corresponds to a different element and each column corresponds to a
+    different compound. Positive entries indicate the compound is a reactant,
+    negative entries indicate the compound is a product, and zeroes indicate
+    the corresponding element is not present in the corresponding compound.  \\
+    \hline
+    Sources     & --                                                         \\
+    \hline
+    Ref.\ By    & \sjc{Fill in}                                              \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -956,11 +1012,11 @@ models.
     \rowcolor[gray]{0.9}
     Type Name   & Compound                                                     \\
     \hline
-    Type Def    & $C = \langle (E, \mathbb{Z}^+) \rangle$                      \\
+    Type Def    & $C = \langle (E, \posReal) \rangle$                          \\
 
     \hline
     Description & A type representing a compound (a sequence of elements, each
-    with a specified quantity).                                                \\
+    with a specified positive quantity).                                       \\
     \hline
     Sources     & --                                                           \\
     \hline
@@ -1135,7 +1191,7 @@ and \iref{balance}, respectively.
     \hline
     Description & $\textbf{E}$ is a matrix representing the amount of each element
     in each compound in a reaction from \iref{convert}. \sjc{Is this necessary?}       \\
-                & $\textbf{c}$ is a vector of whole number coefficients for each
+                & $\textbf{c}$ is a vector of positive integer coefficients for each
     compound in the reaction (in the order inputted) so that the equation is balanced. \\
                 & $\textbf{0}$ is the zero matrix (see \nameref{sec_mathNot}).         \\
     %  & The above equation applies as long as the water is in liquid form,
@@ -1268,7 +1324,7 @@ qualities that the software is expected to exhibit.
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_balance}:] If the
     inputted equation is feasible, balance the chemical equation with the smallest
-    whole number coefficients possible (from \iref{balance}).
+    positive integer coefficients possible (from \iref{balance}).
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_feasOutput}:] If the
     inputted equation is feasible, output a balanced form of the equation in the
