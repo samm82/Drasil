@@ -1450,19 +1450,20 @@ general definitions, data definitions, instance models, likely changes, and
 unlikely changes on the assumptions. Table~\ref{Table:R_trace}
 shows the dependencies of requirements on instance models.
 
-\sjc{Add \ddref{count}}
-
 \begin{table}[h!]
   \centering
-  \begin{tabular}{|c|c|c|c|c|c|c|c|}
+  \begin{tabular}{|c|c|c|c|c|c|c|}
     \hline
-                        & \tmref{TM_MatEq} & \tmref{TM_ConsMass} & \iref{convert} & \iref{feasible} & \iref{balance} & \ref{sec_DataConst} & \ref{sec_PropsCorrSol} \\
+                           & \tmref{TM_MatEq} & \tmref{TM_ConsMass} & \ddref{count} & \iref{convert} & \iref{feasible} & \iref{balance} \\
     \hline
-    \tmref{TM_MatEq}    &                  &                     &                &                 &                &                     &                        \\ \hline
-    \tmref{TM_ConsMass} &                  &                     &                &                 &                &                     &                        \\ \hline
-    \iref{convert}      &                  &                     &                &                 &                &                     & X                      \\ \hline
-    \iref{feasible}     &                  & X                   & X              &                 &                &                     &                        \\ \hline
-    \iref{balance}      & X                &                     & X              & X               &                &                     & X                      \\ \hline
+    \tmref{TM_MatEq}       &                  &                     &               &                &                 &                \\ \hline
+    \tmref{TM_ConsMass}    &                  &                     & X             &                &                 &                \\ \hline
+    \ddref{count}          &                  &                     &               &                &                 &                \\ \hline
+    \iref{convert}         &                  &                     &               &                &                 & X              \\ \hline
+    \iref{feasible}        &                  & X                   &               & X              &                 &                \\ \hline
+    \iref{balance}         & X                &                     &               & X              & X               & X              \\ \hline
+    \ref{sec_DataConst}    &                  &                     &               &                &                 &                \\ \hline
+    \ref{sec_PropsCorrSol} &                  &                     &               & X              &                 & X              \\ \hline
   \end{tabular}
   \caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
   \label{Table:srs_trace}
@@ -1505,6 +1506,7 @@ shows the dependencies of requirements on instance models.
       \hline
       \tmref{TM_MatEq}                &                       &                     &                             &                      \\ \hline
       \tmref{TM_ConsMass}             &                       &                     &                             &                      \\ \hline
+      \ddref{count}                   &                       &                     &                             &                      \\ \hline
       \iref{convert}                  & X                     & X                   & X                           & X                    \\ \hline
       \iref{feasible}                 &                       &                     &                             &                      \\ \hline
       \iref{balance}                  &                       &                     &                             &                      \\ \hline
