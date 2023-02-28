@@ -240,6 +240,7 @@
                       & 1.2.6         & Add \ddref{elems}                                                    \\
                       & 1.2.7         & Add \gdref{chemMatEq}                                                \\
   Feb. 28, 2023       & 1.2.8         & Add \ddref{gcf}                                                      \\
+                      & 1.2.9         & Add notion of parametric solution to \gdref{chemMatEq}               \\
   \bottomrule
 \end{tabularx}
 
@@ -596,10 +597,10 @@ easier to correctly understand the requirements:
         ratio of small positive integers''
         \cite{the_editors_of_encyclopaedia_britannica_nonstoichiometric_2010}.
 
-  \item \textbf{Reduced Row Echelon Form}: A form of a matrix where every row
-        with only zeros is at the bottom and every column but the rightmost one
-        has all zeroes except for one one (which has only zeroes to its left)
-        \cite{taboga_reduced_2021}.
+        % \item \textbf{Reduced Row Echelon Form}: A form of a matrix where every row
+        %       with only zeros is at the bottom and every column but the rightmost one
+        %       has all zeroes except for one one (which has only zeroes to its left)
+        %       \cite{taboga_reduced_2021}.
 
   \item \textbf{Stoichiometry}: ``The calculation of the quantities of reactants
         or products in a chemical reaction using the relationships found in a balanced
@@ -835,6 +836,8 @@ on.
 %% #9 derivation - not applicable by default
 %{Not Applicable}
 
+\newpage
+
 \subsubsection{General Definitions}\label{sec_gendef}
 
 %\plt{Generally the reduction
@@ -854,40 +857,43 @@ instance models.
   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
     \hline
     \rowcolor[gray]{0.9}
-    Number      & GD\refstepcounter{gendefnum}\thegendefnum \label{chemMatEq} \\
+    Number      & GD\refstepcounter{gendefnum}\thegendefnum \label{chemMatEq}   \\
     \hline
-    Label       & \bf Matrix equation for chemical equation                   \\
+    Label       & \bf Matrix equation for chemical equation                     \\
     \hline
     % Units&$MLt^{-3}T^0$\\
     % \hline
-    SI Units    & --                                                          \\
+    SI Units    & --                                                            \\
     \hline
-    Equation    & $\textbf{E}\textbf{c} = \textbf{0}$                         \\
+    Equation    & $\textbf{E}\textbf{c} = \textbf{0}$                           \\
     \hline
     Description &
     This is a specific instance of the matrix equation from \tmref{TM_MatEq}
     with $\textbf{A} = \textbf{E}$ (from \ddref{matRep}),
     $\textbf{x} = \textbf{c}$, and $\textbf{b} = \textbf{0}$ (since there
     should be no difference between the number of atoms of each element on each
-    side of the equation).                                                    \\
+    side of the equation).                                                      \\
 
-                & $\textbf{c}$ is the vector of the smallest
-    non-negative integers so that the Law of Conservation of Mass
-    (\tmref{TM_ConsMass}) is satisfied. This will be found by putting
-    $(\textbf{E}|\textbf{0})$ in reduced row echelon form, which will yield a
-    parametric solution. Every entry in the last non-zero column will be
-    multiplied by the lowest common denominator of the column and subtracted
-    from zero to get the coefficients for the compound associated with the
-    column that has the first ``1'' of the row. If there is one more compound
-    than element (see \aref{A_elemCompDiff}) or if any rows have all zeroes,
-    then the last coefficient or any columns without a leading one,
-    respectively, become this lowest common denominator.
-    \sjc{Double check this}
+                & $\textbf{c}$ is a vector of coefficients for the compounds in
+    the chemical equation such that the Law of Conservation of Mass
+    (\tmref{TM_ConsMass}) is satisfied. Since normal chemical equations are
+    underdetermined \cite{denker_balancing_2012}, $\textbf{c}$ is a parametric
+    solution \cite{hur_sys_2008}.
+    % This will be found by putting
+    % $(\textbf{E}|\textbf{0})$ in reduced row echelon form, which will yield a
+    % parametric solution. Every entry in the last non-zero column will be
+    % multiplied by the lowest common denominator of the column and subtracted
+    % from zero to get the coefficients for the compound associated with the
+    % column that has the first ``1'' of the row. If there is one more compound
+    % than element (see \aref{A_elemCompDiff}) or if any rows have all zeroes,
+    % then the last coefficient or any columns without a leading one,
+    % respectively, become this lowest common denominator.
+    % \sjc{Double check this}
     \\
     \hline
-    Source      & \cite{hamid_balancing_2019}                                 \\
+    Source      & \cite{hamid_balancing_2019}                                   \\
     \hline
-    Ref.\ By    & \sjc{Fill in}                                               \\
+    Ref.\ By    & \sjc{Fill in}                                                 \\
     \hline
   \end{tabular}
 \end{minipage}\\
