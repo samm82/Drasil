@@ -240,7 +240,8 @@
                       & 1.2.6         & Add \ddref{elems}                                                    \\
                       & 1.2.7         & Add \gdref{chemMatEq}                                                \\
   Feb. 28, 2023       & 1.2.8         & Add \ddref{gcf}                                                      \\
-                      & 1.2.9         & Add notion of parametric solution to \gdref{chemMatEq}               \\
+                      & 1.2.9         & Add notion of parametric solution to \gdref{chemMatEq} and add
+  \iref{balance_new}                                                                                         \\
   \bottomrule
 \end{tabularx}
 
@@ -873,12 +874,12 @@ instance models.
     $\textbf{x} = \textbf{c}$, and $\textbf{b} = \textbf{0}$ (since there
     should be no difference between the number of atoms of each element on each
     side of the equation).                                                      \\
-
                 & $\textbf{c}$ is a vector of coefficients for the compounds in
     the chemical equation such that the Law of Conservation of Mass
     (\tmref{TM_ConsMass}) is satisfied. Since normal chemical equations are
     underdetermined \cite{denker_balancing_2012}, $\textbf{c}$ is a parametric
-    solution \cite{hur_sys_2008}.
+    solution \cite{hur_sys_2008}.                                               \\
+                & $\textbf{0}$ is the zero matrix (see \nameref{sec_mathNot}).  \\
     % This will be found by putting
     % $(\textbf{E}|\textbf{0})$ in reduced row echelon form, which will yield a
     % parametric solution. Every entry in the last non-zero column will be
@@ -888,12 +889,11 @@ instance models.
     % than element (see \aref{A_elemCompDiff}) or if any rows have all zeroes,
     % then the last coefficient or any columns without a leading one,
     % respectively, become this lowest common denominator.
-    % \sjc{Double check this}
-    \\
+    % \sjc{Double check this}\\
     \hline
     Source      & \cite{hamid_balancing_2019}                                   \\
     \hline
-    Ref.\ By    & \sjc{Fill in}                                                 \\
+    Ref.\ By    & \iref{balance_new}                                            \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -1020,7 +1020,7 @@ models. The dimension of each quantity is also given.
     \hline
     Sources     & \cite{hamid_balancing_2019}                                \\
     \hline
-    Ref.\ By    & \sjc{Fill in}                                              \\
+    Ref.\ By    & \iref{balance_new}                                         \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -1055,7 +1055,7 @@ models. The dimension of each quantity is also given.
     \hline
     Sources     & --                                                      \\
     \hline
-    Ref.\ By    & \sjc{Fill in}                                           \\
+    Ref.\ By    & \iref{balance_new}                                      \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -1290,6 +1290,38 @@ and \iref{balance}, respectively.
     Sources     & \cite{hamid_balancing_2019}                                          \\
     \hline
     Ref.\ By    & \ucref{UC_diffSolveMethod}                                           \\
+    \hline
+  \end{tabular}
+\end{minipage}\\
+
+\noindent
+\begin{minipage}{\textwidth}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
+    Number      & IM\refstepcounter{instnum}\theinstnum \label{balance_new}        \\
+    \hline
+    Label       & \bf Vector of compound coefficients in balanced equation         \\
+    \hline
+    Input       & $\textbf{E}$ from \ddref{matRep}                                 \\
+    \hline
+    Output      & $\textbf{c}$ from \gdref{chemMatEq}, such that
+    $\text{gcf}(\textbf{c}) = 1$ (from \ddref{gcf})                                \\
+    \hline
+    Description & $\textbf{E}$ is a matrix representing the amount of each element
+    in each compound in a chemical equation from \ddref{matRep}.                   \\
+                & $\textbf{c}$ is a vector of the smallest positive integer
+    coefficients for each compound in the reaction (in the order inputted) so that
+    the chemical equation is balanced.                                             \\
+    %  & The above equation applies as long as the water is in liquid form,
+    %  $0<T_W<100^o\text{C}$, where $0^o\text{C}$ and $100^o\text{C}$ are the melting
+    %  and boiling points of water, respectively (\aref{A_OpRange}, \aref{A_Pressure}).
+    %  \\
+    \hline
+    Sources     & \cite{hamid_balancing_2019}                                      \\
+    \hline
+    Ref.\ By    & \ucref{UC_diffSolveMethod}                                       \\
     \hline
   \end{tabular}
 \end{minipage}\\
