@@ -174,8 +174,8 @@
   Jan. 25, 2023       & 0.2.3         & Add references between sections for notation and
   definitions                                                                                                \\
                       & 0.2.4         & Abstract \iref{feasible}                                             \\
-                      & 0.2.5         & Add IM for converting chemical equation to a matrix
-  (\iref{convert}), along with relevant reference information                                                \\
+                      & 0.2.5         & Add IM for converting chemical
+  equation to a matrix, along with relevant reference information                                            \\
                       & 0.2.6         & Rename and add input constraint to \iref{balance}                    \\
                       & 0.2.7         & Add note about \iref{balance} returning the smallest solution        \\
                       & 0.2.8         & Add TM for matrix equation (\tmref{TM_MatEq})                        \\
@@ -195,7 +195,8 @@
   relevant reference information                                                                             \\
                       & 0.4.3         & Add TM for the Law of Conservation of Mass
   (\tmref{TM_ConsMass})                                                                                      \\
-                      & 0.4.4         & Represent input to \iref{convert} as two sequences of chemical
+                      & 0.4.4         & Represent input to IM for converting
+  chemical equation to a matrix as two sequences of chemical
   formulas, add assumptions about user input, and remove infeasible
   likely change                                                                                              \\
   Jan. 29, 2023       & 0.5.0         & Add NFRs for understandability
@@ -223,8 +224,10 @@
   in \nameref{sec_instance}                                                                                  \\
                       & 0.6.5         & Reformat and clarify \nameref{sec_LCs}                               \\
   Feb. 3, 2023        & 0.6.6         & Add type notation and information                                    \\
-                      & 0.6.7         & Fill in \nameref{sec_UCs}, add likely change for identifying
-  more types of reactions (\lcref{LC_classMoreRxns}), and reference \aref{A_elemCompDiff} in \iref{convert}  \\
+                      & 0.6.7         & Fill in \nameref{sec_UCs}, add
+  likely change for identifying
+  more types of reactions (\lcref{LC_classMoreRxns}), and reference
+  \aref{A_elemCompDiff} in IM for converting chemical equation to a matrix                                   \\
                       & 0.6.8         & Fill in \nameref{sec_traceMats} and remove more unnecessary content  \\
                       & 1.0           & Fill in data constraints sections, update traceability matrices, and
   finalize formatting                                                                                        \\
@@ -242,6 +245,11 @@
   Feb. 28, 2023       & 1.2.8         & Add \ddref{gcf}                                                      \\
                       & 1.2.9         & Add notion of parametric solution to \gdref{chemMatEq} and add
   \iref{balance_new}                                                                                         \\
+  \bottomrule~                                                                                               \\
+  ~                                                                                                          \\
+  \toprule {\bf Date} & {\bf Version} & {\bf Notes}                                                          \\
+  \midrule
+  Feb. 28, 2023       & 1.2.10        & Remove old IM1                                                       \\
   \bottomrule
 \end{tabularx}
 
@@ -708,19 +716,19 @@ is used.
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_elemCompDiff}:]
     For all inputted chemical equations, there is at most one more compound than
     element. \sjc{Should this be an assumption or a requirement?}
-    [\iref{convert}, \ucref{UC_allEqsPermitted}]
+    [\gdref{matRep}, \ucref{UC_allEqsPermitted}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_validInput}:]
     All inputted chemical formulas describe real chemical formulas.
-      [\iref{convert}]
+      [\gdref{matRep}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_correctInputFormat}:]
     All inputted chemical formulas are formatted following some set of
-    agreed-upon conventions.	[\iref{convert}, \lcref{LC_incorrectInputFormat}]
+    agreed-upon conventions.	[\gdref{matRep}, \lcref{LC_incorrectInputFormat}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_simpleForms}:]
     All inputted chemical formulas are simple; i.e., only consist of atomic symbols
-    and subscripts.	[\iref{convert}, \lcref{LC_complexForms}]
+    and subscripts.	[\gdref{matRep}, \lcref{LC_complexForms}]
 
 \end{itemize}
 
@@ -1008,15 +1016,26 @@ models. The dimension of each quantity is also given.
     \vspace{1.5mm}                                                           \\
     \hline
     Description & $\mathbf{E}$ is a matrix of type
-    $\mathbb{R}^{|\text{elems}(R, P)| \times |R\, \cup\, P|}$
-    where $R$ represents the reactant side of a chemical equation, $P$
-    represents the product side, $\text{count}(e,c)$ is from \ddref{count},
-    and $\text{elems}(R,P)$ is from \ddref{elems}.
+    $\mathbb{R}^{|\text{elems}(R, P)| \times |R\, \cup\, P|}$ constructed
+    from $R$, a sequence of compounds ($\langle C \rangle$) on the reactant
+    side of a chemical equation, and $P$ a sequence of compounds
+    ($\langle C \rangle$) on the product side.
     It represents a given chemical equation as a matrix where each row
     corresponds to a different element and each column corresponds to a
     different compound. Positive entries indicate the compound is a reactant,
     negative entries indicate the compound is a product, and zeroes indicate
-    the corresponding element is not present in the corresponding compound.  \\
+    the corresponding element is not present in the corresponding compound.
+
+    ~\newline
+    $\text{count}(e,c)$ is from \ddref{count} and $\text{elems}(R,P)$ is
+    from \ddref{elems}.
+
+    ~\newline
+    Each compound present in the inputted sequences are
+    assumed to be valid (\aref{A_validInput}), be formatted correctly
+    (\aref{A_correctInputFormat}), and only consist of atomic symbols and
+    subscripts (\aref{A_simpleForms}). The number of columns is assumed to be
+    at most one more than the number of rows (\aref{A_elemCompDiff}).        \\
     \hline
     Sources     & \cite{hamid_balancing_2019}                                \\
     \hline
@@ -1165,47 +1184,6 @@ and \iref{balance}, respectively.
 %\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
 %  where the derivation cannot be described under the Description field, it will
 %  be necessary to include this subsection.}
-\noindent
-\begin{minipage}{\textwidth}
-  \renewcommand*{\arraystretch}{1.5}
-  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-    \hline
-    \rowcolor[gray]{0.9}
-    Number      & IM\refstepcounter{instnum}\theinstnum \label{convert}              \\
-    \hline
-    Label       & \bf Matrix representation of elements present in reaction          \\
-    \hline
-    Input       & Two sequences of representations of chemical formulas; one for the
-    reactants and one for the products.                                              \\
-    \hline
-    Output      & \textbf{E}, a matrix such that each entry
-    indicates the amount of a given element in a given compound; each row
-    corresponds to a different element and each column corresponds to a different
-    compound. Positive entries indicate the compound is a reactant, negative
-    entries indicate the compound is a product, and zeroes indicate the
-    corresponding element is not present in the corresponding compound.              \\
-    \hline
-    Description & Each chemical formula present in the inputted sequences are
-    assumed to be valid (\aref{A_validInput}), be formatted correctly
-    (\aref{A_correctInputFormat}), and only consist of atomic symbols and
-    subscripts (\aref{A_simpleForms}). The number of columns is assumed to be
-    at most one more than the number of rows (\aref{A_elemCompDiff}).
-    \\
-    \hline
-    Sources     & \cite{hamid_balancing_2019}                                        \\
-    \hline
-    Ref.\ By    & \iref{feasible}, \iref{balance}                                    \\
-    \hline
-  \end{tabular}
-\end{minipage}\\
-
-~\newline
-
-%\subsubsection*{Derivation of ...}
-%
-%\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
-%  where the derivation cannot be described under the Description field, it will
-%  be necessary to include this subsection.}
 
 \noindent
 \begin{minipage}{\textwidth}
@@ -1217,7 +1195,7 @@ and \iref{balance}, respectively.
     \hline
     Label       & \bf Determination of feasibility                                     \\
     \hline
-    Input       & $\textbf{E}$ from \iref{convert}                                     \\
+    Input       & $\textbf{E}$ from \gdref{matRep}                                     \\
     %  & The input is constrained so that $T_\text{init} \leq T_C$ (\aref{A_charge})\\
     \hline
     Output      & $\textsc{F}$ if a row of $\textbf{E}$ does not have a positive and a
@@ -1225,7 +1203,7 @@ and \iref{balance}, respectively.
     $\textsc{T}$ otherwise                                                             \\
     \hline
     Description & $\textbf{E}$ is a matrix representing the amount of each element
-    in each compound in a reaction from \iref{convert}. \sjc{Is this necessary?}
+    in each compound in a reaction from \gdref{matRep}. \sjc{Is this necessary?}
     If a row of $\textbf{E}$ only has either a positive or negative entry, then
     there is an element that is either a reactant or a product but not both,
     which breaks the Law of Conservation of
@@ -1267,7 +1245,7 @@ and \iref{balance}, respectively.
     \hline
     Label       & \bf Vector of compound coefficients in balanced equation             \\
     \hline
-    Input       & $\textbf{E}$ from \iref{convert}                                     \\
+    Input       & $\textbf{E}$ from \gdref{matRep}                                     \\
                 & The input is constrained so that $\textbf{E}$ is feasible
     (\iref{feasible}).
     \sjc{Is this correct?}                                                             \\
@@ -1278,7 +1256,7 @@ and \iref{balance}, respectively.
     \sjc{Is this sufficient?}                                                          \\
     \hline
     Description & $\textbf{E}$ is a matrix representing the amount of each element
-    in each compound in a reaction from \iref{convert}. \sjc{Is this necessary?}       \\
+    in each compound in a reaction from \gdref{matRep}. \sjc{Is this necessary?}       \\
                 & $\textbf{c}$ is a vector of positive integer coefficients for each
     compound in the reaction (in the order inputted) so that the equation is balanced. \\
                 & $\textbf{0}$ is the zero matrix (see \nameref{sec_mathNot}).         \\
@@ -1294,6 +1272,7 @@ and \iref{balance}, respectively.
   \end{tabular}
 \end{minipage}\\
 
+~\newline
 \noindent
 \begin{minipage}{\textwidth}
   \renewcommand*{\arraystretch}{1.5}
@@ -1387,7 +1366,7 @@ There are no input data constraints.
 \subsubsection{Properties of a Correct Solution} \label{sec_PropsCorrSol}
 
 The equation from \iref{balance} can be used as a ``sanity'' check, using the
-original input (formatted as a matrix according to \iref{convert}) as
+original input (formatted as a matrix according to \gdref{matRep}) as
 $\textbf{E}$ and the outputted vector of coefficients as $\textbf{c}$.
 Performing this matrix multiplication should result in the zero matrix,
 $\textbf{0}$. Additionally, since the coefficients should be as small as
@@ -1433,7 +1412,7 @@ qualities that the software is expected to exhibit.
     representation of a chemical equation.
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_convert}:] Convert the
-    inputted equation to matrix form (from \iref{convert}).
+    inputted equation to matrix form (from \gdref{matRep}).
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_feasible}:] Determine if the
     inputted equation is feasible (see \nameref{sec_termsDefs};	from
@@ -1630,16 +1609,16 @@ shows the dependencies of requirements on instance models.
   \centering
   \begin{tabular}{|c|c|c|c|c|c|c|}
     \hline
-                           & \tmref{TM_MatEq} & \tmref{TM_ConsMass} & \ddref{count} & \iref{convert} & \iref{feasible} & \iref{balance} \\
+                           & \tmref{TM_MatEq} & \tmref{TM_ConsMass} & \gdref{matRep} & \ddref{count} & \iref{feasible} & \iref{balance} \\
     \hline
-    \tmref{TM_MatEq}       &                  &                     &               &                &                 &                \\ \hline
-    \tmref{TM_ConsMass}    &                  &                     & X             &                &                 &                \\ \hline
-    \ddref{count}          &                  &                     &               &                &                 &                \\ \hline
-    \iref{convert}         &                  &                     &               &                &                 & X              \\ \hline
-    \iref{feasible}        &                  & X                   &               & X              &                 &                \\ \hline
-    \iref{balance}         & X                &                     &               & X              & X               & X              \\ \hline
-    \ref{sec_DataConst}    &                  &                     &               &                &                 &                \\ \hline
-    \ref{sec_PropsCorrSol} &                  &                     &               & X              &                 & X              \\ \hline
+    \tmref{TM_MatEq}       &                  &                     &                &               &                 &                \\ \hline
+    \tmref{TM_ConsMass}    &                  &                     &                & X             &                 &                \\ \hline
+    \ddref{count}          &                  &                     &                &               &                 &                \\ \hline
+    \gdref{matRep}         &                  &                     &                &               &                 & X              \\ \hline
+    \iref{feasible}        &                  & X                   & X              &               &                 &                \\ \hline
+    \iref{balance}         & X                &                     & X              &               & X               & X              \\ \hline
+    \ref{sec_DataConst}    &                  &                     &                &               &                 &                \\ \hline
+    \ref{sec_PropsCorrSol} &                  &                     & X              &               &                 & X              \\ \hline
   \end{tabular}
   \caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
   \label{Table:srs_trace}
@@ -1650,23 +1629,23 @@ shows the dependencies of requirements on instance models.
     \centering
     \begin{tabular}{|c|c|c|c|}%c|c|c|c|c|c|c|c|c|c|c|c|}
       \hline
-                                     & \iref{convert} & \iref{feasible} & \iref{balance} \\ % & \rref{R_input} & \rref{R_convert} & \rref{R_feasible} & \rref{R_balance} & \rref{R_infeasOutput} & \rref{R_feasOutput} & \nfrref{NFR_accuracy} & \nfrref{NFR_understandability} & \nfrref{NFR_usability} & \nfrref{NFR_maintainability} & \nfrref{NFR_portability} & \nfrref{NFR_verifiability} \\
+                                     & \sjc{Remove this?} & \iref{feasible} & \iref{balance} \\ % & \rref{R_input} & \rref{R_convert} & \rref{R_feasible} & \rref{R_balance} & \rref{R_infeasOutput} & \rref{R_feasOutput} & \nfrref{NFR_accuracy} & \nfrref{NFR_understandability} & \nfrref{NFR_usability} & \nfrref{NFR_maintainability} & \nfrref{NFR_portability} & \nfrref{NFR_verifiability} \\
       \hline
       % \iref{convert}                 &&&&&&&&&&&&&&&&\\ \hline
       % \iref{feasible}                &X&&&&&&&&&&&&&&&\\ \hline
       % \iref{balance}                 &X&X&&&&&&&&&&&&&&\\ \hline
-      \rref{R_input}                 &                &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \rref{R_convert}               & X              &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \rref{R_feasible}              &                & X               &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \rref{R_infeasOutput}          &                &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \rref{R_balance}               &                &                 & X              \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \rref{R_feasOutput}            &                &                 & X              \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \nfrref{NFR_accuracy}          &                &                 & X              \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \nfrref{NFR_understandability} &                &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \nfrref{NFR_usability}         &                &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \nfrref{NFR_maintainability}   &                &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \nfrref{NFR_portability}       &                &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \nfrref{NFR_verifiability}     &                &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \rref{R_input}                 &                    &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \rref{R_convert}               & X                  &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \rref{R_feasible}              &                    & X               &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \rref{R_infeasOutput}          &                    &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \rref{R_balance}               &                    &                 & X              \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \rref{R_feasOutput}            &                    &                 & X              \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \nfrref{NFR_accuracy}          &                    &                 & X              \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \nfrref{NFR_understandability} &                    &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \nfrref{NFR_usability}         &                    &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \nfrref{NFR_maintainability}   &                    &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \nfrref{NFR_portability}       &                    &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \nfrref{NFR_verifiability}     &                    &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
     \end{tabular}
     \caption{Traceability Matrix Showing the Connections Between Requirements and Instance Models}
     \label{Table:R_trace}
@@ -1682,8 +1661,8 @@ shows the dependencies of requirements on instance models.
       \hline
       \tmref{TM_MatEq}                &                       &                     &                             &                      \\ \hline
       \tmref{TM_ConsMass}             &                       &                     &                             &                      \\ \hline
+      \gdref{matRep}                  & X                     & X                   & X                           & X                    \\ \hline
       \ddref{count}                   &                       &                     &                             &                      \\ \hline
-      \iref{convert}                  & X                     & X                   & X                           & X                    \\ \hline
       \iref{feasible}                 &                       &                     &                             &                      \\ \hline
       \iref{balance}                  &                       &                     &                             &                      \\ \hline
       \lcref{LC_complexForms}         &                       &                     &                             & X                    \\ \hline
