@@ -239,6 +239,7 @@
   Feb. 27, 2023       & 1.2.5         & Add \ddref{matRep} and clarify \nameref{sec_mathNot} for types       \\
                       & 1.2.6         & Add \ddref{elems}                                                    \\
                       & 1.2.7         & Add \gdref{chemMatEq}                                                \\
+  Feb. 28, 2023       & 1.2.8         & Add \ddref{gcf}                                                      \\
   \bottomrule
 \end{tabularx}
 
@@ -310,6 +311,7 @@ symbols are listed in alphabetical order.
   $R$             & --            & $\langle C \rangle$       & reactant side of a chemical equation         \\
   $\textbf{x}$    & --            & $\mathbb{R}^{n}$          & generic vector                               \\
   $x$             & --            & $\nonnegInt$              & generic non-negative integer                 \\
+  $z$             & --            & $\{ \mathbb{Z} \}$        & generic set of integers                      \\
   \bottomrule
 \end{tabularx}
 
@@ -1013,6 +1015,41 @@ models. The dimension of each quantity is also given.
     Sources     & \cite{hamid_balancing_2019}                                \\
     \hline
     Ref.\ By    & \sjc{Fill in}                                              \\
+    \hline
+  \end{tabular}
+\end{minipage}\\
+
+~\newline
+\noindent
+\begin{minipage}{\textwidth}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
+    Number      & DD\refstepcounter{datadefnum}\thedatadefnum \label{gcf} \\
+    \hline
+    Label       & \bf Greatest common factor                              \\
+    \hline
+    Symbol      & $\text{gcf}(z)$                                         \\
+    \hline
+    % Units& $Mt^{-3}$\\
+    % \hline
+    SI Units    & --                                                      \\
+    \hline
+    Equation    & $\text{gcf}(z) = \defDesc\, m : \posInt ~|~
+    \forall\, z_i \in z, n : \posInt ~|~$                                 \\
+                & \quad\quad$z_i \;\mathrm{mod}\; m = 0 \land
+    z_i \;\mathrm{mod}\; n = 0 \Rightarrow m \geq n$                      \\
+    \hline
+    Description & The output of $\text{gcf}(z)$ is of type
+    $\posInt$ and represents the largest integer that evenly divides every
+    element of $z$ (of type $\{ \mathbb{Z} \}$). Since every integer is
+    divisible by one, this is the minimum value of this function, which is why
+    it returns a value of type $\posInt$.                                 \\
+    \hline
+    Sources     & --                                                      \\
+    \hline
+    Ref.\ By    & \sjc{Fill in}                                           \\
     \hline
   \end{tabular}
 \end{minipage}\\
