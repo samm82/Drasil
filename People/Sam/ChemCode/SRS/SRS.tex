@@ -594,17 +594,17 @@ easier to correctly understand the requirements:
         ratio of small positive integers''
         \cite{the_editors_of_encyclopaedia_britannica_nonstoichiometric_2010}.
 
+  \item \textbf{Reduced Row Echelon Form}: A form of a matrix where every row
+        with only zeros is at the bottom and every column but the rightmost one
+        has all zeroes except for one one (which has only zeroes to its left)
+        \cite{taboga_reduced_2021}.
+
   \item \textbf{Stoichiometry}: ``The calculation of the quantities of reactants
         or products in a chemical reaction using the relationships found in a balanced
         chemical equation'' \cite[p. 337]{lund_introduction_2023}.
 
   \item \textbf{Underdetermined}: (Referring to a system of linear equations)
         having ``more unknowns than equations'' \cite{colbry_matrix_2023}.
-
-        %\item \textbf{Reduced Row Echelon Form}: A form of a matrix where every row
-        %with only zeros is at the bottom and every column but the rightmost one
-        %has all zeroes except for one one (which has only zeroes to its left)
-        %\cite{taboga_reduced_2021}.
 \end{itemize}
 
 \subsubsection{Physical System Description} \label{sec_phySystDesc}
@@ -867,9 +867,21 @@ instance models.
     with $\textbf{A} = \textbf{E}$ (from \ddref{matRep}),
     $\textbf{x} = \textbf{c}$, and $\textbf{b} = \textbf{0}$ (since there
     should be no difference between the number of atoms of each element on each
-    side of the equation). $\textbf{c}$ is the vector of the smallest
+    side of the equation).                                                    \\
+
+                & $\textbf{c}$ is the vector of the smallest
     non-negative integers so that the Law of Conservation of Mass
-    (\tmref{TM_ConsMass}) is satisfied.                                       \\
+    (\tmref{TM_ConsMass}) is satisfied. This will be found by putting
+    $(\textbf{E}|\textbf{0})$ in reduced row echelon form, which will yield a
+    parametric solution. Every entry in the last non-zero column will be
+    multiplied by the lowest common denominator of the column and subtracted
+    from zero to get the coefficients for the compound associated with the
+    column that has the first ``1'' of the row. If there is one more compound
+    than element (see \aref{A_elemCompDiff}) or if any rows have all zeroes,
+    then the last coefficient or any columns without a leading one,
+    respectively, become this lowest common denominator.
+    \sjc{Double check this}
+    \\
     \hline
     Source      & \cite{hamid_balancing_2019}                                 \\
     \hline
