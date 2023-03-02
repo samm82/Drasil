@@ -22,7 +22,7 @@ mkSRS = []
 si :: SystemInformation
 si =
   SI
-    { _sys = example,
+    { _sys = chemcode,
       _kind = Doc.srs,
       _authors = [samCrawford],
       _background = [],
@@ -46,7 +46,7 @@ symbMap :: ChunkDB
 symbMap =
   cdb
     ([] :: [QuantityDict])
-    [nw example]
+    [nw chemcode]
     ([] :: [ConceptChunk])
     ([] :: [UnitDefn])
     ([] :: [DataDefinition])
@@ -78,5 +78,5 @@ refDB :: ReferenceDB
 refDB = rdb [] []
 
 -- MOVE TO CONCEPTS
-example :: CI -- name of example
-example = commonIdeaWithDict "example" (pn "ChemCode") "ChemCode" []
+chemcode :: CI -- name of example
+chemcode = commonIdeaWithDict "ChemCode" (pn "ChemCode") "ChemCode" []
