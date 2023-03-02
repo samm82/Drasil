@@ -551,7 +551,7 @@ chemistry, namely stoichiometry (see \nameref{sec_termsDefs}).
 
 \progname~will be developed using Drasil \cite{carette_drasil_2021}, ``a
 framework for generating high-quality documentation and code for Scientific
-Computing Software'' \cite[p. iii]{maclachlan_design_2020}, with the goal of
+Computing Software'' \cite[p.~iii]{maclachlan_design_2020}, with the goal of
 extending it by adding concepts relevant to the problem outlined in
 \nameref{sec_probDesc}. One of the desired additions to Drasil is the notion of
 systems of linear equations, so this problem will be solved using matrices.
@@ -560,7 +560,7 @@ used to solve these systems of linear equations. This was previously done with
 ordinary differential equation (ODE) solvers, since ``creating a complete ODE
 solver in Drasil would take considerable time, and there are already many
 reliable external libraries \dots tested by long use''
-\cite[p. 24]{chen_solving_2022}; these rationales also apply to solvers of
+\cite[p.~24]{chen_solving_2022}; these rationales also apply to solvers of
 systems of linear equations.
 
 \section{Specific System Description} \label{sec_specSysDesc}
@@ -601,13 +601,13 @@ easier to correctly understand the requirements:
   \item \textbf{Feasible}: (Referring to a chemical equation) able to be
         balanced \cite{hamid_balancing_2019}.
 
-  \item \textbf{Hydrate}: ``A compound formed by the chemical combination of water
-        and some other substance in a definite molecular ratio''
+  \item \textbf{Hydrate}: ``A compound formed by the chemical combination of
+        water and some other substance in a definite molecular ratio''
         \cite{harpercollins_publishers_hydrate_nodate}.
 
   \item \textbf{Nonstoichiometric Compound}: ``Any solid chemical compound in
-        which the numbers of atoms of the elements present cannot be expressed as a
-        ratio of small positive integers''
+        which the numbers of atoms of the elements present cannot be expressed
+        as a ratio of small positive integers''
         \cite{the_editors_of_encyclopaedia_britannica_nonstoichiometric_2010}.
 
         % \item \textbf{Reduced Row Echelon Form}: A form of a matrix where every row
@@ -615,9 +615,10 @@ easier to correctly understand the requirements:
         %       has all zeroes except for one one (which has only zeroes to its left)
         %       \cite{taboga_reduced_2021}.
 
-  \item \textbf{Stoichiometry}: ``The calculation of the quantities of reactants
-        or products in a chemical reaction using the relationships found in a balanced
-        chemical equation'' \cite[p. 337]{lund_introduction_2023}.
+  \item \textbf{Stoichiometry}: ``The calculation of the quantities of
+        reactants or products in a chemical reaction using the relationships
+        found in a balanced chemical equation''
+        \cite[p.~337]{lund_introduction_2023}.
 
   \item \textbf{Underdetermined}: (Referring to a system of linear equations)
         having ``more unknowns than equations'' \cite{colbry_matrix_2023}.
@@ -626,7 +627,7 @@ easier to correctly understand the requirements:
 \subsubsection{Physical System Description} \label{sec_phySystDesc}
 
 Chemical reactions are interactions between different types of matter that
-result in new substances being formed \cite[p. 286]{lund_introduction_2023}.
+result in new substances being formed \cite[p.~286]{lund_introduction_2023}.
 These are represented using chemical equations, with the reactant(s)---the
 substance(s) present at the beginning of the reaction---on the left-hand side
 and the product(s)---the substance(s) formed by the reaction---on the right. An
@@ -797,7 +798,7 @@ on.
 {
   This law states that ``matter can neither be created nor destroyed in a
   chemical reaction \dots but it may change forms to other substances''
-  \cite[p. 112]{lund_introduction_2023}.
+  \cite[p.~112]{lund_introduction_2023}.
 }
 % #6 Notes
 {None}
@@ -1492,7 +1493,7 @@ qualities that the software is expected to exhibit.
     will be implemented using matrices and linear algebra. It is unlikely that
     a different method will be used to compute the values from \gdref{chemMatEq}
     and \iref{balance}, since ``balancing chemical equations is not chemistry;
-    it is just linear algebra'' \cite[p. 193]{risteski_new_2021}.
+    it is just linear algebra'' \cite[p.~193]{risteski_new_2021}.
 
   \item[UC\refstepcounter{ucnum}\theucnum\label{UC_allEqsPermitted}:]
     \aref{A_elemCompDiff} assumes that for all inputted chemical equations,
@@ -1504,7 +1505,7 @@ qualities that the software is expected to exhibit.
     Manual empirical analysis of these equations led to unexpected results.
     The constraint in \aref{A_elemCompDiff} might be a law of nature and a
     byproduct of ``balancing chemical equations [being] just linear algebra''
-    \cite[p. 193]{risteski_new_2021}, but preliminary investigation did not
+    \cite[p.~193]{risteski_new_2021}, but preliminary investigation did not
     find any proof of this. Therefore, this constraint will remain an
     assumption and is unlikely to be relaxed.
 
