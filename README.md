@@ -75,6 +75,7 @@ projectile_diff | Projectile Motion Analysis
 pdcontroller_diff | Proportional Derivative Controller
 dblpendulum_diff | Double Pendulum
 sglpendulum_diff | Single Pendulum
+chemcode_diff | Chemistry Code
 
 For more commands related to Drasil, use `make help` or check out the [Makefile documentation](https://github.com/JacquesCarette/Drasil/wiki/Makefile).
 
@@ -97,6 +98,7 @@ projectile | Projectile motion analysis
 pdcontroller | Proportional Derivative Controller
 dblpendulum | Double Pendulum
 sglpendulum | Single Pendulum
+chemcode | Chemistry Code
 
 This runs the examples manually from the .stack-work folder after building, and the generated docs will
 appear in this folder (i.e. in the SRS folders). Due to this placement, these generated

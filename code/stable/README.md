@@ -1,41 +1,58 @@
 --------------------------------------------------
+
 ### Summary of Folder Structure and File Contents
-Last updated: August 20, 2021
+
+Last updated: March 2, 2023
 --------------------------------------------------
 
+**chemcode**
+
+- Contains the (currently) expected output for the ChemCode example
+
 **dblpendulum**
-  - Contains the (currently) expected output for the DblPendulum example
+
+- Contains the (currently) expected output for the DblPendulum example
 
 **gamephysics**
-  - Contains the (currently) expected output for the GamePhysics example
+
+- Contains the (currently) expected output for the GamePhysics example
 
 **glassbr**
-  - Contains the (currently) expected output for the GlassBR example
+
+- Contains the (currently) expected output for the GlassBR example
 
 **hghc**
-  - Contains the (currently) expected output for the HGHC example
+
+- Contains the (currently) expected output for the HGHC example
 
 **nopcm**
-  - Contains the (currently) expected output for the NoPCM example
+
+- Contains the (currently) expected output for the NoPCM example
   
 **pdcontroller**
-  - Contains the (currently) expected output for the PD Controller example
+
+- Contains the (currently) expected output for the PD Controller example
 
 **projectile**
-  - Contains the (currently) expected output for the Projectile example
+
+- Contains the (currently) expected output for the Projectile example
 
 **sglpendulum**
-  - Contains the (currently) expected output for the SglPendulum example
+
+- Contains the (currently) expected output for the SglPendulum example
 
 **ssp**
-  - Contains the (currently) expected output for the SSP example
+
+- Contains the (currently) expected output for the SSP example
 
 **swhs**
-  - Contains the (currently) expected output for the SWHS example
+
+- Contains the (currently) expected output for the SWHS example
 
 **template**
-  - Contains the (currently) expected output for the Template example
 
+- Contains the (currently) expected output for the Template example
 
 README.md
-  - This file
+
+- This file

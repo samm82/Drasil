@@ -21,6 +21,12 @@ cradle:
     - path: "drasil-docLang/lib"
       component: "drasil-docLang:lib"
 
+    - path: "drasil-example/chemcode/lib"
+      component: "chemcode:lib"
+
+    - path: "drasil-example/chemcode/app/Main.hs"
+      component: "chemcode:exe:chemcode"
+
     - path: "drasil-example/dblpendulum/lib"
       component: "dblpendulum:lib"
 
