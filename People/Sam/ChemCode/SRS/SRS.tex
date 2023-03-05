@@ -247,10 +247,10 @@
   Feb. 26, 2023       & 1.2.4         & Add \ddref{count}                                                    \\
   Feb. 27, 2023       & 1.2.5         & Add \ddref{matRep} and clarify \nameref{sec_mathNot} for types       \\
   Feb. 28, 2023       & 1.2.6         & Add \ddref{elems}                                                    \\
-  & 1.2.7         & Add \gdref{chemMatEq}                                                \\
+  & 1.2.7         & Add GD1 \\
   Feb. 28, 2023 & 1.2.8         & Add \ddref{gcf}                                                      \\
-  & 1.2.9         & Add notion of parametric solution to
-  \gdref{chemMatEq} and add \iref{balance}                                                                   \\
+  & 1.2.9         & Add notion of parametric solution to GD1 and add
+  \iref{balance} \\
   & 1.3.0         & Remove old IMs                                                       \\
   Mar. 4, 2023        & 1.3.1         & Clarify inputs and outputs and
   improve line breaking in \nameref{sec_sysCon}                                                              \\
@@ -258,6 +258,8 @@
   improve Revision History table format \\
   Mar. 5, 2023 & 1.3.3 & Replace old TM1 with one for an integer linear program
   (\tmref{TM_ILP})\\
+  & 1.3.4 & Replace old GD1 with one that corresponds to \tmref{TM_ILP}
+  (\gdref{chemILP})\\
 \end{xltabular}
 
 ~\newpage
@@ -389,7 +391,7 @@ subscripts (for example $a_{12}$) \cite{osullivan_appendix_2010}.
 Two (or more) matrices with the same
 number of rows can be joined together to form an ``augmented matrix'', written
 as $\left(\textbf{A}\vert \textbf{B}\right)$ \cite{taboga_augmented_2021}.
-\sjc{Add notation for transpose}
+\sjc{Add notation for transpose and identity matrix}
 
 The notation for definite description ($\defDesc$) is taken from
 % \cite{russell25}.
@@ -796,7 +798,7 @@ on.
 }
 % #8 Referenced by
 {
-  \sjc{Fill in}
+  \gdref{chemILP}
 }
 % #9 derivation - not applicable by default
 {Not Applicable}
@@ -827,7 +829,7 @@ on.
 }
 % #8 Referenced by
 {
-  \gdref{chemMatEq}
+  \gdref{chemILP}
 }
 % #9 derivation - not applicable by default
 {Not Applicable}
@@ -890,28 +892,41 @@ instance models.
   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
     \hline
     \rowcolor[gray]{0.9}
-    Number      & GD\refstepcounter{gendefnum}\thegendefnum \label{chemMatEq}   \\
+    Number      & GD\refstepcounter{gendefnum}\thegendefnum \label{chemILP}   \\
     \hline
-    Label       & \bf Matrix equation for chemical equation                     \\
+    Label       & \bf Integer linear program for chemical equation            \\
     \hline
     % Units&$MLt^{-3}T^0$\\
     % \hline
-    SI Units    & --                                                            \\
+    SI Units    & --                                                          \\
     \hline
-    Equation    & $\textbf{E}\textbf{c} = \textbf{0}$                           \\
+    Equation    & \vspace{-3mm}
+    {$\!\begin{aligned}
+               & \text{minimize}   &  & \mathbf{x}                          \\
+               & \text{subject to} &  & \mathbf{E} \mathbf{x} = \mathbf{0}, \\
+               &                   &  & \mathbf{x} > \mathbf{0},            \\
+               & \text{and}        &  & \mathbf{x} \in \mathbb{Z}^n
+            \end{aligned}$} \sjc{Is it right for this to be labelled ``equation''?}
+    \vspace{1.5mm}                                                            \\
     \hline
     Description &
-    This is a specific instance of the matrix equation from \tmref{TM_MatEq}
+    This is a specific instance of the ILP from \tmref{TM_ILP}
     with $\textbf{A} = \textbf{E}$ (from \ddref{matRep}),
-    $\textbf{x} = \textbf{c}$, and $\textbf{b} = \textbf{0}$ (since there
-    should be no difference between the number of atoms of each element on each
-    side of the equation).                                                      \\
-                & $\textbf{c}$ is a vector of coefficients for the compounds in
-    the chemical equation such that the Law of Conservation of Mass
-    (\tmref{TM_ConsMass}) is satisfied. Since normal chemical equations are
-    underdetermined \cite{denker_balancing_2012}, $\textbf{c}$ is a parametric
-    solution \cite{hur_sys_2008}.                                               \\
-                & $\textbf{0}$ is the zero matrix (see \nameref{sec_mathNot}).  \\
+    $\textbf{b} = \textbf{0}$ (since there should be no difference between the
+    number of atoms of each element on each side of the equation), and
+    $\textbf{c} = \textbf{I}$ (since only the sum of the coefficients need to
+    be minimized to obtain the smallest solution). The goal is changed from
+    ``maximize'' to ``minimize'' since chemical equations have the smallest
+    coefficients by convention \cite{lund_introduction_2023}. The constraints
+    are also modified; for the Law of Conservation of Mass
+    (\tmref{TM_ConsMass}) to hold, $\mathbf{E} \mathbf{x}$ must equal
+    $\mathbf{0}$, and to avoid trivial solutions and ensure that mass is
+    conserved, each coefficient must be positive ($\mathbf{x} > \mathbf{0}$)  \\
+                & $\textbf{x}$ is the vector of the smallest positive integer
+    coefficients for the compounds in the chemical equation such that the Law
+    of Conservation of Mass (\tmref{TM_ConsMass}) is satisfied.               \\
+                & $\textbf{0}$ is the zero matrix and $\textbf{I}$ is the
+    identity matrix (see \nameref{sec_mathNot}).                              \\
     % This will be found by putting
     % $(\textbf{E}|\textbf{0})$ in reduced row echelon form, which will yield a
     % parametric solution. Every entry in the last non-zero column will be
@@ -923,9 +938,9 @@ instance models.
     % respectively, become this lowest common denominator.
     % \sjc{Double check this}\\
     \hline
-    Source      & \cite{hamid_balancing_2019}                                   \\
+    Source      & \cite{hamid_balancing_2019}                                 \\
     \hline
-    Ref.\ By    & \iref{balance}                                                \\
+    Ref.\ By    & \iref{balance}                                              \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -1063,7 +1078,7 @@ models. The dimension of each quantity is also given.
     \hline
     Sources     & \cite{hamid_balancing_2019}                                \\
     \hline
-    Ref.\ By    & \iref{balance}                                             \\
+    Ref.\ By    & \gdref{chemILP}, \iref{balance}                            \\
     \hline
   \end{tabular}
 \end{minipage}\\
