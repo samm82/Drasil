@@ -251,9 +251,11 @@
   Feb. 28, 2023       & 1.2.6         & Add \ddref{elems}                                                    \\
                       & 1.2.7         & Add \gdref{chemMatEq}                                                \\
                       & 1.2.8         & Add \ddref{gcf}                                                      \\
-                      & 1.2.9         & Add notion of parametric solution to \gdref{chemMatEq} and add
-  \iref{balance}                                                                                             \\
-                      & 1.2.10        & Remove old IMs                                                       \\
+                      & 1.2.9         & Add notion of parametric solution to
+  \gdref{chemMatEq} and add \iref{balance}                                                                   \\
+                      & 1.3.0         & Remove old IMs                                                       \\
+  Mar. 4, 2023        & 1.3.1         & Clarify inputs and outputs and
+  improve line breaking in \nameref{sec_sysCon}                                                              \\
   \bottomrule
 \end{tabularx}
 
@@ -487,19 +489,20 @@ characteristics and lists the system constraints.
       %Nodes
       \node[roundnode]        (user_input)                              {User};
       \node[squarednode, xshift = 3cm]      (\progname{})       [right=of user_input] {\progname{}};
-      \node[roundnode, xshift = 3cm]        (user_output)       [right=of \progname{}] {User};
+      \node[roundnode, xshift = 5cm]        (user_output)       [right=of \progname{}] {User};
       \node[roundnode, align=center, yshift = 1.5cm] (ext_lib) [above=of \progname{}] {External\\Library};
-      \node[roundnode, draw=none, align=center, yshift = 1.538cm] (upArrow) [above=of \progname{}] {};\node[roundnode, draw=none, align=center, yshift = 1.55cm] (downArrow) [above=of \progname{}] {};
+      \node[roundnode, draw=none, align=center, yshift = 1.538cm] (upArrow) [above=of \progname{}] {};
+      \node[roundnode, draw=none, align=center, yshift = 1.55cm] (downArrow) [above=of \progname{}] {};
 
       %Lines
       \draw[->, very thick] (user_input.east) -- (\progname{}.west) node[above, pos=0.5, align=center] {An unbalanced\\chemical equation};
       \begin{scope}[transform canvas={xshift=-.7em}]
-        \draw[->, very thick] (\progname{}.north) -- (upArrow.south) node[left, pos=0.5, align=right] {The chemical\\equation as\\ a matrix};
+        \draw[->, very thick] (\progname{}.north) -- (upArrow.south) node[left, pos=0.65, align=right] {The chemical equation\\as a matrix};
       \end{scope}
       \begin{scope}[transform canvas={xshift=.7em}]
-        \draw[->, very thick] (downArrow.south) -- (\progname{}.north) node[right, pos=0.5, align=left] {The matrix\\ after processing\\};
+        \draw[->, very thick] (downArrow.south) -- (\progname{}.north) node[right, pos=0.374, align=left] {The coefficients of the\\balanced equation, if feasible};
       \end{scope}
-      \draw[->, very thick] (\progname{}.east) -- (user_output.west) node[above, pos=0.5, align=center] {A balanced\\form of the\\chemical equation};
+      \draw[->, very thick] (\progname{}.east) -- (user_output.west) node[above, pos=0.5, align=center] {A balanced form of the\\chemical equation or the\\reason it cannot be balanced};
     \end{tikzpicture}
     \caption{System Context}
     \label{fig_sysCon}
@@ -514,20 +517,22 @@ and its environment.
 \begin{itemize}
   \item User Responsibilities:
         \begin{itemize}
-          \item Provide an unbalanced chemical equation, ensuring conformation to input
-                data format required by \progname{}
-          \item Ensure required software assumptions from Subsection~\ref{sec_assumps}
-                are appropriate for the problem to which the user is applying the software
+          \item Provide an unbalanced chemical equation, ensuring conformation
+                to input data format required by \progname{}
+          \item Ensure required software assumptions from Subsection~
+                \ref{sec_assumps} are appropriate for the problem to which the
+                user is applying the software
         \end{itemize}
   \item \progname{} Responsibilities:
         \begin{itemize}
-          \item Detect data type mismatch, such as a string of characters instead of a
-                rational number
+          \item Detect data type mismatch, such as a string of characters
+                instead of a rational number
           \item Detect improperly formatted chemical equations
           \item Format the inputted chemical equation as a matrix
-          \item Determine if the inputted chemical equation is feasible
-          \item If the inputted chemical equation is feasible, find its balanced form with
-                the smallest positive integer coefficients
+          \item If the inputted chemical equation is feasible, find its
+                balanced form with the smallest positive integer coefficients
+          \item If the inputted chemical equation is infeasible, determine the
+                reason why
         \end{itemize}
   \item External Library Responsibilities:
         \begin{itemize}
@@ -732,8 +737,8 @@ is used.
     agreed-upon conventions.	[\gdref{matRep}, \lcref{LC_incorrectInputFormat}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_simpleForms}:]
-    All inputted chemical formulas are simple; i.e., only consist of atomic symbols
-    and subscripts.	[\gdref{matRep}, \lcref{LC_complexForms}]
+    All inputted chemical formulas are simple (i.e., only consist of atomic
+    symbols and subscripts).	[\gdref{matRep}, \lcref{LC_complexForms}]
 
 \end{itemize}
 

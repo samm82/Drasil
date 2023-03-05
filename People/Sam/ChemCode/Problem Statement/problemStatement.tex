@@ -41,7 +41,7 @@
 		and comments about first-person usage and add stretch goals from SRS
 		Likely Changes                                                       \\
 		Mar. 4, 2023  & Sam                   & Make minor formatting
-		improvements                                                         \\
+		improvements and clarify output                                      \\
 		\bottomrule
 	\end{tabularx}
 \end{table}
@@ -96,11 +96,14 @@ a ratio of small whole numbers"
 	\item A representation of a chemical equation
 \end{itemize}
 
-\noindent Output:
+\noindent Outputs:
 
 \begin{itemize}
-	\item A representation of the inputted chemical equation in its balanced
-	      form with the smallest whole number coefficients possible
+	\item If the inputted chemical equation is feasible, a representation of it
+	      in its balanced form with the smallest whole number coefficients
+	      possible
+	\item If the inputted chemical equation is infeasible, a message
+	      describing why
 \end{itemize}
 
 \subsection{Environment} \label{env}
