@@ -11,6 +11,7 @@
 \usepackage{hyperref}
 \usepackage{cleveref}
 \usepackage{longtable}
+\usepackage{xltabular}
 \usepackage{xfrac}
 \usepackage{tabularx}
 \usepackage{ltablex}
@@ -156,53 +157,54 @@
 
 \section{Revision History} \label{sec_revHist}
 
-\begin{tabularx}{\textwidth}{p{2.5cm}p{1.5cm}X}
-  \toprule {\bf Date} & {\bf Version} & {\bf Notes}                                                          \\
+\begin{xltabular}{\textwidth}{llX}
+
+  \toprule {\bf Date} & {\bf Version} & {\bf Notes}                          \\
   \midrule
+  \endhead
+
+  \bottomrule
+  \endfoot
+
   Jan. 21, 2023       & 0.0           & Start document, fill in title page, and add references               \\
-                      & 0.1.0         & Fill in \nameref{sec_probDesc} and \nameref{sec_goals} sections, as
+  & 0.1.0         & Fill in \nameref{sec_probDesc} and \nameref{sec_goals} sections, as
   well as all relevant definitions                                                                           \\
   Jan. 22, 2023       & 0.1.1         & Replace the notion of ``fractional oxidation state'' with
   ``nonstoichiometric compound''                                                                             \\
-                      & 0.1.2         & Fix capTemplate reference                                            \\
-                      & 0.2.0         & Update \nameref{srs_sec_abbsAcrs}                                    \\
-                      & 0.2.1         & Add IM for balancing a chemical
+  & 0.1.2         & Fix capTemplate reference                                            \\
+  & 0.2.0         & Update \nameref{srs_sec_abbsAcrs}                                    \\
+  & 0.2.1         & Add IM for balancing a chemical
   reaction, along with relevant reference information                                                        \\
   Jan. 23, 2023       & 0.2.2         & Add IM for determining if a chemical
   reaction is feasible, along with relevant reference information                                            \\
   Jan. 25, 2023       & 0.2.3         & Add references between sections for notation and
   definitions                                                                                                \\
-                      & 0.2.4         & Abstract IM for determining if a
+  & 0.2.4         & Abstract IM for determining if a
   chemical reaction is feasible                                                                              \\
-                      & 0.2.5         & Add IM for converting chemical
+  & 0.2.5         & Add IM for converting chemical
   equation to a matrix, along with relevant reference information                                            \\
-                      & 0.2.6         & Rename and add input constraint to
+  & 0.2.6         & Rename and add input constraint to
   IM for balancing a chemical reaction                                                                       \\
-                      & 0.2.7         & Add note about IM for balancing a
+  & 0.2.7         & Add note about IM for balancing a
   chemical reaction returning the smallest solution                                                          \\
-                      & 0.2.8         & Add TM for matrix equation (\tmref{TM_MatEq})                        \\
-                      & 0.2.9         & Improve referencing, mainly for TMs, and add note about
+  & 0.2.8         & Add TM for matrix equation (\tmref{TM_MatEq})                        \\
+  & 0.2.9         & Improve referencing, mainly for TMs, and add note about
   potential TM for Conservation of Mass                                                                      \\
-                      & 0.3.0         & Add check for Conservation of Mass
+  & 0.3.0         & Add check for Conservation of Mass
   in IM for determining if a chemical reaction is feasible                                                   \\
   Jan. 26, 2023       & 0.3.1         & Add \nameref{sec_LCs} from Problem Statement, add
   assumption about difference between number of elements and compounds
   (\aref{A_elemCompDiff}), and add mole to \nameref{sec_ToU}                                                 \\
-                      & 0.3.2         & Update \tmref{TM_MatEq} (and TM function) from feedback from
+  & 0.3.2         & Update \tmref{TM_MatEq} (and TM function) from feedback from
   presentation                                                                                               \\
-                      & 0.3.3         & Fill in \nameref{sec_scope}, fix \aref{A_elemCompDiff} and
+  & 0.3.3         & Fill in \nameref{sec_scope}, fix \aref{A_elemCompDiff} and
   change ``infeasible'' to ``feasible''                                                                      \\
   Jan. 27, 2023       & 0.4.0         & Improve section referencing in \nameref{sec_revHist}                 \\
-                      & 0.4.1         & Fill in \nameref{sec_funcReqs}                                       \\
+  & 0.4.1         & Fill in \nameref{sec_funcReqs}                                       \\
   Jan. 28, 2023       & 0.4.2         & Fill in main \nameref{sec_nonfuncReqs}, along with
   relevant reference information                                                                             \\
-                      & 0.4.3         & Add TM for the Law of Conservation of Mass
+  & 0.4.3         & Add TM for the Law of Conservation of Mass
   (\tmref{TM_ConsMass})                                                                                      \\
-  \bottomrule~                                                                                               \\
-  ~                                                                                                          \\
-  ~                                                                                                          \\
-  \toprule {\bf Date} & {\bf Version} & {\bf Notes}                                                          \\
-  \midrule
   Jan. 28, 2023       & 0.4.4         & Represent input to IM for converting
   chemical equation to a matrix as two sequences of chemical
   formulas, add assumptions about user input, and remove infeasible
@@ -210,54 +212,51 @@
   Jan. 29, 2023       & 0.5.0         & Add NFRs for understandability
   (\nfrref{NFR_understandability}) and verifiability
   (\nfrref{NFR_verifiability}) and improve quality of other NFRs                                             \\
-                      & 0.5.1         & Fill in \nameref{sec_intro} based on Drasil examples                 \\
-                      & 0.5.2         & Fill in \nameref{sec_phySystDesc} and remove ``product'' and
+  & 0.5.1         & Fill in \nameref{sec_intro} based on Drasil examples                 \\
+  & 0.5.2         & Fill in \nameref{sec_phySystDesc} and remove ``product'' and
   ``reactant'' from \nameref{sec_termsDefs}                                                                  \\
   Jan. 30, 2023       & 0.5.3         & Remove unnecessary template comments about SRS document
   and the ones from \nameref{sec_specSysDesc} up to \nameref{sec_instance}                                   \\
-                      & 0.5.4         & Remove unnecessary content from \nameref{sec_tabSymbs} and
+  & 0.5.4         & Remove unnecessary content from \nameref{sec_tabSymbs} and
   add the notion of ``gram'' to the document                                                                 \\
-                      & 0.6.0         & Make \nfrref{NFR_accuracy} more accurate to current scope with
+  & 0.6.0         & Make \nfrref{NFR_accuracy} more accurate to current scope with
   potential future information for stretch goals added in comment                                            \\
-                      & 0.6.1         & Make System Context diagram (Figure \ref{fig_sysCon}) and start
+  & 0.6.1         & Make System Context diagram (Figure \ref{fig_sysCon}) and start
   to fill in \nameref{sec_sysCon}                                                                            \\
   Jan. 31, 2023       & 0.6.2         & Fill in rest of \nameref{sec_genSysDesc}                             \\
   Feb. 1, 2023        & 0.6.3         & Change abbreviation of theoretical model from ``T'' to
   ``TM'' and make TM references consistent with other references                                             \\
   Feb. 2, 2023        & 0.6.4         & Fill in \nameref{sec_refMat}, renaming specific matrices/vectors
   in \nameref{sec_instance}                                                                                  \\
-                      & 0.6.5         & Reformat and clarify \nameref{sec_LCs}                               \\
+  & 0.6.5         & Reformat and clarify \nameref{sec_LCs}                               \\
   Feb. 3, 2023        & 0.6.6         & Add type notation and information                                    \\
-                      & 0.6.7         & Fill in \nameref{sec_UCs}, add
+  & 0.6.7         & Fill in \nameref{sec_UCs}, add
   likely change for identifying
   more types of reactions (\lcref{LC_classMoreRxns}), and reference
   \aref{A_elemCompDiff} in IM for converting chemical equation to a matrix                                   \\
-                      & 0.6.8         & Fill in \nameref{sec_traceMats} and remove more unnecessary content  \\
-                      & 1.0           & Fill in data constraints sections, update traceability matrices, and
+  & 0.6.8         & Fill in \nameref{sec_traceMats} and remove more unnecessary content  \\
+  & 1.0           & Fill in data constraints sections, update traceability matrices, and
   finalize formatting                                                                                        \\
   Feb. 14, 2023       & 1.1.0         & Improve mathematical notation
   (remove ``$\times 1$'' from vector types, define $\mathbb{R}$) and citations                               \\
-                      & 1.2.0         & Improve requirements based on feedback                               \\
+  & 1.2.0         & Improve requirements based on feedback                               \\
   Feb. 22, 2023       & 1.2.1         & Add equation to \tmref{TM_ConsMass}, including relevant
   \nameref{sec_datatypes}                                                                                    \\
-                      & 1.2.2         & Improve \tmref{TM_MatEq} based on feedback                           \\
-                      & 1.2.3         & Add \progname{} abbreviation and missing definitions                 \\
+  & 1.2.2         & Improve \tmref{TM_MatEq} based on feedback                           \\
+  & 1.2.3         & Add \progname{} abbreviation and missing definitions                 \\
   Feb. 26, 2023       & 1.2.4         & Add \ddref{count}                                                    \\
   Feb. 27, 2023       & 1.2.5         & Add \ddref{matRep} and clarify \nameref{sec_mathNot} for types       \\
-  \bottomrule~                                                                                               \\
-  ~                                                                                                          \\
-  \toprule {\bf Date} & {\bf Version} & {\bf Notes}                                                          \\
-  \midrule
   Feb. 28, 2023       & 1.2.6         & Add \ddref{elems}                                                    \\
-                      & 1.2.7         & Add \gdref{chemMatEq}                                                \\
-                      & 1.2.8         & Add \ddref{gcf}                                                      \\
-                      & 1.2.9         & Add notion of parametric solution to
+  & 1.2.7         & Add \gdref{chemMatEq}                                                \\
+  Feb. 28, 2023 & 1.2.8         & Add \ddref{gcf}                                                      \\
+  & 1.2.9         & Add notion of parametric solution to
   \gdref{chemMatEq} and add \iref{balance}                                                                   \\
-                      & 1.3.0         & Remove old IMs                                                       \\
+  & 1.3.0         & Remove old IMs                                                       \\
   Mar. 4, 2023        & 1.3.1         & Clarify inputs and outputs and
   improve line breaking in \nameref{sec_sysCon}                                                              \\
-  \bottomrule
-\end{tabularx}
+  & 1.3.2         & Replace method of solving with integer programming and
+  improve Revision History table format                                                                                        \\
+\end{xltabular}
 
 ~\newpage
 
@@ -298,7 +297,7 @@ description of the unit and the SI name.
 %   \href{https://www.nist.gov/pml/weights-and-measures/writing-metric-units}
 %   {NIST} web-page.}
 
-\subsection{Table of Symbols} \label{sec_tabSymbs}
+\subsection{Table of Symbols \sjc{To be updated}} \label{sec_tabSymbs}
 
 The table that follows summarizes the symbols used in this document along with
 their units and types. The choice of symbols was made to be consistent with
@@ -452,13 +451,13 @@ chemical formulas in the equation are correct or if the reaction would take
 place in a real-world setting.
 
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
-Reviewers of this documentation should have an understanding of high-school level
-chemistry, namely stoichiometry (see \nameref{sec_termsDefs}), and undergraduate
-Level 1 linear algebra, namely solving systems of linear equations.
+Reviewers of this documentation should have an understanding of high-school
+level chemistry, namely stoichiometry (see \nameref{sec_termsDefs}), and
+undergraduate Level 3 linear optimization, namely integer programming.
 % The end user
 % of \progname{}, as described in \nameref{sec_userChars}, does not require
-% knowledge of linear algebra, since relevant concepts will be implemented by the
-% code and hidden from the user.
+% knowledge of linear optimization, since relevant concepts will be implemented
+% by the code and hidden from the user.
 
 \subsection{Organization of Document}
 The organization of this document is based on a template from
@@ -519,9 +518,9 @@ and its environment.
         \begin{itemize}
           \item Provide an unbalanced chemical equation, ensuring conformation
                 to input data format required by \progname{}
-          \item Ensure required software assumptions from Subsection~
-                \ref{sec_assumps} are appropriate for the problem to which the
-                user is applying the software
+          \item Ensure required software assumptions from
+                Subsection~\ref{sec_assumps} are appropriate for the problem to
+                which the user is applying the software
         \end{itemize}
   \item \progname{} Responsibilities:
         \begin{itemize}
@@ -536,7 +535,7 @@ and its environment.
         \end{itemize}
   \item External Library Responsibilities:
         \begin{itemize}
-          \item Solve the system of linear equations for the chemical equation
+          \item Solve the integer programming problem for the chemical equation
         \end{itemize}
 \end{itemize}
 
@@ -554,19 +553,20 @@ chemistry, namely stoichiometry (see \nameref{sec_termsDefs}).
 %  abstraction is relaxed here.  However, system constraints should only be
 %  included if they are truly required.}
 
-\progname~will be developed using Drasil \cite{carette_drasil_2021}, ``a
+\progname{} will be developed using Drasil \cite{carette_drasil_2021}, ``a
 framework for generating high-quality documentation and code for Scientific
 Computing Software'' \cite[p.~iii]{maclachlan_design_2020}, with the goal of
 extending it by adding concepts relevant to the problem outlined in
-\nameref{sec_probDesc}. One of the desired additions to Drasil is the notion of
-systems of linear equations, so this problem will be solved using matrices.
+\nameref{sec_probDesc}.
+% One of the desired additions to Drasil is the notion of
+% systems of linear equations, so this problem will be solved using matrices.
 Since Drasil is built on the idea of reusability, external libraries will be
-used to solve these systems of linear equations. This was previously done with
+used to solve the integer programming problems. This was previously done with
 ordinary differential equation (ODE) solvers, since ``creating a complete ODE
 solver in Drasil would take considerable time, and there are already many
 reliable external libraries \dots tested by long use''
 \cite[p.~24]{chen_solving_2022}; these rationales also apply to solvers of
-systems of linear equations.
+integer programming problems.
 
 \section{Specific System Description} \label{sec_specSysDesc}
 
@@ -625,8 +625,8 @@ easier to correctly understand the requirements:
         found in a balanced chemical equation''
         \cite[p.~337]{lund_introduction_2023}.
 
-  \item \textbf{Underdetermined}: (Referring to a system of linear equations)
-        having ``more unknowns than equations'' \cite{colbry_matrix_2023}.
+        % \item \textbf{Underdetermined}: (Referring to a system of linear equations)
+        %       having ``more unknowns than equations'' \cite{colbry_matrix_2023}.
 \end{itemize}
 
 \subsubsection{Physical System Description} \label{sec_phySystDesc}
@@ -911,7 +911,7 @@ instance models.
     \hline
     Source      & \cite{hamid_balancing_2019}                                   \\
     \hline
-    Ref.\ By    & \iref{balance}, \ucref{UC_diffSolveMethod}                    \\
+    Ref.\ By    & \iref{balance}                                                \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -1224,7 +1224,7 @@ and \iref{balance}, respectively.
     \hline
     Sources     & \cite{hamid_balancing_2019}                                      \\
     \hline
-    Ref.\ By    & \ucref{UC_diffSolveMethod}                                       \\
+    Ref.\ By    & --                                                               \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -1493,12 +1493,12 @@ qualities that the software is expected to exhibit.
 
 \begin{itemize}
 
-  \item[UC\refstepcounter{ucnum}\theucnum\label{UC_diffSolveMethod}:] One of
-    the system constraints in Subsection~\ref{sec_sysConst} is that \progname{}
-    will be implemented using matrices and linear algebra. It is unlikely that
-    a different method will be used to compute the values from \gdref{chemMatEq}
-    and \iref{balance}, since ``balancing chemical equations is not chemistry;
-    it is just linear algebra'' \cite[p.~193]{risteski_new_2021}.
+  % \item[UC\refstepcounter{ucnum}\theucnum\label{UC_diffSolveMethod}:] One of
+  %   the system constraints in Subsection~\ref{sec_sysConst} is that \progname{}
+  %   will be implemented using matrices and linear algebra. It is unlikely that
+  %   a different method will be used to compute the values from \gdref{chemMatEq}
+  %   and \iref{balance}, since ``balancing chemical equations is not chemistry;
+  %   it is just linear algebra'' \cite[p.~193]{risteski_new_2021}.
 
   \item[UC\refstepcounter{ucnum}\theucnum\label{UC_allEqsPermitted}:]
     \aref{A_elemCompDiff} assumes that for all inputted chemical equations,
@@ -1596,7 +1596,7 @@ shows the dependencies of requirements on instance models.
       \lcref{LC_inputPhaseLabels}     &                       &                     &                             &                      \\ \hline
       \lcref{LC_identifyPhaseLabels}  &                       &                     &                             &                      \\ \hline
       \lcref{LC_rxnTakePlace}         &                       &                     &                             &                      \\ \hline
-      \ucref{UC_diffSolveMethod}      &                       &                     &                             &                      \\ \hline
+      % \ucref{UC_diffSolveMethod}      &                       &                     &                             &                      \\ \hline
       \ucref{UC_allEqsPermitted}      & X                     &                     &                             &                      \\ \hline
     \end{tabular}
     \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
