@@ -12,7 +12,7 @@
 
 \author{\authname}
 
-\date{January 22, 2023}
+\date{\today}
 
 \input{../Comments}
 \input{../Common}
@@ -22,37 +22,36 @@
 \maketitle
 
 \begin{table}[hp]
-\caption{Revision History} \label{TblRevisionHistory}
-\begin{tabularx}{\textwidth}{llX}
-\toprule
-\textbf{Date} & \textbf{Developer(s)} & \textbf{Change}\\
-\midrule
-Jan. 18, 2023 & Sam & Create document and fill in Problem, Stakeholders, and
-								Goals sections\\
-Jan. 19, 2023 & Sam & Format for Drasil upload; fill in Inputs and Outputs,
-								Environment, and Stretch Goals sections; update Stakeholders and Goals
-								sections; and move Environment section\\
-Jan. 20, 2023 & Sam & Update Goals and Stretch Goals sections, fill in
-								Problem Statement introduction, update Drasil reference\\
-Jan. 22, 2023 & Sam & Replace the notion of ``fractional oxidation state'' with
-								``nonstoichiometric compound''\\
-Jan. 31, 2023 & Sam & Remove references to SciPy and comments about
-								first-person usage and add stretch goals from SRS Likely Changes\\
-\bottomrule
-\end{tabularx}
+	\caption{Revision History} \label{TblRevisionHistory}
+	\begin{tabularx}{\textwidth}{llX}
+		\toprule
+		\textbf{Date} & \textbf{Author} & \textbf{Change}                    \\
+		\midrule
+		Jan. 18, 2023 & Sam             & Create document and fill in
+		Problem, Stakeholders, and Goals sections                            \\
+		Jan. 19, 2023 & Sam             & Format for Drasil upload;
+		fill in Inputs and Outputs, Environment, and Stretch Goals sections;
+		update Stakeholders and Goals sections; and move Environment section \\
+		Jan. 20, 2023 & Sam             & Update Goals and Stretch
+		Goals sections, fill in Problem Statement introduction, update
+		Drasil reference                                                     \\
+		Jan. 22, 2023 & Sam             & Replace the notion of
+		``fractional oxidation state'' with ``nonstoichiometric compound''   \\
+		Jan. 31, 2023 & Sam             & Remove references to SciPy
+		and comments about first-person usage and add stretch goals from SRS
+		Likely Changes                                                       \\
+		Mar. 4, 2023  & Sam             & Replace method of solving
+		with integer programming, clarify output, and make minor formatting
+		improvements                                                         \\
+		\bottomrule
+	\end{tabularx}
 \end{table}
 
 \section{Problem Statement}
 
-\wss{You should check your problem statement with the
-\href{https://github.com/smiths/capTemplate/blob/main/docs/Checklists/ProbState-Checklist.pdf}
-{problem statement checklist}.}
-\wss{You can change the section headings, as long as you include the required
-information.}
-\null\newline
-\null\newline
-\noindent The following sections describe the problem statement of \progname~by outlining
-the \nameref{prob}, \nameref{io}, \nameref{env}, and \nameref{stkhlds}.
+The following sections describe the problem statement of \progname{}
+by outlining the \nameref{prob}, \nameref{io}, \nameref{env}, and
+\nameref{stkhlds}.
 
 \subsection{Problem} \label{prob}
 
@@ -78,68 +77,61 @@ to error, and inefficient, especially for more complicated chemical reactions.
 For each element present in the reaction, an equality can be written for the
 number of elements in each substance, with the reactants on one side and the
 products on the other, using the coefficients of each substance as the
-variables \cite{hamid_balancing_2019}. These equalities then form a system of
-linear
-equations that can be solved through various methods to yield a relation
-between each coefficient, which can then be manipulated to find the require
-whole
-numbers \cite{lund_introduction_2023, hamid_balancing_2019}. This method can
+variables \cite{hamid_balancing_2019}. These equalities can then be used as
+constraints in an integer programming problem that, when solved and properly
+bounded, gives the smallest positive whole numbers that balance the chemical
+equation \cite{lund_introduction_2023, hamid_balancing_2019}. This method can
 also identify reactions that are ``infeasible" and balance reactions involving
 nonstoichiometric compounds \cite{hamid_balancing_2019}, which are compounds
-``in which the numbers of atoms of the elements present cannot be expressed as a
-ratio of small whole numbers"
+``in which the numbers of atoms of the elements present cannot be expressed as
+a ratio of small whole numbers"
 \cite{the_editors_of_encyclopaedia_britannica_nonstoichiometric_2010}.
 
 \subsection{Inputs and Outputs} \label{io}
 
-\wss{Characterize the problem in terms of ``high level'' inputs and outputs.
-Use abstraction so that you can avoid details.}
-\null\newline
-\null\newline
 \noindent Input:
 
 \begin{itemize}
 	\item A representation of a chemical equation
 \end{itemize}
 
-\noindent Output:
+\noindent Outputs:
 
 \begin{itemize}
-\item A representation of the inputted chemical equation in its balanced form
-with the smallest whole number coefficients possible
+	\item If the inputted chemical equation is feasible, a representation of it
+	      in its balanced form with the smallest whole number coefficients
+	      possible
+	\item If the inputted chemical equation is infeasible, a message
+	      describing why
 \end{itemize}
 
 \subsection{Environment} \label{env}
 
-\wss{Hardware and software}
-\null\newline
-\null\newline
-\noindent\progname~will be developed using Drasil
+\progname{} will be developed using Drasil
 \cite{carette_drasil_2021}, ``a framework for generating
 high-quality documentation and code for Scientific Computing Software''
 \cite[p. iii]{maclachlan_design_2020} by encapsulating scientific knowledge as
-``chunks'' to be reused among projects \cite{maclachlan_design_2020}. By 
-building this project in Drasil, relevant concepts about chemistry and systems
-of linear equations must first be added, along with the capability to solve
-these systems. Therefore, a byproduct of this project is that other programs
-that use chemistry and/or systems of linear equations can be made using
+``chunks'' to be reused among projects \cite{maclachlan_design_2020}. By
+building this project in Drasil, relevant concepts about chemistry and integer
+programming must first be added. Therefore, a byproduct of this project is that
+other programs that use chemistry and/or integer programming can be made using
 Drasil. The implementation in Drasil places some constraints on this project.
 
 Since Drasil is built on the idea of reusability, external libraries will be
-used to solve these systems of linear equations. This was previously done with
+used to solve the integer programming problems. This was previously done with
 ordinary differential equation (ODE) solvers, since ``creating a complete ODE
 solver in Drasil would take considerable time, and there are already many
 reliable external libraries \dots tested by long use''
 \cite[p. 24]{chen_solving_2022}; these rationales also apply to solvers of
-systems of linear equations.
+integer programming problems.
 
 Additionally, Drasil can currently generate code in Python, C++, C\#, Java, and
-Swift \cite{chen_solving_2022}. The scope of this project will be limited to 
-generating code in Python since it is the language in which I 
-have the most experience. 
+Swift \cite{chen_solving_2022}. The scope of this project will be limited to
+generating code in Python since it is the language in which I
+have the most experience.
 
-Since both \progname~and Drasil are purely software systems, the only
-hardware involved is the user's computer used to run \progname.
+Since both \progname{} and Drasil are purely software systems, the only
+hardware involved is the user's computer used to run \progname{}.
 
 \subsection{Stakeholders} \label{stkhlds}
 The main stakeholder of this project is Dr.~Spencer Smith, the instructor for
@@ -149,8 +141,8 @@ the Drasil project that \progname~seeks to extend, so the implementation and
 development process are of significance to them. Likewise, any future
 developers of Drasil, including myself, are
 potential stakeholders of this project, since they may use features added to
-Drasil, such as ideas about chemistry or systems of linear equations. Jason
-Balaci, a fellow CAS 741 student and Drasil contributor, is of particular 
+Drasil, such as ideas about chemistry or integer programming. Jason
+Balaci, a fellow CAS 741 student and Drasil contributor, is of particular
 mention, since
 there may be some overlap between our projects so we may be collaborating
 throughout this project. I am also a stakeholder of \progname~as the
@@ -164,51 +156,55 @@ may be a stakeholder of this project, as they may use this tool in their work.
 The goals of this project are to develop a program that\dots
 
 \begin{itemize}
-    \item can balance chemical equations (including ones with nonstoichiometric
-    compounds).
-    \item can determine if a given chemical reaction is ``infeasible'' (i.e.,
-    not able to be balanced).
-    \item is generated by Drasil (along with relevant documentation).
-    \item extends Drasil by introducing the concepts from chemistry necessary
-    to balance equations, such as elements, compounds, and reactions.
-    \item is written in Python (see \nameref{env}).
-    \item uses appropriate external libraries to
-    solve systems of linear equations (see \cite[Ch. 4]{chen_solving_2022}).
+	\item can balance chemical equations (including ones with nonstoichiometric
+	      compounds).
+	\item can determine if a given chemical reaction is ``infeasible'' (i.e.,
+	      not able to be balanced).
+	\item is generated by Drasil (along with relevant documentation).
+	\item extends Drasil by introducing the concepts from chemistry necessary
+	      to balance equations, such as elements, compounds, and reactions.
+	\item is written in Python (see \nameref{env}).
+	\item uses appropriate external libraries to solve integer programming
+	      problems (see \cite[Ch. 4]{chen_solving_2022}).
 \end{itemize}
+
+\newpage
 
 \section{Stretch Goals}
 
 In descending order of priority, the stretch goals of this project are to\dots
 
 \begin{enumerate}
-	\item add support for more complex chemical formulas, such as hydrates or those
-	with polymers or isotopes.
-	\item add the ability to, given the amount of one substance in a reaction (in
-	moles), calculate the amount of every other substance in the reaction (also in
-	moles).\footnote{\label{chemProbExs}These examples of problems related to
-		chemical equations were taken from \cite{lund_introduction_2023}.}
+	\item add support for more complex chemical formulas, such as hydrates or
+	      those with polymers or isotopes.
+	\item add the ability to, given the amount of one substance in a reaction
+	      (in moles), calculate the amount of every other substance in the
+	      reaction (also in moles).\footnote{\label{chemProbExs}These examples
+		      of problems related to chemical equations were taken from
+		      \cite{lund_introduction_2023}.}
 	\item add the ability to, given the amount of each reactant (in moles),
-	determine the limiting reactant(s) in a
-	reaction.\cref{chemProbExs}
+	      determine the limiting reactant(s) in a reaction.\cref{chemProbExs}
 	\item add the ability to, given the amount of each reactant (in moles),
-	determine the theoretical yield of each product and the amount of excess
-	reactant(s).\cref{chemProbExs}
-	\item generate code for \progname~in the other languages supported by
-	Drasil. (While using external ODE solvers in Drasil, the developers ``did not
-		find a suitable library for Swift'' \cite[p.~24]{chen_solving_2022}; a similar
-		problem may arise when using external system of linear equations solvers,
-		meaning that \progname~may not be generated in all five languages supported
-		by Drasil.)
+	      determine the theoretical yield of each product and the amount of
+	      excess reactant(s).\cref{chemProbExs}
+	\item generate code for \progname{} in the other languages supported by
+	      Drasil. (While using external ODE solvers in Drasil, the developers
+	      ``did not find a suitable library for Swift''
+	      \cite[p.~24]{chen_solving_2022}; a similar problem may arise when
+	      using external solvers of integer programming problems,
+	      meaning that \progname{} may not be generated in all five languages
+	      supported by Drasil.)
 	\item add the ability to parse valid but incorrectly formatted chemical
-	formulas inputted by the user and format them correctly when outputting them.
+	      formulas inputted by the user and format them correctly when
+	      outputting them.
 	\item do the same as 2-4.~but in terms of mass.\cref{chemProbExs}
 	\item add the ability to classify a chemical reaction as ``combination (or
-		synthesis), decomposition, combustion, single replacement, \dots double
-		replacement'' \cite[p.~301]{lund_introduction_2023} or some combination of
-		these.\cref{chemProbExs}
+	      synthesis), decomposition, combustion, single replacement, \dots
+	      double replacement'' \cite[p.~301]{lund_introduction_2023} or some
+	      combination of these.\cref{chemProbExs}
 	\item add support for phase labels.\cref{chemProbExs}
-	\item add support for precipitation reactions, including solubility and 
-	identifying when reactions will not take place.\cref{chemProbExs}
+	\item add support for precipitation reactions, including solubility and
+	      identifying when reactions will not take place.\cref{chemProbExs}
 \end{enumerate}
 
 \newpage
