@@ -354,6 +354,7 @@ symbols are listed in alphabetical order.
   $\textbf{A}$    & --            & $\mathbb{R}^{m \times n}$ & generic matrix                               \\
   $a$             & --            & $\posInt$                 & generic positive integer                     \\
   $\textbf{b}$    & --            & $\mathbb{R}^{m}$          & generic vector                               \\
+  $b$             & --            & $\posInt$                 & generic positive integer                     \\
   $\textbf{c}$    & --            & $\posInt^{n}$             & vector of smallest coefficients
   that balance a chemical equation                                                                           \\
   $c$             & --            & $C$                       & generic compound                             \\
@@ -831,11 +832,12 @@ on.
 % #4 equation
 {$\forall\, e : E,\, R, P : \langle C\rangle ~|~
     \sum\limits_{c_i \in R} a_i \text{count}(e, c_i) =
-    \sum\limits_{c_i \in P} a_i \text{count}(e, c_i)$, where $R$
+    \sum\limits_{c_i \in P} b_i \text{count}(e, c_i)$, where $R$
   represents the reactant side of a chemical equation, $P$ represents the
-  product side, $\text{count}(e,c)$ is from \ddref{count}, and $a_i$
+  product side, $\text{count}(e,c)$ is from \ddref{count}, $a_i$
   represents the coefficient in the chemical equation for a given compound
-  $c_i$.}
+  $c_i \in R$, and $b_i$ represents the coefficient in the chemical equation
+  for a given compound $c_i \in P$.}
 % #5 description
 {
   This law states that ``matter can neither be created nor destroyed in a
