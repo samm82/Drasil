@@ -245,7 +245,8 @@
   & 1.2.2         & Improve TM1 based on feedback                           \\
   & 1.2.3         & Add \progname{} abbreviation and missing definitions                 \\
   Feb. 26, 2023       & 1.2.4         & Add \ddref{count}                                                    \\
-  Feb. 27, 2023       & 1.2.5         & Add \ddref{matRep} and clarify \nameref{sec_mathNot} for types       \\
+  Feb. 27, 2023       & 1.2.5         & Add DD for matrix representation and
+  clarify \nameref{sec_mathNot} for types \\
   Feb. 28, 2023       & 1.2.6         & Add \ddref{elems}                                                    \\
   & 1.2.7         & Add GD1 \\
   Feb. 28, 2023 & 1.2.8         & Add DD for GCF (DD4) \\
@@ -269,7 +270,8 @@
   \tmref{TM_ConsMass} \\
   & 1.3.10 & Add \tmref{TM_ConsMass} reference to \imref{output} and improve IM
   referencing \\
-  & 1.3.11 & Move old GD1 to be an IM (\imref{chemILP}) \\
+  & 1.3.11 & Move old DD3 and GD1 to be IMs (\imref{matRep} and
+  \imref{chemILP}, respectively) \\
 \end{xltabular}
 
 ~\newpage
@@ -750,19 +752,19 @@ is used.
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_elemCompDiff}:]
     For all inputted chemical equations, there is at most one more compound than
     element. \sjc{Should this be an assumption or a requirement?}
-    [\gdref{matRep}, \ucref{UC_allEqsPermitted}]
+    [\imref{matRep}, \ucref{UC_allEqsPermitted}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_validInput}:]
     All inputted chemical formulas describe real chemical formulas.
-      [\gdref{matRep}]
+      [\imref{matRep}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_correctInputFormat}:]
     All inputted chemical formulas are formatted following some set of
-    agreed-upon conventions.	[\gdref{matRep}, \lcref{LC_incorrectInputFormat}]
+    agreed-upon conventions.	[\imref{matRep}, \lcref{LC_incorrectInputFormat}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_simpleForms}:]
     All inputted chemical formulas are simple (i.e., only consist of atomic
-    symbols and subscripts).	[\gdref{matRep}, \lcref{LC_complexForms}]
+    symbols and subscripts).	[\imref{matRep}, \lcref{LC_complexForms}]
 
 \end{itemize}
 
@@ -946,7 +948,7 @@ models. The dimension of each quantity is also given.
     \hline
     Sources     & --                                                         \\
     \hline
-    Ref.\ By    & \tmref{TM_ConsMass}, \ddref{matRep}                        \\
+    Ref.\ By    & \tmref{TM_ConsMass}, \imref{matRep}                        \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -979,63 +981,7 @@ models. The dimension of each quantity is also given.
     \hline
     Sources     & --                                                        \\
     \hline
-    Ref.\ By    & \ddref{matRep}                                            \\
-    \hline
-  \end{tabular}
-\end{minipage}\\
-
-~\newline
-\noindent
-\begin{minipage}{\textwidth}
-  \renewcommand*{\arraystretch}{1.5}
-  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-    \hline
-    \rowcolor[gray]{0.9}
-    Number      & DD\refstepcounter{datadefnum}\thedatadefnum \label{matRep} \\
-    \hline
-    Label       & \bf Matrix representation of a chemical equation           \\
-    \hline
-    Symbol      & $\textbf{E}$                                               \\
-    \hline
-    % Units& $Mt^{-3}$\\
-    % \hline
-    SI Units    & --                                                         \\
-    \hline
-    Equation    & \vspace{-3mm}
-    $ \forall\, e_i \in \text{elems}(R, P), c_j \in R \cup P ~|~ e_{ij} =
-      \begin{cases}
-        \begin{aligned}
-           & \text{count}(e_i, c_j),  &  & c_j \in R        \\
-           & -\text{count}(e_i, c_j), &  & \text{otherwise}
-        \end{aligned}
-      \end{cases}$
-    \vspace{1.5mm}                                                           \\
-    \hline
-    Description & $\mathbf{E}$ is a matrix of type
-    $\mathbb{R}^{|\text{elems}(R, P)| \times |R\, \cup\, P|}$ constructed
-    from $R$, a sequence of compounds ($\langle C \rangle$) on the reactant
-    side of a chemical equation, and $P$ a sequence of compounds
-    ($\langle C \rangle$) on the product side.
-    It represents a given chemical equation as a matrix where each row
-    corresponds to a different element and each column corresponds to a
-    different compound. Positive entries indicate the compound is a reactant,
-    negative entries indicate the compound is a product, and zeroes indicate
-    the corresponding element is not present in the corresponding compound.
-
-    ~\newline
-    $\text{count}(e,c)$ is from \ddref{count} and $\text{elems}(R,P)$ is
-    from \ddref{elems}.
-
-    ~\newline
-    Each compound present in the inputted sequences are
-    assumed to be valid (\aref{A_validInput}), be formatted correctly
-    (\aref{A_correctInputFormat}), and only consist of atomic symbols and
-    subscripts (\aref{A_simpleForms}). The number of columns is assumed to be
-    at most one more than the number of rows (\aref{A_elemCompDiff}).        \\
-    \hline
-    Sources     & \cite{hamid_balancing_2019}                                \\
-    \hline
-    Ref.\ By    & \imref{chemILP}                                            \\
+    Ref.\ By    & \imref{matRep}                                            \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -1144,6 +1090,64 @@ The goals \gsref{G_feasible} and \gsref{G_balance} are solved by
   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
     \hline
     \rowcolor[gray]{0.9}
+    Number      & IM\refstepcounter{instnum}\theinstnum \label{matRep} \\
+    \hline
+    Label       & \bf Matrix representation of a chemical equation     \\
+    \hline
+    Symbol      & $\textbf{E}$                                         \\
+    \hline
+    % Units& $Mt^{-3}$\\
+    % \hline
+    SI Units    & --                                                   \\
+    \hline
+    Equation    & \vspace{-3mm}
+    $ \forall\, e_i \in \text{elems}(R, P), c_j \in R \cup P ~|~ e_{ij} =
+      \begin{cases}
+        \begin{aligned}
+           & \text{count}(e_i, c_j),  &  & c_j \in R        \\
+           & -\text{count}(e_i, c_j), &  & \text{otherwise}
+        \end{aligned}
+      \end{cases}$
+    \vspace{1.5mm}                                                     \\
+    \hline
+    Description & $\mathbf{E}$ is a matrix of type
+    $\mathbb{R}^{|\text{elems}(R, P)| \times |R\, \cup\, P|}$ constructed
+    from $R$, a sequence of compounds ($\langle C \rangle$) on the reactant
+    side of a chemical equation, and $P$ a sequence of compounds
+    ($\langle C \rangle$) on the product side.
+    It represents a given chemical equation as a matrix where each row
+    corresponds to a different element and each column corresponds to a
+    different compound. Positive entries indicate the compound is a reactant,
+    negative entries indicate the compound is a product, and zeroes indicate
+    the corresponding element is not present in the corresponding compound;
+    this allows for ensuring that the Law of Conservation of Mass
+    (\tmref{TM_ConsMass}) is followed \sjc{Add more detailed derivation?}.
+
+    ~\newline
+    $\text{count}(e,c)$ is from \ddref{count} and $\text{elems}(R,P)$ is
+    from \ddref{elems}.
+
+    ~\newline
+    Each compound present in the inputted sequences are
+    assumed to be valid (\aref{A_validInput}), be formatted correctly
+    (\aref{A_correctInputFormat}), and only consist of atomic symbols and
+    subscripts (\aref{A_simpleForms}). The number of columns is assumed to be
+    at most one more than the number of rows (\aref{A_elemCompDiff}).  \\
+    \hline
+    Sources     & \cite{hamid_balancing_2019}                          \\
+    \hline
+    Ref.\ By    & \imref{chemILP}                                      \\
+    \hline
+  \end{tabular}
+\end{minipage}\\
+
+~\newline
+\noindent
+\begin{minipage}{\textwidth}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
     Number      & IM\refstepcounter{instnum}\theinstnum \label{chemILP}   \\
     \hline
     Label       & \bf Integer linear program for chemical equation        \\
@@ -1163,7 +1167,7 @@ The goals \gsref{G_feasible} and \gsref{G_balance} are solved by
     \hline
     Description &
     This is a specific instance of the ILP from \tmref{TM_ILP}
-    with $\textbf{A} = \textbf{E}$ (from \ddref{matRep}),
+    with $\textbf{A} = \textbf{E}$ (from \imref{matRep}),
     $\textbf{b} = \textbf{0}$ (since there should be no difference between the
     number of atoms of each element on each side of the equation), and
     $\textbf{c} = \textbf{1}$ (since only the sum of the coefficients need to
@@ -1197,12 +1201,11 @@ The goals \gsref{G_feasible} and \gsref{G_balance} are solved by
   \end{tabular}
 \end{minipage}\\
 
-% \subsubsection*{Detailed derivation of simplified rate of change of temperature}
+%\subsubsection*{Derivation of ...}
 %
-%\plt{This may be necessary when the necessary information does not fit in the
-%  description field.}
-%\plt{Derivations are important for justifying a given GD.  You want it to be
-%  clear where the equation came from.}
+%\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
+%  where the derivation cannot be described under the Description field, it will
+%  be necessary to include this subsection.}
 
 ~\newline
 \noindent
@@ -1251,13 +1254,13 @@ The goals \gsref{G_feasible} and \gsref{G_balance} are solved by
 %     \hline
 %     Label       & \bf Vector of compound coefficients in balanced equation         \\
 %     \hline
-%     Input       & $\textbf{E}$ from \ddref{matRep}                                 \\
+%     Input       & $\textbf{E}$ from \imref{matRep}                                 \\
 %     \hline
 %     Output      & $\textbf{c}$ from \gdref{chemMatEq}, such that
 %     $\text{gcf}(\textbf{c}) = 1$ (from \ddref{gcf})                                \\
 %     \hline
 %     Description & $\textbf{E}$ is a matrix representing the amount of each element
-%     in each compound in a chemical equation from \ddref{matRep}.                   \\
+%     in each compound in a chemical equation from \imref{matRep}.                   \\
 %                 & $\textbf{c}$ is a vector of the smallest positive integer
 %     coefficients for each compound in the reaction (in the order inputted) so that
 %     the chemical equation is balanced.                                             \\
@@ -1335,7 +1338,7 @@ There are no input data constraints.
 
 The vector outputted by \imref{chemILP} can be used as the value for
 $\textbf{x}$ in a ``sanity'' check; the original input (formatted as a matrix
-according to \ddref{matRep}) can then be used as $\textbf{E}$.
+according to \imref{matRep}) can then be used as $\textbf{E}$.
 Performing this matrix multiplication should result in the zero vector,
 $\textbf{0}$ (from \imref{chemILP}).
 % Additionally, since the coefficients
@@ -1381,7 +1384,7 @@ qualities that the software is expected to exhibit.
     representation of a chemical equation.
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_convert}:] Convert the
-    inputted equation to matrix form (from \ddref{matRep}).
+    inputted equation to matrix form (from \imref{matRep}).
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_feasible}:] Determine if the
     inputted equation is feasible (see \nameref{sec_termsDefs};	from
@@ -1579,12 +1582,12 @@ shows the dependencies of requirements on instance models.
   \centering
   \begin{tabular}{|c|c|c|c|c|c|c|}
     \hline
-                           & \tmref{TM_MatEq} & \tmref{TM_ConsMass} & \gdref{matRep} & \ddref{count} & \imref{balance} \\
+                           & \tmref{TM_MatEq} & \tmref{TM_ConsMass} & \imref{matRep} & \ddref{count} & \imref{balance} \\
     \hline
     \tmref{TM_MatEq}       &                  &                     &                &               &                 \\ \hline
     \tmref{TM_ConsMass}    &                  &                     &                & X             &                 \\ \hline
     \ddref{count}          &                  &                     &                &               &                 \\ \hline
-    \gdref{matRep}         &                  &                     &                &               & X               \\ \hline
+    \imref{matRep}         &                  &                     &                &               & X               \\ \hline
     \imref{balance}        & X                &                     & X              &               & X               \\ \hline
     \ref{sec_DataConst}    &                  &                     &                &               &                 \\ \hline
     \ref{sec_PropsCorrSol} &                  &                     & X              &               & X               \\ \hline
@@ -1627,7 +1630,7 @@ shows the dependencies of requirements on instance models.
       \hline
       \tmref{TM_MatEq}                &                       &                     &                             &                      \\ \hline
       \tmref{TM_ConsMass}             &                       &                     &                             &                      \\ \hline
-      \gdref{matRep}                  & X                     & X                   & X                           & X                    \\ \hline
+      \imref{matRep}                  & X                     & X                   & X                           & X                    \\ \hline
       \ddref{count}                   &                       &                     &                             &                      \\ \hline
       \imref{balance}                 &                       &                     &                             &                      \\ \hline
       \lcref{LC_complexForms}         &                       &                     &                             & X                    \\ \hline
