@@ -260,7 +260,8 @@
   (\tmref{TM_ILP})\\
   & 1.3.4 & Replace old GD1 with one that corresponds to \tmref{TM_ILP}
   (\gdref{chemILP})\\
-  Mar. 6, 2023 & 1.3.5 & Clarify \gdref{chemILP} (types and output) \\
+  Mar. 6, 2023 & 1.3.5 & Clarify \gdref{chemILP} (types, output, and special
+  matrices/vectors) \\
 \end{xltabular}
 
 ~\newpage
@@ -316,6 +317,7 @@ symbols are listed in alphabetical order.
   \textbf{symbol} & \textbf{unit} & \textbf{type}             & \textbf{description}                         \\
   \midrule
   $\textbf{0}$    & --            & $\nonnegInt^{m}$          & zero vector                                  \\
+  $\textbf{1}$    & --            & $\posInt^{m}$             & unary vector                                 \\
   $\textbf{A}$    & --            & $\mathbb{R}^{m \times n}$ & generic matrix                               \\
   $\textbf{b}$    & --            & $\mathbb{R}^{m}$          & generic vector                               \\
   $\textbf{c}$    & --            & $\posInt^{n}$             & vector of the smallest coefficients
@@ -380,10 +382,11 @@ three columns is of type $\mathbb{R}^{2 \times 3}$
 \cite[p.~3]{golub_matrix_2013}. Since vectors are one-dimensional
 matrices, their types only have one dimension; for example, a row vector with
 four real number entries is denoted by $\mathbb{R}^{4}$
-\cite[p.~4]{golub_matrix_2013}. The zero matrix is a special
-type of matrix where each element is zero and is denoted by $\textbf{0}$
-\cite{weisstein_zero_2023}.
-Individual entries in a matrix are written in
+\cite[p.~4]{golub_matrix_2013}. The zero matrix/vector is a special
+type of matrix/vector where each element is zero and is denoted by
+$\textbf{0}$ \cite{weisstein_zero_2023}. Similarly, the unary matrix/vector,
+denoted by $\textbf{1}$, will represent a matrix/vector where each element is
+one. Individual entries in a matrix are written in
 lowercase letters with their row and column number, in that order, written as
 subscripts (for example $a_{12}$) \cite{osullivan_appendix_2010}.
 % ; these
@@ -915,7 +918,7 @@ instance models.
     with $\textbf{A} = \textbf{E}$ (from \ddref{matRep}),
     $\textbf{b} = \textbf{0}$ (since there should be no difference between the
     number of atoms of each element on each side of the equation), and
-    $\textbf{c} = \textbf{I}$ (since only the sum of the coefficients need to
+    $\textbf{c} = \textbf{1}$ (since only the sum of the coefficients need to
     be minimized to obtain the smallest solution). The goal is changed from
     ``maximize'' to ``minimize'' since chemical equations have the smallest
     coefficients by convention \cite{lund_introduction_2023}. The constraints
@@ -926,8 +929,8 @@ instance models.
     The solution to this equation \sjc{?} is the vector of the smallest positive
     integer coefficients for the compounds in the chemical equation such that
     the Law of Conservation of Mass (\tmref{TM_ConsMass}) is satisfied.     \\
-                & $\textbf{0}$ is the zero matrix and $\textbf{I}$ is the
-    identity matrix (see \nameref{sec_mathNot}).                            \\
+                & $\textbf{0}$ is the zero vector and $\textbf{1}$ is the
+    unary vector (see \nameref{sec_mathNot}).                               \\
     % This will be found by putting
     % $(\textbf{E}|\textbf{0})$ in reduced row echelon form, which will yield a
     % parametric solution. Every entry in the last non-zero column will be
@@ -1322,7 +1325,7 @@ There are no input data constraints.
 The vector used in \iref{balance} can be used as the value for $\textbf{c}$
 in a ``sanity'' check; the original input (formatted as a matrix according to
 \ddref{matRep}) can then be used as $\textbf{E}$.
-Performing this matrix multiplication should result in the zero matrix,
+Performing this matrix multiplication should result in the zero vector,
 $\textbf{0}$ (from \gdref{chemMatEq}). Additionally, since the coefficients
 should be as small as possible by convention \cite{lund_introduction_2023},
 $\text{gcf}(\mathbf{c})$ (from \ddref{gcf}) should be ``1''.
