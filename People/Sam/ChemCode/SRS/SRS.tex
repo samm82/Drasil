@@ -266,6 +266,8 @@
   & 1.3.7 & Add IM for output (\iref{output}) \\
   & 1.3.8 & Update \nameref{sec_mathNot} (add notion of transpose and remove
   unneeded content) \\
+  Mar. 7, 2023 & 1.3.9 & Account for compound coefficients in
+  \tmref{TM_ConsMass} \\
 \end{xltabular}
 
 ~\newpage
@@ -348,8 +350,9 @@ symbols are listed in alphabetical order.
   $\textbf{0}$    & --            & $\nonnegInt^{m}$          & zero vector                                  \\
   $\textbf{1}$    & --            & $\posInt^{m}$             & unary vector                                 \\
   $\textbf{A}$    & --            & $\mathbb{R}^{m \times n}$ & generic matrix                               \\
+  $a$             & --            & $\posInt$                 & generic positive integer                     \\
   $\textbf{b}$    & --            & $\mathbb{R}^{m}$          & generic vector                               \\
-  $\textbf{c}$    & --            & $\posInt^{n}$             & vector of the smallest coefficients
+  $\textbf{c}$    & --            & $\posInt^{n}$             & vector of smallest coefficients
   that balance a chemical equation                                                                           \\
   $c$             & --            & $C$                       & generic compound                             \\
   $\textbf{E}$    & --            & $\mathbb{R}^{m \times n}$ & matrix representation of a chemical equation \\
@@ -824,10 +827,13 @@ on.
 % #3 label
 {Law of Conservation of Mass}
 % #4 equation
-{$\forall\, e : E,\, R, P : \langle C\rangle ~|~ \sum\limits_{c \in R}
-    \text{count}(e, c) = \sum\limits_{c \in P} \text{count}(e,c)$, where $R$
+{$\forall\, e : E,\, R, P : \langle C\rangle ~|~
+    \sum\limits_{c_i \in R} a_i \text{count}(e, c_i) =
+    \sum\limits_{c_i \in P} a_i \text{count}(e, c_i)$, where $R$
   represents the reactant side of a chemical equation, $P$ represents the
-  product side, and $\text{count}(e,c)$ is from \ddref{count}.}
+  product side, $\text{count}(e,c)$ is from \ddref{count}, and $a_i$
+  represents the coefficient in the chemical equation for a given compound
+  $c_i$.}
 % #5 description
 {
   This law states that ``matter can neither be created nor destroyed in a
@@ -835,7 +841,8 @@ on.
   \cite[p.~112]{lund_introduction_2023}.
 }
 % #6 Notes
-{None}
+{This equation assumes that $R$ and $P$ correspond to the same chemical
+  reaction.}
 % #7 Source
 {
   \url{https://chem.libretexts.org/Courses/Anoka-Ramsey_Community_College/Introduction_to_Chemistry/03\%3A_Matter_and_Energy/3.06\%3A_Conservation_of_Mass}
