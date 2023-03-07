@@ -263,6 +263,7 @@
   matrices/vectors) \\
   & 1.3.6 & Remove all content from specification based on solving a system of
   linear equations \\
+  & 1.3.7 & Add IM for output (\iref{output}) \\
 \end{xltabular}
 
 ~\newpage
@@ -357,6 +358,7 @@ symbols are listed in alphabetical order.
   $n$             & --            & $\posInt$                 & generic positive integer                     \\
   $P$             & --            & $\langle C \rangle$       & product side of a chemical equation          \\
   $R$             & --            & $\langle C \rangle$       & reactant side of a chemical equation         \\
+  $s$             & --            & string                    & output message                               \\
   $\textbf{x}$    & --            & $\mathbb{R}^{n}$          & generic vector                               \\
   $x$             & --            & $\nonnegInt$              & generic non-negative integer                 \\
   $z$             & --            & $\{ \mathbb{Z} \}$        & generic set of integers                      \\
@@ -945,9 +947,9 @@ instance models.
     % respectively, become this lowest common denominator.
     % \sjc{Double check this}\\
     \hline
-    Source      & \cite{hamid_balancing_2019}                               \\
+    Source      & --                                                        \\
     \hline
-    Ref.\ By    & \iref{balance}                                            \\
+    Ref.\ By    & \iref{output}                                             \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -1085,7 +1087,7 @@ models. The dimension of each quantity is also given.
     \hline
     Sources     & \cite{hamid_balancing_2019}                                \\
     \hline
-    Ref.\ By    & \gdref{chemILP}, \iref{balance}                            \\
+    Ref.\ By    & \gdref{chemILP}                                            \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -1181,56 +1183,45 @@ models.
 This section transforms the problem defined in \nameref{sec_probDesc} into
 one which is expressed in mathematical terms. It uses concrete symbols defined
 in Section~\ref{sec_datadef} to replace the abstract symbols in the models
-identified in Sections~\ref{sec_theoretical} and~\ref{sec_gendef} \sjc{Should
-  the reference to the general models be removed if there aren't any?}.
+identified in Sections~\ref{sec_theoretical} and~\ref{sec_gendef}.
 
-The goals \gsref{G_feasible} and \gsref{G_balance} are solved by
-\sjc{Add reference to output IM}
-and \iref{balance}, respectively.
+The goals \gsref{G_feasible} and \gsref{G_balance} are solved by \iref{output}.
 
-% ~\newline
-%\noindent
-%\begin{minipage}{\textwidth}
-%\renewcommand*{\arraystretch}{1.5}
-%\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-%  \hline
-%  \rowcolor[gray]{0.9}
-%  Number& IM\refstepcounter{instnum}\theinstnum \label{ewat}\\
-%  \hline
-%  Label& \bf Energy balance on water to find $T_W$\\
-%  \hline
-%  Input&$m_W$, $C_W$, $h_C$, $A_C$, $h_P$, $A_P$, $t_\text{final}$, $T_C$, 
-%  $T_\text{init}$, $T_P(t)$ from \iref{epcm}\\
-%  & The input is constrained so that $T_\text{init} \leq T_C$ (\aref{A_charge})\\
-%  \hline
-%  Output&$T_W(t)$, $0\leq t \leq t_\text{final}$, such that\\
-%  &$\frac{dT_W}{dt} = \frac{1}{\tau_W}[(T_C - T_W(t)) + {\eta}(T_P(t) - T_W(t))]$,\\
-%  &$T_W(0) = T_P(0) = T_\text{init}$ (\aref{A_InitTemp}) and $T_P(t)$ from \iref{epcm} \\
-%  \hline
-%  Description&$T_W$ is the water temperature (\si{\celsius}).\\
-%  &$T_P$ is the PCM temperature (\si{\celsius}).\\
-%  &$T_C$ is the coil temperature (\si{\celsius}).\\
-%  &$\tau_W = \frac{m_W C_W}{h_C A_C}$ is a constant (\si{\second}).\\
-%  &$\eta = \frac{h_P A_P}{h_C A_C}$ is a constant (dimensionless).\\
-%  & The above equation applies as long as the water is in liquid form,
-%  $0<T_W<100^o\text{C}$, where $0^o\text{C}$ and $100^o\text{C}$ are the melting
-%  and boiling points of water, respectively (\aref{A_OpRange}, \aref{A_Pressure}).
-%  \\
-%  \hline
-%  Sources& Citation here \\
-%  \hline
-%  Ref.\ By & \iref{epcm}\\
-%  \hline
-%\end{tabular}
-%\end{minipage}\\
-%
-%%~\newline
-%
-%\subsubsection*{Derivation of ...}
-%
-%\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
-%  where the derivation cannot be described under the Description field, it will
-%  be necessary to include this subsection.}
+~\newline
+\noindent
+\begin{minipage}{\textwidth}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
+    Number      & IM\refstepcounter{instnum}\theinstnum \label{output} \\
+    \hline
+    Label       & \bf Output message                                   \\
+    \hline
+    Input       & The solution from \gdref{chemILP}, if one exists     \\
+    \hline
+    Output      & \vspace{-3mm}
+    $s = \begin{cases}
+             \begin{aligned}
+           & \parbox{85mm}{The inputted chemical equation balanced with the found coefficients}\,,                             &  & \text{A solution exists}                                   \\[1em]
+           & \parbox{85mm}{``This reaction is infeasible because [reasoning], violating the Law of Conservation of Mass.''}\,, &  & \parbox{30mm}{The Law of Conservation of Mass is violated} \\[1em]
+           & \parbox{85mm}{``This reaction is infeasible, likely because it is overconstrained.''}\,,                          &  & \text{otherwise}
+        \end{aligned}
+           \end{cases}$
+    \vspace{1.5mm}                                                     \\
+    \hline
+    Description & $s$ is a string that will be output to the user.     \\
+    %  & The above equation applies as long as the water is in liquid form,
+    %  $0<T_W<100^o\text{C}$, where $0^o\text{C}$ and $100^o\text{C}$ are the melting
+    %  and boiling points of water, respectively (\aref{A_OpRange}, \aref{A_Pressure}).
+    %  \\
+    \hline
+    Sources     & --                                                   \\
+    \hline
+    Ref.\ By    & --                                                   \\
+    \hline
+  \end{tabular}
+\end{minipage}\\
 
 % ~\newline
 % \noindent
@@ -1377,10 +1368,11 @@ qualities that the software is expected to exhibit.
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_feasible}:] Determine if the
     inputted equation is feasible (see \nameref{sec_termsDefs};	from
-    \sjc{Add ref to output IM}).
+    \sjc{add reference}).
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_infeasOutput}:] If the
-    inputted equation is infeasible, output a descriptive message.
+    inputted equation is infeasible, output a descriptive message (from
+    \iref{output}).
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_balance}:] If the
     inputted equation is feasible, balance the chemical equation with the smallest
@@ -1388,7 +1380,7 @@ qualities that the software is expected to exhibit.
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_feasOutput}:] If the
     inputted equation is feasible, output a balanced form of the equation in the
-    same format as the input (from \sjc{Add ref out output IM}).
+    same format as the input (from \iref{output}).
 
     %\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:]
     %  \plt{Verification related requirements.}
