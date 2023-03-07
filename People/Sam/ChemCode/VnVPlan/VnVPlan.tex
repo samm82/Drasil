@@ -127,6 +127,8 @@
   Mar. 4, 2023 & 1.1.0 & Replace method of solving with integer programming and
   improve Revision History table format \\
   Mar. 6, 2023 & 1.1.1 & Update document based on feedback from Dr.~Smith \\
+  Mar. 7, 2023 & 1.1.2 & Clarify rationale for output string in
+  \testref{test_inf_over_valid_eqn} \\
 \end{xltabular}
 
 \section{Abbreviations and Acronyms} \label{sec_abbrsAcrs}
@@ -450,7 +452,10 @@ input/output is a design decision that is not made at this stage.
     each compound has more than one element, so changing any coefficient
     affects the number of some other element, causing a chain reaction that
     does not converge. There is no solution to this system other than the
-    trivial solution ($\mathbf{0}$) \cite{hamid_balancing_2019}.
+    trivial solution ($\mathbf{0}$) \cite{hamid_balancing_2019}. The message
+    uses the word ``likely'' because there are other potential reasons for a
+    chemical reaction to be infeasible, but based on empirical analysis, it
+    being overconstrained is the most likely reason.
 
 \end{enumerate}
 
