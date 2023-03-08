@@ -275,6 +275,9 @@
   & 1.4 & Update traceability \\
   & 1.4.1 & Clarify \nameref{sec_purpose} and \nameref{sec_scope} \\
   & 1.4.2 & Clarify \aref{A_validForms} and add \aref{A_validEqns} \\
+  Mar. 8, 2023 & 1.4.3 & Add unlikely change for checking that inputted
+  formulas correspond to real-world compounds, including supporting
+  definition \\
 \end{xltabular}
 
 ~\newpage
@@ -637,6 +640,8 @@ easier to correctly understand the requirements:
   \item \textbf{Feasible}: (Referring to a chemical equation) able to be
         balanced \cite{hamid_balancing_2019}.
 
+  \item \textbf{Formula}: A textual representation of a chemical compound.
+
   \item \textbf{Hydrate}: ``A compound formed by the chemical combination of
         water and some other substance in a definite molecular ratio''
         \cite{harpercollins_publishers_hydrate_nodate}.
@@ -761,7 +766,7 @@ is used.
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_validForms}:]
     All inputted chemical formulas describe real chemical compounds.
-      [\imref{matRep}]
+      [\imref{matRep}, \ucref{UC_checkValidForms}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_validEqns}:]
     All inputted chemical equations describe real chemical equations.
@@ -1575,6 +1580,16 @@ qualities that the software is expected to exhibit.
     find any proof of this. Therefore, this constraint will remain an
     assumption and is unlikely to be relaxed.
 
+  \item[UC\refstepcounter{ucnum}\theucnum\label{UC_checkValidForms}:]
+    \aref{A_validForms} assumes that all inputted chemical formulas describe
+    real chemical compounds. While there are extensive libraries of chemical
+    compounds, such as PubChem (which documents 114 million compounds)
+    \cite{national_center_for_biotechnology_information_pubchem_nodate}, it is
+    impossible to verify that any external database of chemical compounds is
+    complete for the sake of verifying user input. Therefore, it is unlikely
+    that there will be a reliable way of ensuring the user only inputs real
+    chemical formulas.
+
 \end{itemize}
 
 \section{Traceability Matrices} \label{sec_traceMats}
@@ -1663,6 +1678,7 @@ shows the dependencies of requirements on instance models.
       \lcref{LC_rxnTakePlace}         &                       &                     &                    &                             &                      \\ \hline
       % \ucref{UC_diffSolveMethod}      &                       &                     &                    &                             &                      \\ \hline
       \ucref{UC_allEqsPermitted}      & X                     &                     &                    &                             &                      \\ \hline
+      \ucref{UC_checkValidForms}      &                       & X                   &                    &                             &                      \\ \hline
     \end{tabular}
     \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
     \label{Table:A_trace}
