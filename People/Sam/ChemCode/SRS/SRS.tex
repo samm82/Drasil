@@ -273,6 +273,7 @@
   & 1.3.11 & Move old DD3 and GD1 to be IMs (\imref{matRep} and
   \imref{chemILP}, respectively) \\
   & 1.4 & Update traceability \\
+  & 1.4.1 & Clarify \nameref{sec_purpose} and \nameref{sec_scope} \\
 \end{xltabular}
 
 ~\newpage
@@ -440,14 +441,17 @@ described in \nameref{sec_phySystDesc}), but must be balanced before they can
 be used \cite{lund_introduction_2023}. Therefore, it is useful to have a
 tool to automatically balance these chemical reactions to improve the
 productivity of scientists and engineers and reduce the potential for human
-error.
+error. If a given chemical reaction is feasible (see \nameref{sec_termsDefs}),
+the program should balance it, and if not, it should provide a descriptive
+message communicating this to the user. The program that performs these tasks
+as specified by this document will be called ``\progname{}''.
 
 The following section provides an overview of the Software Requirements
 Specification (SRS) for \progname{}. This section explains the purpose of this
 document, the scope of the requirements, the characteristics of the intended
 reader, and the organization of the document.
 
-\subsection{Purpose of Document}
+\subsection{Purpose of Document} \label{sec_purpose}
 
 The primary purpose of this document is to record the requirements of the
 program for solving chemistry problems \sjc{Is this a good description?}.
@@ -471,11 +475,10 @@ present the documentation is to ``fake'' a rational design process
 
 \subsection{Scope of Requirements} \label{sec_scope}
 
-The scope of the requirements includes determining if a given chemical equation
-is feasible (see \nameref{sec_termsDefs}) and, if it is, balancing it using the
-smallest positive integer coefficients possible, regardless of whether or not the
-chemical formulas in the equation are correct or if the reaction would take
-place in a real-world setting.
+The scope of the requirements omits any chemical equation with more than one
+compound than element. Furthermore, it requires all inputted chemical formulas
+of compounds to describe real chemical compounds, be formatted following a set
+of conventions, and only consist of atomic symbols and subscripts.
 
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 Reviewers of this documentation should have an understanding of high-school
