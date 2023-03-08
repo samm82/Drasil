@@ -275,9 +275,10 @@
   & 1.4 & Update traceability \\
   & 1.4.1 & Clarify \nameref{sec_purpose} and \nameref{sec_scope} \\
   & 1.4.2 & Clarify \aref{A_validForms} and add \aref{A_validEqns} \\
-  Mar. 8, 2023 & 1.4.3 & Add unlikely change for checking that inputted
-  formulas correspond to real-world compounds, including supporting
-  definition \\
+  Mar. 8, 2023 & 1.4.3 & Add unlikely changes for checking that inputted
+  formulas (\ucref{UC_checkValidForms}) and equations
+  (\ucref{UC_checkValidEqns}) correspond to real-world compounds and reactions,
+  respectively, including supporting definitions \\
 \end{xltabular}
 
 ~\newpage
@@ -291,21 +292,22 @@ This section records information for easy reference.
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l}
   \toprule
-  \textbf{symbol} & \textbf{description}                \\
+  \textbf{symbol} & \textbf{description}                           \\
   \midrule
-  % 1D              & One-Dimensional                     \\
-  A               & Assumption                          \\
-  \progname{}     & Chemistry Code                      \\
-  DD              & Data Definition                     \\
-  GD              & General Definition                  \\
-  GS              & Goal Statement                      \\
-  IM              & Instance Model                      \\
-  LC              & Likely Change                       \\
-  PS              & Physical System Description         \\
-  R               & Requirement                         \\
-  SRS             & Software Requirements Specification \\
-  TM              & Theoretical Model                   \\
-  VnV             & Verification and Validation         \\
+  % 1D              & One-Dimensional                                \\
+  A               & Assumption                                     \\
+  \progname{}     & Chemistry Code                                 \\
+  DD              & Data Definition                                \\
+  GD              & General Definition                             \\
+  GS              & Goal Statement                                 \\
+  IM              & Instance Model                                 \\
+  LC              & Likely Change                                  \\
+  NIST            & National Institute of Standards and Technology \\
+  PS              & Physical System Description                    \\
+  R               & Requirement                                    \\
+  SRS             & Software Requirements Specification            \\
+  TM              & Theoretical Model                              \\
+  VnV             & Verification and Validation                    \\
   \bottomrule
 \end{tabular}\\
 
@@ -637,6 +639,8 @@ easier to correctly understand the requirements:
         protons in the atomic nucleus'' \cite{hartshorn_brief_2015}. For
         example, all atoms with one proton are hydrogen atoms.
 
+  \item \textbf{Equation}: A textual representation of a chemical reaction.
+
   \item \textbf{Feasible}: (Referring to a chemical equation) able to be
         balanced \cite{hamid_balancing_2019}.
 
@@ -655,6 +659,9 @@ easier to correctly understand the requirements:
         %       with only zeros is at the bottom and every column but the rightmost one
         %       has all zeroes except for one one (which has only zeroes to its left)
         %       \cite{taboga_reduced_2021}.
+  \item \textbf{Reaction}: An interaction between different types of matter that
+        results in at least one new substance being formed
+        \cite[p.~286]{lund_introduction_2023}.
 
   \item \textbf{Stoichiometry}: ``The calculation of the quantities of
         reactants or products in a chemical reaction using the relationships
@@ -669,6 +676,7 @@ easier to correctly understand the requirements:
 
 Chemical reactions are interactions between different types of matter that
 result in new substances being formed \cite[p.~286]{lund_introduction_2023}.
+\sjc{If this in \nameref{sec_termsDefs}, should I say it here, too?}
 These are represented using chemical equations, with the reactant(s)---the
 substance(s) present at the beginning of the reaction---on the left-hand side
 and the product(s)---the substance(s) formed by the reaction---on the right. An
@@ -727,6 +735,8 @@ of \progname{} are:
 
 \end{itemize}
 
+\newpage
+
 \subsection{Solution Characteristics Specification}
 
 %\plt{DDs are not refined; they are just used. DDs are not derived; they are
@@ -770,7 +780,7 @@ is used.
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_validEqns}:]
     All inputted chemical equations describe real chemical equations.
-      [\imref{matRep}]
+      [\imref{matRep}, \ucref{UC_checkValidEqns}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_correctInputFormat}:]
     All inputted chemical formulas are formatted following some set of
@@ -781,6 +791,8 @@ is used.
     symbols and subscripts).	[\imref{matRep}, \lcref{LC_complexForms}]
 
 \end{itemize}
+
+\newpage
 
 \subsubsection{Theoretical Models}\label{sec_theoretical}
 
@@ -1035,6 +1047,8 @@ models. The dimension of each quantity is also given.
 %   \end{tabular}
 % \end{minipage}\\
 
+\newpage
+
 \subsubsection{Data Types}\label{sec_datatypes}
 
 This section collects and defines all the data types needed to document the
@@ -1085,6 +1099,8 @@ models.
     \hline
   \end{tabular}
 \end{minipage}\\
+
+\newpage
 
 \subsubsection{Instance Models} \label{sec_instance}
 
@@ -1590,7 +1606,20 @@ qualities that the software is expected to exhibit.
     that there will be a reliable way of ensuring the user only inputs real
     chemical formulas.
 
+  \item[UC\refstepcounter{ucnum}\theucnum\label{UC_checkValidEqns}:]
+    \aref{A_validEqns} assumes that all inputted chemical equations describe
+    real chemical reactions. While there are extensive libraries of chemical
+    reactions, such as the National Institute of Standards and Technology
+    (NIST) Chemical Kinetics Database (which documents 38,000 reactions)
+    \cite{national_institute_of_standards_and_technology_nist_2023}, it is
+    impossible to verify that any external database of chemical reactions is
+    complete for the sake of verifying user input. Therefore, it is unlikely
+    that there will be a reliable way of ensuring the user only inputs real
+    chemical reactions.
+
 \end{itemize}
+
+\newpage
 
 \section{Traceability Matrices} \label{sec_traceMats}
 
@@ -1679,6 +1708,7 @@ shows the dependencies of requirements on instance models.
       % \ucref{UC_diffSolveMethod}      &                       &                     &                    &                             &                      \\ \hline
       \ucref{UC_allEqsPermitted}      & X                     &                     &                    &                             &                      \\ \hline
       \ucref{UC_checkValidForms}      &                       & X                   &                    &                             &                      \\ \hline
+      \ucref{UC_checkValidEqns}       &                       &                     & X                  &                             &                      \\ \hline
     \end{tabular}
     \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
     \label{Table:A_trace}
