@@ -274,6 +274,7 @@
   \imref{chemILP}, respectively) \\
   & 1.4 & Update traceability \\
   & 1.4.1 & Clarify \nameref{sec_purpose} and \nameref{sec_scope} \\
+  & 1.4.2 & Clarify \aref{A_validForms} and add \aref{A_validEqns} \\
 \end{xltabular}
 
 ~\newpage
@@ -758,8 +759,12 @@ is used.
     element. \sjc{Should this be an assumption or a requirement?}
     [\imref{matRep}, \ucref{UC_allEqsPermitted}]
 
-  \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_validInput}:]
-    All inputted chemical formulas describe real chemical formulas.
+  \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_validForms}:]
+    All inputted chemical formulas describe real chemical compounds.
+      [\imref{matRep}]
+
+  \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_validEqns}:]
+    All inputted chemical equations describe real chemical equations.
       [\imref{matRep}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_correctInputFormat}:]
@@ -1133,9 +1138,11 @@ The goals \gsref{G_feasible} and \gsref{G_balance} are solved by
 
     ~\newline
     Each compound present in the inputted sequences are
-    assumed to be valid (\aref{A_validInput}), be formatted correctly
+    assumed to be valid (\aref{A_validForms}), be formatted correctly
     (\aref{A_correctInputFormat}), and only consist of atomic symbols and
-    subscripts (\aref{A_simpleForms}). The number of columns is assumed to be
+    subscripts (\aref{A_simpleForms}). The chemical reaction represented by the
+    inputted sequences is also assumed to be valid (\aref{A_validEqns}). The
+    number of columns is assumed to be
     at most one more than the number of rows (\aref{A_elemCompDiff}).  \\
     \hline
     Sources     & \cite{hamid_balancing_2019}                          \\
@@ -1631,31 +1638,31 @@ shows the dependencies of requirements on instance models.
   \parbox{.45\linewidth}{
     % \begin{table}[h!]
     \centering
-    \begin{tabular}{|c|c|c|c|c|}
+    \begin{tabular}{|c|c|c|c|c|c|}
       \hline
-                                      & \aref{A_elemCompDiff} & \aref{A_validInput} & \aref{A_correctInputFormat} & \aref{A_simpleForms} \\
+                                      & \aref{A_elemCompDiff} & \aref{A_validForms} & \aref{A_validEqns} & \aref{A_correctInputFormat} & \aref{A_simpleForms} \\
       \hline
-      \tmref{TM_ILP}                  &                       &                     &                             &                      \\ \hline
-      \tmref{TM_ConsMass}             &                       &                     &                             &                      \\ \hline
-      \ddref{count}                   &                       &                     &                             &                      \\ \hline
-      \ddref{elems}                   &                       &                     &                             &                      \\ \hline
-      \imref{matRep}                  & X                     & X                   & X                           & X                    \\ \hline
-      \imref{chemILP}                 &                       &                     &                             &                      \\ \hline
-      \imref{output}                  &                       &                     &                             &                      \\ \hline
-      \lcref{LC_complexForms}         &                       &                     &                             & X                    \\ \hline
-      \lcref{LC_calcMoles}            &                       &                     &                             &                      \\ \hline
-      \lcref{LC_detLimReag}           &                       &                     &                             &                      \\ \hline
-      \lcref{LC_calcYield}            &                       &                     &                             &                      \\ \hline
-      \lcref{LC_calcExcess}           &                       &                     &                             &                      \\ \hline
-      \lcref{LC_incorrectInputFormat} &                       &                     & X                           &                      \\ \hline
-      \lcref{LC_termsOfMass}          &                       &                     &                             &                      \\ \hline
-      \lcref{LC_classRxns}            &                       &                     &                             &                      \\ \hline
-      \lcref{LC_classMoreRxns}        &                       &                     &                             &                      \\ \hline
-      \lcref{LC_inputPhaseLabels}     &                       &                     &                             &                      \\ \hline
-      \lcref{LC_identifyPhaseLabels}  &                       &                     &                             &                      \\ \hline
-      \lcref{LC_rxnTakePlace}         &                       &                     &                             &                      \\ \hline
-      % \ucref{UC_diffSolveMethod}      &                       &                     &                             &                      \\ \hline
-      \ucref{UC_allEqsPermitted}      & X                     &                     &                             &                      \\ \hline
+      \tmref{TM_ILP}                  &                       &                     &                    &                             &                      \\ \hline
+      \tmref{TM_ConsMass}             &                       &                     &                    &                             &                      \\ \hline
+      \ddref{count}                   &                       &                     &                    &                             &                      \\ \hline
+      \ddref{elems}                   &                       &                     &                    &                             &                      \\ \hline
+      \imref{matRep}                  & X                     & X                   & X                  & X                           & X                    \\ \hline
+      \imref{chemILP}                 &                       &                     &                    &                             &                      \\ \hline
+      \imref{output}                  &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_complexForms}         &                       &                     &                    &                             & X                    \\ \hline
+      \lcref{LC_calcMoles}            &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_detLimReag}           &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_calcYield}            &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_calcExcess}           &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_incorrectInputFormat} &                       &                     &                    & X                           &                      \\ \hline
+      \lcref{LC_termsOfMass}          &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_classRxns}            &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_classMoreRxns}        &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_inputPhaseLabels}     &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_identifyPhaseLabels}  &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_rxnTakePlace}         &                       &                     &                    &                             &                      \\ \hline
+      % \ucref{UC_diffSolveMethod}      &                       &                     &                    &                             &                      \\ \hline
+      \ucref{UC_allEqsPermitted}      & X                     &                     &                    &                             &                      \\ \hline
     \end{tabular}
     \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
     \label{Table:A_trace}
