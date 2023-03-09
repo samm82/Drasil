@@ -283,6 +283,7 @@
   & 1.4.5 & Finish updating document based on Dr.~Smith's feedback \\
   & 1.4.6 & Add some content from \nameref{sec_phySystDesc} to
   \nameref{sec_intro} \\
+  & 1.4.7 & Clarify \aref{A_correctInputFormat} \\
 \end{xltabular}
 
 ~\newpage
@@ -296,22 +297,23 @@ This section records information for easy reference.
 \renewcommand{\arraystretch}{1.2}
 \begin{tabular}{l l}
   \toprule
-  \textbf{symbol} & \textbf{description}                           \\
+  \textbf{symbol} & \textbf{description}                              \\
   \midrule
-  % 1D              & One-Dimensional                                \\
-  A               & Assumption                                     \\
-  \progname{}     & Chemistry Code                                 \\
-  DD              & Data Definition                                \\
-  GD              & General Definition                             \\
-  GS              & Goal Statement                                 \\
-  IM              & Instance Model                                 \\
-  LC              & Likely Change                                  \\
-  NIST            & National Institute of Standards and Technology \\
-  PS              & Physical System Description                    \\
-  R               & Requirement                                    \\
-  SRS             & Software Requirements Specification            \\
-  TM              & Theoretical Model                              \\
-  VnV             & Verification and Validation                    \\
+  % 1D              & One-Dimensional                                   \\
+  A               & Assumption                                        \\
+  \progname{}     & Chemistry Code                                    \\
+  DD              & Data Definition                                   \\
+  GD              & General Definition                                \\
+  GS              & Goal Statement                                    \\
+  IM              & Instance Model                                    \\
+  IUPAC           & International Union of Pure and Applied Chemistry \\
+  LC              & Likely Change                                     \\
+  NIST            & National Institute of Standards and Technology    \\
+  PS              & Physical System Description                       \\
+  R               & Requirement                                       \\
+  SRS             & Software Requirements Specification               \\
+  TM              & Theoretical Model                                 \\
+  VnV             & Verification and Validation                       \\
   \bottomrule
 \end{tabular}\\
 
@@ -789,8 +791,11 @@ is used.
       [\imref{matRep}, \ucref{UC_checkValidEqns}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_correctInputFormat}:]
-    All inputted chemical formulas are formatted following some set of
-    agreed-upon conventions.	[\imref{matRep}, \lcref{LC_incorrectInputFormat}]
+    All inputted chemical formulas follow the conventions laid out in
+    \cite{international_union_of_pure_and_applied_chemistry_nomenclature_2005}
+    and \cite{international_union_of_pure_and_applied_chemistry_nomenclature_2013}
+    by the International Union of Pure and Applied Chemistry (IUPAC).
+      [\imref{matRep}, \lcref{LC_incorrectInputFormat}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_simpleForms}:]
     All inputted chemical formulas are simple (i.e., only consist of atomic
@@ -1538,11 +1543,13 @@ qualities that the software is expected to exhibit.
     This is dependent on \lcref{LC_detLimReag}.
 
   \item[LC\refstepcounter{lcnum}\thelcnum\label{LC_incorrectInputFormat}:]
-    The system currently assumes that inputted chemical formulas are formatted
-    according to some set of conventions
-    (\aref{A_correctInputFormat}). In the future, \progname{} might be able to
-    parse valid but incorrectly formatted chemical formulas inputted by the
-    user and format them correctly when outputting them.
+    The system currently assumes that inputted chemical formulas
+    follow the conventions laid out in
+    \cite{international_union_of_pure_and_applied_chemistry_nomenclature_2005}
+    and \cite{international_union_of_pure_and_applied_chemistry_nomenclature_2013}.
+    In the future, \progname{} might be able to
+    parse valid inputted chemical formulas that do not follow these conventions
+    and format them correctly when outputting them.
 
   \item[LC\refstepcounter{lcnum}\thelcnum\label{LC_termsOfMass}:] In the future,
     the user might be able to enter the amounts required by \lcref{LC_calcMoles},
