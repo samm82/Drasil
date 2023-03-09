@@ -283,7 +283,8 @@
   & 1.4.5 & Finish updating document based on Dr.~Smith's feedback \\
   & 1.4.6 & Add some content from \nameref{sec_phySystDesc} to
   \nameref{sec_intro} \\
-  & 1.4.7 & Clarify \aref{A_correctInputFormat} \\
+  & 1.4.7 & Clarify \aref{A_correctInputFormat} and \aref{A_simpleForms},
+  including relevant reference material \\
 \end{xltabular}
 
 ~\newpage
@@ -663,6 +664,15 @@ easier to correctly understand the requirements:
         water and some other substance in a definite molecular ratio''
         \cite{harpercollins_publishers_hydrate_nodate}.
 
+  \item \textbf{Isotope}: An atom that is the same element as another but has a
+        different number of neutrons \cite{lund_introduction_2023}.
+
+  \item \textbf{Polyatomic Ion}: A group of atoms ``bonded together that
+        carr[ies] an overall electric charge'' \cite{lund_introduction_2023}.
+
+  \item \textbf{Polymer}: A macromolecule ``formed by the chemical bonding of
+        large numbers of smaller molecules'' \cite{wexler_encyclopedia_2014}.
+
   \item \textbf{Nonstoichiometric Compound}: ``Any solid chemical compound in
         which the numbers of atoms of the elements present cannot be expressed
         as a ratio of small positive integers''
@@ -798,8 +808,11 @@ is used.
       [\imref{matRep}, \lcref{LC_incorrectInputFormat}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_simpleForms}:]
-    All inputted chemical formulas are simple (i.e., only consist of atomic
-    symbols and subscripts).	[\imref{matRep}, \lcref{LC_complexForms}]
+    All inputted chemical formulas only consist of atomic symbols and
+    subscripts; this means that they cannot contain dots, parentheses, hyphens,
+    or superscripts, so hydrates (see \nameref{sec_termsDefs}), polymers, and
+    formulas with isotopes and some with polyatomic ions will not be present
+    in inputted chemical equations. [\imref{matRep}, \lcref{LC_complexForms}]
 
 \end{itemize}
 
@@ -1512,10 +1525,14 @@ qualities that the software is expected to exhibit.
 \begin{itemize}
 
   \item[LC\refstepcounter{lcnum}\thelcnum\label{LC_complexForms}:] The system
-    currently assumes that inputted chemical formulas are simple
-    (\aref{A_simpleForms}). In the future, the user might
-    be able to input more complex chemical formulas, such as hydrates (see
-    \nameref{sec_termsDefs}) or those with polymers or isotopes.
+    currently assumes that inputted chemical formulas only consist of atomic
+    symbols and subscripts (\aref{A_simpleForms}).  In the future, the user
+    might be able to input more complex chemical formulas, such as those
+    containing dots, parentheses, hyphens, and/or superscripts.
+    % NOTE: omitted to keep LCs on one page and avoid multipage footnote issue
+    % , allowing for hydrates
+    % (see \nameref{sec_termsDefs}), polymers, and compounds with isotopes and/or
+    % polyatomic ions to be inputted.
 
   \item[LC\refstepcounter{lcnum}\thelcnum\label{LC_calcMoles}:] In the future,
     \progname{} might be able to, given the amount of one substance (in moles)
