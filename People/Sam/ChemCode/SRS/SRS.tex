@@ -279,6 +279,7 @@
   formulas (\ucref{UC_checkValidForms}) and equations
   (\ucref{UC_checkValidEqns}) correspond to real-world compounds and reactions,
   respectively, including supporting definitions \\
+  Mar. 9, 2023 & 1.4.4 & Refine \nameref{sec_goals} \\
 \end{xltabular}
 
 ~\newpage
@@ -730,8 +731,12 @@ of \progname{} are:
   \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_feasible}:] Determine if
     a given chemical reaction is feasible (see \nameref{sec_termsDefs}).
 
-  \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_balance}:] Balance the
-    chemical equation with the smallest positive integer coefficients possible.
+  \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_balance}:] If the
+    inputted chemical equation is feasible, find its balanced form with the
+    smallest positive integer coefficients.
+
+  \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_detReasonInfeas}:] If the
+    inputted chemical equation is infeasible, determine the reason why.
 
 \end{itemize}
 
@@ -1110,8 +1115,8 @@ in Section~\ref{sec_datadef} to replace the abstract symbols in the models
 identified in Section~\ref{sec_theoretical}.
 %  and~\ref{sec_gendef}.
 
-The goals \gsref{G_feasible} and \gsref{G_balance} are solved by
-\imref{output}.
+The goal \gsref{G_feasible} is solved by \imref{chemILP} and the goals
+\gsref{G_balance} and \gsref{G_detReasonInfeas} are solved by \imref{output}.
 
 ~\newline
 \noindent
@@ -1256,8 +1261,8 @@ The goals \gsref{G_feasible} and \gsref{G_balance} are solved by
     Output      & \vspace{-3mm}
     $s = \begin{cases}
              \begin{aligned}
-           & \parbox{63mm}{The inputted chemical equation balanced with the found coefficients}\,,                             &  & \text{A solution exists}                                                         \\[1em]
-           & \parbox{63mm}{``This reaction is infeasible because [reasoning], violating the Law of Conservation of Mass.''}\,, &  & \parbox{47mm}{The Law of Conservation of Mass (\tmref{TM_ConsMass}) is violated} \\[1em]
+           & \parbox{63mm}{The inputted chemical equation balanced with the found coefficients}\,,                             &  & \text{a solution exists}                                                         \\[1em]
+           & \parbox{63mm}{``This reaction is infeasible because [reasoning], violating the Law of Conservation of Mass.''}\,, &  & \parbox{47mm}{the Law of Conservation of Mass (\tmref{TM_ConsMass}) is violated} \\[1em]
            & \parbox{63mm}{``This reaction is infeasible, likely because it is overconstrained.''}\,,                          &  & \text{otherwise}
         \end{aligned}
            \end{cases}$
