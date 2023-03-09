@@ -281,6 +281,8 @@
   respectively, including supporting definitions \\
   Mar. 9, 2023 & 1.4.4 & Refine \nameref{sec_goals} \\
   & 1.4.5 & Finish updating document based on Dr.~Smith's feedback \\
+  & 1.4.6 & Add some content from \nameref{sec_phySystDesc} to
+  \nameref{sec_intro} \\
 \end{xltabular}
 
 ~\newpage
@@ -445,14 +447,19 @@ The notation for definite description ($\defDesc$) is taken from
 
 \section{Introduction} \label{sec_intro}
 Chemical equations are common ways of representing chemical reactions (as
-described in \nameref{sec_phySystDesc}), but must be balanced before they can
-be used \cite{lund_introduction_2023}. Therefore, it is useful to have a
-tool to automatically balance these chemical reactions to improve the
+described in \nameref{sec_phySystDesc}), but to ensure the Law of Conservation
+of Mass (\tmref{TM_ConsMass}) is observed, they must be balanced
+\cite{lund_introduction_2023}. This process of balancing a chemical
+equation involves introducing coefficients before each chemical formula such
+that there are the same number of atoms of each element on the reactant and
+product sides of the equation. Because balancing must be done before a given
+chemical reaction can be used \cite{lund_introduction_2023}, it is useful to
+have a tool to automatically do this. This would improve the
 productivity of scientists and engineers and reduce the potential for human
-error. If a given chemical reaction is feasible (see \nameref{sec_termsDefs}),
-the program should balance it, and if not, it should provide a descriptive
-message communicating this to the user. The program that performs these tasks
-as specified by this document will be called ``\progname{}''.
+error. This program should balance a given chemical reaction if it is
+feasible (see \nameref{sec_termsDefs}), and if not, it should provide a
+descriptive message communicating this to the user. The program that performs
+these tasks as specified by this document will be called ``\progname{}''.
 
 The following section provides an overview of the Software Requirements
 Specification (SRS) for \progname{}. This section explains the purpose of this
@@ -680,7 +687,7 @@ easier to correctly understand the requirements:
 
 Chemical reactions are interactions between different types of matter that
 result in new substances being formed \cite[p.~286]{lund_introduction_2023}.
-\sjc{If this in \nameref{sec_termsDefs}, should I say it here, too?}
+\sjc{If this is in \nameref{sec_termsDefs}, should I say it here, too?}
 These are represented using chemical equations, with the reactant(s)---the
 substance(s) present at the beginning of the reaction---on the left-hand side
 and the product(s)---the substance(s) formed by the reaction---on the right. An
