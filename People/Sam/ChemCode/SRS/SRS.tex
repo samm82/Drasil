@@ -280,6 +280,7 @@
   (\ucref{UC_checkValidEqns}) correspond to real-world compounds and reactions,
   respectively, including supporting definitions \\
   Mar. 9, 2023 & 1.4.4 & Refine \nameref{sec_goals} \\
+  & 1.4.5 & Finish updating document based on Dr.~Smith's feedback \\
 \end{xltabular}
 
 ~\newpage
@@ -461,7 +462,7 @@ reader, and the organization of the document.
 \subsection{Purpose of Document} \label{sec_purpose}
 
 The primary purpose of this document is to record the requirements of the
-program for solving chemistry problems \sjc{Is this a good description?}.
+program for solving chemistry problems related to balancing chemical equations.
 Goals, assumptions, theoretical models,
 definitions, and other model derivation information are specified, allowing the
 reader to fully understand and verify the purpose and scientific basis of
@@ -487,6 +488,8 @@ compound than element. Furthermore, it requires all inputted chemical formulas
 of compounds to describe real chemical compounds, be formatted following a set
 of conventions, and only consist of atomic symbols and subscripts.
 
+\newpage
+
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 Reviewers of this documentation should have an understanding of high-school
 level chemistry, namely stoichiometry (see \nameref{sec_termsDefs}), and
@@ -497,10 +500,10 @@ undergraduate Level 3 linear optimization, namely integer programming.
 % by the code and hidden from the user.
 
 \subsection{Organization of Document}
-The organization of this document is based on a template from
+The organization of this document is based on a template
 \cite{smith_captemplate_2022}, which is based on the template for an SRS for
-scientific computing software proposed by \cite{SmithAndLai2005},
-\cite{SmithEtAl2007}, and \cite{koothoor_document_2013}. The presentation
+scientific computing software \cite{SmithAndLai2005}
+\cite{SmithEtAl2007} \cite{koothoor_document_2013}. The presentation
 follows the standard pattern of presenting goals, theories, definitions, and
 assumptions. For readers that would like a more bottom-up approach, they can
 start reading the \nameref{sec_instance} and trace back to find any additional
@@ -729,14 +732,14 @@ of \progname{} are:
 \begin{itemize}
 
   \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_feasible}:] Determine if
-    a given chemical reaction is feasible (see \nameref{sec_termsDefs}).
+    the equation is feasible (see \nameref{sec_termsDefs}).
 
   \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_balance}:] If the
-    inputted chemical equation is feasible, find its balanced form with the
+    chemical equation is feasible, find its balanced form with the
     smallest positive integer coefficients.
 
   \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_detReasonInfeas}:] If the
-    inputted chemical equation is infeasible, determine the reason why.
+    chemical equation is infeasible, determine the reason why.
 
 \end{itemize}
 
@@ -748,15 +751,6 @@ of \progname{} are:
 %	just given. If a potential DD includes a derivation, then that means it is
 %	refining other models, which would make it a GD or an IM. TMs are also just
 %	given, but they are refined, not used.}
-%
-%\noindent \plt{The relationships between the parts of the document are show in
-%  the following figure.  In this diagram ``may ref'' has the same role as
-%  ``uses'' above.  The figure adds ``Likely Changes,'' which are able to
-%  reference (use) Assumptions.}
-%
-%\begin{figure}[H]
-%  \includegraphics[scale=0.9]{RelationsBetweenTM_GD_IM_DD_A.pdf}
-%\end{figure}
 
 The instance models that govern \progname{} are presented in
 Subsection~\ref{sec_instance}.  The information to understand the meaning of the
