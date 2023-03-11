@@ -285,6 +285,7 @@
   \nameref{sec_intro} \\
   & 1.4.7 & Clarify \aref{A_correctInputFormat} and \aref{A_simpleForms},
   including relevant reference material \\
+  Mar. 10, 2023 & 1.4.8 & Correct tuple notation in compound data type \\
 \end{xltabular}
 
 ~\newpage
@@ -304,6 +305,7 @@ This section records information for easy reference.
   A               & Assumption                                        \\
   \progname{}     & Chemistry Code                                    \\
   DD              & Data Definition                                   \\
+  elems           & elements \sjc{Is this correct?}                   \\
   GD              & General Definition                                \\
   GS              & Goal Statement                                    \\
   IM              & Instance Model                                    \\
@@ -429,9 +431,9 @@ $\mathbf{A}^\mathrm{T}$ \cite{nykamp_transpose_nodate}.
 % number of rows can be joined together to form an ``augmented matrix'', written
 % as $\left(\textbf{A}\vert \textbf{B}\right)$ \cite{taboga_augmented_2021}.
 
-The notation for definite description ($\defDesc$) is taken from
+% The notation for definite description ($\defDesc$) is taken from
 % \cite{russell25}.
-\cite{farmer_simple_2023}.
+% \cite{farmer_simple_2023}.
 
 % \plt{If symbols are used to show mathematical operations,
 %   these should be summarized here.  In some cases the easiest way to summarize
@@ -986,8 +988,8 @@ models. The dimension of each quantity is also given.
     Equation    & \vspace{-3mm}
     $\text{count}(e,c) = \begin{cases}
                              \begin{aligned}
-           & \defDesc\, x : \posReal ~|~ (e, x) \in c, &  & \exists\,x : \posReal ~|~ (e, x) \in c \\
-           & 0, ~                                      &  & \text{otherwise}
+           & c.\text{count}, &  & \exists\,x : \posReal ~|~ (e, x) \in c \\
+           & 0, ~            &  & \text{otherwise}
         \end{aligned}
                            \end{cases}$
     \vspace{1.5mm}                                                           \\
@@ -1021,7 +1023,7 @@ models. The dimension of each quantity is also given.
     SI Units    & --                                                        \\
     \hline
     Equation    & $\text{elems}(R,P) = \{e : E ~|~
-    \exists\, x : \posReal, c \in R \cup P ~|~ (e, x) \in c\}$              \\
+    \exists\, c \in R \cup P ~|~ c.\text{elem} = e\}$                       \\
     \hline
     Description & The output of $\text{elems}(R,P)$ is of type
     $\langle E \rangle$ and represents the set of elements that occur in a
@@ -1113,8 +1115,8 @@ models.
     \rowcolor[gray]{0.9}
     Type Name   & Compound                                                     \\
     \hline
-    Type Def    & $C = \langle (E, \posReal) \rangle$                          \\
-
+    Type Def    &
+    $C = \langle (\text{elem} : E, \text{count} : \posReal) \rangle$           \\
     \hline
     Description & A type representing a compound (a sequence of elements, each
     with a specified positive quantity).                                       \\
