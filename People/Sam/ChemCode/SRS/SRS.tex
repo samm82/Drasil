@@ -287,9 +287,10 @@
   including relevant reference material \\
   Mar. 10-11, 2023 & 1.4.8 & Improve compound data type (correct tuple notation
   and change sequence to set) \\
+  & 1.4.9 & Add reaction data type \\
 \end{xltabular}
 
-~\newpage
+% ~\newpage
 
 \section{Reference Material} \label{sec_refMat}
 
@@ -367,29 +368,29 @@ symbols are listed in alphabetical order.
 
 % \renewcommand{\arraystretch}{1.2}
 \noindent \begin{tabularx}{\textwidth}{l l l X} \toprule
-  \textbf{symbol} & \textbf{unit} & \textbf{type}             & \textbf{description}                         \\
+  \textbf{symbol} & \textbf{unit} & \textbf{type}             & \textbf{description}                                \\
   \midrule
-  $\textbf{0}$    & --            & $\nonnegInt^{m}$          & zero vector                                  \\
-  $\textbf{1}$    & --            & $\posInt^{m}$             & unary vector                                 \\
-  $\textbf{A}$    & --            & $\mathbb{R}^{m \times n}$ & generic matrix                               \\
-  $a$             & --            & $\posInt$                 & generic positive integer                     \\
-  $\textbf{b}$    & --            & $\mathbb{R}^{m}$          & generic vector                               \\
-  $b$             & --            & $\posInt$                 & generic positive integer                     \\
+  $\textbf{0}$    & --            & $\nonnegInt^{m}$          & zero vector                                         \\
+  $\textbf{1}$    & --            & $\posInt^{m}$             & unary vector                                        \\
+  $\textbf{A}$    & --            & $\mathbb{R}^{m \times n}$ & generic matrix                                      \\
+  $\textbf{b}$    & --            & $\mathbb{R}^{m}$          & generic vector                                      \\
   $\textbf{c}$    & --            & $\posInt^{n}$             & vector of smallest coefficients
-  that balance a chemical equation                                                                           \\
-  $c$             & --            & $C$                       & generic compound                             \\
-  $\textbf{E}$    & --            & $\mathbb{R}^{m \times n}$ & matrix representation of a chemical equation \\
-  $e$             & --            & $E$                       & generic element                              \\
-  $i$             & --            & $\nonnegInt$              & generic non-negative integer                 \\
-  $j$             & --            & $\nonnegInt$              & generic non-negative integer                 \\
-  $m$             & --            & $\posInt$                 & generic positive integer                     \\
-  $n$             & --            & $\posInt$                 & generic positive integer                     \\
-  $P$             & --            & $\langle C \rangle$       & product side of a chemical equation          \\
-  $R$             & --            & $\langle C \rangle$       & reactant side of a chemical equation         \\
-  $s$             & --            & string                    & output message                               \\
-  $\textbf{x}$    & --            & $\mathbb{R}^{n}$          & generic vector                               \\
-  $x$             & --            & $\nonnegInt$              & generic non-negative integer                 \\
-  $z$             & --            & $\{ \mathbb{Z} \}$        & generic set of integers                      \\
+  that balance a chemical equation                                                                                  \\
+  $c$             & --            & $C$                       & generic compound                                    \\
+  $\textbf{E}$    & --            & $\mathbb{R}^{m \times n}$ & matrix representation of a chemical equation        \\
+  $e$             & --            & $E$                       & generic element                                     \\
+  $i$             & --            & $\nonnegInt$              & generic non-negative integer                        \\
+  $j$             & --            & $\nonnegInt$              & generic non-negative integer                        \\
+  $m$             & --            & $\posInt$                 & generic positive integer                            \\
+  $n$             & --            & $\posInt$                 & generic positive integer                            \\
+  $p_i$           & --            & $(C, \posInt)$            & tuple from the product side of a chemical equation  \\
+  $r$             & --            & $R$                       & generic reaction                                    \\
+  $r_i$           & --            & $(C, \posInt)$            & tuple from the reactant side of a chemical equation \\
+  $s$             & --            & string                    & output message                                      \\
+  $\textbf{x}$    & --            & $\mathbb{R}^{n}$          & generic vector                                      \\
+  $x$             & --            & $\nonnegInt$              & generic non-negative integer                        \\
+  $y$             & --            & $\posInt$                 & generic positive integer                            \\
+  % $z$             & --            & $\{ \mathbb{Z} \}$        & generic set of integers                      \\
   \bottomrule
 \end{tabularx}
 
@@ -885,14 +886,14 @@ on.
 % #3 label
 {Law of Conservation of Mass}
 % #4 equation
-{$\forall\, e : E,\, R, P : \langle C\rangle ~|~
-    \sum\limits_{c_i \in R} a_i \text{count}(e, c_i) =
-    \sum\limits_{c_i \in P} b_i \text{count}(e, c_i)$, where $R$
-  represents the reactant side of a chemical equation, $P$ represents the
-  product side, $\text{count}(e,c)$ is from \ddref{count}, $a_i$
-  represents the coefficient in the chemical equation for a given compound
-  $c_i \in R$, and $b_i$ represents the coefficient in the chemical equation
-  for a given compound $c_i \in P$.}
+{$\forall\, e : E,\, r : R ~|~
+    \sum\limits_{r_i \in r.\text{reac}}
+    r_i.\text{coeff} \times \text{count}(e, r_i.\text{comp}) =
+    \sum\limits_{p_i \in r.\text{prod}}
+    p_i.\text{coeff} \times \text{count}(e, p_i.\text{comp})$, where $r_i$
+  represents a tuple of a compound and a coefficient from the reactant side of
+  a chemical equation, $p_i$ represents a tuple of the same type from the
+  product side, and $\text{count}(e,c)$ is from \ddref{count}.}
 % #5 description
 {
   This law states that ``matter can neither be created nor destroyed in a
@@ -900,8 +901,7 @@ on.
   \cite[p.~112]{lund_introduction_2023}.
 }
 % #6 Notes
-{This equation assumes that $R$ and $P$ correspond to the same chemical
-  reaction.}
+{None}
 % #7 Source
 {
   \url{https://chem.libretexts.org/Courses/Anoka-Ramsey_Community_College/Introduction_to_Chemistry/03\%3A_Matter_and_Energy/3.06\%3A_Conservation_of_Mass}
@@ -1017,20 +1017,20 @@ models. The dimension of each quantity is also given.
     \hline
     Label       & \bf Set of elements in a chemical equation                \\
     \hline
-    Symbol      & $\text{elems}(R,P)$                                       \\
+    Symbol      & $\text{elems}(r)$                                         \\
     \hline
     % Units& $Mt^{-3}$\\
     % \hline
     SI Units    & --                                                        \\
     \hline
-    Equation    & $\text{elems}(R,P) = \{e : E ~|~
-    \exists\, c \in R \cup P ~|~ c.\text{elem} = e\}$                       \\
+    Equation    & $\text{elems}(r) = \{e : E ~|~
+      \exists\, c : C, y : \posInt, x : \posReal ~|~ \newline
+      ~\quad\quad\quad\quad\quad\quad\quad\quad
+    (c, y) \in r.\text{prod} \cup r.\text{reac} \land (e, x) \in c\}$       \\
     \hline
-    Description & The output of $\text{elems}(R,P)$ is of type
-    $\langle E \rangle$ and represents the set of elements that occur in a
-    given chemical equation where $R$ (of type $\langle C \rangle$) represents
-    its reactant side and $P$ (of type $\langle C \rangle$) represents its
-    product side.                                                           \\
+    Description & The output of $\text{elems}(r)$ is of type
+    $\textit{set of } E$ and represents the set of elements that occur in a
+    given chemical equation $r$ (of type $R$).                              \\
     \hline
     Sources     & --                                                        \\
     \hline
@@ -1106,8 +1106,8 @@ models.
     \hline
   \end{tabular}
 \end{minipage}\\
-~\newline
 
+~\newline
 \noindent
 \begin{minipage}{\textwidth}
   \renewcommand*{\arraystretch}{1.5}
@@ -1123,6 +1123,31 @@ models.
     with a specified positive quantity).                                      \\
     \hline
     Sources     & --                                                          \\
+    \hline
+  \end{tabular}
+\end{minipage}\\
+
+~\newline
+\noindent
+\begin{minipage}{\textwidth}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
+    Type Name   & Reaction                                                 \\
+    \hline
+    Type Def    &
+    $R = \textit{tuple of }(
+      \text{prod} : \textit{sequence of tuple of }(\text{comp} : C,
+      \text{coeff} : \posInt), \newline
+      ~\quad\quad\quad\quad\quad\quad\>\,
+      \text{reac} : \textit{sequence of tuple of }(\text{comp} : C,
+    \text{coeff} : \posInt))$                                              \\
+    \hline
+    Description & A type representing a reaction (a product and a reactant
+    side, each being a sequence of compounds with their own coefficients). \\
+    \hline
+    Sources     & --                                                       \\
     \hline
   \end{tabular}
 \end{minipage}\\
