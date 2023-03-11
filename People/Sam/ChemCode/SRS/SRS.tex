@@ -285,7 +285,8 @@
   \nameref{sec_intro} \\
   & 1.4.7 & Clarify \aref{A_correctInputFormat} and \aref{A_simpleForms},
   including relevant reference material \\
-  Mar. 10, 2023 & 1.4.8 & Correct tuple notation in compound data type \\
+  Mar. 10, 2023 & 1.4.8 & Improve compound data type (correct tuple notation
+  and change sequence to set) \\
 \end{xltabular}
 
 ~\newpage
@@ -1113,15 +1114,15 @@ models.
   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
     \hline
     \rowcolor[gray]{0.9}
-    Type Name   & Compound                                                     \\
+    Type Name   & Compound                                                   \\
     \hline
     Type Def    &
-    $C = \langle (\text{elem} : E, \text{count} : \posReal) \rangle$           \\
+    $C = \{ \textit{tuple of }(\text{elem} : E, \text{count} : \posReal) \}$ \\
     \hline
-    Description & A type representing a compound (a sequence of elements, each
-    with a specified positive quantity).                                       \\
+    Description & A type representing a compound (a set of elements, each
+    with a specified positive quantity).                                     \\
     \hline
-    Sources     & --                                                           \\
+    Sources     & --                                                         \\
     \hline
   \end{tabular}
 \end{minipage}\\
