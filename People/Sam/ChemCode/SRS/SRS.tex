@@ -82,7 +82,7 @@
 \newcommand{\gsref}[1]{GS\ref{#1}}
 \newcounter{instnum} %Instance Number
 \newcommand{\itheinstnum}{IM\theinstnum}
-\newcommand{\iref}[1]{IM\ref{#1}}
+\newcommand{\imref}[1]{IM\ref{#1}}
 \newcounter{reqnum} %Requirement Number
 \newcommand{\rthereqnum}{P\thereqnum}
 \newcommand{\rref}[1]{R\ref{#1}}
@@ -245,12 +245,12 @@
   & 1.2.2         & Improve TM1 based on feedback                           \\
   & 1.2.3         & Add \progname{} abbreviation and missing definitions                 \\
   Feb. 26, 2023       & 1.2.4         & Add \ddref{count}                                                    \\
-  Feb. 27, 2023       & 1.2.5         & Add \ddref{matRep} and clarify \nameref{sec_mathNot} for types       \\
+  Feb. 27, 2023       & 1.2.5         & Add DD for matrix representation and
+  clarify \nameref{sec_mathNot} for types \\
   Feb. 28, 2023       & 1.2.6         & Add \ddref{elems}                                                    \\
-  & 1.2.7         & Add GD1 \\
-  Feb. 28, 2023 & 1.2.8         & Add \ddref{gcf}                                                      \\
-  & 1.2.9         & Add notion of parametric solution to GD1 and add
-  \iref{balance} \\
+  Feb. 28, 2023 & 1.2.7         & Add GD1 \\
+  & 1.2.8         & Add DD for GCF (DD4) \\
+  & 1.2.9         & Add notion of parametric solution to GD1 and add IM1 \\
   & 1.3.0         & Remove old IMs                                                       \\
   Mar. 4, 2023        & 1.3.1         & Clarify inputs and outputs and
   improve line breaking in \nameref{sec_sysCon}                                                              \\
@@ -258,8 +258,34 @@
   improve Revision History table format \\
   Mar. 5, 2023 & 1.3.3 & Replace old TM1 with one for an integer linear program
   (\tmref{TM_ILP})\\
-  & 1.3.4 & Replace old GD1 with one that corresponds to \tmref{TM_ILP}
-  (\gdref{chemILP})\\
+  & 1.3.4 & Replace old GD1 with one that corresponds to \tmref{TM_ILP} \\
+  Mar. 6, 2023 & 1.3.5 & Clarify old GD1 (types, output, and special
+  matrices/vectors) \\
+  & 1.3.6 & Remove all content from specification based on solving a system of
+  linear equations \\
+  & 1.3.7 & Add IM for output (\imref{output}) \\
+  & 1.3.8 & Update \nameref{sec_mathNot} (add notion of transpose and remove
+  unneeded content) \\
+  Mar. 7, 2023 & 1.3.9 & Account for compound coefficients in
+  \tmref{TM_ConsMass} \\
+  & 1.3.10 & Add \tmref{TM_ConsMass} reference to \imref{output} and improve IM
+  referencing \\
+  & 1.3.11 & Move old DD3 and GD1 to be IMs (\imref{matRep} and
+  \imref{chemILP}, respectively) \\
+  & 1.4 & Update traceability \\
+  & 1.4.1 & Clarify \nameref{sec_purpose} and \nameref{sec_scope} \\
+  & 1.4.2 & Clarify \aref{A_validForms} and add \aref{A_validEqns} \\
+  Mar. 8, 2023 & 1.4.3 & Add unlikely changes for checking that inputted
+  formulas (\ucref{UC_checkValidForms}) and equations
+  (\ucref{UC_checkValidEqns}) correspond to real-world compounds and reactions,
+  respectively, including supporting definitions \\
+  Mar. 9, 2023 & 1.4.4 & Refine \nameref{sec_goals} \\
+  & 1.4.5 & Finish updating document based on Dr.~Smith's feedback \\
+  & 1.4.6 & Add some content from \nameref{sec_phySystDesc} to
+  \nameref{sec_intro} \\
+  & 1.4.7 & Clarify \aref{A_correctInputFormat} and \aref{A_simpleForms},
+  including relevant reference material \\
+  Mar. 10, 2023 & 1.4.8 & Correct tuple notation in compound data type \\
 \end{xltabular}
 
 ~\newpage
@@ -268,12 +294,38 @@
 
 This section records information for easy reference.
 
+\subsection{Abbreviations and Acronyms} \label{srs_sec_abbsAcrs}
+
+\renewcommand{\arraystretch}{1.2}
+\begin{tabular}{l l}
+  \toprule
+  \textbf{symbol} & \textbf{description}                              \\
+  \midrule
+  % 1D              & One-Dimensional                                   \\
+  A               & Assumption                                        \\
+  \progname{}     & Chemistry Code                                    \\
+  DD              & Data Definition                                   \\
+  elems           & elements \sjc{Is this correct?}                   \\
+  GD              & General Definition                                \\
+  GS              & Goal Statement                                    \\
+  IM              & Instance Model                                    \\
+  IUPAC           & International Union of Pure and Applied Chemistry \\
+  LC              & Likely Change                                     \\
+  NIST            & National Institute of Standards and Technology    \\
+  PS              & Physical System Description                       \\
+  R               & Requirement                                       \\
+  SRS             & Software Requirements Specification               \\
+  TM              & Theoretical Model                                 \\
+  VnV             & Verification and Validation                       \\
+  \bottomrule
+\end{tabular}\\
+
 \subsection{Table of Units} \label{sec_ToU}
 
 Throughout this document, SI (Syst\`{e}me International d'Unit\'{e}s) is employed
 as the unit system.
 % In addition to the basic units, 
-Several derived units are
+Several units are
 used as described below.  For each unit, the symbol is given, followed by a
 description of the unit and the SI name.
 ~\newline
@@ -301,7 +353,9 @@ description of the unit and the SI name.
 %   \href{https://www.nist.gov/pml/weights-and-measures/writing-metric-units}
 %   {NIST} web-page.}
 
-\subsection{Table of Symbols \sjc{To be updated}} \label{sec_tabSymbs}
+\newpage
+
+\subsection{Table of Symbols} \label{sec_tabSymbs}
 
 The table that follows summarizes the symbols used in this document along with
 their units and types. The choice of symbols was made to be consistent with
@@ -315,9 +369,12 @@ symbols are listed in alphabetical order.
   \textbf{symbol} & \textbf{unit} & \textbf{type}             & \textbf{description}                         \\
   \midrule
   $\textbf{0}$    & --            & $\nonnegInt^{m}$          & zero vector                                  \\
+  $\textbf{1}$    & --            & $\posInt^{m}$             & unary vector                                 \\
   $\textbf{A}$    & --            & $\mathbb{R}^{m \times n}$ & generic matrix                               \\
+  $a$             & --            & $\posInt$                 & generic positive integer                     \\
   $\textbf{b}$    & --            & $\mathbb{R}^{m}$          & generic vector                               \\
-  $\textbf{c}$    & --            & $\posInt^{n}$             & vector of the smallest coefficients
+  $b$             & --            & $\posInt$                 & generic positive integer                     \\
+  $\textbf{c}$    & --            & $\posInt^{n}$             & vector of smallest coefficients
   that balance a chemical equation                                                                           \\
   $c$             & --            & $C$                       & generic compound                             \\
   $\textbf{E}$    & --            & $\mathbb{R}^{m \times n}$ & matrix representation of a chemical equation \\
@@ -328,34 +385,12 @@ symbols are listed in alphabetical order.
   $n$             & --            & $\posInt$                 & generic positive integer                     \\
   $P$             & --            & $\langle C \rangle$       & product side of a chemical equation          \\
   $R$             & --            & $\langle C \rangle$       & reactant side of a chemical equation         \\
+  $s$             & --            & string                    & output message                               \\
   $\textbf{x}$    & --            & $\mathbb{R}^{n}$          & generic vector                               \\
   $x$             & --            & $\nonnegInt$              & generic non-negative integer                 \\
   $z$             & --            & $\{ \mathbb{Z} \}$        & generic set of integers                      \\
   \bottomrule
 \end{tabularx}
-
-\subsection{Abbreviations and Acronyms} \label{srs_sec_abbsAcrs}
-
-\renewcommand{\arraystretch}{1.2}
-\begin{tabular}{l l}
-  \toprule
-  \textbf{symbol} & \textbf{description}                \\
-  \midrule
-  % 1D              & One-Dimensional                     \\
-  A               & Assumption                          \\
-  \progname{}     & Chemistry Code                      \\
-  DD              & Data Definition                     \\
-  GD              & General Definition                  \\
-  GS              & Goal Statement                      \\
-  IM              & Instance Model                      \\
-  LC              & Likely Change                       \\
-  PS              & Physical System Description         \\
-  R               & Requirement                         \\
-  SRS             & Software Requirements Specification \\
-  TM              & Theoretical Model                   \\
-  VnV             & Verification and Validation         \\
-  \bottomrule
-\end{tabular}\\
 
 \subsection{Mathematical Notation} \label{sec_mathNot}
 
@@ -379,23 +414,26 @@ three columns is of type $\mathbb{R}^{2 \times 3}$
 \cite[p.~3]{golub_matrix_2013}. Since vectors are one-dimensional
 matrices, their types only have one dimension; for example, a row vector with
 four real number entries is denoted by $\mathbb{R}^{4}$
-\cite[p.~4]{golub_matrix_2013}. The zero matrix is a special
-type of matrix where each element is zero and is denoted by $\textbf{0}$
-\cite{weisstein_zero_2023}.
-Individual entries in a matrix are written in
+\cite[p.~4]{golub_matrix_2013}. The zero matrix/vector is a special
+type of matrix/vector where each element is zero and is denoted by
+$\textbf{0}$ \cite{weisstein_zero_2023}. Similarly, the unary matrix/vector,
+denoted by $\textbf{1}$, will represent a matrix/vector where each element is
+one. Individual entries in a matrix are written in
 lowercase letters with their row and column number, in that order, written as
 subscripts (for example $a_{12}$) \cite{osullivan_appendix_2010}.
 % ; these
 % subscripts are sometimes separated by a comma for clarity (for example
 % $a_{12,34}$) \cite{latecki_matrices_2018}.
-Two (or more) matrices with the same
-number of rows can be joined together to form an ``augmented matrix'', written
-as $\left(\textbf{A}\vert \textbf{B}\right)$ \cite{taboga_augmented_2021}.
-\sjc{Add notation for transpose and identity matrix}
+The transpose of a matrix is the matrix that results from ``switching its rows
+with its columns''; the transpose of $\mathbf{A}$ is denoted by
+$\mathbf{A}^\mathrm{T}$ \cite{nykamp_transpose_nodate}.
+% Two (or more) matrices with the same
+% number of rows can be joined together to form an ``augmented matrix'', written
+% as $\left(\textbf{A}\vert \textbf{B}\right)$ \cite{taboga_augmented_2021}.
 
-The notation for definite description ($\defDesc$) is taken from
+% The notation for definite description ($\defDesc$) is taken from
 % \cite{russell25}.
-\cite{farmer_simple_2023}.
+% \cite{farmer_simple_2023}.
 
 % \plt{If symbols are used to show mathematical operations,
 %   these should be summarized here.  In some cases the easiest way to summarize
@@ -414,21 +452,29 @@ The notation for definite description ($\defDesc$) is taken from
 
 \section{Introduction} \label{sec_intro}
 Chemical equations are common ways of representing chemical reactions (as
-described in \nameref{sec_phySystDesc}), but must be balanced before they can
-be used \cite{lund_introduction_2023}. Therefore, it is useful to have a
-tool to automatically balance these chemical reactions to improve the
+described in \nameref{sec_phySystDesc}), but to ensure the Law of Conservation
+of Mass (\tmref{TM_ConsMass}) is observed, they must be balanced
+\cite{lund_introduction_2023}. This process of balancing a chemical
+equation involves introducing coefficients before each chemical formula such
+that there are the same number of atoms of each element on the reactant and
+product sides of the equation. Because balancing must be done before a given
+chemical reaction can be used \cite{lund_introduction_2023}, it is useful to
+have a tool to automatically do this. This would improve the
 productivity of scientists and engineers and reduce the potential for human
-error.
+error. This program should balance a given chemical reaction if it is
+feasible (see \nameref{sec_termsDefs}), and if not, it should provide a
+descriptive message communicating this to the user. The program that performs
+these tasks as specified by this document will be called ``\progname{}''.
 
 The following section provides an overview of the Software Requirements
 Specification (SRS) for \progname{}. This section explains the purpose of this
 document, the scope of the requirements, the characteristics of the intended
 reader, and the organization of the document.
 
-\subsection{Purpose of Document}
+\subsection{Purpose of Document} \label{sec_purpose}
 
 The primary purpose of this document is to record the requirements of the
-program for solving chemistry problems \sjc{Is this a good description?}.
+program for solving chemistry problems related to balancing chemical equations.
 Goals, assumptions, theoretical models,
 definitions, and other model derivation information are specified, allowing the
 reader to fully understand and verify the purpose and scientific basis of
@@ -449,11 +495,12 @@ present the documentation is to ``fake'' a rational design process
 
 \subsection{Scope of Requirements} \label{sec_scope}
 
-The scope of the requirements includes determining if a given chemical equation
-is feasible (see \nameref{sec_termsDefs}) and, if it is, balancing it using the
-smallest positive integer coefficients possible, regardless of whether or not the
-chemical formulas in the equation are correct or if the reaction would take
-place in a real-world setting.
+The scope of the requirements omits any chemical equation with more than one
+compound than element. Furthermore, it requires all inputted chemical formulas
+of compounds to describe real chemical compounds, be formatted following a set
+of conventions, and only consist of atomic symbols and subscripts.
+
+\newpage
 
 \subsection{Characteristics of Intended Reader} \label{sec_IntendedReader}
 Reviewers of this documentation should have an understanding of high-school
@@ -465,10 +512,10 @@ undergraduate Level 3 linear optimization, namely integer programming.
 % by the code and hidden from the user.
 
 \subsection{Organization of Document}
-The organization of this document is based on a template from
+The organization of this document is based on a template
 \cite{smith_captemplate_2022}, which is based on the template for an SRS for
-scientific computing software proposed by \cite{SmithAndLai2005},
-\cite{SmithEtAl2007}, and \cite{koothoor_document_2013}. The presentation
+scientific computing software \cite{SmithAndLai2005}
+\cite{SmithEtAl2007} \cite{koothoor_document_2013}. The presentation
 follows the standard pattern of presenting goals, theories, definitions, and
 assumptions. For readers that would like a more bottom-up approach, they can
 start reading the \nameref{sec_instance} and trace back to find any additional
@@ -608,12 +655,25 @@ easier to correctly understand the requirements:
         protons in the atomic nucleus'' \cite{hartshorn_brief_2015}. For
         example, all atoms with one proton are hydrogen atoms.
 
+  \item \textbf{Equation}: A textual representation of a chemical reaction.
+
   \item \textbf{Feasible}: (Referring to a chemical equation) able to be
         balanced \cite{hamid_balancing_2019}.
+
+  \item \textbf{Formula}: A textual representation of a chemical compound.
 
   \item \textbf{Hydrate}: ``A compound formed by the chemical combination of
         water and some other substance in a definite molecular ratio''
         \cite{harpercollins_publishers_hydrate_nodate}.
+
+  \item \textbf{Isotope}: An atom that is the same element as another but has a
+        different number of neutrons \cite{lund_introduction_2023}.
+
+  \item \textbf{Polyatomic Ion}: A group of atoms ``bonded together that
+        carr[ies] an overall electric charge'' \cite{lund_introduction_2023}.
+
+  \item \textbf{Polymer}: A macromolecule ``formed by the chemical bonding of
+        large numbers of smaller molecules'' \cite{wexler_encyclopedia_2014}.
 
   \item \textbf{Nonstoichiometric Compound}: ``Any solid chemical compound in
         which the numbers of atoms of the elements present cannot be expressed
@@ -624,6 +684,9 @@ easier to correctly understand the requirements:
         %       with only zeros is at the bottom and every column but the rightmost one
         %       has all zeroes except for one one (which has only zeroes to its left)
         %       \cite{taboga_reduced_2021}.
+  \item \textbf{Reaction}: An interaction between different types of matter that
+        results in at least one new substance being formed
+        \cite[p.~286]{lund_introduction_2023}.
 
   \item \textbf{Stoichiometry}: ``The calculation of the quantities of
         reactants or products in a chemical reaction using the relationships
@@ -638,6 +701,7 @@ easier to correctly understand the requirements:
 
 Chemical reactions are interactions between different types of matter that
 result in new substances being formed \cite[p.~286]{lund_introduction_2023}.
+\sjc{If this is in \nameref{sec_termsDefs}, should I say it here, too?}
 These are represented using chemical equations, with the reactant(s)---the
 substance(s) present at the beginning of the reaction---on the left-hand side
 and the product(s)---the substance(s) formed by the reaction---on the right. An
@@ -649,8 +713,8 @@ $$
   \ce{CH4} + \ce{O2} \rightarrow \ce{CO2} + \ce{H2O}
 $$
 
-As mentioned in \nameref{sec_probDesc}, chemical formulas must be balanced to be
-useful \cite{lund_introduction_2023}. This means that there
+As mentioned in \nameref{sec_probDesc}, chemical equations must be balanced to
+be useful \cite{lund_introduction_2023}. This means that there
 must be the same number of each element before and after the reaction takes
 place to satisfy the Law of Conservation of Mass (\tmref{TM_ConsMass}). Since
 changing the subscripts in a formula will change the type of molecule (for
@@ -662,13 +726,13 @@ $$
   \ce{CH4} + \ce{2O2} \rightarrow \ce{CO2} + \ce{2H2O}
 $$
 
-The physical system of \progname{} includes:
+The physical system of \progname{} includes the following elements:
 
 \begin{itemize}
 
-  \item[PS1:] the products of a given chemical reaction;
+  \item[PS1:] The products of a given chemical reaction.
 
-  \item[PS2:] the reactants of the same chemical reaction.
+  \item[PS2:] The reactants of the same chemical reaction.
 
 \end{itemize}
 
@@ -689,12 +753,18 @@ of \progname{} are:
 \begin{itemize}
 
   \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_feasible}:] Determine if
-    a given chemical reaction is feasible (see \nameref{sec_termsDefs}).
+    the equation is feasible (see \nameref{sec_termsDefs}).
 
-  \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_balance}:] Balance the
-    chemical equation with the smallest positive integer coefficients possible.
+  \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_balance}:] If the
+    chemical equation is feasible, find its balanced form with the
+    smallest positive integer coefficients.
+
+  \item[GS\refstepcounter{goalnum}\thegoalnum \label{G_detReasonInfeas}:] If the
+    chemical equation is infeasible, determine the reason why.
 
 \end{itemize}
+
+\newpage
 
 \subsection{Solution Characteristics Specification}
 
@@ -702,15 +772,6 @@ of \progname{} are:
 %	just given. If a potential DD includes a derivation, then that means it is
 %	refining other models, which would make it a GD or an IM. TMs are also just
 %	given, but they are refined, not used.}
-%
-%\noindent \plt{The relationships between the parts of the document are show in
-%  the following figure.  In this diagram ``may ref'' has the same role as
-%  ``uses'' above.  The figure adds ``Likely Changes,'' which are able to
-%  reference (use) Assumptions.}
-%
-%\begin{figure}[H]
-%  \includegraphics[scale=0.9]{RelationsBetweenTM_GD_IM_DD_A.pdf}
-%\end{figure}
 
 The instance models that govern \progname{} are presented in
 Subsection~\ref{sec_instance}.  The information to understand the meaning of the
@@ -731,21 +792,33 @@ is used.
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_elemCompDiff}:]
     For all inputted chemical equations, there is at most one more compound than
     element. \sjc{Should this be an assumption or a requirement?}
-    [\gdref{matRep}, \ucref{UC_allEqsPermitted}]
+    [\imref{matRep}, \ucref{UC_allEqsPermitted}]
 
-  \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_validInput}:]
-    All inputted chemical formulas describe real chemical formulas.
-      [\gdref{matRep}]
+  \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_validForms}:]
+    All inputted chemical formulas describe real chemical compounds.
+      [\imref{matRep}, \ucref{UC_checkValidForms}]
+
+  \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_validEqns}:]
+    All inputted chemical equations describe real chemical equations.
+      [\imref{matRep}, \ucref{UC_checkValidEqns}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_correctInputFormat}:]
-    All inputted chemical formulas are formatted following some set of
-    agreed-upon conventions.	[\gdref{matRep}, \lcref{LC_incorrectInputFormat}]
+    All inputted chemical formulas follow the conventions laid out in
+    \cite{international_union_of_pure_and_applied_chemistry_nomenclature_2005}
+    and \cite{international_union_of_pure_and_applied_chemistry_nomenclature_2013}
+    by the International Union of Pure and Applied Chemistry (IUPAC).
+      [\imref{matRep}, \lcref{LC_incorrectInputFormat}]
 
   \item[A\refstepcounter{assumpnum}\theassumpnum \label{A_simpleForms}:]
-    All inputted chemical formulas are simple (i.e., only consist of atomic
-    symbols and subscripts).	[\gdref{matRep}, \lcref{LC_complexForms}]
+    All inputted chemical formulas only consist of atomic symbols and
+    subscripts; this means that they cannot contain dots, parentheses, hyphens,
+    or superscripts, so hydrates (see \nameref{sec_termsDefs}), polymers, and
+    formulas with isotopes and some with polyatomic ions will not be present
+    in inputted chemical equations. [\imref{matRep}, \lcref{LC_complexForms}]
 
 \end{itemize}
+
+\newpage
 
 \subsubsection{Theoretical Models}\label{sec_theoretical}
 
@@ -798,7 +871,7 @@ on.
 }
 % #8 Referenced by
 {
-  \gdref{chemILP}
+  \imref{chemILP}
 }
 % #9 derivation - not applicable by default
 {Not Applicable}
@@ -811,10 +884,14 @@ on.
 % #3 label
 {Law of Conservation of Mass}
 % #4 equation
-{$\forall\, e : E,\, R, P : \langle C\rangle ~|~ \sum\limits_{c \in R}
-    \text{count}(e, c) = \sum\limits_{c \in P} \text{count}(e,c)$, where $R$
+{$\forall\, e : E,\, R, P : \langle C\rangle ~|~
+    \sum\limits_{c_i \in R} a_i \text{count}(e, c_i) =
+    \sum\limits_{c_i \in P} b_i \text{count}(e, c_i)$, where $R$
   represents the reactant side of a chemical equation, $P$ represents the
-  product side, and $\text{count}(e,c)$ is from \ddref{count}.}
+  product side, $\text{count}(e,c)$ is from \ddref{count}, $a_i$
+  represents the coefficient in the chemical equation for a given compound
+  $c_i \in R$, and $b_i$ represents the coefficient in the chemical equation
+  for a given compound $c_i \in P$.}
 % #5 description
 {
   This law states that ``matter can neither be created nor destroyed in a
@@ -822,14 +899,15 @@ on.
   \cite[p.~112]{lund_introduction_2023}.
 }
 % #6 Notes
-{None}
+{This equation assumes that $R$ and $P$ correspond to the same chemical
+  reaction.}
 % #7 Source
 {
   \url{https://chem.libretexts.org/Courses/Anoka-Ramsey_Community_College/Introduction_to_Chemistry/03\%3A_Matter_and_Energy/3.06\%3A_Conservation_of_Mass}
 }
 % #8 Referenced by
 {
-  \gdref{chemILP}
+  \imref{matRep}, \imref{chemILP}, \imref{output}
 }
 % #9 derivation - not applicable by default
 {Not Applicable}
@@ -880,77 +958,10 @@ on.
 %  For instance, the TM could be Newton's Law of Cooling stated abstracting.  The
 %  GD could take the general law and apply it to get a 1D equation.}
 
-This section collects the laws and equations that will be used in building the
-instance models.
+% This section collects the laws and equations that will be used in building the
+% instance models.
 
-% There are no general definitions.
-
-~\newline
-\noindent
-\begin{minipage}{\textwidth}
-  \renewcommand*{\arraystretch}{1.5}
-  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-    \hline
-    \rowcolor[gray]{0.9}
-    Number      & GD\refstepcounter{gendefnum}\thegendefnum \label{chemILP}   \\
-    \hline
-    Label       & \bf Integer linear program for chemical equation            \\
-    \hline
-    % Units&$MLt^{-3}T^0$\\
-    % \hline
-    SI Units    & --                                                          \\
-    \hline
-    Equation    & \vspace{-3mm}
-    {$\!\begin{aligned}
-               & \text{minimize}   &  & \mathbf{x}                          \\
-               & \text{subject to} &  & \mathbf{E} \mathbf{x} = \mathbf{0}, \\
-               &                   &  & \mathbf{x} > \mathbf{0},            \\
-               & \text{and}        &  & \mathbf{x} \in \mathbb{Z}^n
-            \end{aligned}$} \sjc{Is it right for this to be labelled ``equation''?}
-    \vspace{1.5mm}                                                            \\
-    \hline
-    Description &
-    This is a specific instance of the ILP from \tmref{TM_ILP}
-    with $\textbf{A} = \textbf{E}$ (from \ddref{matRep}),
-    $\textbf{b} = \textbf{0}$ (since there should be no difference between the
-    number of atoms of each element on each side of the equation), and
-    $\textbf{c} = \textbf{I}$ (since only the sum of the coefficients need to
-    be minimized to obtain the smallest solution). The goal is changed from
-    ``maximize'' to ``minimize'' since chemical equations have the smallest
-    coefficients by convention \cite{lund_introduction_2023}. The constraints
-    are also modified; for the Law of Conservation of Mass
-    (\tmref{TM_ConsMass}) to hold, $\mathbf{E} \mathbf{x}$ must equal
-    $\mathbf{0}$, and to avoid trivial solutions and ensure that mass is
-    conserved, each coefficient must be positive ($\mathbf{x} > \mathbf{0}$)  \\
-                & $\textbf{x}$ is the vector of the smallest positive integer
-    coefficients for the compounds in the chemical equation such that the Law
-    of Conservation of Mass (\tmref{TM_ConsMass}) is satisfied.               \\
-                & $\textbf{0}$ is the zero matrix and $\textbf{I}$ is the
-    identity matrix (see \nameref{sec_mathNot}).                              \\
-    % This will be found by putting
-    % $(\textbf{E}|\textbf{0})$ in reduced row echelon form, which will yield a
-    % parametric solution. Every entry in the last non-zero column will be
-    % multiplied by the lowest common denominator of the column and subtracted
-    % from zero to get the coefficients for the compound associated with the
-    % column that has the first ``1'' of the row. If there is one more compound
-    % than element (see \aref{A_elemCompDiff}) or if any rows have all zeroes,
-    % then the last coefficient or any columns without a leading one,
-    % respectively, become this lowest common denominator.
-    % \sjc{Double check this}\\
-    \hline
-    Source      & \cite{hamid_balancing_2019}                                 \\
-    \hline
-    Ref.\ By    & \iref{balance}                                              \\
-    \hline
-  \end{tabular}
-\end{minipage}\\
-
-% \subsubsection*{Detailed derivation of simplified rate of change of temperature}
-%
-%\plt{This may be necessary when the necessary information does not fit in the
-%  description field.}
-%\plt{Derivations are important for justifying a given GD.  You want it to be
-%  clear where the equation came from.}
+There are no general definitions.
 
 \subsubsection{Data Definitions}\label{sec_datadef}
 
@@ -977,8 +988,8 @@ models. The dimension of each quantity is also given.
     Equation    & \vspace{-3mm}
     $\text{count}(e,c) = \begin{cases}
                              \begin{aligned}
-           & \defDesc\, x : \posReal ~|~ (e, x) \in c, &  & \exists\,x : \posReal ~|~ (e, x) \in c \\
-           & 0, ~                                      &  & \text{otherwise}
+           & c.\text{count}, &  & \exists\,x : \posReal ~|~ (e, x) \in c \\
+           & 0, ~            &  & \text{otherwise}
         \end{aligned}
                            \end{cases}$
     \vspace{1.5mm}                                                           \\
@@ -989,7 +1000,7 @@ models. The dimension of each quantity is also given.
     \hline
     Sources     & --                                                         \\
     \hline
-    Ref.\ By    & \tmref{TM_ConsMass}, \ddref{matRep}                        \\
+    Ref.\ By    & \tmref{TM_ConsMass}, \imref{matRep}                        \\
     \hline
   \end{tabular}
 \end{minipage}\\
@@ -1012,7 +1023,7 @@ models. The dimension of each quantity is also given.
     SI Units    & --                                                        \\
     \hline
     Equation    & $\text{elems}(R,P) = \{e : E ~|~
-    \exists\, x : \posReal, c \in R \cup P ~|~ (e, x) \in c\}$              \\
+    \exists\, c \in R \cup P ~|~ c.\text{elem} = e\}$                       \\
     \hline
     Description & The output of $\text{elems}(R,P)$ is of type
     $\langle E \rangle$ and represents the set of elements that occur in a
@@ -1022,101 +1033,47 @@ models. The dimension of each quantity is also given.
     \hline
     Sources     & --                                                        \\
     \hline
-    Ref.\ By    & \ddref{matRep}                                            \\
+    Ref.\ By    & \imref{matRep}                                            \\
     \hline
   \end{tabular}
 \end{minipage}\\
 
-~\newline
-\noindent
-\begin{minipage}{\textwidth}
-  \renewcommand*{\arraystretch}{1.5}
-  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-    \hline
-    \rowcolor[gray]{0.9}
-    Number      & DD\refstepcounter{datadefnum}\thedatadefnum \label{matRep} \\
-    \hline
-    Label       & \bf Matrix representation of a chemical equation           \\
-    \hline
-    Symbol      & $\textbf{E}$                                               \\
-    \hline
-    % Units& $Mt^{-3}$\\
-    % \hline
-    SI Units    & --                                                         \\
-    \hline
-    Equation    & \vspace{-3mm}
-    $ \forall\, e_i \in \text{elems}(R, P), c_j \in R \cup P ~|~ e_{ij} =
-      \begin{cases}
-        \begin{aligned}
-           & \text{count}(e_i, c_j),  &  & c_j \in R        \\
-           & -\text{count}(e_i, c_j), &  & \text{otherwise}
-        \end{aligned}
-      \end{cases}$
-    \vspace{1.5mm}                                                           \\
-    \hline
-    Description & $\mathbf{E}$ is a matrix of type
-    $\mathbb{R}^{|\text{elems}(R, P)| \times |R\, \cup\, P|}$ constructed
-    from $R$, a sequence of compounds ($\langle C \rangle$) on the reactant
-    side of a chemical equation, and $P$ a sequence of compounds
-    ($\langle C \rangle$) on the product side.
-    It represents a given chemical equation as a matrix where each row
-    corresponds to a different element and each column corresponds to a
-    different compound. Positive entries indicate the compound is a reactant,
-    negative entries indicate the compound is a product, and zeroes indicate
-    the corresponding element is not present in the corresponding compound.
+% ~\newline
+% \noindent
+% \begin{minipage}{\textwidth}
+%   \renewcommand*{\arraystretch}{1.5}
+%   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+%     \hline
+%     \rowcolor[gray]{0.9}
+%     Number      & DD\refstepcounter{datadefnum}\thedatadefnum \label{gcf} \\
+%     \hline
+%     Label       & \bf Greatest common factor                              \\
+%     \hline
+%     Symbol      & $\text{gcf}(z)$                                         \\
+%     \hline
+%     % Units& $Mt^{-3}$\\
+%     % \hline
+%     SI Units    & --                                                      \\
+%     \hline
+%     Equation    & $\text{gcf}(z) = \defDesc\, m : \posInt ~|~
+%     \forall\, z_i \in z, n : \posInt ~|~$                                 \\
+%                 & \quad\quad$z_i \;\mathrm{mod}\; m = 0 \land
+%     z_i \;\mathrm{mod}\; n = 0 \Rightarrow m \geq n$                      \\
+%     \hline
+%     Description & The output of $\text{gcf}(z)$ is of type
+%     $\posInt$ and represents the largest integer that evenly divides every
+%     element of $z$ (of type $\{ \mathbb{Z} \}$). Since every integer is
+%     divisible by one, this is the minimum value of this function, which is why
+%     it returns a value of type $\posInt$.                                 \\
+%     \hline
+%     Sources     & --                                                      \\
+%     \hline
+%     Ref.\ By    & \{balance}                                          \\
+%     \hline
+%   \end{tabular}
+% \end{minipage}\\
 
-    ~\newline
-    $\text{count}(e,c)$ is from \ddref{count} and $\text{elems}(R,P)$ is
-    from \ddref{elems}.
-
-    ~\newline
-    Each compound present in the inputted sequences are
-    assumed to be valid (\aref{A_validInput}), be formatted correctly
-    (\aref{A_correctInputFormat}), and only consist of atomic symbols and
-    subscripts (\aref{A_simpleForms}). The number of columns is assumed to be
-    at most one more than the number of rows (\aref{A_elemCompDiff}).        \\
-    \hline
-    Sources     & \cite{hamid_balancing_2019}                                \\
-    \hline
-    Ref.\ By    & \gdref{chemILP}, \iref{balance}                            \\
-    \hline
-  \end{tabular}
-\end{minipage}\\
-
-~\newline
-\noindent
-\begin{minipage}{\textwidth}
-  \renewcommand*{\arraystretch}{1.5}
-  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-    \hline
-    \rowcolor[gray]{0.9}
-    Number      & DD\refstepcounter{datadefnum}\thedatadefnum \label{gcf} \\
-    \hline
-    Label       & \bf Greatest common factor                              \\
-    \hline
-    Symbol      & $\text{gcf}(z)$                                         \\
-    \hline
-    % Units& $Mt^{-3}$\\
-    % \hline
-    SI Units    & --                                                      \\
-    \hline
-    Equation    & $\text{gcf}(z) = \defDesc\, m : \posInt ~|~
-    \forall\, z_i \in z, n : \posInt ~|~$                                 \\
-                & \quad\quad$z_i \;\mathrm{mod}\; m = 0 \land
-    z_i \;\mathrm{mod}\; n = 0 \Rightarrow m \geq n$                      \\
-    \hline
-    Description & The output of $\text{gcf}(z)$ is of type
-    $\posInt$ and represents the largest integer that evenly divides every
-    element of $z$ (of type $\{ \mathbb{Z} \}$). Since every integer is
-    divisible by one, this is the minimum value of this function, which is why
-    it returns a value of type $\posInt$.                                 \\
-    \hline
-    Sources     & --                                                      \\
-    \hline
-    Ref.\ By    & \iref{balance}                                          \\
-    \hline
-  \end{tabular}
-\end{minipage}\\
+\newpage
 
 \subsubsection{Data Types}\label{sec_datatypes}
 
@@ -1158,8 +1115,8 @@ models.
     \rowcolor[gray]{0.9}
     Type Name   & Compound                                                     \\
     \hline
-    Type Def    & $C = \langle (E, \posReal) \rangle$                          \\
-
+    Type Def    &
+    $C = \langle (\text{elem} : E, \text{count} : \posReal) \rangle$           \\
     \hline
     Description & A type representing a compound (a sequence of elements, each
     with a specified positive quantity).                                       \\
@@ -1169,56 +1126,140 @@ models.
   \end{tabular}
 \end{minipage}\\
 
+\newpage
+
 \subsubsection{Instance Models} \label{sec_instance}
 
 This section transforms the problem defined in \nameref{sec_probDesc} into
 one which is expressed in mathematical terms. It uses concrete symbols defined
 in Section~\ref{sec_datadef} to replace the abstract symbols in the models
-identified in Sections~\ref{sec_theoretical} and~\ref{sec_gendef} \sjc{Should
-  the reference to the general models be removed if there aren't any?}.
+identified in Section~\ref{sec_theoretical}.
+%  and~\ref{sec_gendef}.
 
-The goals \gsref{G_feasible} and \gsref{G_balance} are solved by
-\sjc{Add reference to output IM}
-and \iref{balance}, respectively.
+The goal \gsref{G_feasible} is solved by \imref{chemILP} and the goals
+\gsref{G_balance} and \gsref{G_detReasonInfeas} are solved by \imref{output}.
 
-% ~\newline
-%\noindent
-%\begin{minipage}{\textwidth}
-%\renewcommand*{\arraystretch}{1.5}
-%\begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
-%  \hline
-%  \rowcolor[gray]{0.9}
-%  Number& IM\refstepcounter{instnum}\theinstnum \label{ewat}\\
-%  \hline
-%  Label& \bf Energy balance on water to find $T_W$\\
-%  \hline
-%  Input&$m_W$, $C_W$, $h_C$, $A_C$, $h_P$, $A_P$, $t_\text{final}$, $T_C$, 
-%  $T_\text{init}$, $T_P(t)$ from \iref{epcm}\\
-%  & The input is constrained so that $T_\text{init} \leq T_C$ (\aref{A_charge})\\
-%  \hline
-%  Output&$T_W(t)$, $0\leq t \leq t_\text{final}$, such that\\
-%  &$\frac{dT_W}{dt} = \frac{1}{\tau_W}[(T_C - T_W(t)) + {\eta}(T_P(t) - T_W(t))]$,\\
-%  &$T_W(0) = T_P(0) = T_\text{init}$ (\aref{A_InitTemp}) and $T_P(t)$ from \iref{epcm} \\
-%  \hline
-%  Description&$T_W$ is the water temperature (\si{\celsius}).\\
-%  &$T_P$ is the PCM temperature (\si{\celsius}).\\
-%  &$T_C$ is the coil temperature (\si{\celsius}).\\
-%  &$\tau_W = \frac{m_W C_W}{h_C A_C}$ is a constant (\si{\second}).\\
-%  &$\eta = \frac{h_P A_P}{h_C A_C}$ is a constant (dimensionless).\\
-%  & The above equation applies as long as the water is in liquid form,
-%  $0<T_W<100^o\text{C}$, where $0^o\text{C}$ and $100^o\text{C}$ are the melting
-%  and boiling points of water, respectively (\aref{A_OpRange}, \aref{A_Pressure}).
-%  \\
-%  \hline
-%  Sources& Citation here \\
-%  \hline
-%  Ref.\ By & \iref{epcm}\\
-%  \hline
-%\end{tabular}
-%\end{minipage}\\
-%
-%%~\newline
-%
+~\newline
+\noindent
+\begin{minipage}{\textwidth}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
+    Number      & IM\refstepcounter{instnum}\theinstnum \label{matRep} \\
+    \hline
+    Label       & \bf Matrix representation of a chemical equation     \\
+    \hline
+    Symbol      & $\textbf{E}$                                         \\
+    \hline
+    % Units& $Mt^{-3}$\\
+    % \hline
+    SI Units    & --                                                   \\
+    \hline
+    Equation    & \vspace{-3mm}
+    $ \forall\, e_i \in \text{elems}(R, P), c_j \in R \cup P ~|~ e_{ij} =
+      \begin{cases}
+        \begin{aligned}
+           & \text{count}(e_i, c_j),  &  & c_j \in R        \\
+           & -\text{count}(e_i, c_j), &  & \text{otherwise}
+        \end{aligned}
+      \end{cases}$
+    \vspace{1.5mm}                                                     \\
+    \hline
+    Description & $\mathbf{E}$ is a matrix of type
+    $\mathbb{R}^{|\text{elems}(R, P)| \times |R\, \cup\, P|}$ constructed
+    from $R$, a sequence of compounds ($\langle C \rangle$) on the reactant
+    side of a chemical equation, and $P$ a sequence of compounds
+    ($\langle C \rangle$) on the product side.
+    It represents a given chemical equation as a matrix where each row
+    corresponds to a different element and each column corresponds to a
+    different compound. Positive entries indicate the compound is a reactant,
+    negative entries indicate the compound is a product, and zeroes indicate
+    the corresponding element is not present in the corresponding compound;
+    this allows for ensuring that the Law of Conservation of Mass
+    (\tmref{TM_ConsMass}) is followed \sjc{Add more detailed derivation?}.
+
+    ~\newline
+    $\text{count}(e,c)$ is from \ddref{count} and $\text{elems}(R,P)$ is
+    from \ddref{elems}.
+
+    ~\newline
+    Each compound present in the inputted sequences are
+    assumed to be valid (\aref{A_validForms}), be formatted correctly
+    (\aref{A_correctInputFormat}), and only consist of atomic symbols and
+    subscripts (\aref{A_simpleForms}). The chemical reaction represented by the
+    inputted sequences is also assumed to be valid (\aref{A_validEqns}). The
+    number of columns is assumed to be
+    at most one more than the number of rows (\aref{A_elemCompDiff}).  \\
+    \hline
+    Sources     & \cite{hamid_balancing_2019}                          \\
+    \hline
+    Ref.\ By    & \imref{chemILP}, \rref{R_convert}                    \\
+    \hline
+  \end{tabular}
+\end{minipage}\\
+
+~\newline
+\noindent
+\begin{minipage}{\textwidth}
+  \renewcommand*{\arraystretch}{1.5}
+  \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+    \hline
+    \rowcolor[gray]{0.9}
+    Number      & IM\refstepcounter{instnum}\theinstnum \label{chemILP}   \\
+    \hline
+    Label       & \bf Integer linear program for chemical equation        \\
+    \hline
+    % Units&$MLt^{-3}T^0$\\
+    % \hline
+    SI Units    & --                                                      \\
+    \hline
+    Equation    & \vspace{-3mm}
+    {$\!\begin{aligned}
+               & \text{minimize}   &  & \mathbf{x}                          \\
+               & \text{subject to} &  & \mathbf{E} \mathbf{x} = \mathbf{0}, \\
+               &                   &  & \mathbf{x} > \mathbf{0},            \\
+               & \text{and}        &  & \mathbf{x} \in \mathbb{Z}^n
+            \end{aligned}$} \sjc{Is it right for this to be labelled ``equation''?}
+    \vspace{1.5mm}                                                        \\
+    \hline
+    Description &
+    This is a specific instance of the ILP from \tmref{TM_ILP}
+    with $\textbf{A} = \textbf{E}$ (from \imref{matRep}),
+    $\textbf{b} = \textbf{0}$ (since there should be no difference between the
+    number of atoms of each element on each side of the equation), and
+    $\textbf{c} = \textbf{1}$ (since only the sum of the coefficients need to
+    be minimized to obtain the smallest solution). The goal is changed from
+    ``maximize'' to ``minimize'' since chemical equations have the smallest
+    coefficients by convention \cite{lund_introduction_2023}. The constraints
+    are also modified; for the Law of Conservation of Mass
+    (\tmref{TM_ConsMass}) to hold, $\mathbf{E} \mathbf{x}$ must equal
+    $\mathbf{0}$, and to avoid trivial solutions and ensure that mass is
+    conserved, each coefficient must be positive ($\mathbf{x} > \mathbf{0}$).
+    The solution to this equation \sjc{?} is the vector of the smallest positive
+    integer coefficients for the compounds in the chemical equation such that
+    the Law of Conservation of Mass (\tmref{TM_ConsMass}) is satisfied.   \\
+                & $\textbf{0}$ is the zero vector and $\textbf{1}$ is the
+    unary vector (see \nameref{sec_mathNot}).                             \\
+    % This will be found by putting
+    % $(\textbf{E}|\textbf{0})$ in reduced row echelon form, which will yield a
+    % parametric solution. Every entry in the last non-zero column will be
+    % multiplied by the lowest common denominator of the column and subtracted
+    % from zero to get the coefficients for the compound associated with the
+    % column that has the first ``1'' of the row. If there is one more compound
+    % than element (see \aref{A_elemCompDiff}) or if any rows have all zeroes,
+    % then the last coefficient or any columns without a leading one,
+    % respectively, become this lowest common denominator.
+    % \sjc{Double check this}\\
+    \hline
+    Source      & --                                                      \\
+    \hline
+    Ref.\ By    & \imref{output}, \rref{R_feasible}, \rref{R_balance},
+    \nfrref{NFR_accuracy}                                                 \\
+    \hline
+  \end{tabular}
+\end{minipage}\\
+
 %\subsubsection*{Derivation of ...}
 %
 %\plt{The derivation shows how the IM is derived from the TMs/GDs.  In cases
@@ -1232,31 +1273,67 @@ and \iref{balance}, respectively.
   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
     \hline
     \rowcolor[gray]{0.9}
-    Number      & IM\refstepcounter{instnum}\theinstnum \label{balance}            \\
+    Number      & IM\refstepcounter{instnum}\theinstnum \label{output} \\
     \hline
-    Label       & \bf Vector of compound coefficients in balanced equation         \\
+    Label       & \bf Output message                                   \\
     \hline
-    Input       & $\textbf{E}$ from \ddref{matRep}                                 \\
+    Input       & The solution from \imref{chemILP}, if one exists     \\
     \hline
-    Output      & $\textbf{c}$ from \gdref{chemMatEq}, such that
-    $\text{gcf}(\textbf{c}) = 1$ (from \ddref{gcf})                                \\
+    Output      & \vspace{-3mm}
+    $s = \begin{cases}
+             \begin{aligned}
+           & \parbox{63mm}{The inputted chemical equation balanced with the found coefficients}\,,                             &  & \text{a solution exists}                                                         \\[1em]
+           & \parbox{63mm}{``This reaction is infeasible because [reasoning], violating the Law of Conservation of Mass.''}\,, &  & \parbox{47mm}{the Law of Conservation of Mass (\tmref{TM_ConsMass}) is violated} \\[1em]
+           & \parbox{63mm}{``This reaction is infeasible, likely because it is overconstrained.''}\,,                          &  & \text{otherwise}
+        \end{aligned}
+           \end{cases}$
+    \vspace{1.5mm}                                                     \\
     \hline
-    Description & $\textbf{E}$ is a matrix representing the amount of each element
-    in each compound in a chemical equation from \ddref{matRep}.                   \\
-                & $\textbf{c}$ is a vector of the smallest positive integer
-    coefficients for each compound in the reaction (in the order inputted) so that
-    the chemical equation is balanced.                                             \\
+    Description & $s$ is a string that will be output to the user.     \\
     %  & The above equation applies as long as the water is in liquid form,
     %  $0<T_W<100^o\text{C}$, where $0^o\text{C}$ and $100^o\text{C}$ are the melting
     %  and boiling points of water, respectively (\aref{A_OpRange}, \aref{A_Pressure}).
     %  \\
     \hline
-    Sources     & \cite{hamid_balancing_2019}                                      \\
+    Sources     & --                                                   \\
     \hline
-    Ref.\ By    & --                                                               \\
+    Ref.\ By    & \rref{R_infeasOutput}, \rref{R_feasOutput}           \\
     \hline
   \end{tabular}
 \end{minipage}\\
+
+% ~\newline
+% \noindent
+% \begin{minipage}{\textwidth}
+%   \renewcommand*{\arraystretch}{1.5}
+%   \begin{tabular}{| p{\colAwidth} | p{\colBwidth}|}
+%     \hline
+%     \rowcolor[gray]{0.9}
+%     Number      & IM\refstepcounter{instnum}\theinstnum \label{balance}            \\
+%     \hline
+%     Label       & \bf Vector of compound coefficients in balanced equation         \\
+%     \hline
+%     Input       & $\textbf{E}$ from \imref{matRep}                                 \\
+%     \hline
+%     Output      & $\textbf{c}$ from \gdref{chemMatEq}, such that
+%     $\text{gcf}(\textbf{c}) = 1$ (from \ddref{gcf})                                \\
+%     \hline
+%     Description & $\textbf{E}$ is a matrix representing the amount of each element
+%     in each compound in a chemical equation from \imref{matRep}.                   \\
+%                 & $\textbf{c}$ is a vector of the smallest positive integer
+%     coefficients for each compound in the reaction (in the order inputted) so that
+%     the chemical equation is balanced.                                             \\
+%     %  & The above equation applies as long as the water is in liquid form,
+%     %  $0<T_W<100^o\text{C}$, where $0^o\text{C}$ and $100^o\text{C}$ are the melting
+%     %  and boiling points of water, respectively (\aref{A_OpRange}, \aref{A_Pressure}).
+%     %  \\
+%     \hline
+%     Sources     & \cite{hamid_balancing_2019}                                      \\
+%     \hline
+%     Ref.\ By    & --                                                               \\
+%     \hline
+%   \end{tabular}
+% \end{minipage}\\
 
 %~\newline
 
@@ -1318,13 +1395,14 @@ There are no input data constraints.
 
 \subsubsection{Properties of a Correct Solution} \label{sec_PropsCorrSol}
 
-The vector used in \iref{balance} can be used as the value for $\textbf{c}$
-in a ``sanity'' check; the original input (formatted as a matrix according to
-\ddref{matRep}) can then be used as $\textbf{E}$.
-Performing this matrix multiplication should result in the zero matrix,
-$\textbf{0}$ (from \gdref{chemMatEq}). Additionally, since the coefficients
-should be as small as possible by convention \cite{lund_introduction_2023},
-$\text{gcf}(\mathbf{c})$ (from \ddref{gcf}) should be ``1''.
+The vector outputted by \imref{chemILP} can be used as the value for
+$\textbf{x}$ in a ``sanity'' check; the original input (formatted as a matrix
+according to \imref{matRep}) can then be used as $\textbf{E}$.
+Performing this matrix multiplication should result in the zero vector,
+$\textbf{0}$ (from \imref{chemILP}).
+% Additionally, since the coefficients
+% should be as small as possible by convention \cite{lund_introduction_2023},
+% $\text{gcf}(\mathbf{c})$ (from \ddref{gcf}) should be ``1''.
 
 % A correct solution must exhibit \plt{fill in the details}.  \plt{These
 %   properties are in addition to the stated requirements.  There is no need to
@@ -1365,22 +1443,23 @@ qualities that the software is expected to exhibit.
     representation of a chemical equation.
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_convert}:] Convert the
-    inputted equation to matrix form (from \ddref{matRep}).
+    inputted equation to matrix form (from \imref{matRep}).
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_feasible}:] Determine if the
     inputted equation is feasible (see \nameref{sec_termsDefs};	from
-    \sjc{Add ref to output IM}).
+    \imref{chemILP}).
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_infeasOutput}:] If the
-    inputted equation is infeasible, output a descriptive message.
+    inputted equation is infeasible, output a descriptive message (from
+    \imref{output}).
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_balance}:] If the
     inputted equation is feasible, balance the chemical equation with the smallest
-    positive integer coefficients possible (from \iref{balance}).
+    positive integer coefficients possible (from \imref{chemILP}).
 
   \item[R\refstepcounter{reqnum}\thereqnum \label{R_feasOutput}:] If the
     inputted equation is feasible, output a balanced form of the equation in the
-    same format as the input (from \sjc{Add ref out output IM}).
+    same format as the input (from \imref{output}).
 
     %\item[R\refstepcounter{reqnum}\thereqnum \label{R_VerifyOutput}:]
     %  \plt{Verification related requirements.}
@@ -1395,7 +1474,7 @@ qualities that the software is expected to exhibit.
 
   \item[NFR\refstepcounter{nfrnum}\thenfrnum \label{NFR_accuracy}:]
     \textbf{Accuracy:} Chemical equations are only useful if they are balanced
-    \cite{lund_introduction_2023}, so computed coefficients from \iref{balance}
+    \cite{lund_introduction_2023}, so computed coefficients from \imref{chemILP}
     should be exact.
 
     %  All other computed solutions should have a relative error no greater
@@ -1448,10 +1527,14 @@ qualities that the software is expected to exhibit.
 \begin{itemize}
 
   \item[LC\refstepcounter{lcnum}\thelcnum\label{LC_complexForms}:] The system
-    currently assumes that inputted chemical formulas are simple
-    (\aref{A_simpleForms}). In the future, the user might
-    be able to input more complex chemical formulas, such as hydrates (see
-    \nameref{sec_termsDefs}) or those with polymers or isotopes.
+    currently assumes that inputted chemical formulas only consist of atomic
+    symbols and subscripts (\aref{A_simpleForms}).  In the future, the user
+    might be able to input more complex chemical formulas, such as those
+    containing dots, parentheses, hyphens, and/or superscripts.
+    % NOTE: omitted to keep LCs on one page and avoid multipage footnote issue
+    % , allowing for hydrates
+    % (see \nameref{sec_termsDefs}), polymers, and compounds with isotopes and/or
+    % polyatomic ions to be inputted.
 
   \item[LC\refstepcounter{lcnum}\thelcnum\label{LC_calcMoles}:] In the future,
     \progname{} might be able to, given the amount of one substance (in moles)
@@ -1479,11 +1562,13 @@ qualities that the software is expected to exhibit.
     This is dependent on \lcref{LC_detLimReag}.
 
   \item[LC\refstepcounter{lcnum}\thelcnum\label{LC_incorrectInputFormat}:]
-    The system currently assumes that inputted chemical formulas are formatted
-    according to some set of conventions
-    (\aref{A_correctInputFormat}). In the future, \progname{} might be able to
-    parse valid but incorrectly formatted chemical formulas inputted by the
-    user and format them correctly when outputting them.
+    The system currently assumes that inputted chemical formulas
+    follow the conventions laid out in
+    \cite{international_union_of_pure_and_applied_chemistry_nomenclature_2005}
+    and \cite{international_union_of_pure_and_applied_chemistry_nomenclature_2013}.
+    In the future, \progname{} might be able to
+    parse valid inputted chemical formulas that do not follow these conventions
+    and format them correctly when outputting them.
 
   \item[LC\refstepcounter{lcnum}\thelcnum\label{LC_termsOfMass}:] In the future,
     the user might be able to enter the amounts required by \lcref{LC_calcMoles},
@@ -1526,7 +1611,7 @@ qualities that the software is expected to exhibit.
   %   the system constraints in Subsection~\ref{sec_sysConst} is that \progname{}
   %   will be implemented using matrices and linear algebra. It is unlikely that
   %   a different method will be used to compute the values from \gdref{chemMatEq}
-  %   and \iref{balance}, since ``balancing chemical equations is not chemistry;
+  %   and \imref{balance}, since ``balancing chemical equations is not chemistry;
   %   it is just linear algebra'' \cite[p.~193]{risteski_new_2021}.
 
   \item[UC\refstepcounter{ucnum}\theucnum\label{UC_allEqsPermitted}:]
@@ -1543,9 +1628,32 @@ qualities that the software is expected to exhibit.
     find any proof of this. Therefore, this constraint will remain an
     assumption and is unlikely to be relaxed.
 
+  \item[UC\refstepcounter{ucnum}\theucnum\label{UC_checkValidForms}:]
+    \aref{A_validForms} assumes that all inputted chemical formulas describe
+    real chemical compounds. While there are extensive libraries of chemical
+    compounds, such as PubChem (which documents 114 million compounds)
+    \cite{national_center_for_biotechnology_information_pubchem_nodate}, it is
+    impossible to verify that any external database of chemical compounds is
+    complete for the sake of verifying user input. Therefore, it is unlikely
+    that there will be a reliable way of ensuring the user only inputs real
+    chemical formulas.
+
+  \item[UC\refstepcounter{ucnum}\theucnum\label{UC_checkValidEqns}:]
+    \aref{A_validEqns} assumes that all inputted chemical equations describe
+    real chemical reactions. While there are extensive libraries of chemical
+    reactions, such as the National Institute of Standards and Technology
+    (NIST) Chemical Kinetics Database (which documents 38,000 reactions)
+    \cite{national_institute_of_standards_and_technology_nist_2023}, it is
+    impossible to verify that any external database of chemical reactions is
+    complete for the sake of verifying user input. Therefore, it is unlikely
+    that there will be a reliable way of ensuring the user only inputs real
+    chemical reactions.
+
 \end{itemize}
 
-\section{Traceability Matrices \sjc{To be updated}} \label{sec_traceMats}
+\newpage
+
+\section{Traceability Matrices} \label{sec_traceMats}
 
 The purpose of the traceability matrices is to provide easy references on what
 has to be additionally modified if a certain component is changed.  Every time a
@@ -1560,17 +1668,19 @@ shows the dependencies of requirements on instance models.
 
 \begin{table}[h!]
   \centering
-  \begin{tabular}{|c|c|c|c|c|c|c|}
+  \begin{tabular}{|c|c|c|c|c|c|c|c|c|}
     \hline
-                           & \tmref{TM_MatEq} & \tmref{TM_ConsMass} & \gdref{matRep} & \ddref{count} & \iref{balance} \\
+                           & \tmref{TM_ILP} & \tmref{TM_ConsMass} & \ddref{count} & \ddref{elems} & \imref{matRep} & \imref{chemILP} & \imref{output} \\
     \hline
-    \tmref{TM_MatEq}       &                  &                     &                &               &                \\ \hline
-    \tmref{TM_ConsMass}    &                  &                     &                & X             &                \\ \hline
-    \ddref{count}          &                  &                     &                &               &                \\ \hline
-    \gdref{matRep}         &                  &                     &                &               & X              \\ \hline
-    \iref{balance}         & X                &                     & X              &               & X              \\ \hline
-    \ref{sec_DataConst}    &                  &                     &                &               &                \\ \hline
-    \ref{sec_PropsCorrSol} &                  &                     & X              &               & X              \\ \hline
+    \tmref{TM_ILP}         &                &                     & X             &               &                &                 &                \\ \hline
+    \tmref{TM_ConsMass}    &                &                     &               &               &                &                 &                \\ \hline
+    \ddref{count}          &                &                     &               &               &                &                 &                \\ \hline
+    \ddref{elems}          &                &                     &               &               &                &                 &                \\ \hline
+    \imref{matRep}         &                & X                   & X             & X             &                &                 &                \\ \hline
+    \imref{chemILP}        & X              & X                   &               &               & X              &                 &                \\ \hline
+    \imref{output}         &                & X                   &               &               &                & X               &                \\ \hline
+    \ref{sec_DataConst}    &                &                     &               &               &                &                 &                \\ \hline
+    \ref{sec_PropsCorrSol} &                &                     &               &               & X              & X               &                \\ \hline
   \end{tabular}
   \caption{Traceability Matrix Showing the Connections Between Items of Different Sections}
   \label{Table:srs_trace}
@@ -1581,20 +1691,20 @@ shows the dependencies of requirements on instance models.
     \centering
     \begin{tabular}{|c|c|c|c|}%c|c|c|c|c|c|c|c|c|c|c|c|}
       \hline
-                                     & \iref{balance} \\ % & \rref{R_input} & \rref{R_convert} & \rref{R_feasible} & \rref{R_balance} & \rref{R_infeasOutput} & \rref{R_feasOutput} & \nfrref{NFR_accuracy} & \nfrref{NFR_understandability} & \nfrref{NFR_usability} & \nfrref{NFR_maintainability} & \nfrref{NFR_portability} & \nfrref{NFR_verifiability} \\
+                                     & \imref{matRep} & \imref{chemILP} & \imref{output} \\ % & \rref{R_input} & \rref{R_convert} & \rref{R_feasible} & \rref{R_balance} & \rref{R_infeasOutput} & \rref{R_feasOutput} & \nfrref{NFR_accuracy} & \nfrref{NFR_understandability} & \nfrref{NFR_usability} & \nfrref{NFR_maintainability} & \nfrref{NFR_portability} & \nfrref{NFR_verifiability} \\
       \hline
-      \rref{R_input}                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \rref{R_convert}               &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \rref{R_feasible}              &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \rref{R_infeasOutput}          &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \rref{R_balance}               & X              \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \rref{R_feasOutput}            & X              \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \nfrref{NFR_accuracy}          & X              \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \nfrref{NFR_understandability} &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \nfrref{NFR_usability}         &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \nfrref{NFR_maintainability}   &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \nfrref{NFR_portability}       &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
-      \nfrref{NFR_verifiability}     &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \rref{R_input}                 &                &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \rref{R_convert}               & X              &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \rref{R_feasible}              &                & X               &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \rref{R_infeasOutput}          &                &                 & X              \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \rref{R_balance}               &                & X               &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \rref{R_feasOutput}            &                &                 & X              \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \nfrref{NFR_accuracy}          &                & X               &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \nfrref{NFR_understandability} &                &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \nfrref{NFR_usability}         &                &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \nfrref{NFR_maintainability}   &                &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \nfrref{NFR_portability}       &                &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
+      \nfrref{NFR_verifiability}     &                &                 &                \\ \hline % &                &                  &                   &                  &                       &                     &                       &                                &                        &                              &                          &                            \\ \hline
     \end{tabular}
     \caption{Traceability Matrix Showing the Connections Between Requirements and Instance Models}
     \label{Table:R_trace}
@@ -1604,29 +1714,33 @@ shows the dependencies of requirements on instance models.
   \parbox{.45\linewidth}{
     % \begin{table}[h!]
     \centering
-    \begin{tabular}{|c|c|c|c|c|}
+    \begin{tabular}{|c|c|c|c|c|c|}
       \hline
-                                      & \aref{A_elemCompDiff} & \aref{A_validInput} & \aref{A_correctInputFormat} & \aref{A_simpleForms} \\
+                                      & \aref{A_elemCompDiff} & \aref{A_validForms} & \aref{A_validEqns} & \aref{A_correctInputFormat} & \aref{A_simpleForms} \\
       \hline
-      \tmref{TM_MatEq}                &                       &                     &                             &                      \\ \hline
-      \tmref{TM_ConsMass}             &                       &                     &                             &                      \\ \hline
-      \gdref{matRep}                  & X                     & X                   & X                           & X                    \\ \hline
-      \ddref{count}                   &                       &                     &                             &                      \\ \hline
-      \iref{balance}                  &                       &                     &                             &                      \\ \hline
-      \lcref{LC_complexForms}         &                       &                     &                             & X                    \\ \hline
-      \lcref{LC_calcMoles}            &                       &                     &                             &                      \\ \hline
-      \lcref{LC_detLimReag}           &                       &                     &                             &                      \\ \hline
-      \lcref{LC_calcYield}            &                       &                     &                             &                      \\ \hline
-      \lcref{LC_calcExcess}           &                       &                     &                             &                      \\ \hline
-      \lcref{LC_incorrectInputFormat} &                       &                     & X                           &                      \\ \hline
-      \lcref{LC_termsOfMass}          &                       &                     &                             &                      \\ \hline
-      \lcref{LC_classRxns}            &                       &                     &                             &                      \\ \hline
-      \lcref{LC_classMoreRxns}        &                       &                     &                             &                      \\ \hline
-      \lcref{LC_inputPhaseLabels}     &                       &                     &                             &                      \\ \hline
-      \lcref{LC_identifyPhaseLabels}  &                       &                     &                             &                      \\ \hline
-      \lcref{LC_rxnTakePlace}         &                       &                     &                             &                      \\ \hline
-      % \ucref{UC_diffSolveMethod}      &                       &                     &                             &                      \\ \hline
-      \ucref{UC_allEqsPermitted}      & X                     &                     &                             &                      \\ \hline
+      \tmref{TM_ILP}                  &                       &                     &                    &                             &                      \\ \hline
+      \tmref{TM_ConsMass}             &                       &                     &                    &                             &                      \\ \hline
+      \ddref{count}                   &                       &                     &                    &                             &                      \\ \hline
+      \ddref{elems}                   &                       &                     &                    &                             &                      \\ \hline
+      \imref{matRep}                  & X                     & X                   & X                  & X                           & X                    \\ \hline
+      \imref{chemILP}                 &                       &                     &                    &                             &                      \\ \hline
+      \imref{output}                  &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_complexForms}         &                       &                     &                    &                             & X                    \\ \hline
+      \lcref{LC_calcMoles}            &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_detLimReag}           &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_calcYield}            &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_calcExcess}           &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_incorrectInputFormat} &                       &                     &                    & X                           &                      \\ \hline
+      \lcref{LC_termsOfMass}          &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_classRxns}            &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_classMoreRxns}        &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_inputPhaseLabels}     &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_identifyPhaseLabels}  &                       &                     &                    &                             &                      \\ \hline
+      \lcref{LC_rxnTakePlace}         &                       &                     &                    &                             &                      \\ \hline
+      % \ucref{UC_diffSolveMethod}      &                       &                     &                    &                             &                      \\ \hline
+      \ucref{UC_allEqsPermitted}      & X                     &                     &                    &                             &                      \\ \hline
+      \ucref{UC_checkValidForms}      &                       & X                   &                    &                             &                      \\ \hline
+      \ucref{UC_checkValidEqns}       &                       &                     & X                  &                             &                      \\ \hline
     \end{tabular}
     \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
     \label{Table:A_trace}
