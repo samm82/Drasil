@@ -28,6 +28,7 @@ library:
   - Data.Drasil.Citations
   - Data.Drasil.Constraints
   - Data.Drasil.SI_Units
+  - Data.Drasil.Concepts.Chemistry
   - Data.Drasil.Concepts.Computation
   - Data.Drasil.Concepts.Documentation
   - Data.Drasil.Concepts.Thermodynamics

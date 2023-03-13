@@ -4,11 +4,13 @@ module Data.Drasil.Domains where
 import Language.Drasil (IdeaDict, mkIdea, cn')
 
 -- | Various domains that are used in Drasil. May have an abbreviation.
-compScience, softEng, mathematics, progLanguage, physics, civilEng,
+chemistry, compScience, softEng, mathematics, progLanguage, physics, civilEng,
   materialEng, documentc, knowledgemng :: IdeaDict
 -------------------------------------------------------------------------------
 --  IdeaDict     |   |      id       |       term                    |  abbreviation
 -------------------------------------------------------------------------------
+-- | For ideas, concepts, or terms related to Chemistry.
+chemistry    = mkIdea  "chemistry"      (cn' "Chemistry")             (Just "Chem")
 -- | For ideas, concepts, or terms related to Computer Science.
 compScience  = mkIdea  "compScience"    (cn' "Computer Science")      (Just "CS")
 -- | For ideas, concepts, or terms related to Software Engineering.
