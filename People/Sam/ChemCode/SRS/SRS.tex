@@ -287,7 +287,8 @@
   including relevant reference material \\
   Mar. 10-11, 2023 & 1.4.8 & Improve compound data type (correct tuple notation
   and change sequence to set) \\
-  & 1.4.9 & Add reaction data type \\
+  & 1.4.9 & Add reaction data type \\ \\ % remove second line break
+  Mar. 13, 2023 & 1.4.9 & Fix error in \ddref{count} \\
 \end{xltabular}
 
 % ~\newpage
@@ -433,9 +434,9 @@ $\mathbf{A}^\mathrm{T}$ \cite{nykamp_transpose_nodate}.
 % number of rows can be joined together to form an ``augmented matrix'', written
 % as $\left(\textbf{A}\vert \textbf{B}\right)$ \cite{taboga_augmented_2021}.
 
-% The notation for definite description ($\defDesc$) is taken from
+The notation for definite description ($\defDesc$) is taken from
 % \cite{russell25}.
-% \cite{farmer_simple_2023}.
+\cite{farmer_simple_2023}.
 
 % \plt{If symbols are used to show mathematical operations,
 %   these should be summarized here.  In some cases the easiest way to summarize
@@ -989,8 +990,8 @@ models. The dimension of each quantity is also given.
     Equation    & \vspace{-3mm}
     $\text{count}(e,c) = \begin{cases}
                              \begin{aligned}
-           & c.\text{count}, &  & \exists\,x : \posReal ~|~ (e, x) \in c \\
-           & 0, ~            &  & \text{otherwise}
+           & \defDesc\, x : \posReal ~|~ (e, x) \in c, &  & \exists\,x : \posReal ~|~ (e, x) \in c \\
+           & 0, ~                                      &  & \text{otherwise}
         \end{aligned}
                            \end{cases}$
     \vspace{1.5mm}                                                           \\
