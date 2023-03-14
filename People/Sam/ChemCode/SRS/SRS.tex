@@ -287,8 +287,9 @@
   including relevant reference material \\
   Mar. 10-11, 2023 & 1.4.8 & Improve compound data type (correct tuple notation
   and change sequence to set) \\
-  & 1.4.9 & Add reaction data type \\ \\ % remove second line break
-  Mar. 13, 2023 & 1.4.9 & Fix error in \ddref{count} \\
+  & 1.4.9 & Add reaction data type \\
+  Mar. 13, 2023 & 1.4.10 & Fix error in \ddref{count} \\
+  Mar. 14, 2023 & 1.4.11 & Reflect change to \ddref{elems} in \imref{matRep} \\
 \end{xltabular}
 
 % ~\newpage
@@ -1184,21 +1185,20 @@ The goal \gsref{G_feasible} is solved by \imref{chemILP} and the goals
     SI Units    & --                                                   \\
     \hline
     Equation    & \vspace{-3mm}
-    $ \forall\, e_i \in \text{elems}(R, P), c_j \in R \cup P ~|~ e_{ij} =
+    $ \forall\, e_i \in \text{elems}(r), c_j \in
+      r.\text{reac} \cup r.\text{prod} ~|~ e_{ij} =
       \begin{cases}
         \begin{aligned}
-           & \text{count}(e_i, c_j),  &  & c_j \in R        \\
+           & \text{count}(e_i, c_j),  &  & c_j \in r.\text{reac} \\
            & -\text{count}(e_i, c_j), &  & \text{otherwise}
         \end{aligned}
       \end{cases}$
     \vspace{1.5mm}                                                     \\
     \hline
     Description & $\mathbf{E}$ is a matrix of type
-    $\mathbb{R}^{|\text{elems}(R, P)| \times |R\, \cup\, P|}$ constructed
-    from $R$, a sequence of compounds ($\langle C \rangle$) on the reactant
-    side of a chemical equation, and $P$ a sequence of compounds
-    ($\langle C \rangle$) on the product side.
-    It represents a given chemical equation as a matrix where each row
+    $\mathbb{R}^{|\text{elems}(r)| \times |r.\text{reac}\,\cup\,r.\text{prod}|}$
+    constructed from a given chemical equation $r$ (of type $R$).
+    It represents this chemical equation as a matrix where each row
     corresponds to a different element and each column corresponds to a
     different compound. Positive entries indicate the compound is a reactant,
     negative entries indicate the compound is a product, and zeroes indicate
@@ -1207,7 +1207,7 @@ The goal \gsref{G_feasible} is solved by \imref{chemILP} and the goals
     (\tmref{TM_ConsMass}) is followed \sjc{Add more detailed derivation?}.
 
     ~\newline
-    $\text{count}(e,c)$ is from \ddref{count} and $\text{elems}(R,P)$ is
+    $\text{count}(e,c)$ is from \ddref{count} and $\text{elems}(r)$ is
     from \ddref{elems}.
 
     ~\newline
