@@ -38,6 +38,13 @@
               <li><a href=#Sec:ReqsScope>Scope of Requirements</a></li>
             </ul>
           </li>
+          <li>
+            <a href=#Sec:Requirements>Requirements</a>
+            <ul class="list">
+              <li><a href=#Sec:FRs>Functional Requirements</a></li>
+              <li><a href=#Sec:NFRs>Non-Functional Requirements</a></li>
+            </ul>
+          </li>
           <li><a href=#Sec:References>References</a></li>
         </ul>
       </div>
@@ -57,6 +64,77 @@
             <p class="paragraph">
               The scope of the requirements includes all chemical equations with at most one more compound than element.
             </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="Sec:Requirements">
+      <div class="section">
+        <h1>Requirements</h1>
+        <p class="paragraph">
+          This section provides the functional requirements, the tasks and behaviours that the software is expected to complete, and the non-functional requirements, the qualities that the software is expected to exhibit.
+        </p>
+        <div id="Sec:FRs">
+          <div class="subsection">
+            <h2>Functional Requirements</h2>
+            <p class="paragraph">
+              This section provides the functional requirements, the tasks and behaviours that the software is expected to complete.
+            </p>
+            <div class="list">
+              <p>
+                <div id="inputValues">
+                  Input-Values: Input the values from <a href=#Table:ReqInputs>Tab:ReqInputs</a>.
+                </div>
+              </p>
+              <p>
+                <div id="inputFormula">
+                  Input-Formula: Input a representation of a chemical equation.
+                </div>
+              </p>
+              <p>
+                <div id="convertMatrix">
+                  Convert-to-Matrix: Convert the inputted chemical equation to matrix form.
+                </div>
+              </p>
+            </div>
+            <div id="Table:ReqInputs">
+              <table class="table">
+                <tr>
+                  <th>Symbol</th>
+                  <th>Description</th>
+                  <th>Units</th>
+                </tr>
+              </table>
+              <p class="caption">
+                Required Inputs following <a href=#inputValues>FR:Input-Values</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="Sec:NFRs">
+          <div class="subsection">
+            <h2>Non-Functional Requirements</h2>
+            <p class="paragraph">
+              This section provides the non-functional requirements, the qualities that the software is expected to exhibit.
+            </p>
+            <div class="list">
+              <p>
+                <div id="accurate">
+                  Accurate: Chemical equations are only useful if they are balanced, so computed coefficients should be exact.
+                </div>
+              </p>
+              <p>
+                <div id="verifiable">
+                  Verifiable: The code is tested with complete verification and validation plan.
+                </div>
+              </p>
+              <p><div id="reusable">Reusable: The code is modularized.</div></p>
+              <p>
+                <div id="portable">
+                  Portable: The code is able to be run in different environments.
+                </div>
+              </p>
+            </div>
           </div>
         </div>
       </div>

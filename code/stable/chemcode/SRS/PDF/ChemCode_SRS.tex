@@ -7,12 +7,18 @@
 \usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{unicode-math}
+\usepackage{enumitem}
+\usepackage{tabu}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{caption}
 \usepackage{filecontents}
 \usepackage[backend=bibtex]{biblatex}
 \usepackage{url}
 \setmathfont{Latin Modern Math}
 \newcommand{\gt}{\ensuremath >}
 \newcommand{\lt}{\ensuremath <}
+\global\tabulinesep=1mm
 \bibliography{bibfile}
 \title{Software Requirements Specification for ChemCode}
 \author{Samuel J. Crawford}
@@ -30,6 +36,29 @@ The following section provides an overview of the Software Requirements Specific
 \label{Sec:ReqsScope}
 The scope of the requirements includes all chemical equations with at most one more compound than element.
 
+\section{Requirements}
+\label{Sec:Requirements}
+This section provides the functional requirements, the tasks and behaviours that the software is expected to complete, and the non-functional requirements, the qualities that the software is expected to exhibit.
+
+\subsection{Functional Requirements}
+\label{Sec:FRs}
+This section provides the functional requirements, the tasks and behaviours that the software is expected to complete.
+
+\begin{itemize}
+\item[Input-Values:\phantomsection\label{inputValues}]{Input the values from \hyperref[Table:ReqInputs]{Tab:ReqInputs}.}
+\item[Input-Formula:\phantomsection\label{inputFormula}]{Input a representation of a chemical equation.}
+\item[Convert-to-Matrix:\phantomsection\label{convertMatrix}]{Convert the inputted chemical equation to matrix form.}
+\end{itemize}
+\subsection{Non-Functional Requirements}
+\label{Sec:NFRs}
+This section provides the non-functional requirements, the qualities that the software is expected to exhibit.
+
+\begin{itemize}
+\item[Accurate:\phantomsection\label{accurate}]{Chemical equations are only useful if they are balanced, so computed coefficients should be exact.}
+\item[Verifiable:\phantomsection\label{verifiable}]{The code is tested with complete verification and validation plan.}
+\item[Reusable:\phantomsection\label{reusable}]{The code is modularized.}
+\item[Portable:\phantomsection\label{portable}]{The code is able to be run in different environments.}
+\end{itemize}
 \section{References}
 \label{Sec:References}
 \begin{filecontents*}{bibfile.bib}

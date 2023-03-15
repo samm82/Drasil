@@ -11,7 +11,10 @@ import Data.Drasil.Citations (lund2023)
 import qualified Data.Drasil.Concepts.Documentation as Doc (srs)
 import Data.Drasil.Concepts.Documentation hiding (element, scope, srs)
 import Data.Drasil.Concepts.Chemistry
+import Data.Drasil.Concepts.Math (mathcon)
 import Data.Drasil.Concepts.Software (program)
+
+import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
 
 srs :: Document
 srs = mkDoc mkSRS (S.forGen titleize phrase) si
@@ -27,6 +30,11 @@ mkSRS = [TableOfContents,
   IntroSec $
     IntroProg justification (phrase chemcode)
       [ IScope scope ],
+  ReqrmntSec $
+    ReqsProg
+      [ FReqsSub EmptyS [],
+        NonFReqsSub
+      ],
   Bibliography
   ]
 
@@ -91,14 +99,15 @@ symbMap :: ChunkDB
 symbMap =
   cdb
     ([] :: [QuantityDict])
-    (nw chemcode : nw program : map nw doccon ++ map nw doccon' ++ map nw chemCon)
-    ([] :: [ConceptChunk])
+    (nw chemcode : nw program : map nw doccon ++ map nw doccon' ++
+      map nw chemCon ++ map nw mathcon)
+    srsDomains
     ([] :: [UnitDefn])
     ([] :: [DataDefinition])
     ([] :: [InstanceModel])
     ([] :: [GenDefn])
     ([] :: [TheoryModel])
-    ([] :: [ConceptInstance])
+    concIns
     ([] :: [Section])
     ([] :: [LabelledContent])
     ([] :: [Reference])
@@ -108,7 +117,7 @@ usedDB =
   cdb
     ([] :: [QuantityDict])
     ([] :: [IdeaDict])
-    ([] :: [ConceptChunk])
+    srsDomains
     ([] :: [UnitDefn])
     ([] :: [DataDefinition])
     ([] :: [InstanceModel])
@@ -120,7 +129,10 @@ usedDB =
     ([] :: [Reference])
 
 refDB :: ReferenceDB
-refDB = rdb [lund2023] []
+refDB = rdb [lund2023] concIns
+
+concIns :: [ConceptInstance]
+concIns = funcReqs ++ nonfuncReqs
 
 -- MOVE TO CONCEPTS
 chemcode :: CI -- name of example
