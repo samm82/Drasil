@@ -7,9 +7,13 @@
 \usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{unicode-math}
+\usepackage{filecontents}
+\usepackage[backend=bibtex]{biblatex}
+\usepackage{url}
 \setmathfont{Latin Modern Math}
 \newcommand{\gt}{\ensuremath >}
 \newcommand{\lt}{\ensuremath <}
+\bibliography{bibfile}
 \title{Software Requirements Specification for ChemCode}
 \author{Samuel J. Crawford}
 \begin{document}
@@ -18,7 +22,7 @@
 \newpage
 \section{Introduction}
 \label{Sec:Intro}
-Chemical equations are common ways of representing chemical reactions. The program documented here is called ChemCode.
+Chemical equations are common ways of representing chemical reactions but they must be balanced \cite{lund2023}. The program documented here is called ChemCode.
 
 The following section provides an overview of the Software Requirements Specification (SRS) for ChemCode. This section explains the purpose of this document, the scope of the requirements, the characteristics of the intended reader, and the organization of the document.
 
@@ -26,4 +30,19 @@ The following section provides an overview of the Software Requirements Specific
 \label{Sec:ReqsScope}
 The scope of the requirements includes all chemical equations with at most one more compound than element.
 
+\section{References}
+\label{Sec:References}
+\begin{filecontents*}{bibfile.bib}
+@book{lund2023,
+author={Lund, Lance},
+title={Introduction to Chemistry},
+publisher={LibreTexts},
+year={2023},
+address={Cambridge and Coon Rapids, MN, USA},
+month=jan,
+howpublished={\url{https://chem.libretexts.org/Courses/Anoka-Ramsey\_Community\_College/Introduction\_to\_Chemistry}}}
+\end{filecontents*}
+\nocite{*}
+\bibstyle{ieeetr}
+\printbibliography[heading=none]
 \end{document}

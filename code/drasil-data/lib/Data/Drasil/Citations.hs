@@ -2,7 +2,7 @@
 module Data.Drasil.Citations where
 
 import Language.Drasil --(S,(:+:),(+:+),sC,phrase,F,Accent(..),Citation(..),CiteField(..))
-import Data.Drasil.People (dParnas, jRalyte, lLai, nKoothoor, nKraiem, 
+import Data.Drasil.People (dParnas, jRalyte, lLai, lLund, nKoothoor, nKraiem,
   pcClements, pjAgerfalk, spencerSmith, mCampidelli, dmWiess, rodPierce, 
   wikiAuthors, rcHibbeler)
 
@@ -12,7 +12,7 @@ import Data.Drasil.People (dParnas, jRalyte, lLai, nKoothoor, nKraiem,
 
 campidelli, koothoor2013, parnas1972, parnasClements1984,
   parnasClements1986, smithLai2005, lineSource, pointSource,
-  hibbeler2004 :: Citation
+  hibbeler2004, lund2023 :: Citation
 
 campidelli = cBooklet
   "Glass-BR Software for the design and risk assessment of glass facades subjected to blast loading"
@@ -68,6 +68,11 @@ hibbeler2004 = cBookA [rcHibbeler]
   "Engineering Mechanics: Dynamics"
   "Pearson Prentice Hall"
   2004 [] "hibbeler2004"
+
+lund2023 = cBookA [lLund] "Introduction to Chemistry" "LibreTexts"
+  2023 [address "Cambridge and Coon Rapids, MN, USA", month Jan,
+  howPublishedU "https://chem.libretexts.org/Courses/Anoka-Ramsey_Community_College/Introduction_to_Chemistry"]
+  "lund2023"
 
 -- ** Wikipedia
 

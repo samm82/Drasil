@@ -7,6 +7,7 @@ import Language.Drasil.Chunk.Concept.NamedCombinators
 import qualified Language.Drasil.Sentence.Combinators as S
 import Theory.Drasil (DataDefinition, GenDefn, InstanceModel, TheoryModel)
 
+import Data.Drasil.Citations (lund2023)
 import qualified Data.Drasil.Concepts.Documentation as Doc (srs)
 import Data.Drasil.Concepts.Documentation hiding (element, scope, srs)
 import Data.Drasil.Concepts.Chemistry
@@ -25,13 +26,14 @@ mkSRS :: SRSDecl
 mkSRS = [TableOfContents, 
   IntroSec $
     IntroProg justification (phrase chemcode)
-      [ IScope scope ]
+      [ IScope scope ],
+  Bibliography
   ]
 
 justification, scope :: Sentence
 justification = foldlSent [atStart chemical, plural equation,
-  S "are common ways of representing", phrase chemical +:+.
-  plural reaction,
+  S "are common ways of representing", phrase chemical,
+  plural reaction, S "but they must be balanced" +:+. refS lund2023,
   atStartNP (the program), S "documented here is called", phrase chemcode]
 -- , but to ensure the Law of Conservation
 -- of Mass (\tmref{TM_ConsMass}) is observed, they must be balanced
@@ -118,7 +120,7 @@ usedDB =
     ([] :: [Reference])
 
 refDB :: ReferenceDB
-refDB = rdb [] []
+refDB = rdb [lund2023] []
 
 -- MOVE TO CONCEPTS
 chemcode :: CI -- name of example
