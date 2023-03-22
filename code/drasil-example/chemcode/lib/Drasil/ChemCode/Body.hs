@@ -15,6 +15,7 @@ import Data.Drasil.Concepts.Math (mathcon)
 import Data.Drasil.Concepts.Software (program)
 
 import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
+import Drasil.ChemCode.Quantities (inputs)
 
 srs :: Document
 srs = mkDoc mkSRS (S.forGen titleize phrase) si
@@ -85,7 +86,7 @@ si =
       _instModels = [] :: [InstanceModel],
       _datadefs = [] :: [DataDefinition],
       _configFiles = [],
-      _inputs = [] :: [QuantityDict],
+      _inputs = inputs,
       _outputs = [] :: [QuantityDict],
       _defSequence = [] :: [Block SimpleQDef],
       _constraints = [] :: [ConstrainedChunk],
@@ -98,7 +99,7 @@ si =
 symbMap :: ChunkDB
 symbMap =
   cdb
-    ([] :: [QuantityDict])
+    inputs
     (nw chemcode : nw program : map nw doccon ++ map nw doccon' ++
       map nw chemCon ++ map nw mathcon)
     srsDomains
@@ -115,7 +116,7 @@ symbMap =
 usedDB :: ChunkDB
 usedDB =
   cdb
-    ([] :: [QuantityDict])
+    inputs
     ([] :: [IdeaDict])
     srsDomains
     ([] :: [UnitDefn])

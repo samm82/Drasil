@@ -16,17 +16,14 @@ import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 {--Functional Requirements--}
 
 funcReqs :: [ConceptInstance]
-funcReqs = [inputFormula, convertMatrix]
+funcReqs = [convertMatrix]
 
-inputFormula, convertMatrix :: ConceptInstance
+convertMatrix :: ConceptInstance
 
-inputFormula  = cic "inputFormula"  inputFormulaDesc  "Input-Formula"     funcReqDom
 convertMatrix = cic "convertMatrix" convertMatrixDesc "Convert-to-Matrix" funcReqDom
 
-inputFormulaDesc, convertMatrixDesc :: Sentence
+convertMatrixDesc :: Sentence
 
-inputFormulaDesc = foldlSent [S "Input a representation of a", phrase chemical,
-  phrase equation]
 convertMatrixDesc = foldlSent [S "Convert the inputted", phrase chemical,
   phrase equation, S "to", phrase matrix, S "form"]
 
