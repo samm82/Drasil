@@ -89,7 +89,7 @@ symbolsAll :: [QuantityDict]
 symbolsAll = inputs
 
 acronyms :: [CI]
-acronyms = [progName]
+acronyms = [progName, Doc.srs]
 
 si :: SystemInformation
 si =
