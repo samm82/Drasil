@@ -61,27 +61,19 @@ justification = foldlSent [atStart chemical, plural equation,
   S "formula such that there are the same number of atoms of each",
   phrase element `S.onThe` phrase reactant `S.and_` phrase product,
   S "sides" `S.ofThe` phrase chemical +:+. phrase equation,
-  
-  atStartNP (the program), S "documented here is called", introduceAbb progName
+  S "Because balancing must be done before a given", phrase chemical,
+  phrase reaction, S "can be used", refS lund2023 `sC` S "it is useful to" +:+.
+    S "have a tool to automatically do this", S "This would improve the",
+  S "productivity of scientists and engineers" `S.and_` S "reduce the" +:+.
+    S "potential for human error", S "This", phrase program,
+  S "should balance a given", phrase chemical, phrase equation,
+  S "if it is feasible" -- (see \nameref{sec_termsDefs})
+    `S.and_` S "if it is not" `sC` S "it should provide a descriptive",
+  phrase message, S "communicating this to the" +:+. phrase user,
+  atStartNP (the program), S "that performs these tasks as documented here",
+  S "will be called", introduceAbb progName
   ]
--- Because balancing must be done before a given
--- chemical reaction can be used \cite{lund_introduction_2023}, it is useful to
--- have a tool to automatically do this. This would improve the
--- productivity of scientists and engineers and reduce the potential for human
--- error. This program should balance a given chemical reaction if it is
--- feasible (see \nameref{sec_termsDefs}), and if not, it should provide a
--- descriptive message communicating this to the user. The program that performs
--- these tasks as specified by this document will be called ``\progname{}''.
 
--- The following section provides an overview of the Software Requirements
--- Specification (SRS) for \progname{}. This section explains the purpose of this
--- document, the scope of the requirements, the characteristics of the intended
--- reader, and the organization of the document.
-  
-  -- foldlSent [atStart projectile, phrase motion, S "is a common" +:+.
-  -- phraseNP (problem `in_` physics), S "Therefore, it is useful to have a",
-  -- phrase program, S "to solve and model these types of" +:+. plural problem,
-  -- atStartNP (the program), S "documented here is called", phrase projectileTitle]
 scope = foldlSent_ [
   S "all", phrase chemical, plural equation, S "with at most one more", phrase compound,
   S "than", phrase element
