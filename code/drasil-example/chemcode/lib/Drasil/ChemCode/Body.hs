@@ -30,11 +30,11 @@ mkSRS :: SRSDecl
 mkSRS = [TableOfContents, 
   RefSec $ RefProg intro [
     -- TUnits,
-    tsymb tSymbIntro
-    -- TAandA
+    tsymb tSymbIntro,
+    TAandA
     ],
   IntroSec $
-    IntroProg justification (phrase chemcode)
+    IntroProg justification (short progName)
       [ IScope scope ],
   ReqrmntSec $
     ReqsProg
@@ -51,9 +51,9 @@ tSymbIntro = [TSPurpose, -- SymbConvention [Lit (nw chemistry)],
 
 justification, scope :: Sentence
 justification = foldlSent [atStart chemical, plural equation,
-  S "are common ways of representing", phrase chemical,
-  plural reaction, S "but they must be balanced" +:+. refS lund2023,
-  atStartNP (the program), S "documented here is called", phrase chemcode]
+  S "are common ways of representing", phrase chemical, plural reaction,
+  S "but they must be balanced" +:+. refS lund2023, atStartNP (the program),
+  S "documented here is called", introduceAbb progName]
 -- , but to ensure the Law of Conservation
 -- of Mass (\tmref{TM_ConsMass}) is observed, they must be balanced
 -- \cite{lund_introduction_2023}. This process of balancing a chemical
@@ -85,10 +85,13 @@ scope = foldlSent_ [
 symbolsAll :: [QuantityDict]
 symbolsAll = inputs
 
+acronyms :: [CI]
+acronyms = [progName]
+
 si :: SystemInformation
 si =
   SI
-    { _sys = chemcode,
+    { _sys = progName,
       _kind = Doc.srs,
       _authors = [samCrawford],
       _background = [],
@@ -112,8 +115,8 @@ symbMap :: ChunkDB
 symbMap =
   cdb
     symbolsAll
-    (nw chemcode : nw program : map nw doccon ++ map nw doccon' ++
-      map nw chemCon ++ map nw mathcon ++ map nw symbolsAll)
+    (nw progName : nw program : map nw doccon ++ map nw doccon' ++
+      map nw chemCon ++ map nw mathcon ++ map nw acronyms ++ map nw symbolsAll)
     srsDomains
     ([] :: [UnitDefn])
     ([] :: [DataDefinition])
@@ -129,7 +132,7 @@ usedDB :: ChunkDB
 usedDB =
   cdb
     ([] :: [QuantityDict])
-    (map nw symbolsAll)
+    (map nw acronyms ++ map nw symbolsAll)
     srsDomains
     ([] :: [UnitDefn])
     ([] :: [DataDefinition])
@@ -148,5 +151,5 @@ concIns :: [ConceptInstance]
 concIns = funcReqs ++ nonfuncReqs
 
 -- MOVE TO CONCEPTS
-chemcode :: CI -- name of example
-chemcode = commonIdeaWithDict "ChemCode" (pn "ChemCode") "ChemCode" []
+progName :: CI -- name of example
+progName = commonIdeaWithDict "progName" (pn "Chemistry Code") "ChemCode" []
