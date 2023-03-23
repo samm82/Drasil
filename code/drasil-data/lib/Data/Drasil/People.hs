@@ -6,7 +6,7 @@ import Language.Drasil (Person, person, person', personWM, personWM', mononym)
 spencerSmith, henryFrankis, nKoothoor, dParnas, daAruliah, gWilson,
   cTitus, kdHuff, nChueHong, mDavis, rGuy, shdHaddock, imMitchell, mdPlumblet,
   bWaugh, epWhite, pWilson, pcClements, luthfi, alex, nikitha, thulasi,
-  brooks, mLightstone, lLai, pjAgerfalk, nKraiem, jRalyte, jBueche,
+  lLund, brooks, mLightstone, lLai, pjAgerfalk, nKraiem, jRalyte, jBueche,
   fIncropera, dDewitt, tBergman, aLavine, jRobertson, sRobertson, 
   wlBeason, tlKohutek, jmBracci, qhQian, dyZhu, cfLee, grChen, dgFredlund,
   jKrahn, dStolle, yCLi, ymChen, tltZhan, ssLing, pjCleall, pGuo,

@@ -28,6 +28,11 @@ printSetting = piSys fullSI Equational defaultConfiguration
 
 mkSRS :: SRSDecl
 mkSRS = [TableOfContents, 
+  RefSec $ RefProg intro [
+    -- TUnits,
+    tsymb'' tSymbIntro $ TermExcept []
+    -- TAandA
+    ],
   IntroSec $
     IntroProg justification (phrase chemcode)
       [ IScope scope ],
@@ -37,6 +42,11 @@ mkSRS = [TableOfContents,
         NonFReqsSub
       ],
   Bibliography
+  ]
+
+tSymbIntro :: [TSIntro]
+tSymbIntro = [TSPurpose, -- SymbConvention [Lit (nw chemistry)],
+    SymbOrder -- VectorUnits
   ]
 
 justification, scope :: Sentence
@@ -72,6 +82,8 @@ scope = foldlSent_ [
   S "than", phrase element
   ]
 
+symbolsAll :: [QuantityDict]
+symbolsAll = inputs
 
 si :: SystemInformation
 si =
@@ -81,7 +93,7 @@ si =
       _authors = [samCrawford],
       _background = [],
       _purpose = [],
-      _quants = [] :: [QuantityDict],
+      _quants = symbolsAll,
       _concepts = [] :: [DefinedQuantityDict],
       _instModels = [] :: [InstanceModel],
       _datadefs = [] :: [DataDefinition],
@@ -99,9 +111,9 @@ si =
 symbMap :: ChunkDB
 symbMap =
   cdb
-    inputs
+    symbolsAll
     (nw chemcode : nw program : map nw doccon ++ map nw doccon' ++
-      map nw chemCon ++ map nw mathcon)
+      map nw chemCon ++ map nw mathcon ++ map nw symbolsAll)
     srsDomains
     ([] :: [UnitDefn])
     ([] :: [DataDefinition])
@@ -116,8 +128,8 @@ symbMap =
 usedDB :: ChunkDB
 usedDB =
   cdb
-    inputs
-    ([] :: [IdeaDict])
+    ([] :: [QuantityDict])
+    (map nw symbolsAll)
     srsDomains
     ([] :: [UnitDefn])
     ([] :: [DataDefinition])
