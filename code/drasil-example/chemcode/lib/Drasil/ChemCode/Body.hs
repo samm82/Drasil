@@ -30,7 +30,7 @@ mkSRS :: SRSDecl
 mkSRS = [TableOfContents, 
   RefSec $ RefProg intro [
     -- TUnits,
-    tsymb'' tSymbIntro $ TermExcept []
+    tsymb tSymbIntro
     -- TAandA
     ],
   IntroSec $
