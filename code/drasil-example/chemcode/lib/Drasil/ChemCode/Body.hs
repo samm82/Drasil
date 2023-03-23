@@ -1,10 +1,10 @@
 module Drasil.ChemCode.Body where
 
-import Data.Drasil.People (samCrawford)
-import Drasil.SRSDocument
+import Prelude hiding (product)
 import Language.Drasil
 import Language.Drasil.Chunk.Concept.NamedCombinators
 import qualified Language.Drasil.Sentence.Combinators as S
+import Drasil.SRSDocument
 import Theory.Drasil (DataDefinition, GenDefn, InstanceModel, TheoryModel)
 
 import Data.Drasil.Citations (lund2023)
@@ -13,6 +13,8 @@ import Data.Drasil.Concepts.Documentation hiding (element, scope, srs)
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Math (mathcon)
 import Data.Drasil.Concepts.Software (program)
+
+import Data.Drasil.People (samCrawford)
 
 import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
 import Drasil.ChemCode.Quantities (inputs)
@@ -52,14 +54,17 @@ tSymbIntro = [TSPurpose, -- SymbConvention [Lit (nw chemistry)],
 justification, scope :: Sentence
 justification = foldlSent [atStart chemical, plural equation,
   S "are common ways of representing", phrase chemical, plural reaction,
-  S "but they must be balanced" +:+. refS lund2023, atStartNP (the program),
-  S "documented here is called", introduceAbb progName]
--- , but to ensure the Law of Conservation
--- of Mass (\tmref{TM_ConsMass}) is observed, they must be balanced
--- \cite{lund_introduction_2023}. This process of balancing a chemical
--- equation involves introducing coefficients before each chemical formula such
--- that there are the same number of atoms of each element on the reactant and
--- product sides of the equation. Because balancing must be done before a given
+  S "but they must be balanced" +:+. refS lund2023, -- to ensure the Law of
+  -- Conservation of Mass (\tmref{TM_ConsMass}) is observed
+  S "This process of balancing a", phrase chemical, phrase equation,
+  S "involves introducing coefficients before each", phrase chemical,
+  S "formula such that there are the same number of atoms of each",
+  phrase element `S.onThe` phrase reactant `S.and_` phrase product,
+  S "sides" `S.ofThe` phrase chemical +:+. phrase equation,
+  
+  atStartNP (the program), S "documented here is called", introduceAbb progName
+  ]
+-- Because balancing must be done before a given
 -- chemical reaction can be used \cite{lund_introduction_2023}, it is useful to
 -- have a tool to automatically do this. This would improve the
 -- productivity of scientists and engineers and reduce the potential for human

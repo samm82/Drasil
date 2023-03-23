@@ -20,7 +20,7 @@
 \newcommand{\lt}{\ensuremath <}
 \global\tabulinesep=1mm
 \bibliography{bibfile}
-\title{Software Requirements Specification for ChemCode}
+\title{Software Requirements Specification for Chemistry Code}
 \author{Samuel J. Crawford}
 \begin{document}
 \maketitle
@@ -46,9 +46,23 @@ $r$ & Representation of a chemical equation & --
 \caption{Table of Symbols}
 \label{Table:ToS}
 \end{longtable}
+\subsection{Abbreviations and Acronyms}
+\label{Sec:TAbbAcc}
+\begin{longtable}{l l}
+\toprule
+\textbf{Abbreviation} & \textbf{Full Form}
+\\
+\midrule
+\endhead
+ChemCode & Chemistry Code
+\\
+\bottomrule
+\caption{Abbreviations and Acronyms}
+\label{Table:TAbbAcc}
+\end{longtable}
 \section{Introduction}
 \label{Sec:Intro}
-Chemical equations are common ways of representing chemical reactions but they must be balanced \cite{lund2023}. The program documented here is called ChemCode.
+Chemical equations are common ways of representing chemical reactions but they must be balanced \cite{lund2023}. This process of balancing a chemical equation involves introducing coefficients before each chemical formula such that there are the same number of atoms of each element on the reactant and product sides of the chemical equation. The program documented here is called Chemistry Code (ChemCode).
 
 The following section provides an overview of the Software Requirements Specification (SRS) for ChemCode. This section explains the purpose of this document, the scope of the requirements, the characteristics of the intended reader, and the organization of the document.
 
