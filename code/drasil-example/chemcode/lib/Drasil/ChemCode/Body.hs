@@ -1,21 +1,24 @@
 module Drasil.ChemCode.Body where
 
 import Prelude hiding (product)
-import Language.Drasil
+import Language.Drasil hiding (organization)
 import Language.Drasil.Chunk.Concept.NamedCombinators
 import qualified Language.Drasil.Sentence.Combinators as S
+import qualified Drasil.DocLang.SRS as SRS
 import Drasil.SRSDocument
 import Theory.Drasil (DataDefinition, GenDefn, InstanceModel, TheoryModel)
 
-import Data.Drasil.Citations (lund2023, parnasClements1986)
+import Data.Drasil.Citations (koothoor2013, lund2023, parnasClements1986,
+  smithLai2005)
 import qualified Data.Drasil.Concepts.Documentation as Doc (srs)
 import Data.Drasil.Concepts.Documentation hiding (element, scope, srs)
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Computation (algorithm)
 import Data.Drasil.Concepts.Math (mathcon)
 import Data.Drasil.Concepts.Software (program)
-
 import Data.Drasil.People (samCrawford)
+import Data.Drasil.Software.Products (sciCompS)
+import Data.Drasil.TheoryConcepts (inModel)
 
 import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
 import Drasil.ChemCode.Quantities (inputs)
@@ -39,7 +42,8 @@ mkSRS = [TableOfContents,
   IntroSec $
     IntroProg justification (short progName)
       [ IPurpose $ purpDoc progName Verbose,
-        IScope scope
+        IScope scope,
+        IOrgSec orgOfDocIntro inModel (SRS.inModel [] []) EmptyS
       ],
   ReqrmntSec $
     ReqsProg
@@ -88,6 +92,12 @@ scope = foldlSent_ [
     ]
   ]
 
+orgOfDocIntro :: Sentence
+orgOfDocIntro = foldlSent [atStartNP (the organization), S "of this",
+  phrase document, S "follows", phraseNP (the template), S "for an",
+  getAcc Doc.srs, S "for", phrase sciCompS, S "proposed by",
+  refS koothoor2013 `S.and_` refS smithLai2005]
+
 symbolsAll :: [QuantityDict]
 symbolsAll = inputs
 
@@ -122,6 +132,7 @@ symbMap =
   cdb
     symbolsAll
     (nw progName : -- CI
+      nw sciCompS : -- NamedChunk
       map nw [program, algorithm] ++ -- ConceptChunk
       map nw doccon ++ map nw doccon' ++ map nw chemCon ++ map nw mathcon ++
       map nw acronyms ++ map nw symbolsAll)
@@ -156,7 +167,7 @@ refDB :: ReferenceDB
 refDB = rdb citations concIns
 
 citations :: BibRef
-citations = [lund2023, parnasClements1986]
+citations = [koothoor2013, lund2023, parnasClements1986, smithLai2005]
 
 concIns :: [ConceptInstance]
 concIns = funcReqs ++ nonfuncReqs

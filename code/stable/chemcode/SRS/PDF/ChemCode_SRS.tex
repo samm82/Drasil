@@ -78,6 +78,12 @@ This document will be used as a starting point for subsequent development phases
 \label{Sec:ReqsScope}
 The scope of the requirements includes all chemical equations with at most one more compound than element. Furthermore, it also includes all inputted chemical formulas that describe real chemical compounds, are formatted following a set of conventions, and only consist of atomic symbols and subscripts.
 
+\subsection{Organization of Document}
+\label{Sec:DocOrg}
+The organization of this document follows the template for an SRS for scientific computing software proposed by \cite{koothoor2013} and \cite{smithLai2005}. The presentation follows the standard pattern of presenting goals, theories, definitions, and assumptions. For readers that would like a more bottom up approach, they can start reading the \hyperref[Sec:IMs]{instance models} and trace back to find any additional information they require.
+
+The \hyperref[Sec:GoalStmt]{goal statements} are refined to the theoretical models and the \hyperref[Sec:TMs]{theoretical models} to the \hyperref[Sec:IMs]{instance models}.
+
 \section{Requirements}
 \label{Sec:Requirements}
 This section provides the functional requirements, the tasks and behaviours that the software is expected to complete, and the non-functional requirements, the qualities that the software is expected to exhibit.
@@ -115,6 +121,12 @@ This section provides the non-functional requirements, the qualities that the so
 \section{References}
 \label{Sec:References}
 \begin{filecontents*}{bibfile.bib}
+@mastersthesis{koothoor2013,
+author={Koothoor, Nirmitha},
+title={A document drive approach to certifying scientific computing software},
+school={McMaster University},
+year={2013},
+address={Hamilton, ON, Canada}}
 @book{lund2023,
 author={Lund, Lance},
 title={Introduction to Chemistry},
@@ -133,6 +145,15 @@ volume={12},
 number={2},
 pages={251--257},
 address={Washington, USA}}
+@inproceedings{smithLai2005,
+author={Smith, W. Spencer and Lai, Lei},
+title={A new requirements template for scientific computing},
+booktitle={Proceedings of the First International Workshop on Situational Requirements Engineering Processes - Methods, Techniques and Tools to Support Situation-Specific Requirements Engineering Processes, SREP'05},
+year={2005},
+editor={Agerfalk, PJ and Kraiem, N. and Ralyte, J.},
+address={Paris, France},
+pages={107--121},
+note={In conjunction with 13th IEEE International Requirements Engineering Conference,}}
 \end{filecontents*}
 \nocite{*}
 \bibstyle{ieeetr}
