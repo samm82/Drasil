@@ -68,6 +68,12 @@ Chemical equations are common ways of representing chemical reactions but they m
 
 The following section provides an overview of the Software Requirements Specification (SRS) for ChemCode. This section explains the purpose of this document, the scope of the requirements, the characteristics of the intended reader, and the organization of the document.
 
+\subsection{Purpose of Document}
+\label{Sec:DocPurpose}
+The primary purpose of this document is to record the requirements of the Chemistry Code. Goals, assumptions, theoretical models, definitions, and other model derivation information are specified, allowing the reader to fully understand and verify the purpose and scientific basis of ChemCode. With the exception of \hyperref[Sec:SysConstraints]{system constraints}, this SRS will remain abstract, describing what problem is being solved, but not how to solve it.
+
+This document will be used as a starting point for subsequent development phases, including writing the design specification and the software verification and validation plan. The design document will show how the requirements are to be realized, including decisions on the numerical algorithms and programming environment. The verification and validation plan will show the steps that will be used to increase confidence in the software documentation and the implementation. Although the SRS fits in a series of documents that follow the so-called waterfall model, the actual development process is not constrained in any way. Even when the waterfall model is not followed, as Parnas and Clements point out \cite{parnasClements1986}, the most logical way to present the documentation is still to ``fake'' a rational design process.
+
 \subsection{Scope of Requirements}
 \label{Sec:ReqsScope}
 The scope of the requirements includes all chemical equations with at most one more compound than element. Furthermore, it also includes all inputted chemical formulas that describe real chemical compounds, are formatted following a set of conventions, and only consist of atomic symbols and subscripts.
@@ -117,6 +123,16 @@ year={2023},
 address={Cambridge and Coon Rapids, MN, USA},
 month=jan,
 howpublished={\url{https://chem.libretexts.org/Courses/Anoka-Ramsey\_Community\_College/Introduction\_to\_Chemistry}}}
+@article{parnasClements1986,
+author={Parnas, David L. and Clements, P. C.},
+title={A rational design process: How and why to fake it},
+journal={IEEE Transactions on Software Engineering},
+year={1986},
+month=feb,
+volume={12},
+number={2},
+pages={251--257},
+address={Washington, USA}}
 \end{filecontents*}
 \nocite{*}
 \bibstyle{ieeetr}

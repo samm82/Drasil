@@ -7,10 +7,11 @@ import qualified Language.Drasil.Sentence.Combinators as S
 import Drasil.SRSDocument
 import Theory.Drasil (DataDefinition, GenDefn, InstanceModel, TheoryModel)
 
-import Data.Drasil.Citations (lund2023)
+import Data.Drasil.Citations (lund2023, parnasClements1986)
 import qualified Data.Drasil.Concepts.Documentation as Doc (srs)
 import Data.Drasil.Concepts.Documentation hiding (element, scope, srs)
 import Data.Drasil.Concepts.Chemistry
+import Data.Drasil.Concepts.Computation (algorithm)
 import Data.Drasil.Concepts.Math (mathcon)
 import Data.Drasil.Concepts.Software (program)
 
@@ -37,7 +38,9 @@ mkSRS = [TableOfContents,
     ],
   IntroSec $
     IntroProg justification (short progName)
-      [ IScope scope ],
+      [ IPurpose $ purpDoc progName Verbose,
+        IScope scope
+      ],
   ReqrmntSec $
     ReqsProg
       [ FReqsSub EmptyS [],
@@ -118,8 +121,10 @@ symbMap :: ChunkDB
 symbMap =
   cdb
     symbolsAll
-    (nw progName : nw program : map nw doccon ++ map nw doccon' ++
-      map nw chemCon ++ map nw mathcon ++ map nw acronyms ++ map nw symbolsAll)
+    (nw progName : -- CI
+      map nw [program, algorithm] ++ -- ConceptChunk
+      map nw doccon ++ map nw doccon' ++ map nw chemCon ++ map nw mathcon ++
+      map nw acronyms ++ map nw symbolsAll)
     srsDomains
     ([] :: [UnitDefn])
     ([] :: [DataDefinition])
@@ -148,7 +153,10 @@ usedDB =
     ([] :: [Reference])
 
 refDB :: ReferenceDB
-refDB = rdb [lund2023] concIns
+refDB = rdb citations concIns
+
+citations :: BibRef
+citations = [lund2023, parnasClements1986]
 
 concIns :: [ConceptInstance]
 concIns = funcReqs ++ nonfuncReqs
