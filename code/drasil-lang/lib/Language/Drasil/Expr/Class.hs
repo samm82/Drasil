@@ -431,6 +431,8 @@ instance ExprC M.ModelExpr where
   addRe l r = M.AssocA M.AddRe [l, r]
 
   -- | Multiply two expressions (Integers).
+  mulI _ (M.Lit (Int 0)) = M.Lit (Int 0)
+  mulI (M.Lit (Int 0)) _ = M.Lit (Int 0)
   mulI l (M.Lit (Int 1)) = l
   mulI (M.Lit (Int 1)) r = r
   mulI (M.AssocA M.MulI l) (M.AssocA M.MulI r) = M.AssocA M.MulI (l ++ r)
@@ -439,6 +441,10 @@ instance ExprC M.ModelExpr where
   mulI l r = M.AssocA M.MulI [l, r]
 
   -- | Multiply two expressions (Real numbers).
+  mulRe _ (M.Lit (Dbl 0))      = M.Lit (Dbl 0)
+  mulRe (M.Lit (Dbl 0)) _      = M.Lit (Dbl 0)
+  mulRe _ (M.Lit (ExactDbl 0)) = M.Lit (ExactDbl 0)
+  mulRe (M.Lit (ExactDbl 0)) _ = M.Lit (ExactDbl 0)
   mulRe l (M.Lit (Dbl 1))      = l
   mulRe (M.Lit (Dbl 1)) r      = r
   mulRe l (M.Lit (ExactDbl 1)) = l
