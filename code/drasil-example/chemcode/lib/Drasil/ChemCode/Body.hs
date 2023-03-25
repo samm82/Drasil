@@ -8,8 +8,8 @@ import qualified Drasil.DocLang.SRS as SRS
 import Drasil.SRSDocument
 import Theory.Drasil (GenDefn, InstanceModel)
 
-import Data.Drasil.Citations (ilpWiki, koothoor2013, lund2023,
-  parnasClements1986, smithLai2005)
+import Data.Drasil.Citations (elemListWiki, ilpWiki, koothoor2013, lund2023,
+  parnasClements1986, smithChemSpec, smithLai2005)
 import qualified Data.Drasil.Concepts.Documentation as Doc (srs)
 import Data.Drasil.Concepts.Documentation hiding (element, scope, srs)
 import Data.Drasil.Concepts.Chemistry
@@ -187,7 +187,8 @@ refDB :: ReferenceDB
 refDB = rdb citations concIns
 
 citations :: BibRef
-citations = [ilpWiki, koothoor2013, lund2023, parnasClements1986, smithLai2005]
+citations = [elemListWiki, ilpWiki, koothoor2013, lund2023, parnasClements1986,
+  smithChemSpec, smithLai2005]
 
 concIns :: [ConceptInstance]
 concIns = funcReqs ++ nonfuncReqs

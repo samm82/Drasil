@@ -12,7 +12,7 @@ import Data.Drasil.People (dParnas, jRalyte, lLai, lLund, nKoothoor, nKraiem,
 
 campidelli, koothoor2013, parnas1972, parnasClements1984,
   parnasClements1986, smithLai2005, lineSource, pointSource,
-  hibbeler2004, lund2023 :: Citation
+  hibbeler2004, lund2023, elemListWiki, smithChemSpec :: Citation
 
 campidelli = cBooklet
   "Glass-BR Software for the design and risk assessment of glass facades subjected to blast loading"
@@ -121,6 +121,23 @@ ilpWiki
        howPublishedU "https://en.wikipedia.org/wiki/Integer_programming", month Mar,
        year 2023]
       "ilpWiki"
+
+elemListWiki
+  = cMisc
+      [author [wikiAuthors], title "List of chemical elements",
+       howPublishedU "https://en.wikipedia.org/wiki/List_of_chemical_elements",
+       month Jan, year 2023]
+      "elemListWiki"
+
+-- * Misc
+
+smithChemSpec
+  = cMisc
+      [author [spencerSmith], title "Assignment 2",
+       howPublishedU "https://gitlab.cas.mcmaster.ca/smiths/se2aa4_cs2me3/-/blob/master/Assignments/PreviousYears/2020/A2-ChemReacts/A2.pdf",
+       month Feb, year 2020]
+      "smithChemSpec"
+
 
 -- * Common Cite Fields
 
