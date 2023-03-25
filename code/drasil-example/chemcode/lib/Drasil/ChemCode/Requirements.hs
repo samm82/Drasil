@@ -16,16 +16,25 @@ import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 {--Functional Requirements--}
 
 funcReqs :: [ConceptInstance]
-funcReqs = [convertMatrix]
+funcReqs = [convertMatrix, feasOut, infeasOut]
 
-convertMatrix :: ConceptInstance
+convertMatrix, feasOut, infeasOut :: ConceptInstance
 
 convertMatrix = cic "convertMatrix" convertMatrixDesc "Convert-to-Matrix" funcReqDom
+feasOut       = cic "feasOut"       feasOutDesc       "Feasible-Output"   funcReqDom
+infeasOut     = cic "infeasOut"     infeasOutDesc     "Infeasible-Output" funcReqDom
 
-convertMatrixDesc :: Sentence
+convertMatrixDesc, feasOutDesc, infeasOutDesc :: Sentence
 
 convertMatrixDesc = foldlSent [S "Convert the inputted", phrase chemical,
   phrase equation, S "to", phrase matrix, S "form"]
+
+feasOutDesc = foldlSent [S "If the inputted", phrase chemical, phrase equation,
+  S "is feasible" `sC` S "output its balanced form with the smallest positive",
+  S "integer coefficients possible"]
+
+infeasOutDesc = foldlSent [S "If the inputted", phrase chemical, phrase equation,
+  S "is infeasible" `sC` S "output a descriptive message"] 
 
 {--Nonfunctional Requirements--}
 
