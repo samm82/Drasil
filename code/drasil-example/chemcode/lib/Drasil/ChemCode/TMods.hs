@@ -14,21 +14,6 @@ import Drasil.ChemCode.Quantities (cVec, xVec)
 tms :: [TheoryModel]
 tms = [intLinProg]
 
--- intLinProg :: TheoryModel
--- intLinProg = tm intLinProgMK
---   [] ([] :: [ConceptChunk])
---   [] [express intLinProgFD] [] [] "intLinProg" intLinProgNotes
-
--- intLinProgMK :: ModelKind Expr
--- intLinProgMK = equationalModel "intLinProgTM"
---   (nounPhraseSP "Integer linear program") intLinProgFD
-
--- intLinProgFD :: SimpleQDef
--- intLinProgFD = mkFuncDefByQ lO [lR] intLinProgExpr
-
--- intLinProgExpr :: Expr
--- intLinProgExpr = sy cVec `mulRe` sy xVec
-
 intLinProg :: TheoryModel
 intLinProg = tm
   (equationalConstraints' ilpCS)
