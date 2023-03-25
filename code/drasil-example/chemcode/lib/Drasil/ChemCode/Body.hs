@@ -6,7 +6,7 @@ import Language.Drasil.Chunk.Concept.NamedCombinators
 import qualified Language.Drasil.Sentence.Combinators as S
 import qualified Drasil.DocLang.SRS as SRS
 import Drasil.SRSDocument
-import Theory.Drasil (DataDefinition, GenDefn, InstanceModel, TheoryModel)
+import Theory.Drasil (DataDefinition, GenDefn, InstanceModel)
 
 import Data.Drasil.Citations (koothoor2013, lund2023, parnasClements1986,
   smithLai2005)
@@ -21,7 +21,8 @@ import Data.Drasil.Software.Products (sciCompS)
 import Data.Drasil.TheoryConcepts (inModel)
 
 import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
-import Drasil.ChemCode.Quantities (inputs)
+import Drasil.ChemCode.Quantities (inputs, quants)
+import Drasil.ChemCode.TMods (tms)
 
 srs :: Document
 srs = mkDoc mkSRS (S.forGen titleize phrase) si
@@ -44,6 +45,23 @@ mkSRS = [TableOfContents,
       [ IPurpose $ purpDoc progName Verbose,
         IScope scope,
         IOrgSec orgOfDocIntro inModel (SRS.inModel [] []) EmptyS
+      ],
+  SSDSec $
+    SSDProg
+      [
+        -- SSDProblem $ PDProg prob [termsAndDesc]
+        -- [ PhySysDesc glassBR physSystParts physSystFig []
+        -- , Goals goalInputs],
+       SSDSolChSpec $ SCSProg
+        [
+        -- Assumptions, 
+        TMs [] (Label : stdFields)
+        -- , GDs [] [] HideDerivation
+        -- , DDs [] ([Label, Symbol, Units] ++ stdFields) ShowDerivation
+        -- , IMs [instModIntro] ([Label, Input, Output, InConstraints, OutConstraints] ++ stdFields) HideDerivation
+        -- , Constraints auxSpecSent inputDataConstraints
+        -- , CorrSolnPpties [probBr, stressDistFac] []
+        ]
       ],
   ReqrmntSec $
     ReqsProg
@@ -99,7 +117,7 @@ orgOfDocIntro = foldlSent [atStartNP (the organization), S "of this",
   refS koothoor2013 `S.and_` refS smithLai2005]
 
 symbolsAll :: [QuantityDict]
-symbolsAll = inputs
+symbolsAll = quants
 
 acronyms :: [CI]
 acronyms = [progName, Doc.srs]
@@ -107,24 +125,24 @@ acronyms = [progName, Doc.srs]
 si :: SystemInformation
 si =
   SI
-    { _sys = progName,
-      _kind = Doc.srs,
-      _authors = [samCrawford],
-      _background = [],
-      _purpose = [],
-      _quants = symbolsAll,
-      _concepts = [] :: [DefinedQuantityDict],
-      _instModels = [] :: [InstanceModel],
-      _datadefs = [] :: [DataDefinition],
+    { _sys         = progName,
+      _kind        = Doc.srs,
+      _authors     = [samCrawford],
+      _background  = [],
+      _purpose     = [],
+      _quants      = symbolsAll,
+      _concepts    = [] :: [DefinedQuantityDict],
+      _instModels  = [] :: [InstanceModel],
+      _datadefs    = [] :: [DataDefinition],
       _configFiles = [],
-      _inputs = inputs,
-      _outputs = [] :: [QuantityDict],
+      _inputs      = inputs,
+      _outputs     = [] :: [QuantityDict],
       _defSequence = [] :: [Block SimpleQDef],
       _constraints = [] :: [ConstrainedChunk],
-      _constants = [] :: [ConstQDef],
-      _sysinfodb = symbMap,
-      _usedinfodb = usedDB,
-      refdb = refDB
+      _constants   = [] :: [ConstQDef],
+      _sysinfodb   = symbMap,
+      _usedinfodb  = usedDB,
+       refdb       = refDB
     }
 
 symbMap :: ChunkDB
@@ -141,7 +159,7 @@ symbMap =
     ([] :: [DataDefinition])
     ([] :: [InstanceModel])
     ([] :: [GenDefn])
-    ([] :: [TheoryModel])
+    tms
     concIns
     ([] :: [Section])
     ([] :: [LabelledContent])
@@ -157,7 +175,7 @@ usedDB =
     ([] :: [DataDefinition])
     ([] :: [InstanceModel])
     ([] :: [GenDefn])
-    ([] :: [TheoryModel])
+    tms
     ([] :: [ConceptInstance])
     ([] :: [Section])
     ([] :: [LabelledContent])
@@ -171,6 +189,10 @@ citations = [koothoor2013, lund2023, parnasClements1986, smithLai2005]
 
 concIns :: [ConceptInstance]
 concIns = funcReqs ++ nonfuncReqs
+
+stdFields :: Fields
+stdFields = [DefiningEquation, Description Verbose IncludeUnits, Notes, Source, RefBy]
+
 
 -- MOVE TO CONCEPTS
 progName :: CI -- name of example

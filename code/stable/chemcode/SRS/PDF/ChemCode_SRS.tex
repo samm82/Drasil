@@ -19,6 +19,8 @@
 \newcommand{\gt}{\ensuremath >}
 \newcommand{\lt}{\ensuremath <}
 \global\tabulinesep=1mm
+\newlist{symbDescription}{description}{1}
+\setlist[symbDescription]{noitemsep, topsep=0pt, parsep=0pt, partopsep=0pt}
 \bibliography{bibfile}
 \title{Software Requirements Specification for Chemistry Code}
 \author{Samuel J. Crawford}
@@ -40,7 +42,11 @@ The symbols used in this document are summarized in the \hyperref[Table:ToS]{Tab
 \\
 \midrule
 \endhead
+$\symbf{c}$ & Generic vector & --
+\\
 $r$ & Representation of a chemical equation & --
+\\
+$\symbf{x}$ & Generic vector & --
 \\
 \bottomrule
 \caption{Table of Symbols}
@@ -84,6 +90,45 @@ The organization of this document follows the template for an SRS for scientific
 
 The \hyperref[Sec:GoalStmt]{goal statements} are refined to the theoretical models and the \hyperref[Sec:TMs]{theoretical models} to the \hyperref[Sec:IMs]{instance models}.
 
+\section{Specific System Description}
+\label{Sec:SpecSystDesc}
+This section first presents the problem description, which gives a high-level view of the problem to be solved. This is followed by the solution characteristics specification, which presents the assumptions, theories, and definitions that are used.
+
+\subsection{Solution Characteristics Specification}
+\label{Sec:SolCharSpec}
+The instance models that govern ChemCode are presented in the \hyperref[Sec:IMs]{Instance Model Section}. The information to understand the meaning of the instance models and their derivation is also presented, so that the instance models can be verified.
+
+\subsubsection{Theoretical Models}
+\label{Sec:TMs}
+This section focuses on the general equations and laws that ChemCode is based on.
+
+\vspace{\baselineskip}
+\noindent
+\begin{minipage}{\textwidth}
+\begin{tabular}{>{\raggedright}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.82\textwidth}}
+\toprule \textbf{Refname} & \textbf{TM:intLinProg}
+\phantomsection 
+\label{TM:intLinProg}
+\\ \midrule \\
+Label & Integer linear program
+        
+\\ \midrule \\
+Equation & \begin{displaymath}
+           \symbf{c} \symbf{x}
+           \end{displaymath}
+\\ \midrule \\
+Description & \begin{symbDescription}
+              \item{$\symbf{c}$ is the generic vector (Unitless)}
+              \item{$\symbf{x}$ is the generic vector (Unitless)}
+              \end{symbDescription}
+\\ \midrule \\
+Source & --
+         
+\\ \midrule \\
+RefBy & 
+\\ \bottomrule
+\end{tabular}
+\end{minipage}
 \section{Requirements}
 \label{Sec:Requirements}
 This section provides the functional requirements, the tasks and behaviours that the software is expected to complete, and the non-functional requirements, the qualities that the software is expected to exhibit.

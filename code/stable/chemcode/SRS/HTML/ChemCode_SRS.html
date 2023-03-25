@@ -50,6 +50,17 @@
             </ul>
           </li>
           <li>
+            <a href=#Sec:SpecSystDesc>Specific System Description</a>
+            <ul class="list">
+              <li>
+                <a href=#Sec:SolCharSpec>Solution Characteristics Specification</a>
+                <ul class="list">
+                  <li><a href=#Sec:TMs>Theoretical Models</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
             <a href=#Sec:Requirements>Requirements</a>
             <ul class="list">
               <li><a href=#Sec:FRs>Functional Requirements</a></li>
@@ -80,8 +91,18 @@
                   <th>Units</th>
                 </tr>
                 <tr>
+                  <td><em><b>c</b></em></td>
+                  <td>Generic vector</td>
+                  <td>--</td>
+                </tr>
+                <tr>
                   <td><em>r</em></td>
                   <td>Representation of a chemical equation</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em><b>x</b></em></td>
+                  <td>Generic vector</td>
                   <td>--</td>
                 </tr>
               </table>
@@ -150,6 +171,63 @@
             <p class="paragraph">
               The <a href=#Sec:GoalStmt>goal statements</a> are refined to the theoretical models and the <a href=#Sec:TMs>theoretical models</a> to the <a href=#Sec:IMs>instance models</a>.
             </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="Sec:SpecSystDesc">
+      <div class="section">
+        <h1>Specific System Description</h1>
+        <p class="paragraph">
+          This section first presents the problem description, which gives a high-level view of the problem to be solved. This is followed by the solution characteristics specification, which presents the assumptions, theories, and definitions that are used.
+        </p>
+        <div id="Sec:SolCharSpec">
+          <div class="subsection">
+            <h2>Solution Characteristics Specification</h2>
+            <p class="paragraph">
+              The instance models that govern ChemCode are presented in the <a href=#Sec:IMs>Instance Model Section</a>. The information to understand the meaning of the instance models and their derivation is also presented, so that the instance models can be verified.
+            </p>
+            <div id="Sec:TMs">
+              <div class="subsubsection">
+                <h3>Theoretical Models</h3>
+                <p class="paragraph">
+                  This section focuses on the general equations and laws that ChemCode is based on.
+                </p>
+                <div id="TM:intLinProg">
+                  <table class="tdefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>TM:intLinProg</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td><p class="paragraph">Integer linear program</p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>\[\symbf{c} \symbf{x}\]</td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em><b>c</b></em> is the generic vector (Unitless)</li>
+                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph">--</p></td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
