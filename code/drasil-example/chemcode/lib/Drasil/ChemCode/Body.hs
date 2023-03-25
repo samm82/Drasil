@@ -6,7 +6,7 @@ import Language.Drasil.Chunk.Concept.NamedCombinators
 import qualified Language.Drasil.Sentence.Combinators as S
 import qualified Drasil.DocLang.SRS as SRS
 import Drasil.SRSDocument
-import Theory.Drasil (DataDefinition, GenDefn, InstanceModel)
+import Theory.Drasil (GenDefn, InstanceModel)
 
 import Data.Drasil.Citations (ilpWiki, koothoor2013, lund2023,
   parnasClements1986, smithLai2005)
@@ -20,8 +20,9 @@ import Data.Drasil.People (samCrawford)
 import Data.Drasil.Software.Products (sciCompS)
 import Data.Drasil.TheoryConcepts (inModel)
 
-import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
+import Drasil.ChemCode.DataDefs (dds)
 import Drasil.ChemCode.Quantities (inputs, quants)
+import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
 import Drasil.ChemCode.TMods (tms)
 
 srs :: Document
@@ -57,7 +58,8 @@ mkSRS = [TableOfContents,
         -- Assumptions, 
         TMs [] (Label : stdFields)
         -- , GDs [] [] HideDerivation
-        -- , DDs [] ([Label, Symbol, Units] ++ stdFields) ShowDerivation
+        , DDs [] ([Label, Symbol] ++ stdFields) HideDerivation -- FIXME: may want to change later
+                                -- FIXME: may want to add Units later
         -- , IMs [instModIntro] ([Label, Input, Output, InConstraints, OutConstraints] ++ stdFields) HideDerivation
         -- , Constraints auxSpecSent inputDataConstraints
         -- , CorrSolnPpties [probBr, stressDistFac] []
@@ -133,7 +135,7 @@ si =
       _quants      = symbolsAll,
       _concepts    = [] :: [DefinedQuantityDict],
       _instModels  = [] :: [InstanceModel],
-      _datadefs    = [] :: [DataDefinition],
+      _datadefs    = dds,
       _configFiles = [],
       _inputs      = inputs,
       _outputs     = [] :: [QuantityDict],
@@ -156,7 +158,7 @@ symbMap =
       map nw acronyms ++ map nw symbolsAll)
     srsDomains
     ([] :: [UnitDefn])
-    ([] :: [DataDefinition])
+    dds
     ([] :: [InstanceModel])
     ([] :: [GenDefn])
     tms
@@ -172,7 +174,7 @@ usedDB =
     (map nw acronyms ++ map nw symbolsAll)
     srsDomains
     ([] :: [UnitDefn])
-    ([] :: [DataDefinition])
+    dds
     ([] :: [InstanceModel])
     ([] :: [GenDefn])
     tms
