@@ -76,7 +76,8 @@ lund2023 = cBookA [lLund] "Introduction to Chemistry" "LibreTexts"
 
 -- ** Wikipedia
 
-dampingSource, accelerationWiki, velocityWiki, cartesianWiki, laplaceWiki, pidWiki :: Citation
+dampingSource, accelerationWiki, velocityWiki, cartesianWiki, laplaceWiki,
+  pidWiki, ilpWiki :: Citation
 
 dampingSource = cMisc
   [author [wikiAuthors], title "Damping",
@@ -113,6 +114,13 @@ pidWiki
        howPublishedU "https://en.wikipedia.org/wiki/PID_controller", month Oct,
        year 2020]
       "pidWiki"
+
+ilpWiki
+  = cMisc
+      [author [wikiAuthors], title "Integer programming",
+       howPublishedU "https://en.wikipedia.org/wiki/Integer_programming", month Mar,
+       year 2023]
+      "ilpWiki"
 
 -- * Common Cite Fields
 
