@@ -18,7 +18,7 @@ import Data.Drasil.Concepts.Math (mathcon)
 import Data.Drasil.Concepts.Software (program)
 import Data.Drasil.People (samCrawford)
 import Data.Drasil.Software.Products (sciCompS)
-import Data.Drasil.TheoryConcepts (inModel)
+import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 
 import Drasil.ChemCode.DataDefs (dds)
 import Drasil.ChemCode.Quantities (inputs, quants)
@@ -122,7 +122,7 @@ symbolsAll :: [QuantityDict]
 symbolsAll = quants
 
 acronyms :: [CI]
-acronyms = [progName, Doc.srs]
+acronyms = [progName, Doc.srs, thModel, dataDefn] -- genDefn, inModel
 
 si :: SystemInformation
 si =
