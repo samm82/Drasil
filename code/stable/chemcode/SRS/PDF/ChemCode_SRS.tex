@@ -42,6 +42,12 @@ The symbols used in this document are summarized in the \hyperref[Table:ToS]{Tab
 \\
 \midrule
 \endhead
+$\symbf{0}$ & Zero vector & --
+\\
+$\symbf{A}$ & Generic matrix & --
+\\
+$\symbf{b}$ & Generic vector & --
+\\
 $\symbf{c}$ & Generic vector & --
 \\
 $E$ & Element data type & --
@@ -122,13 +128,17 @@ Label & Integer linear program
 Equation & \begin{displaymath}
            \begin{cases}
            \symbf{c} \symbf{x}, & 1\\
-           \symbf{c} \symbf{x}, & 2
+           \symbf{A} \symbf{x}\leq{}\symbf{b}, & 2\\
+           \symbf{x}\geq{}\symbf{0}, & 3
            \end{cases}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
               \item{$\symbf{c}$ is the generic vector (Unitless)}
               \item{$\symbf{x}$ is the generic vector (Unitless)}
+              \item{$\symbf{A}$ is the generic matrix (Unitless)}
+              \item{$\symbf{b}$ is the generic vector (Unitless)}
+              \item{$\symbf{0}$ is the zero vector (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
 Notes & The above equation gives the canonical form of an integer linear program, which is ``a mathematical optimization or feasibility program in which some or all of the variables are restricted to be integers [and] the objective function and the constraints (other than the integer constraints) are linear'' \cite{ilpWiki}

@@ -9,7 +9,7 @@ import Data.Drasil.Citations (ilpWiki)
 import Data.Drasil.Concepts.Math (equation)
 import Data.Drasil.Concepts.Software (program)
 
-import Drasil.ChemCode.Quantities (cVec, xVec)
+import Drasil.ChemCode.Quantities (aMat, bVec, cVec, xVec, zeroVec)
 
 tms :: [TheoryModel]
 tms = [intLinProg]
@@ -39,7 +39,8 @@ intLinProg = tm
     ilpRel :: ModelExpr
     ilpRel = completeCase [
       (sy cVec `mulRe` sy xVec, lit $ int 1),
-      (sy cVec `mulRe` sy xVec, lit $ int 2)
+      (sy aMat `mulRe` sy xVec $<= sy bVec, lit $ int 2),
+      (sy xVec $>= sy zeroVec, lit $ int 3)
       ]
 
     ilpCS = mkConstraintSet ilpChunk $ NE.fromList [ilpRel]

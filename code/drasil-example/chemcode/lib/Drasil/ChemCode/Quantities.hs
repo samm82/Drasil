@@ -9,16 +9,19 @@ inputs :: [QuantityDict]
 inputs = [r]
 
 quants :: [QuantityDict]
-quants = inputs ++ [cVec, xVec, elemT]
+quants = inputs ++ [aMat, bVec, cVec, xVec, zeroVec, elemT]
 
-r, cVec, xVec, elemT :: QuantityDict
+r, aMat, bVec, cVec, xVec, zeroVec, elemT :: QuantityDict
 
 r = vcSt "r" (nounPhraseSP "representation of a chemical equation")
   (autoStage lR) String -- FIXME: should this be a string?
 
+aMat = vc "aMat" (nounPhraseSP "generic matrix") (vec cA) (Vect Real)
+bVec = vc "bVec" (nounPhraseSP "generic vector") (vec lB) (Vect Real)
 cVec = vc "cVec" (nounPhraseSP "generic vector") (vec lC) (Vect Real)
+xVec = vc "xVec" (nounPhraseSP "generic vector") (vec lX) (Vect Integer)
 
-xVec = vc "xVec" (nounPhraseSP "generic vector") (vec lX) (Vect Real)
+zeroVec = vc "zeroVec" (nounPhraseSP "zero vector") (vec $ variable "0") (Vect Integer)
 
 elemT = vcSt "elemT" (nounPhraseSent $ phrase element +:+ S "data type")
   (autoStage cE)

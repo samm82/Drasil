@@ -92,6 +92,21 @@
                   <th>Units</th>
                 </tr>
                 <tr>
+                  <td><em><b>0</b></em></td>
+                  <td>Zero vector</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em><b>A</b></em></td>
+                  <td>Generic matrix</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em><b>b</b></em></td>
+                  <td>Generic vector</td>
+                  <td>--</td>
+                </tr>
+                <tr>
                   <td><em><b>c</b></em></td>
                   <td>Generic vector</td>
                   <td>--</td>
@@ -222,7 +237,8 @@
                       <td>
                         \[\begin{cases}
                           \symbf{c} \symbf{x}, & 1\\
-                          \symbf{c} \symbf{x}, & 2
+                          \symbf{A} \symbf{x}\leq{}\symbf{b}, & 2\\
+                          \symbf{x}\geq{}\symbf{0}, & 3
                           \end{cases}\]
                       </td>
                     </tr>
@@ -232,6 +248,9 @@
                         <ul class="hide-list-style-no-indent">
                           <li><em><b>c</b></em> is the generic vector (Unitless)</li>
                           <li><em><b>x</b></em> is the generic vector (Unitless)</li>
+                          <li><em><b>A</b></em> is the generic matrix (Unitless)</li>
+                          <li><em><b>b</b></em> is the generic vector (Unitless)</li>
+                          <li><em><b>0</b></em> is the zero vector (Unitless)</li>
                         </ul>
                       </td>
                     </tr>
