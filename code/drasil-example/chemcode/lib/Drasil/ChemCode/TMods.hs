@@ -37,6 +37,9 @@ intLinProg = tm
       dccWDS "ilpChunk" (nounPhraseSP "integer linear program") (S "") -- FIXME: ?
 
     ilpRel :: ModelExpr
-    ilpRel = sy cVec `mulRe` sy xVec
+    ilpRel = completeCase [
+      (sy cVec `mulRe` sy xVec, lit $ int 1),
+      (sy cVec `mulRe` sy xVec, lit $ int 2)
+      ]
 
     ilpCS = mkConstraintSet ilpChunk $ NE.fromList [ilpRel]
