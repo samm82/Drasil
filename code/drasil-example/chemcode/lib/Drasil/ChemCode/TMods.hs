@@ -31,7 +31,9 @@ intLinProg = tm
       S "in which some or all of the variables are restricted to be integers",
       S "[and] the objective function and the constraints", 
       sParen (S "other than the integer constraints"), S "are linear"]),
-    refS ilpWiki]]
+    refS ilpWiki],
+  S "The values of" +:+ ch xVec +:+ S "are unknown and will be solved for"
+  ]
   where
     ilpChunk =
       dccWDS "ilpChunk" (nounPhraseSP "integer linear program") (S "") -- FIXME: ?
