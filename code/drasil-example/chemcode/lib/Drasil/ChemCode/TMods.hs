@@ -19,12 +19,12 @@ intLinProg = tm
   (ilpModel "canonIntLinProg" (cn' "canonical integer linear program")
     $ maxILP xVec cVec
       $ sy aMat `mulRe` sy xVec $<= sy bVec NE.:| [sy xVec $>= sy zeroVec])
-  ([] :: [QuantityDict]) -- FIXME: I should not need to manually define the type signature for this to type-check.
-  [ilpChunk] -- FIXME: Why do I need this?
+  ([] :: [QuantityDict]) -- FIXME: I should not need to manually define the type signature for this to type check
+  [ilpChunk] -- FIXME: why do I need this?
   []
   [sy cVec `mulRe` sy xVec,
    sy aMat `mulRe` sy xVec $<= sy bVec,
-   sy xVec $>= sy zeroVec] -- FIXME: apparently this is needed since generaration doesn't happen from ModelKinds
+   sy xVec $>= sy zeroVec] -- FIXME: apparently this is needed since generation doesn't happen from ModelKinds
   []
   [dRef ilpWiki]
   "canonIntLinProg" -- FIXME: this is likely needed for the same ModelKinds reason

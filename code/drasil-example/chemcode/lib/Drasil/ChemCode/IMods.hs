@@ -16,7 +16,7 @@ chemEqIntLinProg = imNoRefs
     $ maxILP xVec unaryVec
       $ (sy eMat `mulRe` sy xVec $= sy zeroVec) NE.:| [sy xVec $> sy zeroVec])
       -- FIXME: ^ parentheses needed for precedence reasons?
-  [qwUC eMat] -- FIXME: Other than the obvious type confliction, why should I need to convert the unitals to quantitydicts
+  [qwUC eMat] -- FIXME: why should I need to convert the Unitals to QuantityDicts?
   xVec
   []
   Nothing -- TODO: Derivation
