@@ -1,5 +1,7 @@
 module Drasil.ChemCode.DataDefs where
 
+import Control.Lens ((^.))
+
 import Language.Drasil
 import Theory.Drasil
 
@@ -12,10 +14,10 @@ dds :: [DataDefinition]
 dds = [elementDD]
 
 elementDD :: DataDefinition
-elementDD = ddE elementExpr [dRef smithChemSpec] Nothing "elementType"
+elementDD = ddME elementExpr [dRef smithChemSpec] Nothing "elementType"
   [S "A type representing each" +:+ phrase element +:+ S "from" +:+
     refS elemListWiki]
 -- FIXME: what's a good UID for this? Is "elementType" different enough from "elemT"?
 
-elementExpr :: QDefinition Expr
-elementExpr = mkQuantDef elemT $ sy elemT
+elementExpr :: ModelQDef
+elementExpr = mkQuantDef elemT $ space (elemT ^. typ) -- FIXME: This is probably a hack
