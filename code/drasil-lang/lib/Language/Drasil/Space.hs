@@ -46,6 +46,7 @@ data Space =
   | Tuple [(String, Space)]
   | Sequence Space
   | Element
+  | Compound
   | Function (NE.NonEmpty Primitive) Primitive
   | Void
   deriving (Eq, Show)

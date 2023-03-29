@@ -6,12 +6,12 @@ import Language.Drasil
 import Theory.Drasil
 
 import Data.Drasil.Citations (elemListWiki, smithChemSpec)
-import Data.Drasil.Concepts.Chemistry (compound, element)
+import Data.Drasil.Concepts.Chemistry (compound, element, reaction)
 
-import Drasil.ChemCode.Quantities (compT, elemT)
+import Drasil.ChemCode.Quantities (compT, elemT, reacT)
 
 dds :: [DataDefinition]
-dds = [elementDD, compoundDD]
+dds = [elementDD, compoundDD, reactionDD]
 
 elementDD :: DataDefinition
 elementDD = ddME elementExpr [dRef smithChemSpec] Nothing "elementType"
@@ -29,3 +29,11 @@ compoundDD = ddMENoRefs compoundExpr Nothing "compoundType"
 
 compoundExpr :: ModelQDef
 compoundExpr = mkQuantDef compT $ space (compT ^. typ) -- FIXME: This is probably a hack
+
+reactionDD :: DataDefinition
+reactionDD = ddMENoRefs reactionExpr Nothing "reactionType"
+  [S "A type representing a" +:+ phrase reaction]
+-- FIXME: what's a good UID for this?
+
+reactionExpr :: ModelQDef
+reactionExpr = mkQuantDef reacT $ space (reacT ^. typ) -- FIXME: This is probably a hack
