@@ -90,11 +90,13 @@ module Language.Drasil (
   , ConceptChunk, CommonConcept, ConceptInstance, sDom
   -- Language.Drasil.Chunk.Concept
   , dcc, dcc', dccWDS, dccWDS', cc, cc', ccs, cw, cic
-  -- Language.Drasil.Chunk.Relation
-  , RelationConcept, makeRC, addRelToCC
   -- Language.Drasil.Chunk.DifferentialModel
   , DifferentialModel(..), ODESolverFormat(..), InitialValueProblem(..), ($^^),($*), ($+)
   , makeAODESolverFormat, makeAIVP, formEquations, makeASystemDE, makeASingleDE
+  -- Language.Drasil.Chunk.IntLinProgModel
+  , IntLinProgModel(..)
+  -- Language.Drasil.Chunk.Relation
+  , RelationConcept, makeRC, addRelToCC
 
   -- *** Quantities and Units
   -- Language.Drasil.Chunk.Quantity
@@ -342,17 +344,18 @@ import Language.Drasil.Chunk.Constrained
 import Language.Drasil.Constraint (physc, sfwrc, isPhysC, isSfwrC,
   Constraint(..), ConstraintE, ConstraintReason(..))
 import Language.Drasil.Chunk.DefinedQuantity
+import Language.Drasil.Chunk.DifferentialModel (DifferentialModel(..), ODESolverFormat(..),
+  InitialValueProblem(..), ($^^), ($*), ($+), makeAODESolverFormat, makeAIVP, makeASystemDE, 
+  makeASingleDE, formEquations)
 import Language.Drasil.Chunk.Eq (QDefinition, fromEqn, fromEqn', fromEqnSt,
   fromEqnSt', fromEqnSt'', mkQDefSt, mkQuantDef, mkQuantDef', ec,
   mkFuncDef, mkFuncDef', mkFuncDefByQ)
+import Language.Drasil.Chunk.IntLinProgModel (IntLinProgModel(..))
 import Language.Drasil.Chunk.NamedIdea
 import Language.Drasil.Chunk.Quantity
-import Language.Drasil.Chunk.Relation(RelationConcept, makeRC, addRelToCC)
-import Language.Drasil.Chunk.DifferentialModel(DifferentialModel(..), ODESolverFormat(..),
-  InitialValueProblem(..), ($^^), ($*), ($+), makeAODESolverFormat, makeAIVP, makeASystemDE, 
-  makeASingleDE, formEquations)
+import Language.Drasil.Chunk.Relation (RelationConcept, makeRC, addRelToCC)
 import Language.Drasil.Chunk.UncertainQuantity
-import Language.Drasil.Chunk.Unital(UnitalChunk(..), uc, uc', ucStaged, ucStaged',
+import Language.Drasil.Chunk.Unital (UnitalChunk(..), uc, uc', ucStaged, ucStaged',
   ucuc, ucw)
 import Language.Drasil.Chunk.Unitary
 import Language.Drasil.Data.Citation (CiteField(..), HP(..), CitationKind(..)

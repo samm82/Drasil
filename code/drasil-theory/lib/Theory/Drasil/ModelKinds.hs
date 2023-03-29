@@ -18,10 +18,7 @@ module Theory.Drasil.ModelKinds (
 import Control.Lens (makeLenses, set, lens, to, (^.), Setter', Getter, Lens')
 import Data.Maybe (mapMaybe)
 
-import Language.Drasil (NamedIdea(..), NP, QDefinition, HasUID(..), Expr,
-  RelationConcept, ConceptDomain(..), Definition(..), Idea(..), Express(..),
-  UID, DifferentialModel, mkUid, RequiresChecking(..), Space, HasSpace(typ),
-  DefiningExpr(..))
+import Language.Drasil
 import Theory.Drasil.ConstraintSet (ConstraintSet)
 import Theory.Drasil.MultiDefn (MultiDefn)
 
@@ -32,7 +29,7 @@ import Theory.Drasil.MultiDefn (MultiDefn)
 --     * 'EquationalConstraint's represent invariants that will hold in a system of equations.
 --     * 'EquationalModel's represent quantities that are calculated via a single definition/'QDefinition'.
 --     * 'EquationalRealm's represent MultiDefns; quantities that may be calculated using any one of many 'DefiningExpr's (e.g., 'x = A = ... = Z')
---     * 'FunctionalModel's represent quantity-resulting function definitions.
+--     * 'ILPModel's represent integer linear programs as 'IntLinProgModel's
 --     * 'OthModel's are placeholders for models. No new 'OthModel's should be created, they should be using one of the other kinds.
 data ModelKinds e where
   NewDEModel            :: DifferentialModel -> ModelKinds e
@@ -42,6 +39,7 @@ data ModelKinds e where
   EquationalConstraints :: ConstraintSet e   -> ModelKinds e
   EquationalModel       :: QDefinition e     -> ModelKinds e
   EquationalRealm       :: MultiDefn e       -> ModelKinds e
+  ILPModel              :: IntLinProgModel   -> ModelKinds e
   -- TODO: Remove OthModel after having removed all instances of it.
   OthModel              :: RelationConcept   -> ModelKinds e
 
@@ -120,18 +118,18 @@ othModel' :: RelationConcept -> ModelKind e
 othModel' rc = MK (OthModel rc) (rc ^. uid) (rc ^. term)
 
 -- | Finds the 'UID' of the 'ModelKinds'.
-instance HasUID        (ModelKinds e) where uid     = lensMk uid uid uid uid uid
+instance HasUID        (ModelKinds e) where uid     = lensMk uid uid uid uid uid uid
 -- | Finds the term ('NP') of the 'ModelKinds'.
-instance NamedIdea     (ModelKinds e) where term    = lensMk term term term term term
+instance NamedIdea     (ModelKinds e) where term    = lensMk term term term term term term
 -- | Finds the idea of the 'ModelKinds'.
-instance Idea          (ModelKinds e) where getA    = elimMk (to getA) (to getA) (to getA) (to getA) (to getA)
+instance Idea          (ModelKinds e) where getA    = elimMk (to getA) (to getA) (to getA) (to getA) (to getA) (to getA)
 -- | Finds the definition of the 'ModelKinds'.
-instance Definition    (ModelKinds e) where defn    = lensMk defn defn defn defn defn
+instance Definition    (ModelKinds e) where defn    = lensMk defn defn defn defn defn defn
 -- | Finds the domain of the 'ModelKinds'.
-instance ConceptDomain (ModelKinds e) where cdom    = elimMk (to cdom) (to cdom) (to cdom) (to cdom) (to cdom)
+instance ConceptDomain (ModelKinds e) where cdom    = elimMk (to cdom) (to cdom) (to cdom) (to cdom) (to cdom) (to cdom)
 -- | Rewrites the underlying model using 'ModelExpr'
 instance Express e => Express (ModelKinds e) where
-  express = elimMk (to express) (to express) (to express) (to express) (to express)
+  express = elimMk (to express) (to express) (to express) (to express) (to express) (to express)
 -- | Expose all expressions that need to be type-checked for theories that need
 --   expose 'Expr's.
 instance RequiresChecking (ModelKinds Expr) Expr Space where
@@ -140,6 +138,7 @@ instance RequiresChecking (ModelKinds Expr) Expr Space where
   requiredChecks (EquationalConstraints cs) = requiredChecks cs
   requiredChecks (EquationalModel qd)       = pure (qd ^. defnExpr, qd ^. typ)
   requiredChecks (EquationalRealm md)       = requiredChecks md
+  requiredChecks (ILPModel ilp)             = requiredChecks ilp
   requiredChecks (OthModel _)               = mempty
 
 -- TODO: implement MayHaveUnit for ModelKinds once we've sufficiently removed OthModels & RelationConcepts (else we'd be breaking too much of `stable`)
@@ -166,38 +165,40 @@ instance RequiresChecking (ModelKind Expr) Expr Space where
 elimMk :: Getter DifferentialModel a 
   -> Getter RelationConcept a -> Getter (ConstraintSet e) a
   -> Getter (QDefinition e) a -> Getter (MultiDefn e) a
-  -> ModelKinds e -> a
-elimMk f _ _ _ _ (NewDEModel q)            = q ^. f
-elimMk _ f _ _ _ (DEModel q)               = q ^. f
-elimMk _ _ f _ _ (EquationalConstraints q) = q ^. f
-elimMk _ _ _ f _ (EquationalModel q)       = q ^. f
-elimMk _ _ _ _ f (EquationalRealm q)       = q ^. f
-elimMk _ f _ _ _ (OthModel q)              = q ^. f
+  -> Getter IntLinProgModel a -> ModelKinds e -> a
+elimMk f _ _ _ _ _ (NewDEModel q)            = q ^. f
+elimMk _ f _ _ _ _ (DEModel q)               = q ^. f
+elimMk _ _ f _ _ _ (EquationalConstraints q) = q ^. f
+elimMk _ _ _ f _ _ (EquationalModel q)       = q ^. f
+elimMk _ _ _ _ f _ (EquationalRealm q)       = q ^. f
+elimMk _ _ _ _ _ f (ILPModel q)              = q ^. f
+elimMk _ f _ _ _ _ (OthModel q)              = q ^. f
 
 -- | Map into internal representations of ModelKinds
 setMk :: ModelKinds e
   -> Setter' DifferentialModel a
   -> Setter' RelationConcept a -> Setter' (ConstraintSet e) a
   -> Setter' (QDefinition e) a -> Setter' (MultiDefn e) a
-  -> a -> ModelKinds e
-setMk (NewDEModel q)            f _ _ _ _ x = NewDEModel            $ set f x q
-setMk (DEModel q)               _ f _ _ _ x = DEModel               $ set f x q
-setMk (EquationalConstraints q) _ _ f _ _ x = EquationalConstraints $ set f x q
-setMk (EquationalModel q)       _ _ _ f _ x = EquationalModel       $ set f x q
-setMk (EquationalRealm q)       _ _ _ _ f x = EquationalRealm       $ set f x q
-setMk (OthModel q)              _ f _ _ _ x = OthModel              $ set f x q
+  -> Setter' IntLinProgModel a -> a -> ModelKinds e
+setMk (NewDEModel q)            f _ _ _ _ _ x = NewDEModel            $ set f x q
+setMk (DEModel q)               _ f _ _ _ _ x = DEModel               $ set f x q
+setMk (EquationalConstraints q) _ _ f _ _ _ x = EquationalConstraints $ set f x q
+setMk (EquationalModel q)       _ _ _ f _ _ x = EquationalModel       $ set f x q
+setMk (EquationalRealm q)       _ _ _ _ f _ x = EquationalRealm       $ set f x q
+setMk (ILPModel q)              _ _ _ _ _ f x = ILPModel              $ set f x q
+setMk (OthModel q)              _ f _ _ _ _ x = OthModel              $ set f x q
 
 -- | Make a 'Lens' for 'ModelKinds'.
 lensMk :: forall e a.
      Lens' DifferentialModel a
   -> Lens' RelationConcept a -> Lens' (ConstraintSet e) a 
   -> Lens' (QDefinition e) a -> Lens' (MultiDefn e) a
-  -> Lens' (ModelKinds e) a
-lensMk ld lr lcs lq lmd = lens g s
+  -> Lens' IntLinProgModel a -> Lens' (ModelKinds e) a
+lensMk ld lr lcs lq lmd lilp = lens g s
     where g :: ModelKinds e -> a
-          g = elimMk ld lr lcs lq lmd
+          g = elimMk ld lr lcs lq lmd lilp
           s :: ModelKinds e -> a -> ModelKinds e
-          s mk_ = setMk mk_ ld lr lcs lq lmd
+          s mk_ = setMk mk_ ld lr lcs lq lmd lilp
 
 -- | Extract a list of 'QDefinition's from a list of 'ModelKinds'.
 getEqModQds :: [ModelKind e] -> [QDefinition e]
