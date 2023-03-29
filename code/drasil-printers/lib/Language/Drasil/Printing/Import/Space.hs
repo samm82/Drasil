@@ -27,6 +27,8 @@ space _  (Actor s)      = P.Ident s
 space sm (DiscreteD l)  = P.Fenced P.Curly P.Curly $ P.Row $ intersperse (P.MO P.Comma) $ map (flip expr sm . dbl) l -- [Double]
 space _  (DiscreteS l)  = P.Fenced P.Curly P.Curly $ P.Row $ intersperse (P.MO P.Comma) $ map P.Str l --ex. let Meal = {"breakfast", "lunch", "dinner"}
 space _  (Enum l)       = P.Fenced P.Curly P.Curly $ P.Row $ intersperse (P.MO P.Comma) $ map P.Label l -- like DiscreteS, but without quotations
+space sm (Tuple l)      = P.Row [P.Label "tuple of", P.Fenced P.Paren P.Paren
+                            $ P.Row $ intersperse (P.MO P.Comma) $ map (\(x,y) -> P.Row [P.Label x, P.MO P.IsIn, space sm y]) l]
 space _  Void           = error "Void not translated"
 space sm (Function i t) = P.Row $
   intersperse (P.MO P.Cross) (map (space sm) $ toList i) ++  -- AxBxC...xY

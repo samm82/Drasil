@@ -1,17 +1,19 @@
 module Drasil.ChemCode.Quantities where
 
+import Control.Lens ((^.))
+
 import Language.Drasil hiding (matrix)
 import Language.Drasil.ShortHands
 
-import Data.Drasil.Concepts.Chemistry (element)
+import Data.Drasil.Concepts.Chemistry (compound, element)
 
 inputs :: [QuantityDict]
 inputs = [r]
 
 quants :: [QuantityDict]
-quants = inputs ++ [aMat, bVec, cVec, xVec, zeroVec, elemT]
+quants = inputs ++ [aMat, bVec, cVec, xVec, zeroVec, elemT, compT]
 
-r, aMat, bVec, cVec, xVec, zeroVec, elemT :: QuantityDict
+r, aMat, bVec, cVec, xVec, zeroVec, elemT, compT :: QuantityDict
 
 r = vcSt "r" (nounPhraseSP "representation of a chemical equation")
   (autoStage lR) String -- FIXME: should this be a string?
@@ -37,3 +39,7 @@ elemT = vcSt "elemT" (nounPhraseSent $ phrase element +:+ S "data type")
          "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv",
          "Ts", "Og"])
   -- FIXME: move to drasil-data
+
+compT = vcSt "compT" (nounPhraseSent $ phrase compound +:+ S "data type")
+  (autoStage cC)
+  (Tuple [("elem", elemT ^. typ), ("count", Real)])
