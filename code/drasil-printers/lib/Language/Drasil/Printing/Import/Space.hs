@@ -33,6 +33,7 @@ space sm (Tuple l)      = P.Row [P.Label "tuple of", P.Spc P.Thin, P.Fenced P.Pa
 space sm (Sequence l)   = P.Row [P.Label "sequence of", P.Spc P.Thin, space sm l]
 space _  Element        = P.MO P.Element
 space _  Compound       = P.MO P.Compound
+space _  Reaction       = P.MO P.Reaction
 space _  Void           = error "Void not translated"
 space sm (Function i t) = P.Row $
   intersperse (P.MO P.Cross) (map (space sm) $ toList i) ++  -- AxBxC...xY

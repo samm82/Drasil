@@ -47,6 +47,7 @@ data Space =
   | Sequence Space
   | Element
   | Compound
+  | Reaction
   | Function (NE.NonEmpty Primitive) Primitive
   | Void
   deriving (Eq, Show)

@@ -128,6 +128,7 @@ opsDoc Natural = text "natural numbers"
 opsDoc Boolean = text "booleans"
 opsDoc Element = text "elements"
 opsDoc Compound = text "compounds"
+opsDoc Reaction = text "reactions"
 opsDoc Comma = comma <> space
 opsDoc Prime = text "'"
 opsDoc Log = text "log"
