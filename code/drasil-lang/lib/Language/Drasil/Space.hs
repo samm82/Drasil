@@ -44,6 +44,7 @@ data Space =
   | DiscreteS [String] --ex. let Meal = {"breakfast", "lunch", "dinner"}
   | Enum [String] --ex. like DiscreteS, but renders without quotations
   | Tuple [(String, Space)]
+  | Sequence Space
   | Function (NE.NonEmpty Primitive) Primitive
   | Void
   deriving (Eq, Show)
@@ -110,5 +111,6 @@ isBasicNumSpace DiscreteD {} = False
 isBasicNumSpace DiscreteS {} = False
 isBasicNumSpace Enum {}      = False
 isBasicNumSpace Tuple {}     = False
+isBasicNumSpace Sequence {}  = False
 isBasicNumSpace Function {}  = False
 isBasicNumSpace Void         = False

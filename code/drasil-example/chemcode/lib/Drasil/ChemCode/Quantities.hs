@@ -42,4 +42,4 @@ elemT = vcSt "elemT" (nounPhraseSent $ phrase element +:+ S "data type")
 
 compT = vcSt "compT" (nounPhraseSent $ phrase compound +:+ S "data type")
   (autoStage cC)
-  (Tuple [("elem", elemT ^. typ), ("count", Real)])
+  (Sequence $ Tuple [("elem", elemT ^. typ), ("count", Real)])
