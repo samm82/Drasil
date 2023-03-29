@@ -9,9 +9,9 @@ inputs :: [QuantityDict]
 inputs = [r]
 
 quants :: [QuantityDict]
-quants = inputs ++ [aMat, bVec, cVec, xVec, zeroVec, elemT, compT, reacT]
+quants = inputs ++ [aMat, bVec, cVec, xVec, zeroVec, genE, genC, count, elemT, compT, reacT]
 
-r, aMat, bVec, cVec, xVec, zeroVec, elemT, compT, reacT :: QuantityDict
+r, aMat, bVec, cVec, xVec, zeroVec, genE, genC, count, elemT, compT, reacT :: QuantityDict
 
 r = vcSt "r" (nounPhraseSP "representation of a chemical equation")
   (autoStage lR) String -- FIXME: should this be a string?
@@ -22,6 +22,13 @@ cVec = vc "cVec" (nounPhraseSP "generic vector") (vec lC) (Vect Real)
 xVec = vc "xVec" (nounPhraseSP "generic vector") (vec lX) (Vect Integer)
 
 zeroVec = vc "zeroVec" (nounPhraseSP "zero vector") (vec $ variable "0") (Vect Integer)
+
+genE = vc "genE" (nounPhraseSent $ S "generic" +:+ phrase element) lE Element
+genC = vc "genC" (nounPhraseSent $ S "generic" +:+ phrase compound) lC Compound
+
+count = vc "count"
+  (nounPhraseSent $ foldlSent_ [S "count of an", phrase element, S "in a", phrase compound])
+  (label "count") (mkFunction [Element, Compound] Real)
 
 elemT = vcSt "elemT" (nounPhraseSent $ phrase element +:+ S "data type")
   (autoStage cE)

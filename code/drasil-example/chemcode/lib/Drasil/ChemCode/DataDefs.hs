@@ -7,11 +7,21 @@ import Theory.Drasil
 
 import Data.Drasil.Citations (elemListWiki, smithChemSpec)
 import Data.Drasil.Concepts.Chemistry (compound, element, reaction)
+import Data.Drasil.Concepts.Documentation (output_)
 
-import Drasil.ChemCode.Quantities (compT, elemT, reacT)
+import Drasil.ChemCode.Quantities (compT, count, elemT, genC, genE, reacT)
 
 dds :: [DataDefinition]
-dds = [elementDD, compoundDD, reactionDD]
+dds = [countDD, elementDD, compoundDD, reactionDD]
+
+countDD :: DataDefinition
+countDD = ddENoRefs countExpr Nothing "countFunc"
+  [foldlSent_ [S "The", phrase output_, S "represents the number of atoms of a given",
+    phrase element, ch genE, sParen (S "of type" +:+ (eS $ space $ genE ^. typ)), S "in a given",
+    phrase compound, ch genC, sParen (S "of type" +:+ (eS $ space $ genC ^. typ))]]
+
+countExpr :: SimpleQDef
+countExpr = mkFuncDefByQ count [genE, genC] $ sy genE `addRe` sy genC
 
 elementDD :: DataDefinition
 elementDD = ddME elementExpr [dRef smithChemSpec] Nothing "elementType"

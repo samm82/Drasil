@@ -50,9 +50,15 @@ $\symbf{b}$ & Generic vector & --
 \\
 $C$ & Compound data type & --
 \\
+$c$ & Generic compound & --
+\\
 $\symbf{c}$ & Generic vector & --
 \\
+$\text{count}$ & Count of an element in a compound & --
+\\
 $E$ & Element data type & --
+\\
+$e$ & Generic element & --
 \\
 $R$ & Reaction data type & --
 \\
@@ -161,6 +167,40 @@ RefBy &
 \label{Sec:DDs}
 This section collects and defines all the data needed to build the instance models.
 
+\vspace{\baselineskip}
+\noindent
+\begin{minipage}{\textwidth}
+\begin{tabular}{>{\raggedright}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.82\textwidth}}
+\toprule \textbf{Refname} & \textbf{DD:countFunc}
+\phantomsection 
+\label{DD:countFunc}
+\\ \midrule \\
+Label & Count of an element in a compound
+        
+\\ \midrule \\
+Symbol & $\text{count}$
+         
+\\ \midrule \\
+Equation & \begin{displaymath}
+           \text{count}=e+c
+           \end{displaymath}
+\\ \midrule \\
+Description & \begin{symbDescription}
+              \item{$\text{count}$ is the count of an element in a compound (Unitless)}
+              \item{$e$ is the generic element (Unitless)}
+              \item{$c$ is the generic compound (Unitless)}
+              \end{symbDescription}
+\\ \midrule \\
+Notes & The output represents the number of atoms of a given element $e$ (of type $E$) in a given compound $c$ (of type $C$)
+        
+\\ \midrule \\
+Source & --
+         
+\\ \midrule \\
+RefBy & 
+\\ \bottomrule
+\end{tabular}
+\end{minipage}
 \vspace{\baselineskip}
 \noindent
 \begin{minipage}{\textwidth}
