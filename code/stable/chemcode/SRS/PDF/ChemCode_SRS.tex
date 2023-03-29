@@ -185,8 +185,8 @@ Symbol & $\text{count}$
 \\ \midrule \\
 Equation & \begin{displaymath}
            \text{count}=\begin{cases}
-                        {t_{C}}, & {t_{C}}\in{}c\\
-                        0, & \neg{}{t_{C}}\in{}c
+                        {t_{C}}_{1}, & {t_{C}}\in{}c\land{}{t_{C}}_{0}=e\\
+                        0, & \neg{}{t_{C}}\in{}c\land{}{t_{C}}_{0}=e
                         \end{cases}
            \end{displaymath}
 \\ \midrule \\
@@ -194,6 +194,7 @@ Description & \begin{symbDescription}
               \item{$\text{count}$ is the count of an element in a compound (Unitless)}
               \item{${t_{C}}$ is the generic tuple of a compound (Unitless)}
               \item{$c$ is the generic compound (Unitless)}
+              \item{$e$ is the generic element (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
 Notes & The output represents the number of atoms of a given element $e$ (of type $E$) in a given compound $c$ (of type $C$)

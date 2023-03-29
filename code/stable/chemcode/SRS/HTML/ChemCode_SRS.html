@@ -331,8 +331,8 @@
                       <th>Equation</th>
                       <td>
                         \[\text{count}=\begin{cases}
-                                       {t_{C}}, & {t_{C}}\in{}c\\
-                                       0, & \neg{}{t_{C}}\in{}c
+                                       {t_{C}}_{1}, & {t_{C}}\in{}c\land{}{t_{C}}_{0}=e\\
+                                       0, & \neg{}{t_{C}}\in{}c\land{}{t_{C}}_{0}=e
                                        \end{cases}\]
                       </td>
                     </tr>
@@ -347,6 +347,7 @@
                             <em>t<sub>C</sub></em> is the generic tuple of a compound (Unitless)
                           </li>
                           <li><em>c</em> is the generic compound (Unitless)</li>
+                          <li><em>e</em> is the generic element (Unitless)</li>
                         </ul>
                       </td>
                     </tr>

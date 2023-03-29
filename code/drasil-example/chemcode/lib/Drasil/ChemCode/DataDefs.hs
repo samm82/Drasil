@@ -22,7 +22,8 @@ countDD = ddMENoRefs countExpr Nothing "countFunc"
 
 countExpr :: ModelQDef
 countExpr = mkFuncDefByQ count [genE, genC]
-  $ completeCase [(sy tupC, isMember (sy tupC) (sy genC)), (int 0, not_ $ isMember (sy tupC) (sy genC))]
+  $ completeCase [(access tupC 2, isMember (sy tupC) (sy genC) $&& (access tupC 1 $= sy genE)),
+                  (int 0, not_ $ isMember (sy tupC) (sy genC) $&& (access tupC 1 $= sy genE))]
 
 elementDD :: DataDefinition
 elementDD = ddME elementExpr [dRef smithChemSpec] Nothing "elementType"

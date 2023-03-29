@@ -85,6 +85,7 @@ expr (E.AssocA ao es)        = AssocA (assocArithOper ao) $ map expr es
 expr (E.AssocB bo es)        = AssocB (assocBoolOper bo) $ map expr es
 expr (E.C u)                 = C u
 expr (E.FCall u es)          = FCall u (map expr es)
+expr (E.TAccess u i)         = TAccess u i
 expr (E.Case c ces)          = Case c (map (bimap expr expr) ces)
 expr (E.Matrix es)           = Matrix $ map (map expr) es
 expr (E.UnaryOp u e)         = UnaryOp (uFunc u) (expr e)

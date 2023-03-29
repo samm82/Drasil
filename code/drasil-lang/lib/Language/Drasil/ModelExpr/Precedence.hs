@@ -87,6 +87,7 @@ mePrec (AssocB op _)          = precB op
 mePrec C{}                    = 500
 mePrec Deriv{}                = prec2Arith Frac
 mePrec FCall{}                = 210
+mePrec TAccess{}              = 215
 mePrec Case{}                 = 200
 mePrec Matrix{}               = 220
 mePrec (UnaryOp fn _)         = prec1 fn
