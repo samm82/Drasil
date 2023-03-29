@@ -1,7 +1,5 @@
 module Drasil.ChemCode.Quantities where
 
-import Control.Lens ((^.))
-
 import Language.Drasil hiding (matrix)
 import Language.Drasil.ShortHands
 
@@ -42,4 +40,4 @@ elemT = vcSt "elemT" (nounPhraseSent $ phrase element +:+ S "data type")
 
 compT = vcSt "compT" (nounPhraseSent $ phrase compound +:+ S "data type")
   (autoStage cC)
-  (Sequence $ Tuple [("elem", elemT ^. typ), ("count", Real)])
+  (Sequence $ Tuple [("elem", Element), ("count", Real)])

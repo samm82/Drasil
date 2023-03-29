@@ -126,6 +126,7 @@ opsDoc Real = text "real numbers"
 opsDoc Rational = text "rational numbers"
 opsDoc Natural = text "natural numbers"
 opsDoc Boolean = text "booleans"
+opsDoc Element = text "elements"
 opsDoc Comma = comma <> space
 opsDoc Prime = text "'"
 opsDoc Log = text "log"
