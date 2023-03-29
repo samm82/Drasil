@@ -9,9 +9,9 @@ inputs :: [QuantityDict]
 inputs = [r]
 
 quants :: [QuantityDict]
-quants = inputs ++ [aMat, bVec, cVec, xVec, zeroVec, genE, genC, count, elemT, compT, reacT]
+quants = inputs ++ [aMat, bVec, cVec, xVec, zeroVec, genE, genC, tupC, count, elemT, compT, reacT]
 
-r, aMat, bVec, cVec, xVec, zeroVec, genE, genC, count, elemT, compT, reacT :: QuantityDict
+r, aMat, bVec, cVec, xVec, zeroVec, genE, genC, tupC, count, elemT, compT, reacT :: QuantityDict
 
 r = vcSt "r" (nounPhraseSP "representation of a chemical equation")
   (autoStage lR) String -- FIXME: should this be a string?
@@ -25,6 +25,11 @@ zeroVec = vc "zeroVec" (nounPhraseSP "zero vector") (vec $ variable "0") (Vect I
 
 genE = vc "genE" (nounPhraseSent $ S "generic" +:+ phrase element) lE Element
 genC = vc "genC" (nounPhraseSent $ S "generic" +:+ phrase compound) lC Compound
+
+compoundTuple :: Space
+compoundTuple = Tuple [("elem", Element), ("count", Real)]
+
+tupC = vc "tupC" (nounPhraseSent $ S "generic tuple of a" +:+ phrase compound) (sub lT cC) compoundTuple
 
 count = vc "count"
   (nounPhraseSent $ foldlSent_ [S "count of an", phrase element, S "in a", phrase compound])
@@ -46,8 +51,7 @@ elemT = vcSt "elemT" (nounPhraseSent $ phrase element +:+ S "data type")
   -- FIXME: move to drasil-data
 
 compT = vcSt "compT" (nounPhraseSent $ phrase compound +:+ S "data type")
-  (autoStage cC)
-  (Sequence $ Tuple [("elem", Element), ("count", Real)])
+  (autoStage cC) (Sequence compoundTuple)
 
 reacT = vcSt "reacT" (nounPhraseSent $ phrase reaction +:+ S "data type")
   (autoStage cR)

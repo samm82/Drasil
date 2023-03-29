@@ -147,6 +147,11 @@
                   <td>--</td>
                 </tr>
                 <tr>
+                  <td><em>t<sub>C</sub></em></td>
+                  <td>Generic tuple of a compound</td>
+                  <td>--</td>
+                </tr>
+                <tr>
                   <td><em><b>x</b></em></td>
                   <td>Generic vector</td>
                   <td>--</td>
@@ -324,7 +329,12 @@
                     </tr>
                     <tr>
                       <th>Equation</th>
-                      <td>\[\text{count}=e+c\]</td>
+                      <td>
+                        \[\text{count}=\begin{cases}
+                                       {t_{C}}, & {t_{C}}\in{}c\\
+                                       0, & \neg{}{t_{C}}\in{}c
+                                       \end{cases}\]
+                      </td>
                     </tr>
                     <tr>
                       <th>Description</th>
@@ -333,7 +343,9 @@
                           <li>
                             <em>count</em> is the count of an element in a compound (Unitless)
                           </li>
-                          <li><em>e</em> is the generic element (Unitless)</li>
+                          <li>
+                            <em>t<sub>C</sub></em> is the generic tuple of a compound (Unitless)
+                          </li>
                           <li><em>c</em> is the generic compound (Unitless)</li>
                         </ul>
                       </td>

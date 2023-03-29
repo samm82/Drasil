@@ -72,7 +72,7 @@ data UFuncVN = Norm | Dim
   deriving Eq
 
 -- | Statements involving 2 arguments.
-data StatBinOp = Defines
+data StatBinOp = Defines | IsMember
   deriving Eq
 
 -- | @Value -> Space -> Bool@ operators.

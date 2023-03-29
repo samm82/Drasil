@@ -37,6 +37,9 @@ class ModelExprC r where
 
   -- | One expression is "defined" by another.
   defines :: r -> r -> r
+
+  -- | Check if a value belongs to a collection.
+  isMember :: r -> r -> r
   
   -- | Space literals.
   space :: Space -> r
@@ -64,6 +67,8 @@ instance ModelExprC ModelExpr where
     | otherwise = error "non-positive argument to derivative"
 
   defines = StatBinaryOp Defines
+
+  isMember a c = StatBinaryOp IsMember a c
 
   space = Spc
 
