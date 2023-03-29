@@ -44,6 +44,8 @@ The symbols used in this document are summarized in the \hyperref[Table:ToS]{Tab
 \endhead
 $\symbf{0}$ & Zero vector & --
 \\
+$\symbf{1}$ & Unary vector & --
+\\
 $\symbf{A}$ & Generic matrix & --
 \\
 $\symbf{b}$ & Generic vector & --
@@ -51,6 +53,8 @@ $\symbf{b}$ & Generic vector & --
 $\symbf{c}$ & Generic vector & --
 \\
 $E$ & Element data type & --
+\\
+$\symbf{E}$ & Matrix representation of a chemical equation & --
 \\
 $r$ & Representation of a chemical equation & --
 \\
@@ -192,6 +196,43 @@ Notes & A type representing each element from \cite{elemListWiki}
         
 \\ \midrule \\
 Source & \cite{smithChemSpec}
+         
+\\ \midrule \\
+RefBy & 
+\\ \bottomrule
+\end{tabular}
+\end{minipage}
+\subsubsection{Instance Models}
+\label{Sec:IMs}
+This section transforms the problem defined in the \hyperref[Sec:ProbDesc]{problem description} into one which is expressed in mathematical terms. It uses concrete symbols defined in the \hyperref[Sec:DDs]{data definitions} to replace the abstract symbols in the models identified in \hyperref[Sec:TMs]{theoretical models} and \hyperref[Sec:GDs]{general definitions}.
+
+\vspace{\baselineskip}
+\noindent
+\begin{minipage}{\textwidth}
+\begin{tabular}{>{\raggedright}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.82\textwidth}}
+\toprule \textbf{Refname} & \textbf{IM:chemEqIntLinProg}
+\phantomsection 
+\label{IM:chemEqIntLinProg}
+\\ \midrule \\
+Label & Integer linear program for a chemical equation
+        
+\\ \midrule \\
+Input & $\symbf{E}$
+        
+\\ \midrule \\
+Output & $\symbf{x}$
+         
+\\ \midrule \\
+Equation & \begin{displaymath}
+           \symbf{1}\cdot{}\symbf{x}
+           \end{displaymath}
+\\ \midrule \\
+Description & \begin{symbDescription}
+              \item{$\symbf{1}$ is the unary vector (Unitless)}
+              \item{$\symbf{x}$ is the generic vector (Unitless)}
+              \end{symbDescription}
+\\ \midrule \\
+Source & --
          
 \\ \midrule \\
 RefBy & 
