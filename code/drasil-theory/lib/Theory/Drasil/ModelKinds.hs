@@ -6,8 +6,8 @@ module Theory.Drasil.ModelKinds (
   -- * Types
   ModelKind(..), ModelKinds(..),
   -- * Constructors
-  newDEModel, deModel, equationalConstraints, equationalModel, equationalRealm, othModel,
-  newDEModel', deModel', equationalConstraints', equationalModel', equationalRealm', othModel',
+  newDEModel, deModel, equationalConstraints, equationalModel, equationalRealm, ilpModel, othModel,
+  newDEModel', deModel', equationalConstraints', equationalModel', equationalRealm', ilpModel', othModel',
   equationalModelU, equationalModelN, equationalRealmU, equationalRealmN,
   -- * Lenses
   setMk, elimMk, lensMk,
@@ -108,6 +108,14 @@ equationalRealmU u md = MK (EquationalRealm md) (mkUid u) (md ^. term)
 -- | Smart constructor for 'EquationalRealm's, deriving UID from the 'MultiDefn'
 equationalRealmN :: NP -> MultiDefn e -> ModelKind e
 equationalRealmN n md = MK (EquationalRealm md) (md ^. uid) n
+
+-- | Smart constructor for 'ILPModel's
+ilpModel :: String -> NP -> IntLinProgModel -> ModelKind e
+ilpModel u n ilp = MK (ILPModel ilp) (mkUid u) n
+
+-- | Smart constructor for 'ILPModel's, deriving UID+Term from the 'IntLinProgModel'
+ilpModel' :: IntLinProgModel -> ModelKind e
+ilpModel' ilp = MK (ILPModel ilp) (ilp ^. uid) (ilp ^. term)
 
 -- | Smart constructor for 'OthModel's
 othModel :: String -> NP -> RelationConcept -> ModelKind Expr

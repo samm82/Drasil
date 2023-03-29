@@ -7,7 +7,8 @@ module Language.Drasil.Chunk.IntLinProgModel (
   -- * Input Language
   -- ($^^), ($*), ($+),
   -- * Constructors
-  formCanonILP, maxILP, minILP
+  -- formCanonILP,
+  maxILP, minILP
   -- makeAODESolverFormat, makeAIVP, makeASystemDE, makeASingleDE
 ) where
 
@@ -18,8 +19,7 @@ import qualified Data.List.NonEmpty as NE
 
 import Language.Drasil.Chunk.Concept (ConceptChunk, dcc)
 -- import Language.Drasil.Chunk.Constrained (ConstrConcept)
-import Language.Drasil.Chunk.DefinedQuantity (DefinedQuantityDict)
--- import Language.Drasil.Chunk.Quantity (qw)
+import Language.Drasil.Chunk.Quantity (QuantityDict) -- qw
 -- import Language.Drasil.Chunk.Unital (UnitalChunk)
 import Language.Drasil.Classes (Express(..),
   ConceptDomain(..), Definition(..), Idea(..), NamedIdea(..))
@@ -29,8 +29,8 @@ import Language.Drasil.Expr.Lang (Expr(..))
 -- import Language.Drasil.ModelExpr.Class (ModelExprC(nthderiv, equiv))
 import Language.Drasil.ModelExpr.Convert (expr)
 import Language.Drasil.ModelExpr.Lang (ModelExpr)
--- import Language.Drasil.NounPhrase.Core (NP)
 import Language.Drasil.NounPhrase (cn')
+-- import Language.Drasil.NounPhrase.Core (NP)
 -- import Language.Drasil.Sentence (Sentence)
 import Language.Drasil.Space (Space, HasSpace(..), getInnerSpace)
 import Language.Drasil.UID (HasUID(uid))
@@ -87,9 +87,9 @@ data IntLinProgModel = ILP {
   -- | whether it is a minimization or a maximization problem
   _ext :: Extremum,
   -- | the value to solve for
-  _x :: DefinedQuantityDict,
+  _x :: QuantityDict,
   -- | the weight used in the objective function
-  _c :: DefinedQuantityDict,
+  _c :: QuantityDict,
   -- | constraints on x
   _cons :: NE.NonEmpty Expr
 }
@@ -123,14 +123,14 @@ formCanonILP ilp = expr $ makeObjFunc ilp
 makeObjFunc :: IntLinProgModel -> Expr
 makeObjFunc ilp = ($.) (sy $ ilp ^. c) (sy $ ilp ^. x)
 
--- | Smart constructor for minimum ILPS
-minILP :: DefinedQuantityDict -> DefinedQuantityDict -> NE.NonEmpty Expr -> IntLinProgModel
+-- | Smart constructor for minimum ILPs
+minILP :: QuantityDict -> QuantityDict -> NE.NonEmpty Expr -> IntLinProgModel
 minILP = ILP (dcc "minILP" (cn' s) s) Min
   where 
     s = "minimum integer linear program"
 
--- | Smart constructor for maximum ILPS
-maxILP :: DefinedQuantityDict -> DefinedQuantityDict -> NE.NonEmpty Expr -> IntLinProgModel
+-- | Smart constructor for maximum ILPs
+maxILP :: QuantityDict -> QuantityDict -> NE.NonEmpty Expr -> IntLinProgModel
 maxILP = ILP (dcc "maxILP" (cn' s) s) Max
   where 
     s = "maximum integer linear program"

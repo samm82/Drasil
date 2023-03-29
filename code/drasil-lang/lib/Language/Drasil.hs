@@ -94,7 +94,7 @@ module Language.Drasil (
   , DifferentialModel(..), ODESolverFormat(..), InitialValueProblem(..), ($^^),($*), ($+)
   , makeAODESolverFormat, makeAIVP, formEquations, makeASystemDE, makeASingleDE
   -- Language.Drasil.Chunk.IntLinProgModel
-  , IntLinProgModel(..)
+  , IntLinProgModel(..), maxILP, minILP
   -- Language.Drasil.Chunk.Relation
   , RelationConcept, makeRC, addRelToCC
 
@@ -350,7 +350,7 @@ import Language.Drasil.Chunk.DifferentialModel (DifferentialModel(..), ODESolver
 import Language.Drasil.Chunk.Eq (QDefinition, fromEqn, fromEqn', fromEqnSt,
   fromEqnSt', fromEqnSt'', mkQDefSt, mkQuantDef, mkQuantDef', ec,
   mkFuncDef, mkFuncDef', mkFuncDefByQ)
-import Language.Drasil.Chunk.IntLinProgModel (IntLinProgModel(..))
+import Language.Drasil.Chunk.IntLinProgModel (IntLinProgModel(..), maxILP, minILP)
 import Language.Drasil.Chunk.NamedIdea
 import Language.Drasil.Chunk.Quantity
 import Language.Drasil.Chunk.Relation (RelationConcept, makeRC, addRelToCC)
