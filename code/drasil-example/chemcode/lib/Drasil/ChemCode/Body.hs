@@ -67,7 +67,7 @@ mkSRS = [TableOfContents,
         [
         Assumptions, 
         TMs [] (Label : stdFields)
-        -- , GDs [] [] HideDerivation
+        , GDs [] [] HideDerivation
         , DDs [] ([Label, Symbol] ++ stdFields) HideDerivation -- FIXME: may want to change later
                                 -- FIXME: may want to add Units later
         -- , IMs [instModIntro] ([Label, Input, Output, InConstraints, OutConstraints] ++ stdFields) HideDerivation
@@ -80,7 +80,7 @@ mkSRS = [TableOfContents,
       [ FReqsSub EmptyS [],
         NonFReqsSub
       ],
-  -- LCsSec,
+  LCsSec,
   UCsSec,
   TraceabilitySec $ TraceabilityProg $ traceMatStandard si,
   -- AuxConstntSec $ AuxConsProg glassBR auxiliaryConstants,  
