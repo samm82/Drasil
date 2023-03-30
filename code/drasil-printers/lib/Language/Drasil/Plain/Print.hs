@@ -54,6 +54,7 @@ pExprDoc _ (Dbl d) = double d
 pExprDoc _ (Int i) = integer i
 pExprDoc _ (Str s) = text s
 pExprDoc f (Case cs) = caseDoc f cs
+pExprDoc _ ILP{} = text "FIXME: ILP"
 pExprDoc f (Mtx rs) = mtxDoc f rs
 pExprDoc f (Row es) = hcat $ map (pExprDoc f) es
 pExprDoc _ (Ident s) = text $ toPlainName s

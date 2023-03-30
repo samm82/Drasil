@@ -224,12 +224,18 @@ Output & $\symbf{x}$
          
 \\ \midrule \\
 Equation & \begin{displaymath}
-           \symbf{1}\cdot{}\symbf{x}
+           \begin{aligned}
+            & \text{minimize} &  & \symbf{1}\cdot{}\symbf{x}\\
+            & \text{subject to} &  & \symbf{E} \symbf{x}=\symbf{0}\\
+            & \text{and} &  & \symbf{x}\gt{}\symbf{0}
+           \end{aligned}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
               \item{$\symbf{1}$ is the unary vector (Unitless)}
               \item{$\symbf{x}$ is the generic vector (Unitless)}
+              \item{$\symbf{E}$ is the matrix representation of a chemical equation (Unitless)}
+              \item{$\symbf{0}$ is the zero vector (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
 Source & --

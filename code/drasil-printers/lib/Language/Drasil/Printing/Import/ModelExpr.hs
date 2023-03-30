@@ -15,6 +15,7 @@ import Language.Drasil.Printing.PrintingInformation (PrintingInformation, ckdb, 
 
 import Control.Lens ((^.))
 import Data.List (intersperse)
+import qualified Data.List.NonEmpty as NE
 
 import Language.Drasil.Printing.Import.Literal (literal)
 import Language.Drasil.Printing.Import.Space (space)
@@ -132,6 +133,15 @@ modelExpr (Deriv n Total a b)        sm =
   let st = [P.Spc P.Thin, P.Ident "d"] in
     P.Div (P.Row (st ++ sup n ++ [modelExpr a sm]))
         (P.Row (st ++ [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) b] ++ sup n))
+modelExpr (ILP e o cs)               sm =
+  P.ILP $ (P.Label $ show e, modelExpr o sm) : (annotate $ NE.toList cs)
+  where
+    annotate []     = error "Attempting to use ILP modelExpr incorrectly"
+    annotate [c]    = [(P.Label "subject to", modelExpr c sm)]
+    annotate [c, d] = annotate [c] ++ [(P.Label "and", modelExpr d sm)]
+    annotate (c:ds) = (P.Label "subject to", P.Row [modelExpr c sm, P.MO P.Comma]) :
+      map (\x -> (P.Spc P.Thin, modelExpr x sm)) (init ds) ++
+      [(P.Label "and", modelExpr (last ds) sm)]
 modelExpr (C c)                      sm = symbol $ lookupC (sm ^. stg) (sm ^. ckdb) c
 modelExpr (FCall f [x])              sm =
   P.Row [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) f, parens $ modelExpr x sm]

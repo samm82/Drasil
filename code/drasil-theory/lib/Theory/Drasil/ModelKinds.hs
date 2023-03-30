@@ -111,11 +111,11 @@ equationalRealmN n md = MK (EquationalRealm md) (md ^. uid) n
 
 -- | Smart constructor for 'ILPModel's
 ilpModel :: String -> NP -> IntLinProgModel -> ModelKind e
-ilpModel u n ilp = MK (ILPModel ilp) (mkUid u) n
+ilpModel u n ilpm = MK (ILPModel ilpm) (mkUid u) n
 
 -- | Smart constructor for 'ILPModel's, deriving UID+Term from the 'IntLinProgModel'
 ilpModel' :: IntLinProgModel -> ModelKind e
-ilpModel' ilp = MK (ILPModel ilp) (ilp ^. uid) (ilp ^. term)
+ilpModel' ilpm = MK (ILPModel ilpm) (ilpm ^. uid) (ilpm ^. term)
 
 -- | Smart constructor for 'OthModel's
 othModel :: String -> NP -> RelationConcept -> ModelKind Expr
@@ -146,7 +146,7 @@ instance RequiresChecking (ModelKinds Expr) Expr Space where
   requiredChecks (EquationalConstraints cs) = requiredChecks cs
   requiredChecks (EquationalModel qd)       = pure (qd ^. defnExpr, qd ^. typ)
   requiredChecks (EquationalRealm md)       = requiredChecks md
-  requiredChecks (ILPModel ilp)             = requiredChecks ilp
+  requiredChecks (ILPModel ilpm)            = requiredChecks ilpm
   requiredChecks (OthModel _)               = mempty
 
 -- TODO: implement MayHaveUnit for ModelKinds once we've sufficiently removed OthModels & RelationConcepts (else we'd be breaking too much of `stable`)

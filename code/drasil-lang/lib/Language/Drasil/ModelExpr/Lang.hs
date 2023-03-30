@@ -4,6 +4,7 @@
 module Language.Drasil.ModelExpr.Lang where
 
 import Prelude hiding (sqrt)
+import qualified Data.List.NonEmpty as NE
 
 import Language.Drasil.Expr.Lang (Completeness)
 import Language.Drasil.Literal.Lang (Literal(..))
@@ -83,6 +84,14 @@ data SpaceBinOp = IsIn
 data DerivType = Part | Total
   deriving Eq
 
+-- | Determines the type of optimization problem.
+data Extremum = Min | Max
+  deriving Eq
+
+instance Show Extremum where
+  show Max = "maximize"
+  show Min = "minimize"
+
 -- | Expression language where all terms are supposed to have a meaning, but
 --   that meaning may not be that of a definite value. For example,
 --   specification expressions, especially with quantifiers, belong here.
@@ -108,6 +117,8 @@ data ModelExpr where
   FCall     :: UID -> [ModelExpr] -> ModelExpr
   -- | For multi-case expressions, each pair represents one case.
   Case      :: Completeness -> [(ModelExpr, ModelExpr)] -> ModelExpr
+  -- | For integer linear programs.
+  ILP       :: Extremum -> ModelExpr -> NE.NonEmpty ModelExpr -> ModelExpr
   -- | Represents a matrix of expressions.
   Matrix    :: [[ModelExpr]] -> ModelExpr
   

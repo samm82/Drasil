@@ -377,7 +377,13 @@
                     </tr>
                     <tr>
                       <th>Equation</th>
-                      <td>\[\symbf{1}\cdot{}\symbf{x}\]</td>
+                      <td>
+                        \[\begin{aligned}
+                           & \text{minimize} &  & \symbf{1}\cdot{}\symbf{x}\\
+                           & \text{subject to} &  & \symbf{E} \symbf{x}=\symbf{0}\\
+                           & \text{and} &  & \symbf{x}\gt{}\symbf{0}
+                          \end{aligned}\]
+                      </td>
                     </tr>
                     <tr>
                       <th>Description</th>
@@ -385,6 +391,10 @@
                         <ul class="hide-list-style-no-indent">
                           <li><em><b>1</b></em> is the unary vector (Unitless)</li>
                           <li><em><b>x</b></em> is the generic vector (Unitless)</li>
+                          <li>
+                            <em><b>E</b></em> is the matrix representation of a chemical equation (Unitless)
+                          </li>
+                          <li><em><b>0</b></em> is the zero vector (Unitless)</li>
                         </ul>
                       </td>
                     </tr>

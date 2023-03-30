@@ -2,11 +2,11 @@
 module Language.Drasil.ModelExpr.Class where
 
 import Prelude hiding (sqrt, log, sin, cos, tan, exp)
-
 import Control.Lens ((^.))
+import qualified Data.List.NonEmpty as NE
 
 import Language.Drasil.UID (HasUID(..))
-import Language.Drasil.ModelExpr.Lang (ModelExpr(..), DerivType(..),
+import Language.Drasil.ModelExpr.Lang (Extremum(..), ModelExpr(..), DerivType(..),
   SpaceBinOp(..), StatBinOp(..), AssocBoolOper(..), AssocArithOper(..))
 import Language.Drasil.Space (DomainDesc(..), RTopology(..), Space)
 import Language.Drasil.Symbol (Symbol, HasSymbol)
@@ -35,6 +35,9 @@ class ModelExprC r where
   -- | Gets the nthderivative of an 'ModelExpr' with respect to a 'Symbol'.
   nthderiv, nthpderiv :: (HasUID c, HasSymbol c) => Integer -> r -> c -> r
 
+  -- | Denotes an integer linear program.
+  ilp :: Extremum -> r -> NE.NonEmpty r -> r
+
   -- | One expression is "defined" by another.
   defines :: r -> r -> r
   
@@ -62,6 +65,8 @@ instance ModelExprC ModelExpr where
     | n > 0     = Deriv n Part e (c ^. uid)
     | n == 0    = Deriv 0 Total e (c ^. uid)
     | otherwise = error "non-positive argument to derivative"
+
+  ilp = ILP
 
   defines = StatBinaryOp Defines
 

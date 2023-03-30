@@ -13,7 +13,7 @@ ims = [chemEqIntLinProg]
 chemEqIntLinProg :: InstanceModel
 chemEqIntLinProg = imNoRefs
   (ilpModel "chemEqIntLinProg" (cn' "integer linear program for a chemical equation")
-    $ maxILP xVec unaryVec
+    $ minILP xVec unaryVec
       $ (sy eMat `mulRe` sy xVec $= sy zeroVec) NE.:| [sy xVec $> sy zeroVec])
       -- FIXME: ^ parentheses needed for precedence reasons?
   [qwUC eMat] -- FIXME: why should I need to convert the Unitals to QuantityDicts?

@@ -26,9 +26,9 @@ import Language.Drasil.Classes (Express(..),
 import Language.Drasil.Expr.Class (ExprC(..), ($.)) --, columnVec)
 import Language.Drasil.Expr.Lang (Expr(..))
 -- import Language.Drasil.Literal.Class (LiteralC(exactDbl, int))
--- import Language.Drasil.ModelExpr.Class (ModelExprC(nthderiv, equiv))
+import Language.Drasil.ModelExpr.Class (ModelExprC(ilp))
 import Language.Drasil.ModelExpr.Convert (expr)
-import Language.Drasil.ModelExpr.Lang (ModelExpr)
+import Language.Drasil.ModelExpr.Lang (Extremum(..), ModelExpr)
 import Language.Drasil.NounPhrase (cn')
 -- import Language.Drasil.NounPhrase.Core (NP)
 -- import Language.Drasil.Sentence (Sentence)
@@ -78,8 +78,6 @@ import Language.Drasil.WellTyped (RequiresChecking (requiredChecks))
 -- ($+) :: [Term] -> Term -> LHS
 -- ($+) xs x  = xs ++ [x]
 
-data Extremum = Min | Max
-
 -- | Describe the structural content of a system of linear ODEs with six necessary fields
 data IntLinProgModel = ILP {
   -- | meta data
@@ -91,7 +89,7 @@ data IntLinProgModel = ILP {
   -- | the weight used in the objective function
   _c :: QuantityDict,
   -- | constraints on x
-  _cons :: NE.NonEmpty Expr
+  _cons :: NE.NonEmpty ModelExpr
 }
 makeLenses ''IntLinProgModel
 
@@ -108,29 +106,25 @@ instance Definition    IntLinProgModel where defn = ilpconc . defn
 -- | Finds the domain of the 'ConceptChunk' used to make the 'IntLinProgModel'.
 instance ConceptDomain IntLinProgModel where cdom = cdom . view ilpconc
 -- | Convert the 'IntLinProgModel' into the model expression language.
-instance Express       IntLinProgModel where express = formCanonILP
+instance Express       IntLinProgModel where express ilpm = ilp (ilpm ^. ext) (expr $ makeObjFunc ilpm) (ilpm ^. cons)
 
 instance RequiresChecking IntLinProgModel Expr Space where
-  requiredChecks ilp = [(makeObjFunc ilp, getInnerSpace $ ilp ^. (c . typ))] 
+  requiredChecks ilpm = [(makeObjFunc ilpm, getInnerSpace $ ilpm ^. (c . typ))] 
   --map (, dmo ^. (depVar . typ)) $ formEquations (coeffVects dm) (unknownVect dm) (constantVect dm) (_depVar dmo)
     --where dm = makeAODESolverFormat dmo
 
--- | Set the expression to be in canonical form
-formCanonILP :: IntLinProgModel -> ModelExpr
-formCanonILP ilp = expr $ makeObjFunc ilp
-
 -- | Helper for making the objective function (not exported)
 makeObjFunc :: IntLinProgModel -> Expr
-makeObjFunc ilp = ($.) (sy $ ilp ^. c) (sy $ ilp ^. x)
+makeObjFunc ilpm = ($.) (sy $ ilpm ^. c) (sy $ ilpm ^. x)
 
 -- | Smart constructor for minimum ILPs
-minILP :: QuantityDict -> QuantityDict -> NE.NonEmpty Expr -> IntLinProgModel
+minILP :: QuantityDict -> QuantityDict -> NE.NonEmpty ModelExpr -> IntLinProgModel
 minILP = ILP (dcc "minILP" (cn' s) s) Min
   where 
     s = "minimum integer linear program"
 
 -- | Smart constructor for maximum ILPs
-maxILP :: QuantityDict -> QuantityDict -> NE.NonEmpty Expr -> IntLinProgModel
+maxILP :: QuantityDict -> QuantityDict -> NE.NonEmpty ModelExpr -> IntLinProgModel
 maxILP = ILP (dcc "maxILP" (cn' s) s) Max
   where 
     s = "maximum integer linear program"

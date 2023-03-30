@@ -88,6 +88,7 @@ mePrec C{}                    = 500
 mePrec Deriv{}                = prec2Arith Frac
 mePrec FCall{}                = 210
 mePrec Case{}                 = 200
+mePrec ILP{}                  = 205
 mePrec Matrix{}               = 220
 mePrec (UnaryOp fn _)         = prec1 fn
 mePrec (UnaryOpB fn _)        = prec1B fn
