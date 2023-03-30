@@ -77,6 +77,7 @@ mkSRS = [TableOfContents,
       ],
   -- LCsSec,
   UCsSec,
+  TraceabilitySec $ TraceabilityProg $ traceMatStandard si,
   ReqrmntSec $
     ReqsProg
       [ FReqsSub EmptyS [],
