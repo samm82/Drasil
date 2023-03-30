@@ -201,6 +201,42 @@ RefBy &
 \\ \bottomrule
 \end{tabular}
 \end{minipage}
+\section{Requirements}
+\label{Sec:Requirements}
+This section provides the functional requirements, the tasks and behaviours that the software is expected to complete, and the non-functional requirements, the qualities that the software is expected to exhibit.
+
+\subsection{Functional Requirements}
+\label{Sec:FRs}
+This section provides the functional requirements, the tasks and behaviours that the software is expected to complete.
+
+\begin{itemize}
+\item[Input-Values:\phantomsection\label{inputValues}]{Input the values from \hyperref[Table:ReqInputs]{Tab:ReqInputs}.}
+\item[Convert-to-Matrix:\phantomsection\label{convertMatrix}]{Convert the inputted chemical equation to matrix form.}
+\item[Feasible-Output:\phantomsection\label{feasOut}]{If the inputted chemical equation is feasible, output its balanced form with the smallest positive integer coefficients possible.}
+\item[Infeasible-Output:\phantomsection\label{infeasOut}]{If the inputted chemical equation is infeasible, output a descriptive message.}
+\end{itemize}
+\begin{longtable}{l l l}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Units}
+\\
+\midrule
+\endhead
+$r$ & Representation of a chemical equation & --
+\\
+\bottomrule
+\caption{Required Inputs following \hyperref[inputValues]{FR:Input-Values}}
+\label{Table:ReqInputs}
+\end{longtable}
+\subsection{Non-Functional Requirements}
+\label{Sec:NFRs}
+This section provides the non-functional requirements, the qualities that the software is expected to exhibit.
+
+\begin{itemize}
+\item[Accurate:\phantomsection\label{accurate}]{Chemical equations are only useful if they are balanced, so computed coefficients should be exact.}
+\item[Verifiable:\phantomsection\label{verifiable}]{The code is tested with complete verification and validation plan.}
+\item[Reusable:\phantomsection\label{reusable}]{The code is modularized.}
+\item[Portable:\phantomsection\label{portable}]{The code is able to be run in different environments.}
+\end{itemize}
 \section{Unlikely Changes}
 \label{Sec:UCs}
 This section lists the unlikely changes to be made to the software.
@@ -351,42 +387,6 @@ For convenience, the following graphs can be found at the links below:
 \item{\hyperref{../../../../traceygraphs/chemcode/refvsref.svg}{}{}{TraceGraphRefvsRef}}
 \item{\hyperref{../../../../traceygraphs/chemcode/allvsr.svg}{}{}{TraceGraphAllvsR}}
 \item{\hyperref{../../../../traceygraphs/chemcode/allvsall.svg}{}{}{TraceGraphAllvsAll}}
-\end{itemize}
-\section{Requirements}
-\label{Sec:Requirements}
-This section provides the functional requirements, the tasks and behaviours that the software is expected to complete, and the non-functional requirements, the qualities that the software is expected to exhibit.
-
-\subsection{Functional Requirements}
-\label{Sec:FRs}
-This section provides the functional requirements, the tasks and behaviours that the software is expected to complete.
-
-\begin{itemize}
-\item[Input-Values:\phantomsection\label{inputValues}]{Input the values from \hyperref[Table:ReqInputs]{Tab:ReqInputs}.}
-\item[Convert-to-Matrix:\phantomsection\label{convertMatrix}]{Convert the inputted chemical equation to matrix form.}
-\item[Feasible-Output:\phantomsection\label{feasOut}]{If the inputted chemical equation is feasible, output its balanced form with the smallest positive integer coefficients possible.}
-\item[Infeasible-Output:\phantomsection\label{infeasOut}]{If the inputted chemical equation is infeasible, output a descriptive message.}
-\end{itemize}
-\begin{longtable}{l l l}
-\toprule
-\textbf{Symbol} & \textbf{Description} & \textbf{Units}
-\\
-\midrule
-\endhead
-$r$ & Representation of a chemical equation & --
-\\
-\bottomrule
-\caption{Required Inputs following \hyperref[inputValues]{FR:Input-Values}}
-\label{Table:ReqInputs}
-\end{longtable}
-\subsection{Non-Functional Requirements}
-\label{Sec:NFRs}
-This section provides the non-functional requirements, the qualities that the software is expected to exhibit.
-
-\begin{itemize}
-\item[Accurate:\phantomsection\label{accurate}]{Chemical equations are only useful if they are balanced, so computed coefficients should be exact.}
-\item[Verifiable:\phantomsection\label{verifiable}]{The code is tested with complete verification and validation plan.}
-\item[Reusable:\phantomsection\label{reusable}]{The code is modularized.}
-\item[Portable:\phantomsection\label{portable}]{The code is able to be run in different environments.}
 \end{itemize}
 \section{References}
 \label{Sec:References}

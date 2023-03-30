@@ -75,14 +75,14 @@ mkSRS = [TableOfContents,
         -- , CorrSolnPpties [probBr, stressDistFac] []
         ]
       ],
-  -- LCsSec,
-  UCsSec,
-  TraceabilitySec $ TraceabilityProg $ traceMatStandard si,
   ReqrmntSec $
     ReqsProg
       [ FReqsSub EmptyS [],
         NonFReqsSub
       ],
+  -- LCsSec,
+  UCsSec,
+  TraceabilitySec $ TraceabilityProg $ traceMatStandard si,
   -- AuxConstntSec $ AuxConsProg glassBR auxiliaryConstants,  
   Bibliography
   ]
