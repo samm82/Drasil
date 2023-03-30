@@ -61,14 +61,16 @@ mkSRS = [TableOfContents,
   SSDSec $
     SSDProg
       [
-        -- SSDProblem $ PDProg prob [termsAndDesc]
-        -- [ PhySysDesc glassBR physSystParts physSystFig []
-        -- , Goals goalInputs],
+        SSDProblem $ PDProg prob []
+        [ TermsAndDefs Nothing terms
+        -- , PhySysDesc glassBR physSystParts physSystFig []
+        -- , Goals goalInputs
+        ],
        SSDSolChSpec $ SCSProg
         [
         Assumptions, 
         TMs [] (Label : stdFields)
-        -- , GDs [] [] HideDerivation
+        , GDs [] [] HideDerivation
         , DDs [] ([Label, Symbol] ++ stdFields) HideDerivation -- FIXME: may want to change later
                                 -- FIXME: may want to add Units later
         , IMs [] ([Label, Input, Output] --, InConstraints, OutConstraints] 
@@ -82,7 +84,7 @@ mkSRS = [TableOfContents,
       [ FReqsSub EmptyS [],
         NonFReqsSub
       ],
-  -- LCsSec,
+  LCsSec,
   UCsSec,
   TraceabilitySec $ TraceabilityProg $ traceMatStandard si,
   -- AuxConstntSec $ AuxConsProg glassBR auxiliaryConstants,  
@@ -94,7 +96,7 @@ tSymbIntro = [TSPurpose, -- SymbConvention [Lit (nw chemistry)],
     SymbOrder -- VectorUnits
   ]
 
-justification, scope :: Sentence
+justification, scope, orgOfDocIntro, prob :: Sentence
 justification = foldlSent [atStart chemical, plural equation,
   S "are common ways of representing", phrase chemical, plural reaction,
   S "but they must be balanced" +:+. refS lund2023, -- to ensure the Law of
@@ -128,17 +130,23 @@ scope = foldlSent_ [
     ]
   ]
 
-orgOfDocIntro :: Sentence
 orgOfDocIntro = foldlSent [atStartNP (the organization), S "of this",
   phrase document, S "follows", phraseNP (the template), S "for an",
   getAcc Doc.srs, S "for", phrase sciCompS, S "proposed by",
   refS koothoor2013 `S.and_` refS smithLai2005]
 
+prob = foldlSent_ [S "balance", phrase chemical, plural equation,
+  S "with the smallest possible whole number coefficients",
+  S "so they can be useful for other computations"]
+
 symbolsAll :: [QuantityDict]
 symbolsAll = quants
 
 acronyms :: [CI]
-acronyms = [progName, Doc.srs, thModel, dataDefn, inModel] -- genDefn,
+acronyms = [progName, Doc.srs, thModel, dataDefn, inModel, requirement, unlikelyChg] -- genDefn,
+
+terms :: [ConceptChunk]
+terms = [compound, element, equation, product, reactant, reaction]
 
 si :: SystemInformation
 si =

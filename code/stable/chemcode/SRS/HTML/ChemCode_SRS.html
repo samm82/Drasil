@@ -53,10 +53,17 @@
             <a href=#Sec:SpecSystDesc>Specific System Description</a>
             <ul class="list">
               <li>
+                <a href=#Sec:ProbDesc>Problem Description</a>
+                <ul class="list">
+                  <li><a href=#Sec:TermDefs>Terminology and Definitions</a></li>
+                </ul>
+              </li>
+              <li>
                 <a href=#Sec:SolCharSpec>Solution Characteristics Specification</a>
                 <ul class="list">
                   <li><a href=#Sec:Assumps>Assumptions</a></li>
                   <li><a href=#Sec:TMs>Theoretical Models</a></li>
+                  <li><a href=#Sec:GDs>General Definitions</a></li>
                   <li><a href=#Sec:DDs>Data Definitions</a></li>
                   <li><a href=#Sec:IMs>Instance Models</a></li>
                 </ul>
@@ -70,6 +77,7 @@
               <li><a href=#Sec:NFRs>Non-Functional Requirements</a></li>
             </ul>
           </li>
+          <li><a href=#Sec:LCs>Likely Changes</a></li>
           <li><a href=#Sec:UCs>Unlikely Changes</a></li>
           <li>
             <a href=#Sec:TraceMatrices>Traceability Matrices and Graphs</a>
@@ -199,12 +207,20 @@
                   <td>Instance Model</td>
                 </tr>
                 <tr>
+                  <td>R</td>
+                  <td>Requirement</td>
+                </tr>
+                <tr>
                   <td>SRS</td>
                   <td>Software Requirements Specification</td>
                 </tr>
                 <tr>
                   <td>TM</td>
                   <td>Theoretical Model</td>
+                </tr>
+                <tr>
+                  <td>UC</td>
+                  <td>Unlikely Change</td>
                 </tr>
               </table>
               <p class="caption">Abbreviations and Acronyms</p>
@@ -260,6 +276,38 @@
         <p class="paragraph">
           This section first presents the problem description, which gives a high-level view of the problem to be solved. This is followed by the solution characteristics specification, which presents the assumptions, theories, and definitions that are used.
         </p>
+        <div id="Sec:ProbDesc">
+          <div class="subsection">
+            <h2>Problem Description</h2>
+            <p class="paragraph">
+              A system is needed to balance chemical equations with the smallest possible whole number coefficients so they can be useful for other computations.
+            </p>
+            <div id="Sec:TermDefs">
+              <div class="subsubsection">
+                <h3>Terminology and Definitions</h3>
+                <p class="paragraph">
+                  This subsection provides a list of terms that are used in the subsequent sections and their meaning, with the purpose of reducing ambiguity and making it easier to correctly understand the requirements.
+                </p>
+                <ul class="list">
+                  <li>
+                    Compound: A molecule made up of more than one atom, which may or may not be of different elements.
+                  </li>
+                  <li>
+                    Element: The group of all atoms with the same number of protons in the atomic nucleus. For example, all atoms with one proton are hydrogen atoms.
+                  </li>
+                  <li>Equation: A textual representation of a chemical reaction.</li>
+                  <li>Product: A substance formed by a chemical reaction.</li>
+                  <li>
+                    Reactant: A substance involved in and changed by a chemical reaction.
+                  </li>
+                  <li>
+                    Reaction: An interaction between different types of matter that results in at least one new substance being formed <a href=#lund2023>lund2023</a>.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
         <div id="Sec:SolCharSpec">
           <div class="subsection">
             <h2>Solution Characteristics Specification</h2>
@@ -362,6 +410,12 @@
                     </tr>
                   </table>
                 </div>
+              </div>
+            </div>
+            <div id="Sec:GDs">
+              <div class="subsubsection">
+                <h3>General Definitions</h3>
+                <p class="paragraph">There are no general definitions.</p>
               </div>
             </div>
             <div id="Sec:DDs">
@@ -715,6 +769,15 @@
             </div>
           </div>
         </div>
+      </div>
+    </div>
+    <div id="Sec:LCs">
+      <div class="section">
+        <h1>Likely Changes</h1>
+        <p class="paragraph">
+          This section lists the likely changes to be made to the software.
+        </p>
+        <div class="list"></div>
       </div>
     </div>
     <div id="Sec:UCs">

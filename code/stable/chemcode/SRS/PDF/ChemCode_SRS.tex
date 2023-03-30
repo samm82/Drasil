@@ -92,9 +92,13 @@ DD & Data Definition
 \\
 IM & Instance Model
 \\
+R & Requirement
+\\
 SRS & Software Requirements Specification
 \\
 TM & Theoretical Model
+\\
+UC & Unlikely Change
 \\
 \bottomrule
 \caption{Abbreviations and Acronyms}
@@ -126,6 +130,22 @@ The \hyperref[Sec:GoalStmt]{goal statements} are refined to the theoretical mode
 \label{Sec:SpecSystDesc}
 This section first presents the problem description, which gives a high-level view of the problem to be solved. This is followed by the solution characteristics specification, which presents the assumptions, theories, and definitions that are used.
 
+\subsection{Problem Description}
+\label{Sec:ProbDesc}
+A system is needed to balance chemical equations with the smallest possible whole number coefficients so they can be useful for other computations.
+
+\subsubsection{Terminology and Definitions}
+\label{Sec:TermDefs}
+This subsection provides a list of terms that are used in the subsequent sections and their meaning, with the purpose of reducing ambiguity and making it easier to correctly understand the requirements.
+
+\begin{itemize}
+\item{Compound: A molecule made up of more than one atom, which may or may not be of different elements.}
+\item{Element: The group of all atoms with the same number of protons in the atomic nucleus. For example, all atoms with one proton are hydrogen atoms.}
+\item{Equation: A textual representation of a chemical reaction.}
+\item{Product: A substance formed by a chemical reaction.}
+\item{Reactant: A substance involved in and changed by a chemical reaction.}
+\item{Reaction: An interaction between different types of matter that results in at least one new substance being formed \cite{lund2023}.}
+\end{itemize}
 \subsection{Solution Characteristics Specification}
 \label{Sec:SolCharSpec}
 The instance models that govern ChemCode are presented in the \hyperref[Sec:IMs]{Instance Model Section}. The information to understand the meaning of the instance models and their derivation is also presented, so that the instance models can be verified.
@@ -197,6 +217,10 @@ RefBy & \hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}
 \\ \bottomrule
 \end{tabular}
 \end{minipage}
+\subsubsection{General Definitions}
+\label{Sec:GDs}
+There are no general definitions.
+
 \subsubsection{Data Definitions}
 \label{Sec:DDs}
 This section collects and defines all the data needed to build the instance models.
@@ -418,6 +442,10 @@ This section provides the non-functional requirements, the qualities that the so
 \item[Reusable:\phantomsection\label{reusable}]{The code is modularized.}
 \item[Portable:\phantomsection\label{portable}]{The code is able to be run in different environments.}
 \end{itemize}
+\section{Likely Changes}
+\label{Sec:LCs}
+This section lists the likely changes to be made to the software.
+
 \section{Unlikely Changes}
 \label{Sec:UCs}
 This section lists the unlikely changes to be made to the software.
