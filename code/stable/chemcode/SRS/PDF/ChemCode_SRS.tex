@@ -115,9 +115,9 @@ The instance models that govern ChemCode are presented in the \hyperref[Sec:IMs]
 This section simplifies the original problem and helps in developing the theoretical models by filling in the missing information for the physical system. The assumptions refine the scope by providing more detail.
 
 \begin{itemize}
-\item[elemCompDiff:\phantomsection\label{elemCompDiff}]{For all chemical equations, there is at most one more compound than element.}
-\item[validForms:\phantomsection\label{validForms}]{All inputted chemical formulas describe real chemical compounds.}
-\item[validEqns:\phantomsection\label{validEqns}]{All inputted chemical equations describe real chemical reactions.}
+\item[elemCompDiff:\phantomsection\label{elemCompDiff}]{For all chemical equations, there is at most one more compound than element. (RefBy: \hyperref[allEqsPermitted]{UC:allEqsPermitted}.)}
+\item[validForms:\phantomsection\label{validForms}]{All inputted chemical formulas describe real chemical compounds. (RefBy: \hyperref[checkValidForms]{UC:checkValidForms}.)}
+\item[validEqns:\phantomsection\label{validEqns}]{All inputted chemical equations describe real chemical reactions. (RefBy: \hyperref[checkValidEqns]{UC:checkValidEqns}.)}
 \end{itemize}
 \subsubsection{Theoretical Models}
 \label{Sec:TMs}
@@ -199,6 +199,15 @@ RefBy &
 \\ \bottomrule
 \end{tabular}
 \end{minipage}
+\section{Unlikely Changes}
+\label{Sec:UCs}
+This section lists the unlikely changes to be made to the software.
+
+\begin{itemize}
+\item[allEqsPermitted:\phantomsection\label{allEqsPermitted}]{\hyperref[elemCompDiff]{A:elemCompDiff} assumes...}
+\item[checkValidForms:\phantomsection\label{checkValidForms}]{\hyperref[validForms]{A:validForms} assumes...}
+\item[checkValidEqns:\phantomsection\label{checkValidEqns}]{\hyperref[validEqns]{A:validEqns} assumes...}
+\end{itemize}
 \section{Requirements}
 \label{Sec:Requirements}
 This section provides the functional requirements, the tasks and behaviours that the software is expected to complete, and the non-functional requirements, the qualities that the software is expected to exhibit.

@@ -21,6 +21,7 @@ import Data.Drasil.Software.Products (sciCompS)
 import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 
 import Drasil.ChemCode.Assumptions (assumps)
+import Drasil.ChemCode.Changes (uChanges)
 import Drasil.ChemCode.DataDefs (dds)
 import Drasil.ChemCode.Quantities (inputs, quants)
 import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
@@ -46,8 +47,16 @@ mkSRS = [TableOfContents,
     IntroProg justification (short progName)
       [ IPurpose $ purpDoc progName Verbose,
         IScope scope,
+        -- IChar [] (undIR ++ appStanddIR) [],
         IOrgSec orgOfDocIntro inModel (SRS.inModel [] []) EmptyS
       ],
+  -- StkhldrSec $
+  --   StkhldrProg
+  --     [Client glassBR $ phraseNP (a_ company)
+  --       +:+. S "named Entuitive" +:+ S "It is developed by Dr." +:+ S (name mCampidelli),
+  --     Cstmr glassBR],
+  -- GSDSec $ GSDProg [SysCntxt [sysCtxIntro, LlC sysCtxFig, sysCtxDesc, sysCtxList],
+  --   UsrChars [userCharacteristicsIntro], SystCons [] [] ],
   SSDSec $
     SSDProg
       [
@@ -66,11 +75,14 @@ mkSRS = [TableOfContents,
         -- , CorrSolnPpties [probBr, stressDistFac] []
         ]
       ],
+  -- LCsSec,
+  UCsSec,
   ReqrmntSec $
     ReqsProg
       [ FReqsSub EmptyS [],
         NonFReqsSub
       ],
+  -- AuxConstntSec $ AuxConsProg glassBR auxiliaryConstants,  
   Bibliography
   ]
 
@@ -192,7 +204,7 @@ citations = [elemListWiki, ilpWiki, koothoor2013, lund2023, parnasClements1986,
   smithChemSpec, smithLai2005]
 
 concIns :: [ConceptInstance]
-concIns = assumps ++ funcReqs ++ nonfuncReqs
+concIns = assumps ++ funcReqs ++ nonfuncReqs ++ uChanges
 
 stdFields :: Fields
 stdFields = [DefiningEquation, Description Verbose IncludeUnits, Notes, Source, RefBy]

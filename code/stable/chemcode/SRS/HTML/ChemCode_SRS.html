@@ -62,6 +62,7 @@
               </li>
             </ul>
           </li>
+          <li><a href=#Sec:UCs>Unlikely Changes</a></li>
           <li>
             <a href=#Sec:Requirements>Requirements</a>
             <ul class="list">
@@ -226,17 +227,17 @@
                 <div class="list">
                   <p>
                     <div id="elemCompDiff">
-                      elemCompDiff: For all chemical equations, there is at most one more compound than element.
+                      elemCompDiff: For all chemical equations, there is at most one more compound than element. (RefBy: <a href=#allEqsPermitted>UC:allEqsPermitted</a>.)
                     </div>
                   </p>
                   <p>
                     <div id="validForms">
-                      validForms: All inputted chemical formulas describe real chemical compounds.
+                      validForms: All inputted chemical formulas describe real chemical compounds. (RefBy: <a href=#checkValidForms>UC:checkValidForms</a>.)
                     </div>
                   </p>
                   <p>
                     <div id="validEqns">
-                      validEqns: All inputted chemical equations describe real chemical reactions.
+                      validEqns: All inputted chemical equations describe real chemical reactions. (RefBy: <a href=#checkValidEqns>UC:checkValidEqns</a>.)
                     </div>
                   </p>
                 </div>
@@ -359,6 +360,31 @@
               </div>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div id="Sec:UCs">
+      <div class="section">
+        <h1>Unlikely Changes</h1>
+        <p class="paragraph">
+          This section lists the unlikely changes to be made to the software.
+        </p>
+        <div class="list">
+          <p>
+            <div id="allEqsPermitted">
+              allEqsPermitted: <a href=#elemCompDiff>A:elemCompDiff</a> assumes...
+            </div>
+          </p>
+          <p>
+            <div id="checkValidForms">
+              checkValidForms: <a href=#validForms>A:validForms</a> assumes...
+            </div>
+          </p>
+          <p>
+            <div id="checkValidEqns">
+              checkValidEqns: <a href=#validEqns>A:validEqns</a> assumes...
+            </div>
+          </p>
         </div>
       </div>
     </div>
