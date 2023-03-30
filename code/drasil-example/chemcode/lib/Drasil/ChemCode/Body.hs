@@ -20,6 +20,7 @@ import Data.Drasil.People (samCrawford)
 import Data.Drasil.Software.Products (sciCompS)
 import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 
+import Drasil.ChemCode.Assumptions (assumps)
 import Drasil.ChemCode.DataDefs (dds)
 import Drasil.ChemCode.Quantities (inputs, quants)
 import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
@@ -55,7 +56,7 @@ mkSRS = [TableOfContents,
         -- , Goals goalInputs],
        SSDSolChSpec $ SCSProg
         [
-        -- Assumptions, 
+        Assumptions, 
         TMs [] (Label : stdFields)
         -- , GDs [] [] HideDerivation
         , DDs [] ([Label, Symbol] ++ stdFields) HideDerivation -- FIXME: may want to change later
@@ -191,7 +192,7 @@ citations = [elemListWiki, ilpWiki, koothoor2013, lund2023, parnasClements1986,
   smithChemSpec, smithLai2005]
 
 concIns :: [ConceptInstance]
-concIns = funcReqs ++ nonfuncReqs
+concIns = assumps ++ funcReqs ++ nonfuncReqs
 
 stdFields :: Fields
 stdFields = [DefiningEquation, Description Verbose IncludeUnits, Notes, Source, RefBy]

@@ -55,6 +55,7 @@
               <li>
                 <a href=#Sec:SolCharSpec>Solution Characteristics Specification</a>
                 <ul class="list">
+                  <li><a href=#Sec:Assumps>Assumptions</a></li>
                   <li><a href=#Sec:TMs>Theoretical Models</a></li>
                   <li><a href=#Sec:DDs>Data Definitions</a></li>
                 </ul>
@@ -216,6 +217,31 @@
             <p class="paragraph">
               The instance models that govern ChemCode are presented in the <a href=#Sec:IMs>Instance Model Section</a>. The information to understand the meaning of the instance models and their derivation is also presented, so that the instance models can be verified.
             </p>
+            <div id="Sec:Assumps">
+              <div class="subsubsection">
+                <h3>Assumptions</h3>
+                <p class="paragraph">
+                  This section simplifies the original problem and helps in developing the theoretical models by filling in the missing information for the physical system. The assumptions refine the scope by providing more detail.
+                </p>
+                <div class="list">
+                  <p>
+                    <div id="elemCompDiff">
+                      elemCompDiff: For all chemical equations, there is at most one more compound than element.
+                    </div>
+                  </p>
+                  <p>
+                    <div id="validForms">
+                      validForms: All inputted chemical formulas describe real chemical compounds.
+                    </div>
+                  </p>
+                  <p>
+                    <div id="validEqns">
+                      validEqns: All inputted chemical equations describe real chemical reactions.
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
             <div id="Sec:TMs">
               <div class="subsubsection">
                 <h3>Theoretical Models</h3>
