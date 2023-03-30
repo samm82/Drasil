@@ -16,14 +16,19 @@ tms = [intLinProg]
 
 intLinProg :: TheoryModel
 intLinProg = tm
-  (equationalConstraints' ilpCS)
-  ([] :: [QuantityDict]) -- FIXME: I should not need to manually define the type signature for this to type-check.
-  [ilpChunk] -- FIXME: Why do I need this?
+  (ilpModel "canonIntLinProg" (cn' "canonical integer linear program")
+    $ maxILP xVec cVec
+      $ sy aMat `mulRe` sy xVec $<= sy bVec NE.:| [sy xVec $>= sy zeroVec, isIn (sy xVec) (Vect Integer)])
+  ([] :: [QuantityDict]) -- FIXME: I should not need to manually define the type signature for this to type check
+  [ilpChunk] -- FIXME: why do I need this?
   []
-  [ilpRel] -- FIXME: I should not need to manually reference ilpRel twice.
+  [sy cVec `mulRe` sy xVec,
+   sy aMat `mulRe` sy xVec $<= sy bVec,
+   sy xVec $>= sy zeroVec,
+   isIn (sy xVec) (Vect Integer)] -- FIXME: apparently this is needed since generation doesn't happen from ModelKinds
   []
   [dRef ilpWiki]
-  "intLinProg"
+  "canonIntLinProg" -- FIXME: this is likely needed for the same ModelKinds reason
   [foldlSent_ [S "The above", phrase equation, -- FIXME: can this be called an "equation"?
     S "gives the canonical form of an integer linear",
     phrase program `sC` S "which is", Quote (foldlSent_ [
@@ -37,12 +42,3 @@ intLinProg = tm
   where
     ilpChunk =
       dccWDS "ilpChunk" (nounPhraseSP "integer linear program") (S "") -- FIXME: ?
-
-    ilpRel :: ModelExpr
-    ilpRel = completeCase [
-      (sy cVec `mulRe` sy xVec, lit $ int 1),
-      (sy aMat `mulRe` sy xVec $<= sy bVec, lit $ int 2),
-      (sy xVec $>= sy zeroVec, lit $ int 3)
-      ]
-
-    ilpCS = mkConstraintSet ilpChunk $ NE.fromList [ilpRel]

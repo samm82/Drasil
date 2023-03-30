@@ -19,6 +19,7 @@ meNames (FCall f x)           = f : concatMap meNames x
 meNames (TAccess f _)         = [f]
 meNames (Case _ ls)           = concatMap (meNames . fst) ls ++
                                 concatMap (meNames . snd) ls
+meNames (ILP _ o cs)          = meNames o ++ concatMap meNames cs
 meNames (UnaryOp _ u)         = meNames u
 meNames (UnaryOpB _ u)        = meNames u
 meNames (UnaryOpVV _ u)       = meNames u
@@ -58,6 +59,7 @@ meNames' (FCall _ x)           = concatMap meNames' x
 meNames' TAccess{}             = []
 meNames' (Case _ ls)           = concatMap (meNames' . fst) ls ++ 
                                  concatMap (meNames' . snd) ls
+meNames' (ILP _ o cs)          = meNames' o ++ concatMap meNames' cs
 meNames' (UnaryOp _ u)         = meNames' u
 meNames' (UnaryOpB _ u)        = meNames' u
 meNames' (UnaryOpVV _ u)       = meNames' u

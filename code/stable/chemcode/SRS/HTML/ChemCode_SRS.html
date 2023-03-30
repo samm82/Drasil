@@ -58,6 +58,7 @@
                   <li><a href=#Sec:Assumps>Assumptions</a></li>
                   <li><a href=#Sec:TMs>Theoretical Models</a></li>
                   <li><a href=#Sec:DDs>Data Definitions</a></li>
+                  <li><a href=#Sec:IMs>Instance Models</a></li>
                 </ul>
               </li>
             </ul>
@@ -102,6 +103,11 @@
                   <td>--</td>
                 </tr>
                 <tr>
+                  <td><em><b>1</b></em></td>
+                  <td>Unary vector</td>
+                  <td>--</td>
+                </tr>
+                <tr>
                   <td><em><b>A</b></em></td>
                   <td>Generic matrix</td>
                   <td>--</td>
@@ -134,6 +140,11 @@
                 <tr>
                   <td><em>E</em></td>
                   <td>Element data type</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em><b>E</b></em></td>
+                  <td>Matrix representation of a chemical equation</td>
                   <td>--</td>
                 </tr>
                 <tr>
@@ -182,6 +193,10 @@
                 <tr>
                   <td>DD</td>
                   <td>Data Definition</td>
+                </tr>
+                <tr>
+                  <td>IM</td>
+                  <td>Instance Model</td>
                 </tr>
                 <tr>
                   <td>SRS</td>
@@ -282,24 +297,23 @@
                 <p class="paragraph">
                   This section focuses on the general equations and laws that ChemCode is based on.
                 </p>
-                <div id="TM:intLinProg">
+                <div id="TM:canonIntLinProg">
                   <table class="tdefn">
                     <tr>
                       <th>Refname</th>
-                      <td><b>TM:intLinProg</b></td>
+                      <td><b>TM:canonIntLinProg</b></td>
                     </tr>
                     <tr>
                       <th>Label</th>
-                      <td><p class="paragraph">Integer linear program</p></td>
+                      <td><p class="paragraph">Canonical integer linear program</p></td>
                     </tr>
                     <tr>
                       <th>Equation</th>
                       <td>
-                        \[\begin{cases}
-                          \symbf{c} \symbf{x}, & 1\\
-                          \symbf{A} \symbf{x}\leq{}\symbf{b}, & 2\\
-                          \symbf{x}\geq{}\symbf{0}, & 3
-                          \end{cases}\]
+                        \[\symbf{c} \symbf{x}\]
+                        \[\symbf{A} \symbf{x}\leq{}\symbf{b}\]
+                        \[\symbf{x}\geq{}\symbf{0}\]
+                        \[\symbf{x}\in{}\mathbb{Z}^{n}\]
                       </td>
                     </tr>
                     <tr>
@@ -308,9 +322,18 @@
                         <ul class="hide-list-style-no-indent">
                           <li><em><b>c</b></em> is the generic vector (Unitless)</li>
                           <li><em><b>x</b></em> is the generic vector (Unitless)</li>
+                        </ul>
+                        <ul class="hide-list-style-no-indent">
                           <li><em><b>A</b></em> is the generic matrix (Unitless)</li>
+                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
                           <li><em><b>b</b></em> is the generic vector (Unitless)</li>
+                        </ul>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
                           <li><em><b>0</b></em> is the zero vector (Unitless)</li>
+                        </ul>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
                         </ul>
                       </td>
                     </tr>
@@ -331,7 +354,11 @@
                     </tr>
                     <tr>
                       <th>RefBy</th>
-                      <td><p class="paragraph"></p></td>
+                      <td>
+                        <p class="paragraph">
+                          <a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a>
+                        </p>
+                      </td>
                     </tr>
                   </table>
                 </div>
@@ -533,6 +560,78 @@
                 </div>
               </div>
             </div>
+            <div id="Sec:IMs">
+              <div class="subsubsection">
+                <h3>Instance Models</h3>
+                <p class="paragraph">
+                  This section transforms the problem defined in the <a href=#Sec:ProbDesc>problem description</a> into one which is expressed in mathematical terms. It uses concrete symbols defined in the <a href=#Sec:DDs>data definitions</a> to replace the abstract symbols in the models identified in <a href=#Sec:TMs>theoretical models</a> and <a href=#Sec:GDs>general definitions</a>.
+                </p>
+                <div id="IM:chemEqIntLinProg">
+                  <table class="idefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>IM:chemEqIntLinProg</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td>
+                        <p class="paragraph">
+                          Integer linear program for a chemical equation
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Input</th>
+                      <td><p class="paragraph"><em><b>E</b></em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Output</th>
+                      <td><p class="paragraph"><em><b>x</b></em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>
+                        \[\begin{aligned}
+                           & \text{minimize} &  & \symbf{1}\cdot{}\symbf{x}\\
+                           & \text{subject to} &  & \symbf{E} \symbf{x}=\symbf{0},\\
+                           & \, &  & \symbf{x}\gt{}\symbf{0},\\
+                           & \text{and} &  & \symbf{x}\in{}\mathbb{Z}^{n}
+                          \end{aligned}\]
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em><b>1</b></em> is the unary vector (Unitless)</li>
+                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
+                          <li>
+                            <em><b>E</b></em> is the matrix representation of a chemical equation (Unitless)
+                          </li>
+                          <li><em><b>0</b></em> is the zero vector (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td>
+                        <p class="paragraph">
+                          This is a specific instance of the ILP from <a href=#TM:canonIntLinProg>TM:canonIntLinProg</a> with <em><b>A</b> = <b>E</b></em>, <em><b>b</b> = <b>0</b></em>, and <em><b>c</b> = <b>1</b></em>. The goal and constraints are also modified.
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph">--</p></td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -713,7 +812,13 @@
               <td></td>
             </tr>
             <tr>
-              <td><a href=#TM:intLinProg>TM:intLinProg</a></td>
+              <td><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></td>
               <td></td>
               <td></td>
               <td></td>
@@ -797,10 +902,12 @@
               <th><a href=#DD:elementType>DD:elementType</a></th>
               <th><a href=#DD:compoundType>DD:compoundType</a></th>
               <th><a href=#DD:reactionType>DD:reactionType</a></th>
-              <th><a href=#TM:intLinProg>TM:intLinProg</a></th>
+              <th><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></th>
+              <th><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></th>
             </tr>
             <tr>
               <td><a href=#DD:countFunc>DD:countFunc</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -814,9 +921,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#DD:compoundType>DD:compoundType</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -830,13 +939,24 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
-              <td><a href=#TM:intLinProg>TM:intLinProg</a></td>
+              <td><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></td>
               <td></td>
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>X</td>
               <td></td>
             </tr>
           </table>
@@ -852,7 +972,8 @@
               <th><a href=#DD:elementType>DD:elementType</a></th>
               <th><a href=#DD:compoundType>DD:compoundType</a></th>
               <th><a href=#DD:reactionType>DD:reactionType</a></th>
-              <th><a href=#TM:intLinProg>TM:intLinProg</a></th>
+              <th><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></th>
+              <th><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></th>
               <th><a href=#inputValues>FR:Input-Values</a></th>
               <th><a href=#convertMatrix>FR:Convert-to-Matrix</a></th>
               <th><a href=#feasOut>FR:Feasible-Output</a></th>
@@ -864,6 +985,7 @@
             </tr>
             <tr>
               <td><a href=#inputValues>FR:Input-Values</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -893,9 +1015,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#feasOut>FR:Feasible-Output</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -925,9 +1049,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#accurate>NFR:Accurate</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -957,6 +1083,7 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#reusable>NFR:Reusable</a></td>
@@ -973,9 +1100,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#portable>NFR:Portable</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>

@@ -103,6 +103,7 @@ pExpr (Int i)        = pure (integer i)
 pExpr (Str s)        = toText . quote . pure $ text s
 pExpr (Div n d)      = command2D "frac" (pExpr n) (pExpr d)
 pExpr (Case ps)      = mkEnv "cases" (cases ps)
+pExpr (ILP cs)       = mkEnv "aligned" (ilpLines cs)
 pExpr (Mtx a)        = mkEnv "bmatrix" (pMatrix a)
 pExpr (Row [x])      = br $ pExpr x -- FIXME: Hack needed for symbols with multiple subscripts, etc.
 pExpr (Row l)        = foldl1 (<>) (map pExpr l)
@@ -196,6 +197,12 @@ cases :: [(Expr,Expr)] -> D
 cases [] = error "Attempt to create case expression without cases"
 cases e  = vpunctuate dbs (map _case e)
   where _case (x, y) = hpunctuate (text ", & ") (map pExpr [x, y])
+
+-- | Helper for printing lines in ILPs.
+ilpLines :: [(Expr,Expr)] -> D
+ilpLines [] = error "Attempt to create ILP without expressions"
+ilpLines e  = vpunctuate dbs (map _line e)
+  where _line (x, y) = hpunctuate (text " & ") [pure $ text "", pExpr x, pure $ text "", pExpr y]
 
 -----------------------------------------------------------------
 ------------------ TABLE PRINTING---------------------------

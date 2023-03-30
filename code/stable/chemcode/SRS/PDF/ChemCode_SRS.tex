@@ -46,6 +46,8 @@ The symbols used in this document are summarized in the \hyperref[Table:ToS]{Tab
 \endhead
 $\symbf{0}$ & Zero vector & --
 \\
+$\symbf{1}$ & Unary vector & --
+\\
 $\symbf{A}$ & Generic matrix & --
 \\
 $\symbf{b}$ & Generic vector & --
@@ -59,6 +61,8 @@ $\symbf{c}$ & Generic vector & --
 $\text{count}$ & Count of an element in a compound & --
 \\
 $E$ & Element data type & --
+\\
+$\symbf{E}$ & Matrix representation of a chemical equation & --
 \\
 $e$ & Generic element & --
 \\
@@ -85,6 +89,8 @@ $\symbf{x}$ & Generic vector & --
 ChemCode & Chemistry Code
 \\
 DD & Data Definition
+\\
+IM & Instance Model
 \\
 SRS & Software Requirements Specification
 \\
@@ -141,27 +147,41 @@ This section focuses on the general equations and laws that ChemCode is based on
 \noindent
 \begin{minipage}{\textwidth}
 \begin{tabular}{>{\raggedright}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.82\textwidth}}
-\toprule \textbf{Refname} & \textbf{TM:intLinProg}
+\toprule \textbf{Refname} & \textbf{TM:canonIntLinProg}
 \phantomsection 
-\label{TM:intLinProg}
+\label{TM:canonIntLinProg}
 \\ \midrule \\
-Label & Integer linear program
+Label & Canonical integer linear program
         
 \\ \midrule \\
 Equation & \begin{displaymath}
-           \begin{cases}
-           \symbf{c} \symbf{x}, & 1\\
-           \symbf{A} \symbf{x}\leq{}\symbf{b}, & 2\\
-           \symbf{x}\geq{}\symbf{0}, & 3
-           \end{cases}
+           \symbf{c} \symbf{x}
+           \end{displaymath}
+           \begin{displaymath}
+           \symbf{A} \symbf{x}\leq{}\symbf{b}
+           \end{displaymath}
+           \begin{displaymath}
+           \symbf{x}\geq{}\symbf{0}
+           \end{displaymath}
+           \begin{displaymath}
+           \symbf{x}\in{}\mathbb{Z}^{n}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
               \item{$\symbf{c}$ is the generic vector (Unitless)}
               \item{$\symbf{x}$ is the generic vector (Unitless)}
+              \end{symbDescription}
+              \begin{symbDescription}
               \item{$\symbf{A}$ is the generic matrix (Unitless)}
+              \item{$\symbf{x}$ is the generic vector (Unitless)}
               \item{$\symbf{b}$ is the generic vector (Unitless)}
+              \end{symbDescription}
+              \begin{symbDescription}
+              \item{$\symbf{x}$ is the generic vector (Unitless)}
               \item{$\symbf{0}$ is the zero vector (Unitless)}
+              \end{symbDescription}
+              \begin{symbDescription}
+              \item{$\symbf{x}$ is the generic vector (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
 Notes & The above equation gives the canonical form of an integer linear program, which is ``a mathematical optimization or feasibility program in which some or all of the variables are restricted to be integers [and] the objective function and the constraints (other than the integer constraints) are linear'' \cite{ilpWiki}
@@ -172,7 +192,8 @@ Notes & The above equation gives the canonical form of an integer linear program
 Source & \cite{ilpWiki}
          
 \\ \midrule \\
-RefBy & 
+RefBy & \hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}
+        
 \\ \bottomrule
 \end{tabular}
 \end{minipage}
@@ -314,6 +335,53 @@ RefBy &
 \\ \bottomrule
 \end{tabular}
 \end{minipage}
+\subsubsection{Instance Models}
+\label{Sec:IMs}
+This section transforms the problem defined in the \hyperref[Sec:ProbDesc]{problem description} into one which is expressed in mathematical terms. It uses concrete symbols defined in the \hyperref[Sec:DDs]{data definitions} to replace the abstract symbols in the models identified in \hyperref[Sec:TMs]{theoretical models} and \hyperref[Sec:GDs]{general definitions}.
+
+\vspace{\baselineskip}
+\noindent
+\begin{minipage}{\textwidth}
+\begin{tabular}{>{\raggedright}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.82\textwidth}}
+\toprule \textbf{Refname} & \textbf{IM:chemEqIntLinProg}
+\phantomsection 
+\label{IM:chemEqIntLinProg}
+\\ \midrule \\
+Label & Integer linear program for a chemical equation
+        
+\\ \midrule \\
+Input & $\symbf{E}$
+        
+\\ \midrule \\
+Output & $\symbf{x}$
+         
+\\ \midrule \\
+Equation & \begin{displaymath}
+           \begin{aligned}
+            & \text{minimize} &  & \symbf{1}\cdot{}\symbf{x}\\
+            & \text{subject to} &  & \symbf{E} \symbf{x}=\symbf{0},\\
+            & \, &  & \symbf{x}\gt{}\symbf{0},\\
+            & \text{and} &  & \symbf{x}\in{}\mathbb{Z}^{n}
+           \end{aligned}
+           \end{displaymath}
+\\ \midrule \\
+Description & \begin{symbDescription}
+              \item{$\symbf{1}$ is the unary vector (Unitless)}
+              \item{$\symbf{x}$ is the generic vector (Unitless)}
+              \item{$\symbf{E}$ is the matrix representation of a chemical equation (Unitless)}
+              \item{$\symbf{0}$ is the zero vector (Unitless)}
+              \end{symbDescription}
+\\ \midrule \\
+Notes & This is a specific instance of the ILP from \hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} with $\symbf{A}=\symbf{E}$, $\symbf{b}=\symbf{0}$, and $\symbf{c}=\symbf{1}$. The goal and constraints are also modified.
+        
+\\ \midrule \\
+Source & --
+         
+\\ \midrule \\
+RefBy & 
+\\ \bottomrule
+\end{tabular}
+\end{minipage}
 \section{Requirements}
 \label{Sec:Requirements}
 This section provides the functional requirements, the tasks and behaviours that the software is expected to complete, and the non-functional requirements, the qualities that the software is expected to exhibit.
@@ -393,7 +461,9 @@ The purpose of the traceability matrices is to provide easy references on what h
 \\
 \hyperref[DD:reactionType]{DD:reactionType} &  &  & 
 \\
-\hyperref[TM:intLinProg]{TM:intLinProg} &  &  & 
+\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} &  &  & 
+\\
+\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg} &  &  & 
 \\
 \hyperref[inputValues]{FR:Input-Values} &  &  & 
 \\
@@ -421,47 +491,49 @@ The purpose of the traceability matrices is to provide easy references on what h
 \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
 \label{Table:TraceMatAvsAll}
 \end{longtable}
-\begin{longtable}{l l l l l l}
+\begin{longtable}{l l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:intLinProg]{TM:intLinProg}}
+\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}}
 \\
 \midrule
 \endhead
-\hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  & 
+\hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  &  & 
 \\
-\hyperref[DD:elementType]{DD:elementType} &  &  &  &  & 
+\hyperref[DD:elementType]{DD:elementType} &  &  &  &  &  & 
 \\
-\hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  & 
+\hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  &  & 
 \\
-\hyperref[DD:reactionType]{DD:reactionType} &  &  &  &  & 
+\hyperref[DD:reactionType]{DD:reactionType} &  &  &  &  &  & 
 \\
-\hyperref[TM:intLinProg]{TM:intLinProg} &  &  &  &  & 
+\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} &  &  &  &  &  & 
+\\
+\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg} &  &  &  &  & X & 
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Items and Other Sections}
 \label{Table:TraceMatRefvsRef}
 \end{longtable}
-\begin{longtable}{l l l l l l l l l l l l l l}
+\begin{longtable}{l l l l l l l l l l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:intLinProg]{TM:intLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[portable]{NFR:Portable}}
+\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[portable]{NFR:Portable}}
 \\
 \midrule
 \endhead
-\hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[accurate]{NFR:Accurate} &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[accurate]{NFR:Accurate} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[reusable]{NFR:Reusable} &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[reusable]{NFR:Reusable} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[portable]{NFR:Portable} &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[portable]{NFR:Portable} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Requirements and Other Items}

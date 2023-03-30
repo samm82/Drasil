@@ -6,7 +6,7 @@ import Language.Drasil.Chunk.Concept.NamedCombinators
 import qualified Language.Drasil.Sentence.Combinators as S
 import qualified Drasil.DocLang.SRS as SRS
 import Drasil.SRSDocument
-import Theory.Drasil (GenDefn, InstanceModel)
+import Theory.Drasil (GenDefn)
 
 import Data.Drasil.Citations (elemListWiki, ilpWiki, koothoor2013, lund2023,
   parnasClements1986, smithChemSpec, smithLai2005)
@@ -23,6 +23,7 @@ import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 import Drasil.ChemCode.Assumptions (assumps)
 import Drasil.ChemCode.Changes (uChanges)
 import Drasil.ChemCode.DataDefs (dds)
+import Drasil.ChemCode.IMods (ims)
 import Drasil.ChemCode.Quantities (inputs, quants)
 import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
 import Drasil.ChemCode.TMods (tms)
@@ -70,7 +71,8 @@ mkSRS = [TableOfContents,
         -- , GDs [] [] HideDerivation
         , DDs [] ([Label, Symbol] ++ stdFields) HideDerivation -- FIXME: may want to change later
                                 -- FIXME: may want to add Units later
-        -- , IMs [instModIntro] ([Label, Input, Output, InConstraints, OutConstraints] ++ stdFields) HideDerivation
+        , IMs [] ([Label, Input, Output] --, InConstraints, OutConstraints] 
+          ++ stdFields) HideDerivation
         -- , Constraints auxSpecSent inputDataConstraints
         -- , CorrSolnPpties [probBr, stressDistFac] []
         ]
@@ -136,7 +138,7 @@ symbolsAll :: [QuantityDict]
 symbolsAll = quants
 
 acronyms :: [CI]
-acronyms = [progName, Doc.srs, thModel, dataDefn] -- genDefn, inModel
+acronyms = [progName, Doc.srs, thModel, dataDefn, inModel] -- genDefn,
 
 si :: SystemInformation
 si =
@@ -148,7 +150,7 @@ si =
       _purpose     = [],
       _quants      = symbolsAll,
       _concepts    = [] :: [DefinedQuantityDict],
-      _instModels  = [] :: [InstanceModel],
+      _instModels  = ims,
       _datadefs    = dds,
       _configFiles = [],
       _inputs      = inputs,
@@ -173,7 +175,7 @@ symbMap =
     srsDomains
     ([] :: [UnitDefn])
     dds
-    ([] :: [InstanceModel])
+    ims
     ([] :: [GenDefn])
     tms
     concIns
@@ -189,7 +191,7 @@ usedDB =
     srsDomains
     ([] :: [UnitDefn])
     dds
-    ([] :: [InstanceModel])
+    ims
     ([] :: [GenDefn])
     tms
     ([] :: [ConceptInstance])

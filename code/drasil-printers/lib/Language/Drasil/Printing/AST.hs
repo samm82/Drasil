@@ -30,6 +30,7 @@ data Expr = Dbl    Double
           | Int    Integer
           | Str    String
           | Case   [(Expr, Expr)] -- ^ Case expressions
+          | ILP    [(Expr, Expr)] -- ^ Integer linear programs
           | Mtx    [[Expr]] -- ^ Matrix.
           | Row    [Expr]
           | Ident  String
