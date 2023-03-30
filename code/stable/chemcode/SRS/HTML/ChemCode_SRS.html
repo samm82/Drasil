@@ -249,6 +249,7 @@
                         \[\symbf{c} \symbf{x}\]
                         \[\symbf{A} \symbf{x}\leq{}\symbf{b}\]
                         \[\symbf{x}\geq{}\symbf{0}\]
+                        \[\symbf{x}\in{}\mathbb{Z}^{n}\]
                       </td>
                     </tr>
                     <tr>
@@ -266,6 +267,9 @@
                         <ul class="hide-list-style-no-indent">
                           <li><em><b>x</b></em> is the generic vector (Unitless)</li>
                           <li><em><b>0</b></em> is the zero vector (Unitless)</li>
+                        </ul>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
                         </ul>
                       </td>
                     </tr>
@@ -380,8 +384,9 @@
                       <td>
                         \[\begin{aligned}
                            & \text{minimize} &  & \symbf{1}\cdot{}\symbf{x}\\
-                           & \text{subject to} &  & \symbf{E} \symbf{x}=\symbf{0}\\
-                           & \text{and} &  & \symbf{x}\gt{}\symbf{0}
+                           & \text{subject to} &  & \symbf{E} \symbf{x}=\symbf{0},\\
+                           & \, &  & \symbf{x}\gt{}\symbf{0},\\
+                           & \text{and} &  & \symbf{x}\in{}\mathbb{Z}^{n}
                           \end{aligned}\]
                       </td>
                     </tr>

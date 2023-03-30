@@ -14,7 +14,7 @@ chemEqIntLinProg :: InstanceModel
 chemEqIntLinProg = imNoRefs
   (ilpModel "chemEqIntLinProg" (cn' "integer linear program for a chemical equation")
     $ minILP xVec unaryVec
-      $ (sy eMat `mulRe` sy xVec $= sy zeroVec) NE.:| [sy xVec $> sy zeroVec])
+      $ (sy eMat `mulRe` sy xVec $= sy zeroVec) NE.:| [sy xVec $> sy zeroVec, isIn (sy xVec ) (Vect Integer)])
       -- FIXME: ^ parentheses needed for precedence reasons?
   [qwUC eMat] -- FIXME: why should I need to convert the Unitals to QuantityDicts?
   xVec

@@ -140,7 +140,7 @@ modelExpr (ILP e o cs)               sm =
     annotate [c]    = [(P.Label "subject to", modelExpr c sm)]
     annotate [c, d] = annotate [c] ++ [(P.Label "and", modelExpr d sm)]
     annotate (c:ds) = (P.Label "subject to", P.Row [modelExpr c sm, P.MO P.Comma]) :
-      map (\x -> (P.Spc P.Thin, modelExpr x sm)) (init ds) ++
+      map (\x -> (P.Spc P.Thin, P.Row [modelExpr x sm, P.MO P.Comma])) (init ds) ++
       [(P.Label "and", modelExpr (last ds) sm)]
 modelExpr (C c)                      sm = symbol $ lookupC (sm ^. stg) (sm ^. ckdb) c
 modelExpr (FCall f [x])              sm =

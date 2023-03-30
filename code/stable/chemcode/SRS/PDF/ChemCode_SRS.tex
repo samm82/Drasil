@@ -138,6 +138,9 @@ Equation & \begin{displaymath}
            \begin{displaymath}
            \symbf{x}\geq{}\symbf{0}
            \end{displaymath}
+           \begin{displaymath}
+           \symbf{x}\in{}\mathbb{Z}^{n}
+           \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
               \item{$\symbf{c}$ is the generic vector (Unitless)}
@@ -151,6 +154,9 @@ Description & \begin{symbDescription}
               \begin{symbDescription}
               \item{$\symbf{x}$ is the generic vector (Unitless)}
               \item{$\symbf{0}$ is the zero vector (Unitless)}
+              \end{symbDescription}
+              \begin{symbDescription}
+              \item{$\symbf{x}$ is the generic vector (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
 Notes & The above equation gives the canonical form of an integer linear program, which is ``a mathematical optimization or feasibility program in which some or all of the variables are restricted to be integers [and] the objective function and the constraints (other than the integer constraints) are linear'' \cite{ilpWiki}
@@ -226,8 +232,9 @@ Output & $\symbf{x}$
 Equation & \begin{displaymath}
            \begin{aligned}
             & \text{minimize} &  & \symbf{1}\cdot{}\symbf{x}\\
-            & \text{subject to} &  & \symbf{E} \symbf{x}=\symbf{0}\\
-            & \text{and} &  & \symbf{x}\gt{}\symbf{0}
+            & \text{subject to} &  & \symbf{E} \symbf{x}=\symbf{0},\\
+            & \, &  & \symbf{x}\gt{}\symbf{0},\\
+            & \text{and} &  & \symbf{x}\in{}\mathbb{Z}^{n}
            \end{aligned}
            \end{displaymath}
 \\ \midrule \\
