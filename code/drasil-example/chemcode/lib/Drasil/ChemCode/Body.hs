@@ -60,9 +60,11 @@ mkSRS = [TableOfContents,
   SSDSec $
     SSDProg
       [
-        -- SSDProblem $ PDProg prob [termsAndDesc]
-        -- [ PhySysDesc glassBR physSystParts physSystFig []
-        -- , Goals goalInputs],
+        SSDProblem $ PDProg EmptyS []
+        [ TermsAndDefs Nothing terms
+        -- , PhySysDesc glassBR physSystParts physSystFig []
+        -- , Goals goalInputs
+        ],
        SSDSolChSpec $ SCSProg
         [
         Assumptions, 
@@ -137,6 +139,9 @@ symbolsAll = quants
 
 acronyms :: [CI]
 acronyms = [progName, Doc.srs, thModel, dataDefn, requirement, unlikelyChg] -- genDefn, inModel
+
+terms :: [ConceptChunk]
+terms = [compound, element, equation, product, reactant, reaction]
 
 si :: SystemInformation
 si =
