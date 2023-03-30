@@ -16,6 +16,7 @@ meNames (C c)                 = [c]
 meNames Lit{}                 = []
 meNames Spc{}                 = []
 meNames (FCall f x)           = f : concatMap meNames x
+meNames (TAccess f _)         = [f]
 meNames (Case _ ls)           = concatMap (meNames . fst) ls ++
                                 concatMap (meNames . snd) ls
 meNames (UnaryOp _ u)         = meNames u
@@ -54,6 +55,7 @@ meNames' (C c)                 = [c]
 meNames' Lit{}                 = []
 meNames' Spc{}                 = []
 meNames' (FCall _ x)           = concatMap meNames' x
+meNames' TAccess{}             = []
 meNames' (Case _ ls)           = concatMap (meNames' . fst) ls ++ 
                                  concatMap (meNames' . snd) ls
 meNames' (UnaryOp _ u)         = meNames' u

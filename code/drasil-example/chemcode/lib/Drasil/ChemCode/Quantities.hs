@@ -3,15 +3,15 @@ module Drasil.ChemCode.Quantities where
 import Language.Drasil hiding (matrix)
 import Language.Drasil.ShortHands
 
-import Data.Drasil.Concepts.Chemistry (element)
+import Data.Drasil.Concepts.Chemistry (compound, element, reaction)
 
 inputs :: [QuantityDict]
 inputs = [r]
 
 quants :: [QuantityDict]
-quants = inputs ++ [aMat, bVec, cVec, xVec, zeroVec, elemT]
+quants = inputs ++ [aMat, bVec, cVec, xVec, zeroVec, genE, genC, tupC, count, elemT, compT, reacT]
 
-r, aMat, bVec, cVec, xVec, zeroVec, elemT :: QuantityDict
+r, aMat, bVec, cVec, xVec, zeroVec, genE, genC, tupC, count, elemT, compT, reacT :: QuantityDict
 
 r = vcSt "r" (nounPhraseSP "representation of a chemical equation")
   (autoStage lR) String -- FIXME: should this be a string?
@@ -23,17 +23,38 @@ xVec = vc "xVec" (nounPhraseSP "generic vector") (vec lX) (Vect Integer)
 
 zeroVec = vc "zeroVec" (nounPhraseSP "zero vector") (vec $ variable "0") (Vect Integer)
 
+genE = vc "genE" (nounPhraseSent $ S "generic" +:+ phrase element) lE Element
+genC = vc "genC" (nounPhraseSent $ S "generic" +:+ phrase compound) lC Compound
+
+compoundTuple :: Space
+compoundTuple = Tuple [("elem", Element), ("count", Real)]
+
+tupC = vc "tupC" (nounPhraseSent $ S "generic tuple of a" +:+ phrase compound) (sub lT cC) compoundTuple
+
+count = vc "count"
+  (nounPhraseSent $ foldlSent_ [S "count of an", phrase element, S "in a", phrase compound])
+  (label "count") (mkFunction [Element, Compound] Real)
+
 elemT = vcSt "elemT" (nounPhraseSent $ phrase element +:+ S "data type")
   (autoStage cE)
-  (DiscreteS ["H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg",
-              "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V",
-              "Cr", "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se",
-              "Br", "Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh",
-              "Pd", "Ag", "Cd", "In", "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba",
-              "La", "Ce", "Pr", "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho",
-              "Er", "Tm", "Yb", "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt",
-              "Au", "Hg", "Tl", "Pb", "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac",
-              "Th", "Pa", "U", "Np", "Pu", "Am", "Cm", "Bk", "Cf", "Es", "Fm",
-              "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg",
-              "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"])
+  (Enum ["H", "He", "Li", "Be", "B", "C", "N", "O", "F", "Ne", "Na", "Mg",
+         "Al", "Si", "P", "S", "Cl", "Ar", "K", "Ca", "Sc", "Ti", "V", "Cr",
+         "Mn", "Fe", "Co", "Ni", "Cu", "Zn", "Ga", "Ge", "As", "Se", "Br",
+         "Kr", "Rb", "Sr", "Y", "Zr", "Nb", "Mo", "Tc", "Ru", "Rh", "Pd", "Ag",
+         "Cd", "In", "Sn", "Sb", "Te", "I", "Xe", "Cs", "Ba", "La", "Ce", "Pr",
+         "Nd", "Pm", "Sm", "Eu", "Gd", "Tb", "Dy", "Ho", "Er", "Tm", "Yb",
+         "Lu", "Hf", "Ta", "W", "Re", "Os", "Ir", "Pt", "Au", "Hg", "Tl", "Pb",
+         "Bi", "Po", "At", "Rn", "Fr", "Ra", "Ac", "Th", "Pa", "U", "Np", "Pu",
+         "Am", "Cm", "Bk", "Cf", "Es", "Fm", "Md", "No", "Lr", "Rf", "Db",
+         "Sg", "Bh", "Hs", "Mt", "Ds", "Rg", "Cn", "Nh", "Fl", "Mc", "Lv",
+         "Ts", "Og"])
   -- FIXME: move to drasil-data
+
+compT = vcSt "compT" (nounPhraseSent $ phrase compound +:+ S "data type")
+  (autoStage cC) (Sequence compoundTuple)
+
+reacT = vcSt "reacT" (nounPhraseSent $ phrase reaction +:+ S "data type")
+  (autoStage cR)
+  (Tuple [("prod", reacSide), ("reac", reacSide)])
+  where 
+    reacSide = Sequence $ Tuple [("comp", Compound), ("coeff", Integer)]

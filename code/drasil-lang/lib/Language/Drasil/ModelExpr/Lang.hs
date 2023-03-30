@@ -72,7 +72,7 @@ data UFuncVN = Norm | Dim
   deriving Eq
 
 -- | Statements involving 2 arguments.
-data StatBinOp = Defines
+data StatBinOp = Defines | IsMember
   deriving Eq
 
 -- | @Value -> Space -> Bool@ operators.
@@ -106,6 +106,8 @@ data ModelExpr where
   C         :: UID -> ModelExpr
   -- | Function applications.
   FCall     :: UID -> [ModelExpr] -> ModelExpr
+  -- | Tuple accessors.
+  TAccess   :: UID -> Integer -> ModelExpr
   -- | For multi-case expressions, each pair represents one case.
   Case      :: Completeness -> [(ModelExpr, ModelExpr)] -> ModelExpr
   -- | Represents a matrix of expressions.
@@ -184,6 +186,7 @@ instance Eq ModelExpr where
   Deriv a t1 b c      == Deriv d t2 e f      =   a == d && t1 == t2 && b == e && c == f
   C a                 == C b                 =   a == b
   FCall a b           == FCall c d           =   a == c && b == d
+  TAccess a b         == TAccess c d         =   a == c && b == d
   Case a b            == Case c d            =   a == c && b == d 
   UnaryOp a b         == UnaryOp c d         =   a == c && b == d
   UnaryOpB a b        == UnaryOpB c d        =   a == c && b == d

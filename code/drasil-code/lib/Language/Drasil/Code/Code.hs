@@ -33,3 +33,4 @@ spaceToCodeType S.Void           = [Void]
 spaceToCodeType (S.Function i t) = [Func is ts | is <- ins, ts <- trgs]
     where trgs = spaceToCodeType t
           ins  = map spaceToCodeType (toList i)
+spaceToCodeType _                = [String] -- FIXME: hack since we don't care about code gen for ChemCode yet

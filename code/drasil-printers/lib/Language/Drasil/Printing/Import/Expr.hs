@@ -121,6 +121,8 @@ expr (C c)                    sm = symbol $ lookupC (sm ^. stg) (sm ^. ckdb) c
 expr (FCall f [x])            sm =
   P.Row [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) f, parens $ expr x sm]
 expr (FCall f l)              sm = call sm f l
+expr (TAccess t i)            sm =
+  P.Row [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) t, P.Sub $ P.Int i]
 expr (Case _ ps)              sm =
   if length ps < 2
     then error "Attempting to use multi-case expr incorrectly"

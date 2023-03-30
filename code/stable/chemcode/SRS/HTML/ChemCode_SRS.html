@@ -112,8 +112,23 @@
                   <td>--</td>
                 </tr>
                 <tr>
+                  <td><em>C</em></td>
+                  <td>Compound data type</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>c</em></td>
+                  <td>Generic compound</td>
+                  <td>--</td>
+                </tr>
+                <tr>
                   <td><em><b>c</b></em></td>
                   <td>Generic vector</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>count</em></td>
+                  <td>Count of an element in a compound</td>
                   <td>--</td>
                 </tr>
                 <tr>
@@ -122,8 +137,23 @@
                   <td>--</td>
                 </tr>
                 <tr>
+                  <td><em>e</em></td>
+                  <td>Generic element</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>R</em></td>
+                  <td>Reaction data type</td>
+                  <td>--</td>
+                </tr>
+                <tr>
                   <td><em>r</em></td>
                   <td>Representation of a chemical equation</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>t<sub>C</sub></em></td>
+                  <td>Generic tuple of a compound</td>
                   <td>--</td>
                 </tr>
                 <tr>
@@ -313,6 +343,62 @@
                 <p class="paragraph">
                   This section collects and defines all the data needed to build the instance models.
                 </p>
+                <div id="DD:countFunc">
+                  <table class="ddefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>DD:countFunc</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td><p class="paragraph">Count of an element in a compound</p></td>
+                    </tr>
+                    <tr>
+                      <th>Symbol</th>
+                      <td><p class="paragraph"><em>count</em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>
+                        \[\text{count}=\begin{cases}
+                                       {t_{C}}_{1}, & {t_{C}}\in{}c\land{}{t_{C}}_{0}=e\\
+                                       0, & \neg{}{t_{C}}\in{}c\land{}{t_{C}}_{0}=e
+                                       \end{cases}\]
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li>
+                            <em>count</em> is the count of an element in a compound (Unitless)
+                          </li>
+                          <li>
+                            <em>t<sub>C</sub></em> is the generic tuple of a compound (Unitless)
+                          </li>
+                          <li><em>c</em> is the generic compound (Unitless)</li>
+                          <li><em>e</em> is the generic element (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td>
+                        <p class="paragraph">
+                          The output represents the number of atoms of a given element <em>e</em> (of type <em>E</em>) in a given compound <em>c</em> (of type <em>C</em>)
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph">--</p></td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
                 <div id="DD:elementType">
                   <table class="ddefn">
                     <tr>
@@ -329,13 +415,14 @@
                     </tr>
                     <tr>
                       <th>Equation</th>
-                      <td>\[E=E\]</td>
+                      <td>
+                        \[E=\{\text{H},\text{He},\text{Li},\text{Be},\text{B},\text{C},\text{N},\text{O},\text{F},\text{Ne},\text{Na},\text{Mg},\text{Al},\text{Si},\text{P},\text{S},\text{Cl},\text{Ar},\text{K},\text{Ca},\text{Sc},\text{Ti},\text{V},\text{Cr},\text{Mn},\text{Fe},\text{Co},\text{Ni},\text{Cu},\text{Zn},\text{Ga},\text{Ge},\text{As},\text{Se},\text{Br},\text{Kr},\text{Rb},\text{Sr},\text{Y},\text{Zr},\text{Nb},\text{Mo},\text{Tc},\text{Ru},\text{Rh},\text{Pd},\text{Ag},\text{Cd},\text{In},\text{Sn},\text{Sb},\text{Te},\text{I},\text{Xe},\text{Cs},\text{Ba},\text{La},\text{Ce},\text{Pr},\text{Nd},\text{Pm},\text{Sm},\text{Eu},\text{Gd},\text{Tb},\text{Dy},\text{Ho},\text{Er},\text{Tm},\text{Yb},\text{Lu},\text{Hf},\text{Ta},\text{W},\text{Re},\text{Os},\text{Ir},\text{Pt},\text{Au},\text{Hg},\text{Tl},\text{Pb},\text{Bi},\text{Po},\text{At},\text{Rn},\text{Fr},\text{Ra},\text{Ac},\text{Th},\text{Pa},\text{U},\text{Np},\text{Pu},\text{Am},\text{Cm},\text{Bk},\text{Cf},\text{Es},\text{Fm},\text{Md},\text{No},\text{Lr},\text{Rf},\text{Db},\text{Sg},\text{Bh},\text{Hs},\text{Mt},\text{Ds},\text{Rg},\text{Cn},\text{Nh},\text{Fl},\text{Mc},\text{Lv},\text{Ts},\text{Og}\}\]
+                      </td>
                     </tr>
                     <tr>
                       <th>Description</th>
                       <td>
                         <ul class="hide-list-style-no-indent">
-                          <li><em>E</em> is the element data type (Unitless)</li>
                           <li><em>E</em> is the element data type (Unitless)</li>
                         </ul>
                       </td>
@@ -353,6 +440,90 @@
                       <td>
                         <p class="paragraph"><a href=#smithChemSpec>smithChemSpec</a></p>
                       </td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
+                <div id="DD:compoundType">
+                  <table class="ddefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>DD:compoundType</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td><p class="paragraph">Compound data type</p></td>
+                    </tr>
+                    <tr>
+                      <th>Symbol</th>
+                      <td><p class="paragraph"><em>C</em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>
+                        \[C=\text{sequence of}\,\text{tuple of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)\]
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em>C</em> is the compound data type (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td><p class="paragraph">A type representing a compound</p></td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph">--</p></td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
+                <div id="DD:reactionType">
+                  <table class="ddefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>DD:reactionType</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td><p class="paragraph">Reaction data type</p></td>
+                    </tr>
+                    <tr>
+                      <th>Symbol</th>
+                      <td><p class="paragraph"><em>R</em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>
+                        \[R=\text{tuple of}\,\left(\text{prod}\in{}\text{sequence of}\,\text{tuple of}\,\left(\text{comp}\in{}C,\,\text{coeff}\in{}\mathbb{Z}\right),\,\text{reac}\in{}\text{sequence of}\,\text{tuple of}\,\left(\text{comp}\in{}C,\,\text{coeff}\in{}\mathbb{Z}\right)\right)\]
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em>R</em> is the reaction data type (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td><p class="paragraph">A type representing a reaction</p></td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph">--</p></td>
                     </tr>
                     <tr>
                       <th>RefBy</th>
