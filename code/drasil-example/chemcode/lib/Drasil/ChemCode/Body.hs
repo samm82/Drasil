@@ -124,7 +124,7 @@ symbolsAll :: [QuantityDict]
 symbolsAll = quants
 
 acronyms :: [CI]
-acronyms = [progName, Doc.srs, thModel, dataDefn] -- genDefn, inModel
+acronyms = [progName, Doc.srs, thModel, dataDefn, inModel] -- genDefn,
 
 si :: SystemInformation
 si =
