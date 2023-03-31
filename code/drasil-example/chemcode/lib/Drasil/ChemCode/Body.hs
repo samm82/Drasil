@@ -10,10 +10,10 @@ import Theory.Drasil (GenDefn, InstanceModel)
 
 import Data.Drasil.Citations (elemListWiki, ilpWiki, koothoor2013, lund2023,
   parnasClements1986, smithChemSpec, smithLai2005)
-import qualified Data.Drasil.Concepts.Documentation as Doc (srs)
-import Data.Drasil.Concepts.Documentation hiding (element, scope, srs)
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Computation (algorithm)
+import qualified Data.Drasil.Concepts.Documentation as Doc (srs)
+import Data.Drasil.Concepts.Documentation hiding (element, scope, srs)
 import Data.Drasil.Concepts.Math (mathcon)
 import Data.Drasil.Concepts.Software (program)
 import Data.Drasil.People (samCrawford)
@@ -141,7 +141,7 @@ symbolsAll :: [QuantityDict]
 symbolsAll = quants
 
 acronyms :: [CI]
-acronyms = [progName, Doc.srs, thModel, dataDefn, requirement, unlikelyChg] -- genDefn, inModel
+acronyms = [assumption, progName, Doc.srs, thModel, dataDefn, requirement, unlikelyChg] -- genDefn, inModel
 
 terms :: [ConceptChunk]
 terms = [compound, element, equation, product, reactant, reaction]
