@@ -65,7 +65,6 @@
                   <li><a href=#Sec:TMs>Theoretical Models</a></li>
                   <li><a href=#Sec:GDs>General Definitions</a></li>
                   <li><a href=#Sec:DDs>Data Definitions</a></li>
-                  <li><a href=#Sec:IMs>Instance Models</a></li>
                 </ul>
               </li>
             </ul>
@@ -111,11 +110,6 @@
                   <td>--</td>
                 </tr>
                 <tr>
-                  <td><em><b>1</b></em></td>
-                  <td>Unary vector</td>
-                  <td>--</td>
-                </tr>
-                <tr>
                   <td><em><b>A</b></em></td>
                   <td>Generic matrix</td>
                   <td>--</td>
@@ -126,23 +120,8 @@
                   <td>--</td>
                 </tr>
                 <tr>
-                  <td><em>C</em></td>
-                  <td>Compound data type</td>
-                  <td>--</td>
-                </tr>
-                <tr>
-                  <td><em>c</em></td>
-                  <td>Generic compound</td>
-                  <td>--</td>
-                </tr>
-                <tr>
                   <td><em><b>c</b></em></td>
                   <td>Generic vector</td>
-                  <td>--</td>
-                </tr>
-                <tr>
-                  <td><em>count</em></td>
-                  <td>Count of an element in a compound</td>
                   <td>--</td>
                 </tr>
                 <tr>
@@ -151,28 +130,8 @@
                   <td>--</td>
                 </tr>
                 <tr>
-                  <td><em><b>E</b></em></td>
-                  <td>Matrix representation of a chemical equation</td>
-                  <td>--</td>
-                </tr>
-                <tr>
-                  <td><em>e</em></td>
-                  <td>Generic element</td>
-                  <td>--</td>
-                </tr>
-                <tr>
-                  <td><em>R</em></td>
-                  <td>Reaction data type</td>
-                  <td>--</td>
-                </tr>
-                <tr>
                   <td><em>r</em></td>
                   <td>Representation of a chemical equation</td>
-                  <td>--</td>
-                </tr>
-                <tr>
-                  <td><em>t<sub>C</sub></em></td>
-                  <td>Generic tuple of a compound</td>
                   <td>--</td>
                 </tr>
                 <tr>
@@ -195,20 +154,12 @@
                   <th>Full Form</th>
                 </tr>
                 <tr>
-                  <td>A</td>
-                  <td>Assumption</td>
-                </tr>
-                <tr>
                   <td>ChemCode</td>
                   <td>Chemistry Code</td>
                 </tr>
                 <tr>
                   <td>DD</td>
                   <td>Data Definition</td>
-                </tr>
-                <tr>
-                  <td>IM</td>
-                  <td>Instance Model</td>
                 </tr>
                 <tr>
                   <td>R</td>
@@ -349,23 +300,24 @@
                 <p class="paragraph">
                   This section focuses on the general equations and laws that ChemCode is based on.
                 </p>
-                <div id="TM:canonIntLinProg">
+                <div id="TM:intLinProg">
                   <table class="tdefn">
                     <tr>
                       <th>Refname</th>
-                      <td><b>TM:canonIntLinProg</b></td>
+                      <td><b>TM:intLinProg</b></td>
                     </tr>
                     <tr>
                       <th>Label</th>
-                      <td><p class="paragraph">Canonical integer linear program</p></td>
+                      <td><p class="paragraph">Integer linear program</p></td>
                     </tr>
                     <tr>
                       <th>Equation</th>
                       <td>
-                        \[\symbf{c} \symbf{x}\]
-                        \[\symbf{A} \symbf{x}\leq{}\symbf{b}\]
-                        \[\symbf{x}\geq{}\symbf{0}\]
-                        \[\symbf{x}\in{}\mathbb{Z}^{n}\]
+                        \[\begin{cases}
+                          \symbf{c} \symbf{x}, & 1\\
+                          \symbf{A} \symbf{x}\leq{}\symbf{b}, & 2\\
+                          \symbf{x}\geq{}\symbf{0}, & 3
+                          \end{cases}\]
                       </td>
                     </tr>
                     <tr>
@@ -374,18 +326,9 @@
                         <ul class="hide-list-style-no-indent">
                           <li><em><b>c</b></em> is the generic vector (Unitless)</li>
                           <li><em><b>x</b></em> is the generic vector (Unitless)</li>
-                        </ul>
-                        <ul class="hide-list-style-no-indent">
                           <li><em><b>A</b></em> is the generic matrix (Unitless)</li>
-                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
                           <li><em><b>b</b></em> is the generic vector (Unitless)</li>
-                        </ul>
-                        <ul class="hide-list-style-no-indent">
-                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
                           <li><em><b>0</b></em> is the zero vector (Unitless)</li>
-                        </ul>
-                        <ul class="hide-list-style-no-indent">
-                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
                         </ul>
                       </td>
                     </tr>
@@ -406,11 +349,7 @@
                     </tr>
                     <tr>
                       <th>RefBy</th>
-                      <td>
-                        <p class="paragraph">
-                          <a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a>
-                        </p>
-                      </td>
+                      <td><p class="paragraph"></p></td>
                     </tr>
                   </table>
                 </div>
@@ -428,62 +367,6 @@
                 <p class="paragraph">
                   This section collects and defines all the data needed to build the instance models.
                 </p>
-                <div id="DD:countFunc">
-                  <table class="ddefn">
-                    <tr>
-                      <th>Refname</th>
-                      <td><b>DD:countFunc</b></td>
-                    </tr>
-                    <tr>
-                      <th>Label</th>
-                      <td><p class="paragraph">Count of an element in a compound</p></td>
-                    </tr>
-                    <tr>
-                      <th>Symbol</th>
-                      <td><p class="paragraph"><em>count</em></p></td>
-                    </tr>
-                    <tr>
-                      <th>Equation</th>
-                      <td>
-                        \[\text{count}=\begin{cases}
-                                       {t_{C}}_{1}, & {t_{C}}\in{}c\land{}{t_{C}}_{0}=e\\
-                                       0, & \neg{}{t_{C}}\in{}c\land{}{t_{C}}_{0}=e
-                                       \end{cases}\]
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Description</th>
-                      <td>
-                        <ul class="hide-list-style-no-indent">
-                          <li>
-                            <em>count</em> is the count of an element in a compound (Unitless)
-                          </li>
-                          <li>
-                            <em>t<sub>C</sub></em> is the generic tuple of a compound (Unitless)
-                          </li>
-                          <li><em>c</em> is the generic compound (Unitless)</li>
-                          <li><em>e</em> is the generic element (Unitless)</li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Notes</th>
-                      <td>
-                        <p class="paragraph">
-                          The output represents the number of atoms of a given element <em>e</em> (of type <em>E</em>) in a given compound <em>c</em> (of type <em>C</em>)
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Source</th>
-                      <td><p class="paragraph">--</p></td>
-                    </tr>
-                    <tr>
-                      <th>RefBy</th>
-                      <td><p class="paragraph"></p></td>
-                    </tr>
-                  </table>
-                </div>
                 <div id="DD:elementType">
                   <table class="ddefn">
                     <tr>
@@ -500,14 +383,13 @@
                     </tr>
                     <tr>
                       <th>Equation</th>
-                      <td>
-                        \[E=\{\text{H},\text{He},\text{Li},\text{Be},\text{B},\text{C},\text{N},\text{O},\text{F},\text{Ne},\text{Na},\text{Mg},\text{Al},\text{Si},\text{P},\text{S},\text{Cl},\text{Ar},\text{K},\text{Ca},\text{Sc},\text{Ti},\text{V},\text{Cr},\text{Mn},\text{Fe},\text{Co},\text{Ni},\text{Cu},\text{Zn},\text{Ga},\text{Ge},\text{As},\text{Se},\text{Br},\text{Kr},\text{Rb},\text{Sr},\text{Y},\text{Zr},\text{Nb},\text{Mo},\text{Tc},\text{Ru},\text{Rh},\text{Pd},\text{Ag},\text{Cd},\text{In},\text{Sn},\text{Sb},\text{Te},\text{I},\text{Xe},\text{Cs},\text{Ba},\text{La},\text{Ce},\text{Pr},\text{Nd},\text{Pm},\text{Sm},\text{Eu},\text{Gd},\text{Tb},\text{Dy},\text{Ho},\text{Er},\text{Tm},\text{Yb},\text{Lu},\text{Hf},\text{Ta},\text{W},\text{Re},\text{Os},\text{Ir},\text{Pt},\text{Au},\text{Hg},\text{Tl},\text{Pb},\text{Bi},\text{Po},\text{At},\text{Rn},\text{Fr},\text{Ra},\text{Ac},\text{Th},\text{Pa},\text{U},\text{Np},\text{Pu},\text{Am},\text{Cm},\text{Bk},\text{Cf},\text{Es},\text{Fm},\text{Md},\text{No},\text{Lr},\text{Rf},\text{Db},\text{Sg},\text{Bh},\text{Hs},\text{Mt},\text{Ds},\text{Rg},\text{Cn},\text{Nh},\text{Fl},\text{Mc},\text{Lv},\text{Ts},\text{Og}\}\]
-                      </td>
+                      <td>\[E=E\]</td>
                     </tr>
                     <tr>
                       <th>Description</th>
                       <td>
                         <ul class="hide-list-style-no-indent">
+                          <li><em>E</em> is the element data type (Unitless)</li>
                           <li><em>E</em> is the element data type (Unitless)</li>
                         </ul>
                       </td>
@@ -525,162 +407,6 @@
                       <td>
                         <p class="paragraph"><a href=#smithChemSpec>smithChemSpec</a></p>
                       </td>
-                    </tr>
-                    <tr>
-                      <th>RefBy</th>
-                      <td><p class="paragraph"></p></td>
-                    </tr>
-                  </table>
-                </div>
-                <div id="DD:compoundType">
-                  <table class="ddefn">
-                    <tr>
-                      <th>Refname</th>
-                      <td><b>DD:compoundType</b></td>
-                    </tr>
-                    <tr>
-                      <th>Label</th>
-                      <td><p class="paragraph">Compound data type</p></td>
-                    </tr>
-                    <tr>
-                      <th>Symbol</th>
-                      <td><p class="paragraph"><em>C</em></p></td>
-                    </tr>
-                    <tr>
-                      <th>Equation</th>
-                      <td>
-                        \[C=\text{sequence of}\,\text{tuple of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)\]
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Description</th>
-                      <td>
-                        <ul class="hide-list-style-no-indent">
-                          <li><em>C</em> is the compound data type (Unitless)</li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Notes</th>
-                      <td><p class="paragraph">A type representing a compound</p></td>
-                    </tr>
-                    <tr>
-                      <th>Source</th>
-                      <td><p class="paragraph">--</p></td>
-                    </tr>
-                    <tr>
-                      <th>RefBy</th>
-                      <td><p class="paragraph"></p></td>
-                    </tr>
-                  </table>
-                </div>
-                <div id="DD:reactionType">
-                  <table class="ddefn">
-                    <tr>
-                      <th>Refname</th>
-                      <td><b>DD:reactionType</b></td>
-                    </tr>
-                    <tr>
-                      <th>Label</th>
-                      <td><p class="paragraph">Reaction data type</p></td>
-                    </tr>
-                    <tr>
-                      <th>Symbol</th>
-                      <td><p class="paragraph"><em>R</em></p></td>
-                    </tr>
-                    <tr>
-                      <th>Equation</th>
-                      <td>
-                        \[R=\text{tuple of}\,\left(\text{prod}\in{}\text{sequence of}\,\text{tuple of}\,\left(\text{comp}\in{}C,\,\text{coeff}\in{}\mathbb{Z}\right),\,\text{reac}\in{}\text{sequence of}\,\text{tuple of}\,\left(\text{comp}\in{}C,\,\text{coeff}\in{}\mathbb{Z}\right)\right)\]
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Description</th>
-                      <td>
-                        <ul class="hide-list-style-no-indent">
-                          <li><em>R</em> is the reaction data type (Unitless)</li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Notes</th>
-                      <td><p class="paragraph">A type representing a reaction</p></td>
-                    </tr>
-                    <tr>
-                      <th>Source</th>
-                      <td><p class="paragraph">--</p></td>
-                    </tr>
-                    <tr>
-                      <th>RefBy</th>
-                      <td><p class="paragraph"></p></td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-            <div id="Sec:IMs">
-              <div class="subsubsection">
-                <h3>Instance Models</h3>
-                <p class="paragraph">
-                  This section transforms the problem defined in the <a href=#Sec:ProbDesc>problem description</a> into one which is expressed in mathematical terms. It uses concrete symbols defined in the <a href=#Sec:DDs>data definitions</a> to replace the abstract symbols in the models identified in <a href=#Sec:TMs>theoretical models</a> and <a href=#Sec:GDs>general definitions</a>.
-                </p>
-                <div id="IM:chemEqIntLinProg">
-                  <table class="idefn">
-                    <tr>
-                      <th>Refname</th>
-                      <td><b>IM:chemEqIntLinProg</b></td>
-                    </tr>
-                    <tr>
-                      <th>Label</th>
-                      <td>
-                        <p class="paragraph">
-                          Integer linear program for a chemical equation
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Input</th>
-                      <td><p class="paragraph"><em><b>E</b></em></p></td>
-                    </tr>
-                    <tr>
-                      <th>Output</th>
-                      <td><p class="paragraph"><em><b>x</b></em></p></td>
-                    </tr>
-                    <tr>
-                      <th>Equation</th>
-                      <td>
-                        \[\begin{aligned}
-                           & \text{minimize} &  & \symbf{1}\cdot{}\symbf{x}\\
-                           & \text{subject to} &  & \symbf{E} \symbf{x}=\symbf{0},\\
-                           & \, &  & \symbf{x}\gt{}\symbf{0},\\
-                           & \text{and} &  & \symbf{x}\in{}\mathbb{Z}^{n}
-                          \end{aligned}\]
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Description</th>
-                      <td>
-                        <ul class="hide-list-style-no-indent">
-                          <li><em><b>1</b></em> is the unary vector (Unitless)</li>
-                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
-                          <li>
-                            <em><b>E</b></em> is the matrix representation of a chemical equation (Unitless)
-                          </li>
-                          <li><em><b>0</b></em> is the zero vector (Unitless)</li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Notes</th>
-                      <td>
-                        <p class="paragraph">
-                          This is a specific instance of the ILP from <a href=#TM:canonIntLinProg>TM:canonIntLinProg</a> with <em><b>A</b> = <b>E</b></em>, <em><b>b</b> = <b>0</b></em>, and <em><b>c</b> = <b>1</b></em>. The goal and constraints are also modified.
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Source</th>
-                      <td><p class="paragraph">--</p></td>
                     </tr>
                     <tr>
                       <th>RefBy</th>
@@ -855,37 +581,13 @@
               <th><a href=#validEqns>A:validEqns</a></th>
             </tr>
             <tr>
-              <td><a href=#DD:countFunc>DD:countFunc</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
               <td><a href=#DD:elementType>DD:elementType</a></td>
               <td></td>
               <td></td>
               <td></td>
             </tr>
             <tr>
-              <td><a href=#DD:compoundType>DD:compoundType</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><a href=#DD:reactionType>DD:reactionType</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></td>
+              <td><a href=#TM:intLinProg>TM:intLinProg</a></td>
               <td></td>
               <td></td>
               <td></td>
@@ -965,65 +667,17 @@
           <table class="table">
             <tr>
               <th></th>
-              <th><a href=#DD:countFunc>DD:countFunc</a></th>
               <th><a href=#DD:elementType>DD:elementType</a></th>
-              <th><a href=#DD:compoundType>DD:compoundType</a></th>
-              <th><a href=#DD:reactionType>DD:reactionType</a></th>
-              <th><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></th>
-              <th><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></th>
-            </tr>
-            <tr>
-              <td><a href=#DD:countFunc>DD:countFunc</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
+              <th><a href=#TM:intLinProg>TM:intLinProg</a></th>
             </tr>
             <tr>
               <td><a href=#DD:elementType>DD:elementType</a></td>
               <td></td>
               <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
             </tr>
             <tr>
-              <td><a href=#DD:compoundType>DD:compoundType</a></td>
+              <td><a href=#TM:intLinProg>TM:intLinProg</a></td>
               <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><a href=#DD:reactionType>DD:reactionType</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td>X</td>
               <td></td>
             </tr>
           </table>
@@ -1035,12 +689,8 @@
           <table class="table">
             <tr>
               <th></th>
-              <th><a href=#DD:countFunc>DD:countFunc</a></th>
               <th><a href=#DD:elementType>DD:elementType</a></th>
-              <th><a href=#DD:compoundType>DD:compoundType</a></th>
-              <th><a href=#DD:reactionType>DD:reactionType</a></th>
-              <th><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></th>
-              <th><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></th>
+              <th><a href=#TM:intLinProg>TM:intLinProg</a></th>
               <th><a href=#inputValues>FR:Input-Values</a></th>
               <th><a href=#convertMatrix>FR:Convert-to-Matrix</a></th>
               <th><a href=#feasOut>FR:Feasible-Output</a></th>
@@ -1052,10 +702,6 @@
             </tr>
             <tr>
               <td><a href=#inputValues>FR:Input-Values</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1079,17 +725,9 @@
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
             </tr>
             <tr>
               <td><a href=#feasOut>FR:Feasible-Output</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1113,17 +751,9 @@
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
             </tr>
             <tr>
               <td><a href=#accurate>NFR:Accurate</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1147,10 +777,6 @@
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
             </tr>
             <tr>
               <td><a href=#reusable>NFR:Reusable</a></td>
@@ -1164,17 +790,9 @@
               <td></td>
               <td></td>
               <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
             </tr>
             <tr>
               <td><a href=#portable>NFR:Portable</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
               <td></td>
               <td></td>
               <td></td>
