@@ -1,0 +1,1288 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="ChemCode_SRS.css">
+    <title>
+      Software Requirements Specification for Chemistry Code
+    </title>
+    <meta charset="utf-8">
+    <script>
+    MathJax = {
+      loader: {load: ['[tex]/textmacros', 'output/chtml']},
+      tex: {
+        packages: {'[+]': ['textmacros']}
+      },
+      svg: {
+        fontCache: 'global'
+      }
+    };
+    </script>
+    <script type="text/javascript" id="MathJax-script" async
+     src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js">
+    </script>
+  </head>
+  <body>
+    <div class="title">
+      <h1>Software Requirements Specification for Chemistry Code</h1>
+    </div>
+    <div class="author"><h2>Samuel J. Crawford</h2></div>
+    <div id="Sec:ToC">
+      <div class="section">
+        <h1>Table of Contents</h1>
+        <p class="paragraph">
+          An outline of all sections included in this SRS is recorded here for easy reference.
+        </p>
+        <ul class="list">
+          <li><a href=#Sec:ToC>Table of Contents</a></li>
+          <li>
+            <a href=#Sec:RefMat>Reference Material</a>
+            <ul class="list">
+              <li><a href=#Sec:ToS>Table of Symbols</a></li>
+              <li><a href=#Sec:TAbbAcc>Abbreviations and Acronyms</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href=#Sec:Intro>Introduction</a>
+            <ul class="list">
+              <li><a href=#Sec:DocPurpose>Purpose of Document</a></li>
+              <li><a href=#Sec:ReqsScope>Scope of Requirements</a></li>
+              <li><a href=#Sec:DocOrg>Organization of Document</a></li>
+            </ul>
+          </li>
+          <li>
+            <a href=#Sec:SpecSystDesc>Specific System Description</a>
+            <ul class="list">
+              <li>
+                <a href=#Sec:ProbDesc>Problem Description</a>
+                <ul class="list">
+                  <li><a href=#Sec:TermDefs>Terminology and Definitions</a></li>
+                </ul>
+              </li>
+              <li>
+                <a href=#Sec:SolCharSpec>Solution Characteristics Specification</a>
+                <ul class="list">
+                  <li><a href=#Sec:Assumps>Assumptions</a></li>
+                  <li><a href=#Sec:TMs>Theoretical Models</a></li>
+                  <li><a href=#Sec:GDs>General Definitions</a></li>
+                  <li><a href=#Sec:DDs>Data Definitions</a></li>
+                  <li><a href=#Sec:IMs>Instance Models</a></li>
+                </ul>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a href=#Sec:Requirements>Requirements</a>
+            <ul class="list">
+              <li><a href=#Sec:FRs>Functional Requirements</a></li>
+              <li><a href=#Sec:NFRs>Non-Functional Requirements</a></li>
+            </ul>
+          </li>
+          <li><a href=#Sec:LCs>Likely Changes</a></li>
+          <li><a href=#Sec:UCs>Unlikely Changes</a></li>
+          <li>
+            <a href=#Sec:TraceMatrices>Traceability Matrices and Graphs</a>
+          </li>
+          <li><a href=#Sec:References>References</a></li>
+        </ul>
+      </div>
+    </div>
+    <div id="Sec:RefMat">
+      <div class="section">
+        <h1>Reference Material</h1>
+        <p class="paragraph">
+          This section records information for easy reference.
+        </p>
+        <div id="Sec:ToS">
+          <div class="subsection">
+            <h2>Table of Symbols</h2>
+            <p class="paragraph">
+              The symbols used in this document are summarized in the <a href=#Table:ToS>Table of Symbols</a> along with their units. The symbols are listed in alphabetical order.
+            </p>
+            <div id="Table:ToS">
+              <table class="table">
+                <tr>
+                  <th>Symbol</th>
+                  <th>Description</th>
+                  <th>Units</th>
+                </tr>
+                <tr>
+                  <td><em><b>0</b></em></td>
+                  <td>Zero vector</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em><b>1</b></em></td>
+                  <td>Unary vector</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em><b>A</b></em></td>
+                  <td>Generic matrix</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em><b>b</b></em></td>
+                  <td>Generic vector</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>C</em></td>
+                  <td>Compound data type</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>c</em></td>
+                  <td>Generic compound</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em><b>c</b></em></td>
+                  <td>Generic vector</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>count</em></td>
+                  <td>Count of an element in a compound</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>E</em></td>
+                  <td>Element data type</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em><b>E</b></em></td>
+                  <td>Matrix representation of a chemical equation</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>e</em></td>
+                  <td>Generic element</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>R</em></td>
+                  <td>Reaction data type</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>r</em></td>
+                  <td>Representation of a chemical equation</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>t<sub>C</sub></em></td>
+                  <td>Generic tuple of a compound</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em><b>x</b></em></td>
+                  <td>Generic vector</td>
+                  <td>--</td>
+                </tr>
+              </table>
+              <p class="caption">Table of Symbols</p>
+            </div>
+          </div>
+        </div>
+        <div id="Sec:TAbbAcc">
+          <div class="subsection">
+            <h2>Abbreviations and Acronyms</h2>
+            <div id="Table:TAbbAcc">
+              <table class="table">
+                <tr>
+                  <th>Abbreviation</th>
+                  <th>Full Form</th>
+                </tr>
+                <tr>
+                  <td>ChemCode</td>
+                  <td>Chemistry Code</td>
+                </tr>
+                <tr>
+                  <td>DD</td>
+                  <td>Data Definition</td>
+                </tr>
+                <tr>
+                  <td>IM</td>
+                  <td>Instance Model</td>
+                </tr>
+                <tr>
+                  <td>R</td>
+                  <td>Requirement</td>
+                </tr>
+                <tr>
+                  <td>SRS</td>
+                  <td>Software Requirements Specification</td>
+                </tr>
+                <tr>
+                  <td>TM</td>
+                  <td>Theoretical Model</td>
+                </tr>
+                <tr>
+                  <td>UC</td>
+                  <td>Unlikely Change</td>
+                </tr>
+              </table>
+              <p class="caption">Abbreviations and Acronyms</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="Sec:Intro">
+      <div class="section">
+        <h1>Introduction</h1>
+        <p class="paragraph">
+          Chemical equations are common ways of representing chemical reactions but they must be balanced <a href=#lund2023>lund2023</a>. This process of balancing a chemical equation involves introducing coefficients before each chemical formula such that there are the same number of atoms of each element on the reactant and product sides of the chemical equation. Because balancing must be done before a given chemical reaction can be used <a href=#lund2023>lund2023</a>, it is useful to have a tool to automatically do this. This would improve the productivity of scientists and engineers and reduce the potential for human error. This program should balance a given chemical equation if it is feasible and if it is not, it should provide a descriptive message communicating this to the user. The program that performs these tasks as documented here will be called Chemistry Code (ChemCode).
+        </p>
+        <p class="paragraph">
+          The following section provides an overview of the Software Requirements Specification (SRS) for ChemCode. This section explains the purpose of this document, the scope of the requirements, the characteristics of the intended reader, and the organization of the document.
+        </p>
+        <div id="Sec:DocPurpose">
+          <div class="subsection">
+            <h2>Purpose of Document</h2>
+            <p class="paragraph">
+              The primary purpose of this document is to record the requirements of the Chemistry Code. Goals, assumptions, theoretical models, definitions, and other model derivation information are specified, allowing the reader to fully understand and verify the purpose and scientific basis of ChemCode. With the exception of <a href=#Sec:SysConstraints>system constraints</a>, this SRS will remain abstract, describing what problem is being solved, but not how to solve it.
+            </p>
+            <p class="paragraph">
+              This document will be used as a starting point for subsequent development phases, including writing the design specification and the software verification and validation plan. The design document will show how the requirements are to be realized, including decisions on the numerical algorithms and programming environment. The verification and validation plan will show the steps that will be used to increase confidence in the software documentation and the implementation. Although the SRS fits in a series of documents that follow the so-called waterfall model, the actual development process is not constrained in any way. Even when the waterfall model is not followed, as Parnas and Clements point out <a href=#parnasClements1986>parnasClements1986</a>, the most logical way to present the documentation is still to "fake" a rational design process.
+            </p>
+          </div>
+        </div>
+        <div id="Sec:ReqsScope">
+          <div class="subsection">
+            <h2>Scope of Requirements</h2>
+            <p class="paragraph">
+              The scope of the requirements includes all chemical equations with at most one more compound than element. Furthermore, it also includes all inputted chemical formulas that describe real chemical compounds, are formatted following a set of conventions, and only consist of atomic symbols and subscripts.
+            </p>
+          </div>
+        </div>
+        <div id="Sec:DocOrg">
+          <div class="subsection">
+            <h2>Organization of Document</h2>
+            <p class="paragraph">
+              The organization of this document follows the template for an SRS for scientific computing software proposed by <a href=#koothoor2013>koothoor2013</a> and <a href=#smithLai2005>smithLai2005</a>. The presentation follows the standard pattern of presenting goals, theories, definitions, and assumptions. For readers that would like a more bottom up approach, they can start reading the <a href=#Sec:IMs>instance models</a> and trace back to find any additional information they require.
+            </p>
+            <p class="paragraph">
+              The <a href=#Sec:GoalStmt>goal statements</a> are refined to the theoretical models and the <a href=#Sec:TMs>theoretical models</a> to the <a href=#Sec:IMs>instance models</a>.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="Sec:SpecSystDesc">
+      <div class="section">
+        <h1>Specific System Description</h1>
+        <p class="paragraph">
+          This section first presents the problem description, which gives a high-level view of the problem to be solved. This is followed by the solution characteristics specification, which presents the assumptions, theories, and definitions that are used.
+        </p>
+        <div id="Sec:ProbDesc">
+          <div class="subsection">
+            <h2>Problem Description</h2>
+            <p class="paragraph">
+              A system is needed to balance chemical equations with the smallest possible whole number coefficients so they can be useful for other computations.
+            </p>
+            <div id="Sec:TermDefs">
+              <div class="subsubsection">
+                <h3>Terminology and Definitions</h3>
+                <p class="paragraph">
+                  This subsection provides a list of terms that are used in the subsequent sections and their meaning, with the purpose of reducing ambiguity and making it easier to correctly understand the requirements.
+                </p>
+                <ul class="list">
+                  <li>
+                    Compound: A molecule made up of more than one atom, which may or may not be of different elements.
+                  </li>
+                  <li>
+                    Element: The group of all atoms with the same number of protons in the atomic nucleus. For example, all atoms with one proton are hydrogen atoms.
+                  </li>
+                  <li>Equation: A textual representation of a chemical reaction.</li>
+                  <li>Product: A substance formed by a chemical reaction.</li>
+                  <li>
+                    Reactant: A substance involved in and changed by a chemical reaction.
+                  </li>
+                  <li>
+                    Reaction: An interaction between different types of matter that results in at least one new substance being formed <a href=#lund2023>lund2023</a>.
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div id="Sec:SolCharSpec">
+          <div class="subsection">
+            <h2>Solution Characteristics Specification</h2>
+            <p class="paragraph">
+              The instance models that govern ChemCode are presented in the <a href=#Sec:IMs>Instance Model Section</a>. The information to understand the meaning of the instance models and their derivation is also presented, so that the instance models can be verified.
+            </p>
+            <div id="Sec:Assumps">
+              <div class="subsubsection">
+                <h3>Assumptions</h3>
+                <p class="paragraph">
+                  This section simplifies the original problem and helps in developing the theoretical models by filling in the missing information for the physical system. The assumptions refine the scope by providing more detail.
+                </p>
+                <div class="list">
+                  <p>
+                    <div id="elemCompDiff">
+                      elemCompDiff: For all chemical equations, there is at most one more compound than element. (RefBy: <a href=#allEqsPermitted>UC:allEqsPermitted</a>.)
+                    </div>
+                  </p>
+                  <p>
+                    <div id="validForms">
+                      validForms: All inputted chemical formulas describe real chemical compounds. (RefBy: <a href=#checkValidForms>UC:checkValidForms</a>.)
+                    </div>
+                  </p>
+                  <p>
+                    <div id="validEqns">
+                      validEqns: All inputted chemical equations describe real chemical reactions. (RefBy: <a href=#checkValidEqns>UC:checkValidEqns</a>.)
+                    </div>
+                  </p>
+                </div>
+              </div>
+            </div>
+            <div id="Sec:TMs">
+              <div class="subsubsection">
+                <h3>Theoretical Models</h3>
+                <p class="paragraph">
+                  This section focuses on the general equations and laws that ChemCode is based on.
+                </p>
+                <div id="TM:canonIntLinProg">
+                  <table class="tdefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>TM:canonIntLinProg</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td><p class="paragraph">Canonical integer linear program</p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>
+                        \[\symbf{c} \symbf{x}\]
+                        \[\symbf{A} \symbf{x}\leq{}\symbf{b}\]
+                        \[\symbf{x}\geq{}\symbf{0}\]
+                        \[\symbf{x}\in{}\mathbb{Z}^{n}\]
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em><b>c</b></em> is the generic vector (Unitless)</li>
+                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
+                        </ul>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em><b>A</b></em> is the generic matrix (Unitless)</li>
+                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
+                          <li><em><b>b</b></em> is the generic vector (Unitless)</li>
+                        </ul>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
+                          <li><em><b>0</b></em> is the zero vector (Unitless)</li>
+                        </ul>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td>
+                        <p class="paragraph">
+                          The above equation gives the canonical form of an integer linear program, which is "a mathematical optimization or feasibility program in which some or all of the variables are restricted to be integers [and] the objective function and the constraints (other than the integer constraints) are linear" <a href=#ilpWiki>ilpWiki</a>
+                        </p>
+                        <p class="paragraph">
+                          The values of <em><b>x</b></em> are unknown and will be solved for
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph"><a href=#ilpWiki>ilpWiki</a></p></td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td>
+                        <p class="paragraph">
+                          <a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a>
+                        </p>
+                      </td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div id="Sec:GDs">
+              <div class="subsubsection">
+                <h3>General Definitions</h3>
+                <p class="paragraph">There are no general definitions.</p>
+              </div>
+            </div>
+            <div id="Sec:DDs">
+              <div class="subsubsection">
+                <h3>Data Definitions</h3>
+                <p class="paragraph">
+                  This section collects and defines all the data needed to build the instance models.
+                </p>
+                <div id="DD:countFunc">
+                  <table class="ddefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>DD:countFunc</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td><p class="paragraph">Count of an element in a compound</p></td>
+                    </tr>
+                    <tr>
+                      <th>Symbol</th>
+                      <td><p class="paragraph"><em>count</em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>
+                        \[\text{count}=\begin{cases}
+                                       {t_{C}}_{1}, & {t_{C}}\in{}c\land{}{t_{C}}_{0}=e\\
+                                       0, & \neg{}{t_{C}}\in{}c\land{}{t_{C}}_{0}=e
+                                       \end{cases}\]
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li>
+                            <em>count</em> is the count of an element in a compound (Unitless)
+                          </li>
+                          <li>
+                            <em>t<sub>C</sub></em> is the generic tuple of a compound (Unitless)
+                          </li>
+                          <li><em>c</em> is the generic compound (Unitless)</li>
+                          <li><em>e</em> is the generic element (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td>
+                        <p class="paragraph">
+                          The output represents the number of atoms of a given element <em>e</em> (of type <em>E</em>) in a given compound <em>c</em> (of type <em>C</em>)
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph">--</p></td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
+                <div id="DD:elementType">
+                  <table class="ddefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>DD:elementType</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td><p class="paragraph">Element data type</p></td>
+                    </tr>
+                    <tr>
+                      <th>Symbol</th>
+                      <td><p class="paragraph"><em>E</em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>
+                        \[E=\{\text{H},\text{He},\text{Li},\text{Be},\text{B},\text{C},\text{N},\text{O},\text{F},\text{Ne},\text{Na},\text{Mg},\text{Al},\text{Si},\text{P},\text{S},\text{Cl},\text{Ar},\text{K},\text{Ca},\text{Sc},\text{Ti},\text{V},\text{Cr},\text{Mn},\text{Fe},\text{Co},\text{Ni},\text{Cu},\text{Zn},\text{Ga},\text{Ge},\text{As},\text{Se},\text{Br},\text{Kr},\text{Rb},\text{Sr},\text{Y},\text{Zr},\text{Nb},\text{Mo},\text{Tc},\text{Ru},\text{Rh},\text{Pd},\text{Ag},\text{Cd},\text{In},\text{Sn},\text{Sb},\text{Te},\text{I},\text{Xe},\text{Cs},\text{Ba},\text{La},\text{Ce},\text{Pr},\text{Nd},\text{Pm},\text{Sm},\text{Eu},\text{Gd},\text{Tb},\text{Dy},\text{Ho},\text{Er},\text{Tm},\text{Yb},\text{Lu},\text{Hf},\text{Ta},\text{W},\text{Re},\text{Os},\text{Ir},\text{Pt},\text{Au},\text{Hg},\text{Tl},\text{Pb},\text{Bi},\text{Po},\text{At},\text{Rn},\text{Fr},\text{Ra},\text{Ac},\text{Th},\text{Pa},\text{U},\text{Np},\text{Pu},\text{Am},\text{Cm},\text{Bk},\text{Cf},\text{Es},\text{Fm},\text{Md},\text{No},\text{Lr},\text{Rf},\text{Db},\text{Sg},\text{Bh},\text{Hs},\text{Mt},\text{Ds},\text{Rg},\text{Cn},\text{Nh},\text{Fl},\text{Mc},\text{Lv},\text{Ts},\text{Og}\}\]
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em>E</em> is the element data type (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td>
+                        <p class="paragraph">
+                          A type representing each element from <a href=#elemListWiki>elemListWiki</a>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td>
+                        <p class="paragraph"><a href=#smithChemSpec>smithChemSpec</a></p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
+                <div id="DD:compoundType">
+                  <table class="ddefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>DD:compoundType</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td><p class="paragraph">Compound data type</p></td>
+                    </tr>
+                    <tr>
+                      <th>Symbol</th>
+                      <td><p class="paragraph"><em>C</em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>
+                        \[C=\text{sequence of}\,\text{tuple of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)\]
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em>C</em> is the compound data type (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td><p class="paragraph">A type representing a compound</p></td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph">--</p></td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
+                <div id="DD:reactionType">
+                  <table class="ddefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>DD:reactionType</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td><p class="paragraph">Reaction data type</p></td>
+                    </tr>
+                    <tr>
+                      <th>Symbol</th>
+                      <td><p class="paragraph"><em>R</em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>
+                        \[R=\text{tuple of}\,\left(\text{prod}\in{}\text{sequence of}\,\text{tuple of}\,\left(\text{comp}\in{}C,\,\text{coeff}\in{}\mathbb{Z}\right),\,\text{reac}\in{}\text{sequence of}\,\text{tuple of}\,\left(\text{comp}\in{}C,\,\text{coeff}\in{}\mathbb{Z}\right)\right)\]
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em>R</em> is the reaction data type (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td><p class="paragraph">A type representing a reaction</p></td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph">--</p></td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+            <div id="Sec:IMs">
+              <div class="subsubsection">
+                <h3>Instance Models</h3>
+                <p class="paragraph">
+                  This section transforms the problem defined in the <a href=#Sec:ProbDesc>problem description</a> into one which is expressed in mathematical terms. It uses concrete symbols defined in the <a href=#Sec:DDs>data definitions</a> to replace the abstract symbols in the models identified in <a href=#Sec:TMs>theoretical models</a> and <a href=#Sec:GDs>general definitions</a>.
+                </p>
+                <div id="IM:chemEqIntLinProg">
+                  <table class="idefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>IM:chemEqIntLinProg</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td>
+                        <p class="paragraph">
+                          Integer linear program for a chemical equation
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Input</th>
+                      <td><p class="paragraph"><em><b>E</b></em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Output</th>
+                      <td><p class="paragraph"><em><b>x</b></em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>
+                        \[\begin{aligned}
+                           & \text{minimize} &  & \symbf{1}\cdot{}\symbf{x}\\
+                           & \text{subject to} &  & \symbf{E} \symbf{x}=\symbf{0},\\
+                           & \, &  & \symbf{x}\gt{}\symbf{0},\\
+                           & \text{and} &  & \symbf{x}\in{}\mathbb{Z}^{n}
+                          \end{aligned}\]
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li><em><b>1</b></em> is the unary vector (Unitless)</li>
+                          <li><em><b>x</b></em> is the generic vector (Unitless)</li>
+                          <li>
+                            <em><b>E</b></em> is the matrix representation of a chemical equation (Unitless)
+                          </li>
+                          <li><em><b>0</b></em> is the zero vector (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td>
+                        <p class="paragraph">
+                          This is a specific instance of the ILP from <a href=#TM:canonIntLinProg>TM:canonIntLinProg</a> with <em><b>A</b> = <b>E</b></em>, <em><b>b</b> = <b>0</b></em>, and <em><b>c</b> = <b>1</b></em>. The goal and constraints are also modified.
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph">--</p></td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="Sec:Requirements">
+      <div class="section">
+        <h1>Requirements</h1>
+        <p class="paragraph">
+          This section provides the functional requirements, the tasks and behaviours that the software is expected to complete, and the non-functional requirements, the qualities that the software is expected to exhibit.
+        </p>
+        <div id="Sec:FRs">
+          <div class="subsection">
+            <h2>Functional Requirements</h2>
+            <p class="paragraph">
+              This section provides the functional requirements, the tasks and behaviours that the software is expected to complete.
+            </p>
+            <div class="list">
+              <p>
+                <div id="inputValues">
+                  Input-Values: Input the values from <a href=#Table:ReqInputs>Tab:ReqInputs</a>.
+                </div>
+              </p>
+              <p>
+                <div id="convertMatrix">
+                  Convert-to-Matrix: Convert the inputted chemical equation to matrix form.
+                </div>
+              </p>
+              <p>
+                <div id="feasOut">
+                  Feasible-Output: If the inputted chemical equation is feasible, output its balanced form with the smallest positive integer coefficients possible.
+                </div>
+              </p>
+              <p>
+                <div id="infeasOut">
+                  Infeasible-Output: If the inputted chemical equation is infeasible, output a descriptive message.
+                </div>
+              </p>
+            </div>
+            <div id="Table:ReqInputs">
+              <table class="table">
+                <tr>
+                  <th>Symbol</th>
+                  <th>Description</th>
+                  <th>Units</th>
+                </tr>
+                <tr>
+                  <td><em>r</em></td>
+                  <td>Representation of a chemical equation</td>
+                  <td>--</td>
+                </tr>
+              </table>
+              <p class="caption">
+                Required Inputs following <a href=#inputValues>FR:Input-Values</a>
+              </p>
+            </div>
+          </div>
+        </div>
+        <div id="Sec:NFRs">
+          <div class="subsection">
+            <h2>Non-Functional Requirements</h2>
+            <p class="paragraph">
+              This section provides the non-functional requirements, the qualities that the software is expected to exhibit.
+            </p>
+            <div class="list">
+              <p>
+                <div id="accurate">
+                  Accurate: Chemical equations are only useful if they are balanced, so computed coefficients should be exact.
+                </div>
+              </p>
+              <p>
+                <div id="verifiable">
+                  Verifiable: The code is tested with complete verification and validation plan.
+                </div>
+              </p>
+              <p><div id="reusable">Reusable: The code is modularized.</div></p>
+              <p>
+                <div id="portable">
+                  Portable: The code is able to be run in different environments.
+                </div>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div id="Sec:LCs">
+      <div class="section">
+        <h1>Likely Changes</h1>
+        <p class="paragraph">
+          This section lists the likely changes to be made to the software.
+        </p>
+        <div class="list"></div>
+      </div>
+    </div>
+    <div id="Sec:UCs">
+      <div class="section">
+        <h1>Unlikely Changes</h1>
+        <p class="paragraph">
+          This section lists the unlikely changes to be made to the software.
+        </p>
+        <div class="list">
+          <p>
+            <div id="allEqsPermitted">
+              allEqsPermitted: <a href=#elemCompDiff>A:elemCompDiff</a> assumes...
+            </div>
+          </p>
+          <p>
+            <div id="checkValidForms">
+              checkValidForms: <a href=#validForms>A:validForms</a> assumes...
+            </div>
+          </p>
+          <p>
+            <div id="checkValidEqns">
+              checkValidEqns: <a href=#validEqns>A:validEqns</a> assumes...
+            </div>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div id="Sec:TraceMatrices">
+      <div class="section">
+        <h1>Traceability Matrices and Graphs</h1>
+        <p class="paragraph">
+          The purpose of the traceability matrices is to provide easy references on what has to be additionally modified if a certain component is changed. Every time a component is changed, the items in the column of that component that are marked with an "X" should be modified as well. <a href=#Table:TraceMatAvsA>Tab:TraceMatAvsA</a> shows the dependencies of assumptions on the assumptions. <a href=#Table:TraceMatAvsAll>Tab:TraceMatAvsAll</a> shows the dependencies of data definitions, theoretical models, general definitions, instance models, requirements, likely changes, and unlikely changes on the assumptions. <a href=#Table:TraceMatRefvsRef>Tab:TraceMatRefvsRef</a> shows the dependencies of data definitions, theoretical models, general definitions, and instance models with each other. <a href=#Table:TraceMatAllvsR>Tab:TraceMatAllvsR</a> shows the dependencies of requirements on the data definitions, theoretical models, general definitions, and instance models.
+        </p>
+        <div id="Table:TraceMatAvsA">
+          <table class="table">
+            <tr>
+              <th></th>
+              <th><a href=#elemCompDiff>A:elemCompDiff</a></th>
+              <th><a href=#validForms>A:validForms</a></th>
+              <th><a href=#validEqns>A:validEqns</a></th>
+            </tr>
+            <tr>
+              <td><a href=#elemCompDiff>A:elemCompDiff</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#validForms>A:validForms</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#validEqns>A:validEqns</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+          <p class="caption">
+            Traceability Matrix Showing the Connections Between Assumptions and Other Assumptions
+          </p>
+        </div>
+        <div id="Table:TraceMatAvsAll">
+          <table class="table">
+            <tr>
+              <th></th>
+              <th><a href=#elemCompDiff>A:elemCompDiff</a></th>
+              <th><a href=#validForms>A:validForms</a></th>
+              <th><a href=#validEqns>A:validEqns</a></th>
+            </tr>
+            <tr>
+              <td><a href=#DD:countFunc>DD:countFunc</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#DD:elementType>DD:elementType</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#DD:compoundType>DD:compoundType</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#DD:reactionType>DD:reactionType</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#inputValues>FR:Input-Values</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#convertMatrix>FR:Convert-to-Matrix</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#feasOut>FR:Feasible-Output</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#infeasOut>FR:Infeasible-Output</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#accurate>NFR:Accurate</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#verifiable>NFR:Verifiable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#reusable>NFR:Reusable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#portable>NFR:Portable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#allEqsPermitted>UC:allEqsPermitted</a></td>
+              <td>X</td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#checkValidForms>UC:checkValidForms</a></td>
+              <td></td>
+              <td>X</td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#checkValidEqns>UC:checkValidEqns</a></td>
+              <td></td>
+              <td></td>
+              <td>X</td>
+            </tr>
+          </table>
+          <p class="caption">
+            Traceability Matrix Showing the Connections Between Assumptions and Other Items
+          </p>
+        </div>
+        <div id="Table:TraceMatRefvsRef">
+          <table class="table">
+            <tr>
+              <th></th>
+              <th><a href=#DD:countFunc>DD:countFunc</a></th>
+              <th><a href=#DD:elementType>DD:elementType</a></th>
+              <th><a href=#DD:compoundType>DD:compoundType</a></th>
+              <th><a href=#DD:reactionType>DD:reactionType</a></th>
+              <th><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></th>
+              <th><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></th>
+            </tr>
+            <tr>
+              <td><a href=#DD:countFunc>DD:countFunc</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#DD:elementType>DD:elementType</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#DD:compoundType>DD:compoundType</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#DD:reactionType>DD:reactionType</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>X</td>
+              <td></td>
+            </tr>
+          </table>
+          <p class="caption">
+            Traceability Matrix Showing the Connections Between Items and Other Sections
+          </p>
+        </div>
+        <div id="Table:TraceMatAllvsR">
+          <table class="table">
+            <tr>
+              <th></th>
+              <th><a href=#DD:countFunc>DD:countFunc</a></th>
+              <th><a href=#DD:elementType>DD:elementType</a></th>
+              <th><a href=#DD:compoundType>DD:compoundType</a></th>
+              <th><a href=#DD:reactionType>DD:reactionType</a></th>
+              <th><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></th>
+              <th><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></th>
+              <th><a href=#inputValues>FR:Input-Values</a></th>
+              <th><a href=#convertMatrix>FR:Convert-to-Matrix</a></th>
+              <th><a href=#feasOut>FR:Feasible-Output</a></th>
+              <th><a href=#infeasOut>FR:Infeasible-Output</a></th>
+              <th><a href=#accurate>NFR:Accurate</a></th>
+              <th><a href=#verifiable>NFR:Verifiable</a></th>
+              <th><a href=#reusable>NFR:Reusable</a></th>
+              <th><a href=#portable>NFR:Portable</a></th>
+            </tr>
+            <tr>
+              <td><a href=#inputValues>FR:Input-Values</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#convertMatrix>FR:Convert-to-Matrix</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#feasOut>FR:Feasible-Output</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#infeasOut>FR:Infeasible-Output</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#accurate>NFR:Accurate</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#verifiable>NFR:Verifiable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#reusable>NFR:Reusable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#portable>NFR:Portable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </table>
+          <p class="caption">
+            Traceability Matrix Showing the Connections Between Requirements and Other Items
+          </p>
+        </div>
+        <p class="paragraph">
+          The purpose of the traceability graphs is also to provide easy references on what has to be additionally modified if a certain component is changed. The arrows in the graphs represent dependencies. The component at the tail of an arrow is depended on by the component at the head of that arrow. Therefore, if a component is changed, the components that it points to should also be changed. <a href=#Figure:TraceGraphAvsA>Fig:TraceGraphAvsA</a> shows the dependencies of assumptions on the assumptions. <a href=#Figure:TraceGraphAvsAll>Fig:TraceGraphAvsAll</a> shows the dependencies of data definitions, theoretical models, general definitions, instance models, requirements, likely changes, and unlikely changes on the assumptions. <a href=#Figure:TraceGraphRefvsRef>Fig:TraceGraphRefvsRef</a> shows the dependencies of data definitions, theoretical models, general definitions, and instance models with each other. <a href=#Figure:TraceGraphAllvsR>Fig:TraceGraphAllvsR</a> shows the dependencies of requirements on the data definitions, theoretical models, general definitions, and instance models. <a href=#Figure:TraceGraphAllvsAll>Fig:TraceGraphAllvsAll</a> shows the dependencies of dependencies of assumptions, models, definitions, requirements, goals, and changes with each other.
+        </p>
+        <div id="Figure:TraceGraphAvsA">
+          <figure>
+            <img src="../../../../traceygraphs/chemcode/avsa.svg" alt="TraceGraphAvsA" >
+            <figcaption>TraceGraphAvsA</figcaption>
+          </figure>
+        </div>
+        <div id="Figure:TraceGraphAvsAll">
+          <figure>
+            <img src="../../../../traceygraphs/chemcode/avsall.svg" alt="TraceGraphAvsAll" >
+            <figcaption>TraceGraphAvsAll</figcaption>
+          </figure>
+        </div>
+        <div id="Figure:TraceGraphRefvsRef">
+          <figure>
+            <img src="../../../../traceygraphs/chemcode/refvsref.svg" alt="TraceGraphRefvsRef" >
+            <figcaption>TraceGraphRefvsRef</figcaption>
+          </figure>
+        </div>
+        <div id="Figure:TraceGraphAllvsR">
+          <figure>
+            <img src="../../../../traceygraphs/chemcode/allvsr.svg" alt="TraceGraphAllvsR" >
+            <figcaption>TraceGraphAllvsR</figcaption>
+          </figure>
+        </div>
+        <div id="Figure:TraceGraphAllvsAll">
+          <figure>
+            <img src="../../../../traceygraphs/chemcode/allvsall.svg" alt="TraceGraphAllvsAll" >
+            <figcaption>TraceGraphAllvsAll</figcaption>
+          </figure>
+        </div>
+        <p class="paragraph">
+          For convenience, the following graphs can be found at the links below:
+        </p>
+        <ul class="list">
+          <li>
+            <a href="../../../../traceygraphs/chemcode/avsa.svg">TraceGraphAvsA</a>
+          </li>
+          <li>
+            <a href="../../../../traceygraphs/chemcode/avsall.svg">TraceGraphAvsAll</a>
+          </li>
+          <li>
+            <a href="../../../../traceygraphs/chemcode/refvsref.svg">TraceGraphRefvsRef</a>
+          </li>
+          <li>
+            <a href="../../../../traceygraphs/chemcode/allvsr.svg">TraceGraphAllvsR</a>
+          </li>
+          <li>
+            <a href="../../../../traceygraphs/chemcode/allvsall.svg">TraceGraphAllvsAll</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+    <div id="Sec:References">
+      <div class="section">
+        <h1>References</h1>
+        <ul class="hide-list-style">
+          <li>
+            <div id="koothoor2013">
+              [1]: Koothoor, Nirmitha. <em>A document drive approach to certifying scientific computing software</em>. McMaster University, Hamilton, ON, Canada: 2013. Print.
+            </div>
+          </li>
+          <li>
+            <div id="lund2023">
+              [2]: Lund, Lance. <em>Introduction to Chemistry</em>. Cambridge and Coon Rapids, MN, USA: LibreTexts, January, 2023. <a href="https://chem.libretexts.org/Courses/Anoka-Ramsey_Community_College/Introduction_to_Chemistry">https://chem.libretexts.org/Courses/Anoka-Ramsey_Community_College/Introduction_to_Chemistry</a>. Print.
+            </div>
+          </li>
+          <li>
+            <div id="parnasClements1986">
+              [3]: Parnas, David L. and Clements, P. C. "A rational design process: How and why to fake it." <em>IEEE Transactions on Software Engineering</em>, vol. 12, no. 2, Washington, USA: February, 1986. pp. 251&ndash;257. Print.
+            </div>
+          </li>
+          <li>
+            <div id="smithChemSpec">
+              [4]: Smith, W. Spencer. <em>Assignment 2</em>. February, 2020. <a href="https://gitlab.cas.mcmaster.ca/smiths/se2aa4_cs2me3/-/blob/master/Assignments/PreviousYears/2020/A2-ChemReacts/A2.pdf">https://gitlab.cas.mcmaster.ca/smiths/se2aa4_cs2me3/-/blob/master/Assignments/PreviousYears/2020/A2-ChemReacts/A2.pdf</a>.
+            </div>
+          </li>
+          <li>
+            <div id="smithLai2005">
+              [5]: Smith, W. Spencer and Lai, Lei. "A new requirements template for scientific computing." <em>Proceedings of the First International Workshop on Situational Requirements Engineering Processes - Methods, Techniques and Tools to Support Situation-Specific Requirements Engineering Processes, SREP'05</em>. Edited by PJ Agerfalk, N. Kraiem, and J. Ralyte, Paris, France: 2005. pp. 107&ndash;121. In conjunction with 13th IEEE International Requirements Engineering Conference,
+            </div>
+          </li>
+          <li>
+            <div id="ilpWiki">
+              [6]: Wikipedia Contributors. <em>Integer programming</em>. March, 2023. <a href="https://en.wikipedia.org/wiki/Integer_programming">https://en.wikipedia.org/wiki/Integer_programming</a>.
+            </div>
+          </li>
+          <li>
+            <div id="elemListWiki">
+              [7]: Wikipedia Contributors. <em>List of chemical elements</em>. January, 2023. <a href="https://en.wikipedia.org/wiki/List_of_chemical_elements">https://en.wikipedia.org/wiki/List_of_chemical_elements</a>.
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </body>
+</html>
