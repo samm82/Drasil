@@ -1,7 +1,7 @@
 module Drasil.ChemCode.Body where
 
 import Prelude hiding (product)
-import Language.Drasil hiding (organization)
+import Language.Drasil hiding (number, matrix, organization)
 import Language.Drasil.Chunk.Concept.NamedCombinators
 import qualified Language.Drasil.Sentence.Combinators as S
 import qualified Drasil.DocLang.SRS as SRS
@@ -14,7 +14,7 @@ import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Computation (algorithm)
 import qualified Data.Drasil.Concepts.Documentation as Doc (srs)
 import Data.Drasil.Concepts.Documentation hiding (element, scope, srs)
-import Data.Drasil.Concepts.Math (mathcon)
+import Data.Drasil.Concepts.Math (mathcon, matrix, number)
 import Data.Drasil.Concepts.Software (program)
 import Data.Drasil.People (samCrawford)
 import Data.Drasil.Software.Products (sciCompS)
@@ -55,8 +55,12 @@ mkSRS = [TableOfContents,
   --     [Client glassBR $ phraseNP (a_ company)
   --       +:+. S "named Entuitive" +:+ S "It is developed by Dr." +:+ S (name mCampidelli),
   --     Cstmr glassBR],
-  -- GSDSec $ GSDProg [SysCntxt [sysCtxIntro, LlC sysCtxFig, sysCtxDesc, sysCtxList],
-  --   UsrChars [userCharacteristicsIntro], SystCons [] [] ],
+  GSDSec $
+    GSDProg
+      [
+        SysCntxt [sysCtxDesc, sysCtxList] -- sysCtxIntro, LlC sysCtxFig
+      -- , UsrChars [userCharacteristicsIntro], SystCons [] []
+      ],
   SSDSec $
     SSDProg
       [
@@ -136,6 +140,50 @@ orgOfDocIntro = foldlSent [atStartNP (the organization), S "of this",
 prob = foldlSent_ [S "balance", phrase chemical, plural equation,
   S "with the smallest possible whole number coefficients",
   S "so they can be useful for other computations"]
+
+sysCtxDesc :: Contents
+sysCtxDesc = foldlSPCol
+  [S "The interaction between the", phraseNP (product_ `andThe` user),
+   S "is through a user" +:+. phrase interface,
+   S "The responsibilities of the", phraseNP (user `andThe` system),
+   S "are as follows"]
+
+sysCtxUsrResp :: [[Sentence]]
+sysCtxUsrResp = [
+    [S "Provide an unbalanced", phrase chemical, phrase equation `sC`
+     S "ensuring conformation to", phrase input_, S "data format required by",
+     short progName],
+    -- [S "Ensure that consistent units are used for",
+    --   pluralNP (combineNINI input_ variable)],
+    [S "Ensure required" +:+ namedRef (SRS.assumpt [] []) (pluralNP
+     (combineNINI software assumption)), S "are appropriate for the",
+     phrase problem, S "to which the", phrase user, S "is applying the",
+     phrase software]
+  ]
+
+sysCtxSysResp :: [[Sentence]]
+sysCtxSysResp = [
+    [S "Detect data type mismatch" `sC` S "such as a string of characters",
+     S "instead of a floating point", phrase number],
+    [S "Format the inputted", phrase chemical, phrase equation, S "as a",
+     phrase matrix],
+    [S "If the inputted", phrase chemical, phrase equation, S "is feasible" `sC`
+      S "find its balanced form with the smallest possible whole number coefficients"]
+  ]
+
+sysCtxExtLibResp :: [[Sentence]]
+sysCtxExtLibResp = [
+    [S "Solve the integer linear programming problem for the inputted",
+     phrase chemical, phrase equation]
+  ]
+  
+sysCtxResp :: [Sentence]
+sysCtxResp = map (\x -> x +:+ S "Responsibilities") [titleize user,
+  short progName, S "External" +:+ titleize library]
+
+sysCtxList :: Contents
+sysCtxList = UlC $ ulcc $ Enumeration $ bulletNested sysCtxResp $
+  map (bulletFlat . (\x -> map foldlSent_ x)) [sysCtxUsrResp, sysCtxSysResp, sysCtxExtLibResp]
 
 symbolsAll :: [QuantityDict]
 symbolsAll = quants
