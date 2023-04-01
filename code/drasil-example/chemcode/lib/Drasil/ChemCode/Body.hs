@@ -8,8 +8,9 @@ import qualified Drasil.DocLang.SRS as SRS
 import Drasil.SRSDocument
 import Theory.Drasil (GenDefn, InstanceModel)
 
-import Data.Drasil.Citations (elemListWiki, ilpWiki, koothoor2013, lund2023,
-  parnasClements1986, smithChemSpec, smithLai2005)
+import Data.Drasil.Citations (chen2022, drasilSource, elemListWiki, ilpWiki,
+  koothoor2013, lund2023, maclachlan2021, parnasClements1986, smithChemSpec,
+  smithLai2005)
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Computation (algorithm)
 import qualified Data.Drasil.Concepts.Documentation as Doc (srs)
@@ -269,8 +270,8 @@ refDB :: ReferenceDB
 refDB = rdb citations concIns
 
 citations :: BibRef
-citations = [elemListWiki, ilpWiki, koothoor2013, lund2023, parnasClements1986,
-  smithChemSpec, smithLai2005]
+citations = [chen2022, drasilSource, elemListWiki, ilpWiki, koothoor2013,
+  lund2023, maclachlan2021, parnasClements1986, smithChemSpec, smithLai2005]
 
 concIns :: [ConceptInstance]
 concIns = assumps ++ funcReqs ++ nonfuncReqs ++ uChanges

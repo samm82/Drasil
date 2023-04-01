@@ -2,9 +2,10 @@
 module Data.Drasil.Citations where
 
 import Language.Drasil --(S,(:+:),(+:+),sC,phrase,F,Accent(..),Citation(..),CiteField(..))
-import Data.Drasil.People (dParnas, jRalyte, lLai, lLund, nKoothoor, nKraiem,
-  pcClements, pjAgerfalk, spencerSmith, mCampidelli, dmWiess, rodPierce, 
-  wikiAuthors, rcHibbeler)
+import Data.Drasil.People (brooks, dParnas, dScime, dSzymczak, dmWiess, dong,
+  jBalaci, jCarette, jRalyte, lLai, lLund, mCampidelli, mNiazi, nKoothoor,
+  nKraiem, pcClements, pjAgerfalk, rcHibbeler, rodPierce, samCrawford,
+  spencerSmith, tWu, wikiAuthors)
 
 -- * Citations
 
@@ -73,6 +74,29 @@ lund2023 = cBookA [lLund] "Introduction to Chemistry" "LibreTexts"
   2023 [address "Cambridge and Coon Rapids, MN, USA", month Jan,
   howPublishedU "https://chem.libretexts.org/Courses/Anoka-Ramsey_Community_College/Introduction_to_Chemistry"]
   "lund2023"
+
+-- ** about Drasil
+
+drasilSource, maclachlan2021, chen2022 :: Citation
+
+drasilSource = cMisc [author [jCarette, spencerSmith, jBalaci, tWu,
+    samCrawford, dong, dSzymczak, brooks, dScime, mNiazi], title "Drasil",
+  howPublishedU "https://jacquescarette.github.io/Drasil/",
+  month Feb, year 2021]
+  "drasilSource"
+
+maclachlan2021 = cPhDThesis [brooks]
+  "A Design Language for Scientific Computing Software in Drasil"
+  "McMaster University" 2021 [month Nov, address "Hamilton, ON, Canada",
+  editor [jCarette, spencerSmith],
+  howPublishedU "https://macsphere.mcmaster.ca/bitstream/11375/25542/2/maclachlan_brooks_2020july_masc.pdf"]
+  "maclachlan2021"
+
+chen2022 = cMThesis [dong] "Solving Higher-Order ODEs in Drasil"
+  "McMaster University" 2022 [month Sep, address "Hamilton, ON, Canada",
+  editor [jCarette, spencerSmith],
+  howPublishedU "https://github.com/JacquesCarette/Drasil/blob/master/People/Dong/Thesis_Main.pdf"]
+  "chen2022"
 
 -- ** Wikipedia
 
