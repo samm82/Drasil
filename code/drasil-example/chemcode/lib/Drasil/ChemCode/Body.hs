@@ -195,7 +195,7 @@ sysCtxResp = map (\x -> x +:+ S "Responsibilities") [titleize user,
 
 sysCtxList :: Contents
 sysCtxList = UlC $ ulcc $ Enumeration $ bulletNested sysCtxResp $
-  map (bulletFlat . (\x -> map foldlSent_ x)) [sysCtxUsrResp, sysCtxSysResp, sysCtxExtLibResp]
+  map (bulletFlat . map foldlSent_) [sysCtxUsrResp, sysCtxSysResp, sysCtxExtLibResp]
 
 symbolsAll :: [QuantityDict]
 symbolsAll = quants
