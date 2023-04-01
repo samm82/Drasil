@@ -15,8 +15,8 @@ import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Computation (algorithm)
 import qualified Data.Drasil.Concepts.Documentation as Doc (srs)
 import Data.Drasil.Concepts.Documentation hiding (element, scope, srs)
-import Data.Drasil.Concepts.Math (mathcon, matrix, number)
-import Data.Drasil.Concepts.Software (program)
+import Data.Drasil.Concepts.Math (mathcon, matrix, number, ode)
+import Data.Drasil.Concepts.Software (program, reusability)
 import Data.Drasil.People (samCrawford)
 import Data.Drasil.Software.Products (sciCompS)
 import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
@@ -61,7 +61,8 @@ mkSRS = [TableOfContents,
     GSDProg
       [
         SysCntxt [sysCtxIntro, LlC sysCtxFig, sysCtxDesc, sysCtxList]
-      -- , UsrChars [userCharacteristicsIntro], SystCons [] []
+      -- , UsrChars [userCharacteristicsIntro],
+      , SystCons [sysConstraints] []
       ],
   SSDSec $
     SSDProg
@@ -73,8 +74,8 @@ mkSRS = [TableOfContents,
         ],
        SSDSolChSpec $ SCSProg
         [
-        Assumptions, 
-        TMs [] (Label : stdFields)
+        Assumptions 
+        , TMs [] (Label : stdFields)
         , GDs [] [] HideDerivation
         , DDs [] ([Label, Symbol] ++ stdFields) HideDerivation -- FIXME: may want to change later
                                 -- FIXME: may want to add Units later
@@ -198,11 +199,28 @@ sysCtxList :: Contents
 sysCtxList = UlC $ ulcc $ Enumeration $ bulletNested sysCtxResp $
   map (bulletFlat . map foldlSent_) [sysCtxUsrResp, sysCtxSysResp, sysCtxExtLibResp]
 
+-- SYSTEM CONSTRAINTS
+
+sysConstraints :: Contents
+sysConstraints = foldlSP [short progName, S "will be developed using Drasil",
+  refS drasilSource `sC` Quote (foldlSent_ [S "a framework for generating high-quality",
+    phrase documentation `S.and_` phrase code, S "for Scientific Computing Software"]),
+  refS maclachlan2021 `sC` S "with the goal of extending it by adding concepts", --FIXME: ref from page "iii"
+  S "relevant to the problem outlined in the" +:+.
+  namedRef (SRS.probDesc ([]::[Contents]) ([]::[Section])) (phrase problemDescription),
+  S "Since Drasil is built on the idea of", phrase reusability `sC` S "external" +:+.
+  S "libraries will be used to solve the integer programming problems", 
+  S "This was previously done with", phrase ode, sParen (short ode), S "solvers" `sC`
+  S "since", Quote (foldlSent_ [S "creating a complete", short ode, S "solver in Drasil",
+    S "would take considerable time" `sC`S "and there are already many reliable external",
+    S "libraries ... tested by long use"]) +:+. complexRef chen2022 (Page [24]),
+  S "These rationales also apply to ILP solvers"]
+
 symbolsAll :: [QuantityDict]
 symbolsAll = quants
 
 acronyms :: [CI]
-acronyms = [assumption, progName, Doc.srs, thModel, dataDefn, requirement, unlikelyChg] -- genDefn, inModel
+acronyms = [assumption, progName, Doc.srs, thModel, dataDefn, requirement, unlikelyChg, ode] -- genDefn, inModel
 
 terms :: [ConceptChunk]
 terms = [compound, element, equation, product, reactant, reaction]
@@ -236,7 +254,7 @@ symbMap =
     symbolsAll
     (nw progName : -- CI
       nw sciCompS : -- NamedChunk
-      map nw [program, algorithm] ++ -- ConceptChunk
+      map nw [algorithm, program, reusability] ++ -- ConceptChunk
       map nw doccon ++ map nw doccon' ++ map nw chemCon ++ map nw mathcon ++
       map nw acronyms ++ map nw symbolsAll)
     srsDomains
