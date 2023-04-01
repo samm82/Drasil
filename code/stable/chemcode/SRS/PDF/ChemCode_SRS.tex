@@ -11,9 +11,9 @@
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{caption}
-\usepackage{enumitem}
 \usepackage{graphics}
 \usepackage{svg}
+\usepackage{enumitem}
 \usepackage{filecontents}
 \usepackage[backend=bibtex]{biblatex}
 \usepackage{url}
@@ -116,6 +116,15 @@ This section provides general information about the system. It identifies the in
 
 \subsection{System Context}
 \label{Sec:SysContext}
+\hyperref[Figure:sysCtxFig]{Fig:sysCtxFig} shows the system context. A circle represents an external entity outside the software, the user in this case. A rectangle represents the software system itself (ChemCode). Arrows are used to show the data flow between the system and its environment.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\textwidth]{../../../../datafiles/chemcode/sysCtxFig.png}
+\caption{System Context}
+\label{Figure:sysCtxFig}
+\end{center}
+\end{figure}
 The interaction between the product and the user is through a user interface. The responsibilities of the user and the system are as follows:
 
 \begin{itemize}

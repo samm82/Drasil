@@ -23,6 +23,7 @@ import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 import Drasil.ChemCode.Assumptions (assumps)
 import Drasil.ChemCode.Changes (uChanges)
 import Drasil.ChemCode.DataDefs (dds)
+import Drasil.ChemCode.Figures (sysCtxFig)
 import Drasil.ChemCode.Quantities (inputs, quants)
 import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
 import Drasil.ChemCode.TMods (tms)
@@ -58,7 +59,7 @@ mkSRS = [TableOfContents,
   GSDSec $
     GSDProg
       [
-        SysCntxt [sysCtxDesc, sysCtxList] -- sysCtxIntro, LlC sysCtxFig
+        SysCntxt [sysCtxIntro, LlC sysCtxFig, sysCtxDesc, sysCtxList]
       -- , UsrChars [userCharacteristicsIntro], SystCons [] []
       ],
   SSDSec $
@@ -140,6 +141,17 @@ orgOfDocIntro = foldlSent [atStartNP (the organization), S "of this",
 prob = foldlSent_ [S "balance", phrase chemical, plural equation,
   S "with the smallest possible whole number coefficients",
   S "so they can be useful for other computations"]
+
+-- SYSTEM CONTEXT
+
+sysCtxIntro :: Contents
+sysCtxIntro = foldlSP
+  [refS sysCtxFig, S "shows the" +:+. phrase sysCont,
+   S "A circle represents an external entity outside", phraseNP (the software) `sC`
+    phraseNP (the user) +:+. S "in this case", S "A rectangle represents the",
+   phrase softwareSys, S "itself" +:+. sParen (short progName),
+   S "Arrows are used to show the data flow between the", phraseNP (system
+   `andIts` environment)]
 
 sysCtxDesc :: Contents
 sysCtxDesc = foldlSPCol
