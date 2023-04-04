@@ -12,7 +12,8 @@ spencerSmith, henryFrankis, nKoothoor, dParnas, daAruliah, gWilson,
   jKrahn, dStolle, yCLi, ymChen, tltZhan, ssLing, pjCleall, pGuo,
   mCampidelli,   dmWiess, sPalmer, scottSmith, bKarchewski, rHuston, 
   hJosephs, nrMorgenstern, vePrice, samCrawford, rcHibbeler, olu, rodPierce,
-  dong :: Person
+  pWexler, dong, jCarette, jBalaci, ngConnelly, haFavre, atHutton, mNiazi,
+  dScime, dSzymczak, tWu, tDahmus, rmHartshorn, gpMoss, whPowell :: Person
   
 pjAgerfalk    = person    "PJ"                        "Agerfalk"
 daAruliah     = personWM  "D"         ["A"]           "Aruliah"
@@ -84,11 +85,12 @@ spencerSmith  = personWM  "W"         ["Spencer"]     "Smith"
 dStolle       = person    "Dieter"                    "Stolle"
 dSzymczak     = person    "Dan"                       "Szymczak"
 cTitus        = person    "C"                         "Titus"
-tWu           = person    "Ting-Yu"                   "Wu"
 bWaugh        = person    "Ben"                       "Waugh" -- Best Practices for Scientific Computing 2013
+pWexler       = person    "Philip"                    "Wexler"
 epWhite       = personWM  "Ethan"     ["P"]           "White" -- Best Practices for Scientific Computing 2013
 gWilson       = person    "Greg"                      "Wilson"
 pWilson       = person    "Paul"                      "Wilson" -- Best Practices for Scientific Computing 2013
+tWu           = person    "Ting-Yu"                   "Wu"
 tltZhan       = personWM  "Tony"      ["L","T"]       "Zhan"
 dyZhu         = personWM' "D"         ["Y"]           "Zhu"
 dmWiess       = personWM  ""          []              "Wiess"
@@ -97,6 +99,7 @@ rodPierce     = person    "Rod"                       "Pierce"
 dong          = person    "Dong"                      "Chen"
 
 -- Right now, we have to say these are each a 'Person', even though they clearly aren't
-iupac, wikiAuthors :: Person
+harpCollins, iupac, wikiAuthors :: Person
+harpCollins = mononym "HarperCollins Publishers"
 iupac       = mononym "International Union of Pure and Applied Chemistry"
 wikiAuthors = mononym "Wikipedia Contributors"

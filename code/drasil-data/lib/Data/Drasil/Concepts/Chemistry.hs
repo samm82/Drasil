@@ -6,14 +6,14 @@ module Data.Drasil.Concepts.Chemistry where
 import Prelude hiding (product)
 import Language.Drasil
 
-import Data.Drasil.Citations (lund2023)
+import Data.Drasil.Citations (hydrateSource, lund2023, polymerSource)
 -- import Data.Drasil.Concepts.Documentation (property, value)
 import Data.Drasil.Domains (chemistry)
 
 -- | Collects all chemistry-related concepts.
 chemCon :: [ConceptChunk]
-chemCon = [chemical, compound, element, equation, product, reactant,
-  reaction] -- chemistry
+chemCon = [chemical, compound, element, equation, hydrate, isotope, -- chemistry
+  polyIon, polymer, product, reactant, reaction]
 
 -- * Chemistry Concepts
 --
@@ -21,8 +21,8 @@ chemCon = [chemical, compound, element, equation, product, reactant,
 --
 -- In alphabetical order.
 
-chemical, compound, element, equation, product, reactant, -- chemistry
-  reaction :: ConceptChunk
+chemical, compound, element, equation, hydrate, isotope, polyIon, -- chemistry
+  polymer, product, reactant, reaction :: ConceptChunk
 
 chemical = dccWDS "chemical" (cn' "chemical")
   (S "relating to" +:+ phrase chemistry)
@@ -33,9 +33,22 @@ compound = dccWDS "compound" (cn' "compound")
     S "which may or may not be of different" +:+ plural element)
 element = dcc "element" (cn' "element")
   ("the group of all atoms with the same number of protons in the atomic nucleus. " ++
-    "For example, all atoms with one proton are hydrogen atoms") -- FIXME: add source
+   "For example, all atoms with one proton are hydrogen atoms") -- FIXME: add source
 equation = dccWDS "equation" (cn' "equation")
   (S "a textual representation of a" +:+ phrase chemical +:+ phrase reaction)
+hydrate = dccWDS "hydrate" (cn' "hydrate")
+  (Quote (S "a" +:+ phrase compound +:+ S "formed by the chemical combination" +:+
+   S "of water and some other substance in a definite molecular ratio") +:+ 
+   refS hydrateSource)
+isotope = dccWDS "isotope" (cn' "isotope")
+  (S "an atom that is the same" +:+ phrase element +:+ S "as another but" +:+
+   S "has a different number of neutrons" +:+ refS lund2023)
+polyIon = dccWDS "polyIon" (cn' "polyatomic ion")
+  (S "a group of atoms" +:+ (Quote $ S "bonded together that carr[ies] an" +:+
+    S "overall electric charge") +:+ refS lund2023)
+polymer = dccWDS "polymer" (cn' "polymer")
+  (S "a macromolecule" +:+ (Quote $ S "formed by the chemical bonding of" +:+
+    S "large numbers of smaller molecules") +:+ refS polymerSource)
 product = dccWDS "product" (cn' "product")
   (S "a substance formed by a" +:+ phrase chemical +:+ phrase reaction)
 reactant = dccWDS "reactant" (cn' "reactant")

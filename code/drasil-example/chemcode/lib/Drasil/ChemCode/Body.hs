@@ -8,9 +8,9 @@ import qualified Drasil.DocLang.SRS as SRS
 import Drasil.SRSDocument
 import Theory.Drasil (GenDefn, InstanceModel)
 
-import Data.Drasil.Citations (chen2022, drasilSource, elemListWiki, ilpWiki,
-  inorganicIUPAC, koothoor2013, lund2023, maclachlan2021, organicIUPAC,
-  parnasClements1986, smithChemSpec, smithLai2005)
+import Data.Drasil.Citations (chen2022, drasilSource, elemListWiki, hydrateSource,
+  ilpWiki, inorganicIUPAC, koothoor2013, lund2023, maclachlan2021, organicIUPAC,
+  parnasClements1986, polymerSource, smithChemSpec, smithLai2005)
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Computation (algorithm)
 import qualified Data.Drasil.Concepts.Documentation as Doc (srs)
@@ -229,7 +229,8 @@ acronyms = [assumption, progName, Doc.srs, thModel, dataDefn, requirement,
   unlikelyChg, ode, iupac] -- genDefn, inModel
 
 terms :: [ConceptChunk]
-terms = [compound, element, equation, product, reactant, reaction]
+terms = [compound, element, equation, hydrate, isotope, polyIon, polymer,
+  product, reactant, reaction]
 
 si :: SystemInformation
 si =
@@ -294,9 +295,9 @@ refDB :: ReferenceDB
 refDB = rdb citations concIns
 
 citations :: BibRef
-citations = [chen2022, drasilSource, elemListWiki, ilpWiki, inorganicIUPAC,
-  koothoor2013, lund2023, maclachlan2021, organicIUPAC, parnasClements1986,
-  smithChemSpec, smithLai2005]
+citations = [chen2022, drasilSource, elemListWiki, hydrateSource, ilpWiki,
+  inorganicIUPAC, koothoor2013, lund2023, maclachlan2021, organicIUPAC,
+  parnasClements1986, polymerSource, smithChemSpec, smithLai2005]
 
 concIns :: [ConceptInstance]
 concIns = assumps ++ funcReqs ++ nonfuncReqs ++ uChanges

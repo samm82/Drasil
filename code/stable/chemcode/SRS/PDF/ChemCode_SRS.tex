@@ -168,6 +168,10 @@ This subsection provides a list of terms that are used in the subsequent section
 \item{Compound: A molecule made up of more than one atom, which may or may not be of different elements.}
 \item{Element: The group of all atoms with the same number of protons in the atomic nucleus. For example, all atoms with one proton are hydrogen atoms.}
 \item{Equation: A textual representation of a chemical reaction.}
+\item{Hydrate: ``a compound formed by the chemical combination of water and some other substance in a definite molecular ratio'' \cite{hydrateSource}.}
+\item{Isotope: An atom that is the same element as another but has a different number of neutrons \cite{lund2023}.}
+\item{Polyatomic ion: A group of atoms ``bonded together that carr[ies] an overall electric charge'' \cite{lund2023}.}
+\item{Polymer: A macromolecule ``formed by the chemical bonding of large numbers of smaller molecules'' \cite{polymerSource}.}
 \item{Product: A substance formed by a chemical reaction.}
 \item{Reactant: A substance involved in and changed by a chemical reaction.}
 \item{Reaction: An interaction between different types of matter that results in at least one new substance being formed \cite{lund2023}.}
@@ -184,7 +188,8 @@ This section simplifies the original problem and helps in developing the theoret
 \item[elemCompDiff:\phantomsection\label{elemCompDiff}]{For all chemical equations, there is at most one more compound than element. (RefBy: \hyperref[allEqsPermitted]{UC:allEqsPermitted}.)}
 \item[validForms:\phantomsection\label{validForms}]{All inputted chemical formulas describe real chemical compounds. (RefBy: \hyperref[checkValidForms]{UC:checkValidForms}.)}
 \item[validEqns:\phantomsection\label{validEqns}]{All inputted chemical equations describe real chemical reactions. (RefBy: \hyperref[checkValidEqns]{UC:checkValidEqns}.)}
-\item[correctInputFormat:\phantomsection\label{correctInputFormat}]{All inputted chemical equations follow the conventions laid out in \cite{inorganicIUPAC} and \cite{organicIUPAC} by the International Union of Pure and Applied Chemistry (IUPAC).}
+\item[correctInputFormat:\phantomsection\label{correctInputFormat}]{All inputted chemical formulas follow the conventions laid out in \cite{inorganicIUPAC} and \cite{organicIUPAC} by the International Union of Pure and Applied Chemistry (IUPAC).}
+\item[simpleForms:\phantomsection\label{simpleForms}]{All inputted chemical formulas only consist of atomic symbols and subscripts. This means that they cannot contain dots, parentheses, hyphens, or superscripts, so hydrates, polymers, and formulas with isotopes and some with polyatomic ions will not be present in inputted chemical equations.}
 \end{itemize}
 \subsubsection{Theoretical Models}
 \label{Sec:TMs}
@@ -323,55 +328,57 @@ This section lists the unlikely changes to be made to the software.
 \label{Sec:TraceMatrices}
 The purpose of the traceability matrices is to provide easy references on what has to be additionally modified if a certain component is changed. Every time a component is changed, the items in the column of that component that are marked with an ``X'' should be modified as well. \hyperref[Table:TraceMatAvsA]{Tab:TraceMatAvsA} shows the dependencies of assumptions on the assumptions. \hyperref[Table:TraceMatAvsAll]{Tab:TraceMatAvsAll} shows the dependencies of data definitions, theoretical models, general definitions, instance models, requirements, likely changes, and unlikely changes on the assumptions. \hyperref[Table:TraceMatRefvsRef]{Tab:TraceMatRefvsRef} shows the dependencies of data definitions, theoretical models, general definitions, and instance models with each other. \hyperref[Table:TraceMatAllvsR]{Tab:TraceMatAllvsR} shows the dependencies of requirements on the data definitions, theoretical models, general definitions, and instance models.
 
-\begin{longtable}{l l l l l}
+\begin{longtable}{l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}}
+\textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}} & \textbf{\hyperref[simpleForms]{A:simpleForms}}
 \\
 \midrule
 \endhead
-\hyperref[elemCompDiff]{A:elemCompDiff} &  &  &  & 
+\hyperref[elemCompDiff]{A:elemCompDiff} &  &  &  &  & 
 \\
-\hyperref[validForms]{A:validForms} &  &  &  & 
+\hyperref[validForms]{A:validForms} &  &  &  &  & 
 \\
-\hyperref[validEqns]{A:validEqns} &  &  &  & 
+\hyperref[validEqns]{A:validEqns} &  &  &  &  & 
 \\
-\hyperref[correctInputFormat]{A:correctInputFormat} &  &  &  & 
+\hyperref[correctInputFormat]{A:correctInputFormat} &  &  &  &  & 
+\\
+\hyperref[simpleForms]{A:simpleForms} &  &  &  &  & 
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Assumptions}
 \label{Table:TraceMatAvsA}
 \end{longtable}
-\begin{longtable}{l l l l l}
+\begin{longtable}{l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}}
+\textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}} & \textbf{\hyperref[simpleForms]{A:simpleForms}}
 \\
 \midrule
 \endhead
-\hyperref[DD:elementType]{DD:elementType} &  &  &  & 
+\hyperref[DD:elementType]{DD:elementType} &  &  &  &  & 
 \\
-\hyperref[TM:intLinProg]{TM:intLinProg} &  &  &  & 
+\hyperref[TM:intLinProg]{TM:intLinProg} &  &  &  &  & 
 \\
-\hyperref[inputValues]{FR:Input-Values} &  &  &  & 
+\hyperref[inputValues]{FR:Input-Values} &  &  &  &  & 
 \\
-\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  & 
+\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  & 
 \\
-\hyperref[feasOut]{FR:Feasible-Output} &  &  &  & 
+\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  & 
 \\
-\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  & 
+\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  & 
 \\
-\hyperref[accurate]{NFR:Accurate} &  &  &  & 
+\hyperref[accurate]{NFR:Accurate} &  &  &  &  & 
 \\
-\hyperref[verifiable]{NFR:Verifiable} &  &  &  & 
+\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  & 
 \\
-\hyperref[reusable]{NFR:Reusable} &  &  &  & 
+\hyperref[reusable]{NFR:Reusable} &  &  &  &  & 
 \\
-\hyperref[portable]{NFR:Portable} &  &  &  & 
+\hyperref[portable]{NFR:Portable} &  &  &  &  & 
 \\
-\hyperref[allEqsPermitted]{UC:allEqsPermitted} & X &  &  & 
+\hyperref[allEqsPermitted]{UC:allEqsPermitted} & X &  &  &  & 
 \\
-\hyperref[checkValidForms]{UC:checkValidForms} &  & X &  & 
+\hyperref[checkValidForms]{UC:checkValidForms} &  & X &  &  & 
 \\
-\hyperref[checkValidEqns]{UC:checkValidEqns} &  &  & X & 
+\hyperref[checkValidEqns]{UC:checkValidEqns} &  &  & X &  & 
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
@@ -481,6 +488,12 @@ month=sep,
 address={Hamilton, ON, Canada},
 editor={Carette, Jacques and Smith, W. Spencer},
 howpublished={\url{https://github.com/JacquesCarette/Drasil/blob/master/People/Dong/Thesis\_Main.pdf}}}
+@misc{hydrateSource,
+author={HarperCollins Publishers},
+title={hydrate},
+publisher={HarperCollins},
+address={New York, NY, USA},
+journal={Collins}}
 @book{inorganicIUPAC,
 author={International Union of Pure and Applied Chemistry and Connelly, Neil G. and Damhus, Ture and Hartshorn, Richard M. and Hutton, Alan T.},
 title={Nomenclature of Inorganic Chemistry: IUPAC Recommendations 2005},
@@ -543,6 +556,13 @@ editor={Agerfalk, PJ and Kraiem, N. and Ralyte, J.},
 address={Paris, France},
 pages={107--121},
 note={In conjunction with 13th IEEE International Requirements Engineering Conference,}}
+@book{polymerSource,
+author={Wexler, Philip},
+title={Encyclopedia of Toxicology},
+publisher={Academic Press},
+year={2014},
+address={Amsterdam, NL},
+edition={3}}
 @misc{ilpWiki,
 author={Wikipedia Contributors},
 title={Integer programming},
