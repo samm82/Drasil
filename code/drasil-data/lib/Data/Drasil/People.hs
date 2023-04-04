@@ -27,17 +27,22 @@ grChen        = personWM' "G"         ["R"]           "Chen"
 ymChen        = person'   "Yun-Min"                   "Chen"
 pjCleall      = personWM  "Peter"     ["John"]        "Cleall"
 pcClements    = personWM  "P"         ["C"]           "Clements" -- The Modular Structure of Complex Systems ICSE '84
+ngConnelly    = personWM  "Neil"      ["G"]           "Connelly" -- IUPAC
 samCrawford   = personWM  "Samuel"    ["J"]           "Crawford"
+tDahmus       = person    "Ture"                      "Damhus" -- IUPAC
 mDavis        = person    "Matt"                      "Davis"
 dDewitt       = personWM  "D"         ["P"]           "Dewitt"
+haFavre       = personWM  "Henri"     ["A"]           "Favre" -- IUPAC
 henryFrankis  = person    "Henry"                     "Frankis"
 dgFredlund    = personWM  "D"         ["G"]           "Fredlund"
 rGuy          = personWM  "Richard"   ["T"]           "Guy"
 pGuo          = person    "Peijun"                    "Guo"
 shdHaddock    = personWM  "Steven"    ["H", "D"]      "Haddock"
+rmHartshorn   = personWM  "Richard"   ["M"]           "Hartshorn" -- IUPAC
 alex          = person    "Alex"                      "Halliwushka"
 rcHibbeler    = personWM' "R"         ["C"]           "Hibbeler"
 rHuston       = person    "Ronald"                    "Huston"
+atHutton      = personWM  "Alan"      ["T"]           "Hutton" -- IUPAC
 nChueHong     = personWM  "Neil"      ["P"]           "Chue Hong"
 kdHuff        = personWM  "Kathryn"   ["D"]           "Huff"
 fIncropera    = personWM  "F"         ["P"]           "Incropera"
@@ -61,9 +66,11 @@ luthfi        = person    "Luthfi"                    "Mawarid"
 mNiazi        = person    "Maryyam"                   "Miazi"
 imMitchell    = personWM  "Ian"       ["M"]           "Mitchell"
 nrMorgenstern = personWM  "N"         ["R"]           "Morgenstern"
+gpMoss        = personWM  "G"         ["P"]           "Moss" -- IUPAC
 sPalmer       = person    "Steven"                    "Palmer"
 dParnas       = personWM  "David"     ["L"]           "Parnas"
 mdPlumblet    = personWM  "Mark"      ["D"]           "Plumblet"
+whPowell      = personWM  "Warren"    ["H"]           "Powell" -- IUPAC
 vePrice       = personWM  "P"         ["E"]           "Price"
 qhQian        = personWM' "Q"         ["H"]           "Qian"
 jRalyte       = person    "J"                         "Ralyte"
@@ -89,6 +96,7 @@ olu           = person    "Olu"                       "Owojaiye"
 rodPierce     = person    "Rod"                       "Pierce"
 dong          = person    "Dong"                      "Chen"
 
--- Right now, we have to say this is a 'Person', even though it clearly isn't
-wikiAuthors :: Person
-wikiAuthors   = mononym "Wikipedia Contributors"
+-- Right now, we have to say these are each a 'Person', even though they clearly aren't
+iupac, wikiAuthors :: Person
+iupac       = mononym "International Union of Pure and Applied Chemistry"
+wikiAuthors = mononym "Wikipedia Contributors"

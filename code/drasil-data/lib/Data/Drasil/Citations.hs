@@ -2,10 +2,7 @@
 module Data.Drasil.Citations where
 
 import Language.Drasil --(S,(:+:),(+:+),sC,phrase,F,Accent(..),Citation(..),CiteField(..))
-import Data.Drasil.People (brooks, dParnas, dScime, dSzymczak, dmWiess, dong,
-  jBalaci, jCarette, jRalyte, lLai, lLund, mCampidelli, mNiazi, nKoothoor,
-  nKraiem, pcClements, pjAgerfalk, rcHibbeler, rodPierce, samCrawford,
-  spencerSmith, tWu, wikiAuthors)
+import Data.Drasil.People
 
 -- * Citations
 
@@ -13,7 +10,8 @@ import Data.Drasil.People (brooks, dParnas, dScime, dSzymczak, dmWiess, dong,
 
 campidelli, koothoor2013, parnas1972, parnasClements1984,
   parnasClements1986, smithLai2005, lineSource, pointSource,
-  hibbeler2004, lund2023, elemListWiki, smithChemSpec :: Citation
+  hibbeler2004, lund2023, inorganicIUPAC, organicIUPAC,
+  elemListWiki, smithChemSpec :: Citation
 
 campidelli = cBooklet
   "Glass-BR Software for the design and risk assessment of glass facades subjected to blast loading"
@@ -74,6 +72,18 @@ lund2023 = cBookA [lLund] "Introduction to Chemistry" "LibreTexts"
   2023 [address "Cambridge and Coon Rapids, MN, USA", month Jan,
   howPublishedU "https://chem.libretexts.org/Courses/Anoka-Ramsey_Community_College/Introduction_to_Chemistry"]
   "lund2023"
+
+inorganicIUPAC = cBookA [iupac, ngConnelly, tDahmus, rmHartshorn, atHutton]
+  "Nomenclature of Inorganic Chemistry: IUPAC Recommendations 2005"
+  "The Royal Society of Chemistry" 2005 [address "Cambridge, UK",
+  howPublishedU "https://iupac.org/wp-content/uploads/2016/07/Red_Book_2005.pdf"]
+  "inorganicIUPAC"
+
+organicIUPAC = cBookA [iupac, gpMoss, haFavre, whPowell]
+  "Nomenclature of Organic Chemistry: IUPAC Recommendations and Preferred Names 2013"
+  "The Royal Society of Chemistry" 2013 [address "Cambridge, UK",
+  howPublishedU "https://iupac.qmul.ac.uk/BlueBook/PDF/"]
+  "organicIUPAC"
 
 -- ** about Drasil
 
