@@ -225,7 +225,8 @@ symbolsAll :: [QuantityDict]
 symbolsAll = quants
 
 acronyms :: [CI]
-acronyms = [assumption, progName, Doc.srs, thModel, dataDefn, requirement, unlikelyChg, ode] -- genDefn, inModel
+acronyms = [assumption, progName, Doc.srs, thModel, dataDefn, requirement,
+  unlikelyChg, ode, iupac] -- genDefn, inModel
 
 terms :: [ConceptChunk]
 terms = [compound, element, equation, product, reactant, reaction]

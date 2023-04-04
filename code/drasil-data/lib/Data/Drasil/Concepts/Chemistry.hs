@@ -8,12 +8,12 @@ import Language.Drasil
 
 import Data.Drasil.Citations (lund2023)
 -- import Data.Drasil.Concepts.Documentation (property, value)
--- import Data.Drasil.Domains (chemistry)
+import Data.Drasil.Domains (chemistry)
 
 -- | Collects all chemistry-related concepts.
 chemCon :: [ConceptChunk]
-chemCon = [chemical, chemistry, compound, element, equation, product,
-  reactant, reaction]
+chemCon = [chemical, compound, element, equation, product, reactant,
+  reaction] -- chemistry
 
 -- * Chemistry Concepts
 --
@@ -21,13 +21,13 @@ chemCon = [chemical, chemistry, compound, element, equation, product,
 --
 -- In alphabetical order.
 
-chemical, chemistry, compound, element, equation, product, reactant,
+chemical, compound, element, equation, product, reactant, -- chemistry
   reaction :: ConceptChunk
 
 chemical = dccWDS "chemical" (cn' "chemical")
   (S "relating to" +:+ phrase chemistry)
-chemistry = dcc "chemistry" (cn' "chemistry")
-  "the study of the properties and behavior of matter" -- source: Wikipedia
+-- chemistry = dcc "chemistry" (cn' "chemistry")
+--   "the study of the properties and behavior of matter" -- source: Wikipedia
 compound = dccWDS "compound" (cn' "compound")
   (S "a molecule made up of more than one atom" `sC`
     S "which may or may not be of different" +:+ plural element)
@@ -44,3 +44,10 @@ reactant = dccWDS "reactant" (cn' "reactant")
 reaction = dccWDS "reaction" (cn' "reaction")
   (S "an interaction between different types of matter that results in at" +:+
     S "least one new substance being formed" +:+ refS lund2023)
+
+-- FIXME: getAbbrStr could likely be used to reuse this in People, but this
+-- would cause an import cycle
+iupac :: CI 
+iupac = commonIdeaWithDict "iupac"
+  (pn "International Union of Pure and Applied Chemistry")
+  "IUPAC" [chemistry]
