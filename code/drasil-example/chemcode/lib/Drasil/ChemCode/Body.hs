@@ -141,8 +141,13 @@ orgOfDocIntro = foldlSent [atStartNP (the organization), S "of this",
   refS koothoor2013 `S.and_` refS smithLai2005]
 
 prob = foldlSent_ [S "balance", phrase chemical, plural equation,
-  S "with the smallest possible whole number coefficients",
-  S "so they can be useful for other computations"]
+  -- S "with the smallest possible whole number coefficients",
+  S "so they can be useful for other computations" +:+. refS lund2023,
+  S "Additionally" `sC` S "since molecules only exist in positive integer",
+  plural quantity, sParen (S "since dividing a molecule changes it into" +:+
+    S "different molecules") `sC` S "the coefficients used to balance the",
+  phrase chemical, phrase equation, S "must be whole numbers" `sC`
+    S "and by convention should be as small as possible", refS lund2023]
 
 -- SYSTEM CONTEXT
 

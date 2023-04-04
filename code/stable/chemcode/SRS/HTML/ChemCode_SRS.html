@@ -300,7 +300,7 @@
           <div class="subsection">
             <h2>System Constraints</h2>
             <p class="paragraph">
-              ChemCode will be developed using Drasil <a href=#drasilSource>drasilSource</a>, "a framework for generating high-quality documentation and code for Scientific Computing Softare" <a href=#maclachlan2021>maclachlan2021</a>, with the goal of extending it by adding concepts relevant to the problem outlined in the <a href=#Sec:ProbDesc>problem description</a>. Since Drasil is built on the idea of reusability, external libraries will be used to solve the integer programming problems. This was previously done with ordinary differential equation (ODE) solvers, since "creating a complete ODE solver in Drasil would take considerable time, and there are already many reliable external libraries ... tested by long use" <a href=#chen2022>chen2022</a> (pg. 24). These rationales also apply to ILP solvers.
+              ChemCode will be developed using Drasil <a href=#drasilSource>drasilSource</a>, "a framework for generating high-quality documentation and code for Scientific Computing Software" <a href=#maclachlan2021>maclachlan2021</a>, with the goal of extending it by adding concepts relevant to the problem outlined in the <a href=#Sec:ProbDesc>problem description</a>. Since Drasil is built on the idea of reusability, external libraries will be used to solve the integer programming problems. This was previously done with ordinary differential equation (ODE) solvers, since "creating a complete ODE solver in Drasil would take considerable time, and there are already many reliable external libraries ... tested by long use" <a href=#chen2022>chen2022</a> (pg. 24). These rationales also apply to ILP solvers.
             </p>
           </div>
         </div>
@@ -316,7 +316,7 @@
           <div class="subsection">
             <h2>Problem Description</h2>
             <p class="paragraph">
-              A system is needed to balance chemical equations with the smallest possible whole number coefficients so they can be useful for other computations.
+              A system is needed to balance chemical equations so they can be useful for other computations <a href=#lund2023>lund2023</a>. Additionally, since molecules only exist in positive integer quantities (since dividing a molecule changes it into different molecules), the coefficients used to balance the chemical equation must be whole numbers, and by convention should be as small as possible <a href=#lund2023>lund2023</a>.
             </p>
             <div id="Sec:TermDefs">
               <div class="subsubsection">
