@@ -16,7 +16,7 @@ dds = [countDD, elementDD, compoundDD, reactionDD]
 
 countDD :: DataDefinition
 countDD = ddMENoRefs countExpr Nothing "countFunc"
-  [foldlSent_ [S "The", phrase output_, S "represents the number of atoms of a given",
+  [foldlSent [S "The", phrase output_, S "represents the number of atoms of a given",
     phrase element, ch genE, sParen (S "of type" +:+ eS (space $ genE ^. typ)), S "in a given",
     phrase compound, ch genC, sParen (S "of type" +:+ eS (space $ genC ^. typ))]]
 
@@ -27,8 +27,8 @@ countExpr = mkFuncDefByQ count [genE, genC]
 
 elementDD :: DataDefinition
 elementDD = ddME elementExpr [dRef smithChemSpec] Nothing "elementType"
-  [S "A type representing each" +:+ phrase element +:+ S "from" +:+.
-    refS elemListWiki]
+  [foldlSent [S "A type representing each", phrase element, S "from",
+    refS elemListWiki]]
 -- FIXME: what's a good UID for this? Is "elementType" different enough from "elemT"?
 
 elementExpr :: ModelQDef
@@ -36,7 +36,7 @@ elementExpr = mkQuantDef elemT $ space (elemT ^. typ) -- FIXME: This is probably
 
 compoundDD :: DataDefinition
 compoundDD = ddMENoRefs compoundExpr Nothing "compoundType"
-  [S "A type representing a" +:+ phrase compound]
+  [S "A type representing a" +:+. phrase compound]
 -- FIXME: what's a good UID for this?
 
 compoundExpr :: ModelQDef
@@ -44,7 +44,7 @@ compoundExpr = mkQuantDef compT $ space (compT ^. typ) -- FIXME: This is probabl
 
 reactionDD :: DataDefinition
 reactionDD = ddMENoRefs reactionExpr Nothing "reactionType"
-  [S "A type representing a" +:+ phrase reaction]
+  [S "A type representing a" +:+. phrase reaction]
 -- FIXME: what's a good UID for this?
 
 reactionExpr :: ModelQDef
