@@ -116,7 +116,7 @@ data ModelExpr where
   -- | Function applications.
   FCall     :: UID -> [ModelExpr] -> ModelExpr
   -- | Tuple accessors.
-  TAccess   :: UID -> Integer -> ModelExpr
+  TAccess   :: UID -> String -> ModelExpr
   -- | For multi-case expressions, each pair represents one case.
   Case      :: Completeness -> [(ModelExpr, ModelExpr)] -> ModelExpr
   -- | For integer linear programs.

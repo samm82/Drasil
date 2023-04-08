@@ -146,8 +146,9 @@ modelExpr (C c)                      sm = symbol $ lookupC (sm ^. stg) (sm ^. ck
 modelExpr (FCall f [x])              sm =
   P.Row [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) f, parens $ modelExpr x sm]
 modelExpr (FCall f l)                sm = call sm f l
-modelExpr (TAccess t i)              sm =
-  P.Row [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) t, P.Sub $ P.Int i]
+modelExpr (TAccess t l)              sm =
+  P.Row [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) t, P.Label $ "." ++ l]
+  -- FIXME: should period be captured better?
 modelExpr (Case _ ps)                sm =
   if length ps < 2
     then error "Attempting to use multi-case modelExpr incorrectly"

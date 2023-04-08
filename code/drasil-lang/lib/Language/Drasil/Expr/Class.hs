@@ -214,7 +214,7 @@ class ExprC r where
   apply :: (HasUID f, HasSymbol f) => f -> [r] -> r
 
   -- | Accesses a given field of a tuple.
-  access :: (HasUID f) => f -> Integer -> r
+  access :: (HasUID f) => f -> String -> r
    
   -- Note how |sy| 'enforces' having a symbol
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.
@@ -392,9 +392,7 @@ instance ExprC Expr where
   apply f ps = FCall (f ^. uid) ps
 
   -- | Accesses a given field of a tuple.
-  access f x
-    | x < 1     = error "Invalid field number for access"
-    | otherwise = TAccess (f ^. uid) (x - 1) -- offset for indexing
+  access f = TAccess (f ^. uid)
   
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.
   sy x = C (x ^. uid)
@@ -571,9 +569,7 @@ instance ExprC M.ModelExpr where
   apply f ps = M.FCall (f ^. uid) ps
 
   -- | Accesses a given field of a tuple.
-  access f x
-    | x < 1     = error "Invalid field number for access"
-    | otherwise = M.TAccess (f ^. uid) (x - 1) -- offset for indexing
+  access f = M.TAccess (f ^. uid)
 
   -- Note how |sy| 'enforces' having a symbol
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.

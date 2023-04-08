@@ -106,7 +106,7 @@ data Expr where
   -- | Function applications.
   FCall    :: UID -> [Expr] -> Expr
   -- | Tuple accessors.
-  TAccess  :: UID -> Integer -> Expr
+  TAccess  :: UID -> String -> Expr
   -- | For multi-case expressions, each pair represents one case.
   Case     :: Completeness -> [(Expr, Relation)] -> Expr
   -- | Represents a matrix of expressions.
