@@ -11,9 +11,9 @@
 \usepackage{longtable}
 \usepackage{booktabs}
 \usepackage{caption}
-\usepackage{enumitem}
 \usepackage{graphics}
 \usepackage{svg}
+\usepackage{enumitem}
 \usepackage{filecontents}
 \usepackage[backend=bibtex]{biblatex}
 \usepackage{url}
@@ -94,6 +94,10 @@ DD & Data Definition
 \\
 IM & Instance Model
 \\
+IUPAC & International Union of Pure and Applied Chemistry
+\\
+ODE & Ordinary Differential Equation
+\\
 R & Requirement
 \\
 SRS & Software Requirements Specification
@@ -128,13 +132,51 @@ The organization of this document follows the template for an SRS for scientific
 
 The \hyperref[Sec:GoalStmt]{goal statements} are refined to the theoretical models and the \hyperref[Sec:TMs]{theoretical models} to the \hyperref[Sec:IMs]{instance models}.
 
+\section{General System Description}
+\label{Sec:GenSysDesc}
+This section provides general information about the system. It identifies the interfaces between the system and its environment, describes the user characteristics, and lists the system constraints.
+
+\subsection{System Context}
+\label{Sec:SysContext}
+\hyperref[Figure:sysCtxFig]{Fig:sysCtxFig} shows the system context. A circle represents an external entity outside the software, the user in this case. A rectangle represents the software system itself (ChemCode). Arrows are used to show the data flow between the system and its environment.
+
+\begin{figure}
+\begin{center}
+\includegraphics[width=\textwidth]{../../../../datafiles/chemcode/sysCtxFig.png}
+\caption{System Context}
+\label{Figure:sysCtxFig}
+\end{center}
+\end{figure}
+The interaction between the product and the user is through a user interface. The responsibilities of the user and the system are as follows:
+
+\begin{itemize}
+\item{User Responsibilities}
+\begin{itemize}
+\item{Provide an unbalanced chemical equation, ensuring conformation to input data format required by ChemCode}
+\item{Ensure required \hyperref[Sec:Assumps]{software assumptions} are appropriate for the problem to which the user is applying the software}
+\end{itemize}
+\item{ChemCode Responsibilities}
+\begin{itemize}
+\item{Detect data type mismatch, such as a string of characters instead of a floating point number}
+\item{Format the inputted chemical equation as a matrix}
+\item{If the inputted chemical equation is feasible, find its balanced form with the smallest possible whole number coefficients}
+\end{itemize}
+\item{External Library Responsibilities}
+\begin{itemize}
+\item{Solve the integer linear programming problem for the inputted chemical equation}
+\end{itemize}
+\end{itemize}
+\subsection{System Constraints}
+\label{Sec:SysConstraints}
+ChemCode will be developed using Drasil \cite{drasilSource}, ``a framework for generating high-quality documentation and code for Scientific Computing Software'' \cite{maclachlan2021}, with the goal of extending it by adding concepts relevant to the problem outlined in the \hyperref[Sec:ProbDesc]{problem description}. Since Drasil is built on the idea of reusability, external libraries will be used to solve the integer programming problems. This was previously done with ordinary differential equation (ODE) solvers, since ``creating a complete ODE solver in Drasil would take considerable time, and there are already many reliable external libraries ... tested by long use'' \cite[(pg. 24)]{chen2022}. These rationales also apply to ILP solvers.
+
 \section{Specific System Description}
 \label{Sec:SpecSystDesc}
 This section first presents the problem description, which gives a high-level view of the problem to be solved. This is followed by the solution characteristics specification, which presents the assumptions, theories, and definitions that are used.
 
 \subsection{Problem Description}
 \label{Sec:ProbDesc}
-A system is needed to balance chemical equations with the smallest possible whole number coefficients so they can be useful for other computations.
+A system is needed to balance chemical equations so they can be useful for other computations \cite{lund2023}. Additionally, since molecules only exist in positive integer quantities (since dividing a molecule changes it into different molecules), the coefficients used to balance the chemical equation must be whole numbers, and by convention should be as small as possible \cite{lund2023}.
 
 \subsubsection{Terminology and Definitions}
 \label{Sec:TermDefs}
@@ -144,6 +186,10 @@ This subsection provides a list of terms that are used in the subsequent section
 \item{Compound: A molecule made up of more than one atom, which may or may not be of different elements.}
 \item{Element: The group of all atoms with the same number of protons in the atomic nucleus. For example, all atoms with one proton are hydrogen atoms.}
 \item{Equation: A textual representation of a chemical reaction.}
+\item{Hydrate: ``a compound formed by the chemical combination of water and some other substance in a definite molecular ratio'' \cite{hydrateSource}.}
+\item{Isotope: An atom that is the same element as another but has a different number of neutrons \cite{lund2023}.}
+\item{Polyatomic ion: A group of atoms ``bonded together that carr[ies] an overall electric charge'' \cite{lund2023}.}
+\item{Polymer: A macromolecule ``formed by the chemical bonding of large numbers of smaller molecules'' \cite{polymerSource}.}
 \item{Product: A substance formed by a chemical reaction.}
 \item{Reactant: A substance involved in and changed by a chemical reaction.}
 \item{Reaction: An interaction between different types of matter that results in at least one new substance being formed \cite{lund2023}.}
@@ -160,6 +206,8 @@ This section simplifies the original problem and helps in developing the theoret
 \item[elemCompDiff:\phantomsection\label{elemCompDiff}]{For all chemical equations, there is at most one more compound than element. (RefBy: \hyperref[allEqsPermitted]{UC:allEqsPermitted}.)}
 \item[validForms:\phantomsection\label{validForms}]{All inputted chemical formulas describe real chemical compounds. (RefBy: \hyperref[checkValidForms]{UC:checkValidForms}.)}
 \item[validEqns:\phantomsection\label{validEqns}]{All inputted chemical equations describe real chemical reactions. (RefBy: \hyperref[checkValidEqns]{UC:checkValidEqns}.)}
+\item[correctInputFormat:\phantomsection\label{correctInputFormat}]{All inputted chemical formulas follow the conventions laid out in \cite{inorganicIUPAC} and \cite{organicIUPAC} by the International Union of Pure and Applied Chemistry (IUPAC).}
+\item[simpleForms:\phantomsection\label{simpleForms}]{All inputted chemical formulas only consist of atomic symbols and subscripts. This means that they cannot contain dots, parentheses, hyphens, or superscripts, so hydrates, polymers, and formulas with isotopes and some with polyatomic ions will not be present in inputted chemical equations.}
 \end{itemize}
 \subsubsection{Theoretical Models}
 \label{Sec:TMs}
@@ -206,9 +254,9 @@ Description & \begin{symbDescription}
               \item{$\symbf{x}$ is the generic vector (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
-Notes & The above equation gives the canonical form of an integer linear program, which is ``a mathematical optimization or feasibility program in which some or all of the variables are restricted to be integers [and] the objective function and the constraints (other than the integer constraints) are linear'' \cite{ilpWiki}
+Notes & The above equation gives the canonical form of an integer linear program, which is ``a mathematical optimization or feasibility program in which some or all of the variables are restricted to be integers [and] the objective function and the constraints (other than the integer constraints) are linear'' \cite{ilpWiki}.
         
-        The values of $\symbf{x}$ are unknown and will be solved for
+        The values of $\symbf{x}$ are unknown and will be solved for.
         
 \\ \midrule \\
 Source & \cite{ilpWiki}
@@ -287,7 +335,7 @@ Description & \begin{symbDescription}
               \item{$E$ is the element data type (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
-Notes & A type representing each element from \cite{elemListWiki}
+Notes & A type representing each element from \cite{elemListWiki}.
         
 \\ \midrule \\
 Source & \cite{smithChemSpec}
@@ -461,61 +509,65 @@ This section lists the unlikely changes to be made to the software.
 \label{Sec:TraceMatrices}
 The purpose of the traceability matrices is to provide easy references on what has to be additionally modified if a certain component is changed. Every time a component is changed, the items in the column of that component that are marked with an ``X'' should be modified as well. \hyperref[Table:TraceMatAvsA]{Tab:TraceMatAvsA} shows the dependencies of assumptions on the assumptions. \hyperref[Table:TraceMatAvsAll]{Tab:TraceMatAvsAll} shows the dependencies of data definitions, theoretical models, general definitions, instance models, requirements, likely changes, and unlikely changes on the assumptions. \hyperref[Table:TraceMatRefvsRef]{Tab:TraceMatRefvsRef} shows the dependencies of data definitions, theoretical models, general definitions, and instance models with each other. \hyperref[Table:TraceMatAllvsR]{Tab:TraceMatAllvsR} shows the dependencies of requirements on the data definitions, theoretical models, general definitions, and instance models.
 
-\begin{longtable}{l l l l}
+\begin{longtable}{l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}}
+\textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}} & \textbf{\hyperref[simpleForms]{A:simpleForms}}
 \\
 \midrule
 \endhead
-\hyperref[elemCompDiff]{A:elemCompDiff} &  &  & 
+\hyperref[elemCompDiff]{A:elemCompDiff} &  &  &  &  & 
 \\
-\hyperref[validForms]{A:validForms} &  &  & 
+\hyperref[validForms]{A:validForms} &  &  &  &  & 
 \\
-\hyperref[validEqns]{A:validEqns} &  &  & 
+\hyperref[validEqns]{A:validEqns} &  &  &  &  & 
+\\
+\hyperref[correctInputFormat]{A:correctInputFormat} &  &  &  &  & 
+\\
+\hyperref[simpleForms]{A:simpleForms} &  &  &  &  & 
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Assumptions}
 \label{Table:TraceMatAvsA}
 \end{longtable}
-\begin{longtable}{l l l l}
+\begin{longtable}{l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}}
+\textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}} & \textbf{\hyperref[simpleForms]{A:simpleForms}}
 \\
 \midrule
 \endhead
-\hyperref[DD:countFunc]{DD:countFunc} &  &  & 
+\hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  & 
 \\
-\hyperref[DD:elementType]{DD:elementType} &  &  & 
+\hyperref[DD:elementType]{DD:elementType} &  &  &  &  & 
 \\
-\hyperref[DD:compoundType]{DD:compoundType} &  &  & 
+\hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  & 
 \\
-\hyperref[DD:reactionType]{DD:reactionType} &  &  & 
+\hyperref[DD:reactionType]{DD:reactionType} &  &  &  &  & 
 \\
-\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} &  &  & 
+\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} &  &  &  &  & 
 \\
-\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg} &  &  & 
+\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg} &  &  &  &  & 
 \\
-\hyperref[inputValues]{FR:Input-Values} &  &  & 
+\hyperref[inputValues]{FR:Input-Values} &  &  &  &  & 
 \\
-\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  & 
+\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  & 
 \\
-\hyperref[feasOut]{FR:Feasible-Output} &  &  & 
+\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  & 
 \\
-\hyperref[infeasOut]{FR:Infeasible-Output} &  &  & 
+\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  & 
 \\
-\hyperref[accurate]{NFR:Accurate} &  &  & 
+\hyperref[accurate]{NFR:Accurate} &  &  &  &  & 
 \\
-\hyperref[verifiable]{NFR:Verifiable} &  &  & 
+\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  & 
 \\
-\hyperref[reusable]{NFR:Reusable} &  &  & 
+\hyperref[reusable]{NFR:Reusable} &  &  &  &  & 
 \\
-\hyperref[portable]{NFR:Portable} &  &  & 
+\hyperref[portable]{NFR:Portable} &  &  &  &  & 
 \\
-\hyperref[allEqsPermitted]{UC:allEqsPermitted} & X &  & 
+\hyperref[allEqsPermitted]{UC:allEqsPermitted} & X &  &  &  & 
 \\
-\hyperref[checkValidForms]{UC:checkValidForms} &  & X & 
+\hyperref[checkValidForms]{UC:checkValidForms} &  & X &  &  & 
 \\
-\hyperref[checkValidEqns]{UC:checkValidEqns} &  &  & X
+\hyperref[checkValidEqns]{UC:checkValidEqns} &  &  & X &  & 
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
@@ -618,6 +670,41 @@ For convenience, the following graphs can be found at the links below:
 \section{References}
 \label{Sec:References}
 \begin{filecontents*}{bibfile.bib}
+@misc{drasilSource,
+author={Carette, Jacques and Smith, W. Spencer and Balaci, Jason and Wu, Ting-Yu and Crawford, Samuel J. and Chen, Dong and Szymczak, Dan and MacLachlan, Brooks and Scime, Dan and Miazi, Maryyam},
+title={Drasil},
+howpublished={\url{https://jacquescarette.github.io/Drasil/}},
+month=feb,
+year={2021}}
+@mastersthesis{chen2022,
+author={Chen, Dong},
+title={Solving Higher-Order ODEs in Drasil},
+school={McMaster University},
+year={2022},
+month=sep,
+address={Hamilton, ON, Canada},
+editor={Carette, Jacques and Smith, W. Spencer},
+howpublished={\url{https://github.com/JacquesCarette/Drasil/blob/master/People/Dong/Thesis\_Main.pdf}}}
+@misc{hydrateSource,
+author={HarperCollins Publishers},
+title={hydrate},
+publisher={HarperCollins},
+address={New York, NY, USA},
+journal={Collins}}
+@book{inorganicIUPAC,
+author={International Union of Pure and Applied Chemistry and Connelly, Neil G. and Damhus, Ture and Hartshorn, Richard M. and Hutton, Alan T.},
+title={Nomenclature of Inorganic Chemistry: IUPAC Recommendations 2005},
+publisher={The Royal Society of Chemistry},
+year={2005},
+address={Cambridge, UK},
+howpublished={\url{https://iupac.org/wp-content/uploads/2016/07/Red\_Book\_2005.pdf}}}
+@book{organicIUPAC,
+author={International Union of Pure and Applied Chemistry and Moss, G. P. and Favre, Henri A. and Powell, Warren H.},
+title={Nomenclature of Organic Chemistry: IUPAC Recommendations and Preferred Names 2013},
+publisher={The Royal Society of Chemistry},
+year={2013},
+address={Cambridge, UK},
+howpublished={\url{https://iupac.qmul.ac.uk/BlueBook/PDF/}}}
 @mastersthesis{koothoor2013,
 author={Koothoor, Nirmitha},
 title={A document drive approach to certifying scientific computing software},
@@ -632,6 +719,15 @@ year={2023},
 address={Cambridge and Coon Rapids, MN, USA},
 month=jan,
 howpublished={\url{https://chem.libretexts.org/Courses/Anoka-Ramsey\_Community\_College/Introduction\_to\_Chemistry}}}
+@phdthesis{maclachlan2021,
+author={MacLachlan, Brooks},
+title={A Design Language for Scientific Computing Software in Drasil},
+school={McMaster University},
+year={2021},
+month=nov,
+address={Hamilton, ON, Canada},
+editor={Carette, Jacques and Smith, W. Spencer},
+howpublished={\url{https://macsphere.mcmaster.ca/bitstream/11375/25542/2/maclachlan\_brooks\_2020july\_masc.pdf}}}
 @article{parnasClements1986,
 author={Parnas, David L. and Clements, P. C.},
 title={A rational design process: How and why to fake it},
@@ -657,6 +753,13 @@ editor={Agerfalk, PJ and Kraiem, N. and Ralyte, J.},
 address={Paris, France},
 pages={107--121},
 note={In conjunction with 13th IEEE International Requirements Engineering Conference,}}
+@book{polymerSource,
+author={Wexler, Philip},
+title={Encyclopedia of Toxicology},
+publisher={Academic Press},
+year={2014},
+address={Amsterdam, NL},
+edition={3}}
 @misc{ilpWiki,
 author={Wikipedia Contributors},
 title={Integer programming},

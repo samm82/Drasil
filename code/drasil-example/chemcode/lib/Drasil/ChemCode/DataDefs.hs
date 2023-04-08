@@ -27,7 +27,7 @@ countExpr = mkFuncDefByQ count [genE, genC]
 
 elementDD :: DataDefinition
 elementDD = ddME elementExpr [dRef smithChemSpec] Nothing "elementType"
-  [S "A type representing each" +:+ phrase element +:+ S "from" +:+
+  [S "A type representing each" +:+ phrase element +:+ S "from" +:+.
     refS elemListWiki]
 -- FIXME: what's a good UID for this? Is "elementType" different enough from "elemT"?
 

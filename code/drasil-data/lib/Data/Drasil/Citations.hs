@@ -2,9 +2,7 @@
 module Data.Drasil.Citations where
 
 import Language.Drasil --(S,(:+:),(+:+),sC,phrase,F,Accent(..),Citation(..),CiteField(..))
-import Data.Drasil.People (dParnas, jRalyte, lLai, lLund, nKoothoor, nKraiem,
-  pcClements, pjAgerfalk, spencerSmith, mCampidelli, dmWiess, rodPierce, 
-  wikiAuthors, rcHibbeler)
+import Data.Drasil.People
 
 -- * Citations
 
@@ -12,7 +10,8 @@ import Data.Drasil.People (dParnas, jRalyte, lLai, lLund, nKoothoor, nKraiem,
 
 campidelli, koothoor2013, parnas1972, parnasClements1984,
   parnasClements1986, smithLai2005, lineSource, pointSource,
-  hibbeler2004, lund2023, elemListWiki, smithChemSpec :: Citation
+  hibbeler2004, lund2023, hydrateSource, polymerSource, inorganicIUPAC,
+  organicIUPAC, elemListWiki, smithChemSpec :: Citation
 
 campidelli = cBooklet
   "Glass-BR Software for the design and risk assessment of glass facades subjected to blast loading"
@@ -73,6 +72,49 @@ lund2023 = cBookA [lLund] "Introduction to Chemistry" "LibreTexts"
   2023 [address "Cambridge and Coon Rapids, MN, USA", month Jan,
   howPublishedU "https://chem.libretexts.org/Courses/Anoka-Ramsey_Community_College/Introduction_to_Chemistry"]
   "lund2023"
+
+hydrateSource = cMisc [author [harpCollins], title "hydrate",
+  publisher "HarperCollins", address "New York, NY, USA", journal "Collins"]
+  "hydrateSource"
+
+-- FIXME: should use cBookE, but gets a "No author found" error when building
+polymerSource = cBookA [pWexler] "Encyclopedia of Toxicology" "Academic Press"
+  2014 [address "Amsterdam, NL", edition 3] "polymerSource"
+
+inorganicIUPAC = cBookA [iupac, ngConnelly, tDahmus, rmHartshorn, atHutton]
+  "Nomenclature of Inorganic Chemistry: IUPAC Recommendations 2005"
+  "The Royal Society of Chemistry" 2005 [address "Cambridge, UK",
+  howPublishedU "https://iupac.org/wp-content/uploads/2016/07/Red_Book_2005.pdf"]
+  "inorganicIUPAC"
+
+organicIUPAC = cBookA [iupac, gpMoss, haFavre, whPowell]
+  "Nomenclature of Organic Chemistry: IUPAC Recommendations and Preferred Names 2013"
+  "The Royal Society of Chemistry" 2013 [address "Cambridge, UK",
+  howPublishedU "https://iupac.qmul.ac.uk/BlueBook/PDF/"]
+  "organicIUPAC"
+
+-- ** about Drasil
+
+drasilSource, maclachlan2021, chen2022 :: Citation
+
+drasilSource = cMisc [author [jCarette, spencerSmith, jBalaci, tWu,
+    samCrawford, dong, dSzymczak, brooks, dScime, mNiazi], title "Drasil",
+  howPublishedU "https://jacquescarette.github.io/Drasil/",
+  month Feb, year 2021]
+  "drasilSource"
+
+maclachlan2021 = cPhDThesis [brooks]
+  "A Design Language for Scientific Computing Software in Drasil"
+  "McMaster University" 2021 [month Nov, address "Hamilton, ON, Canada",
+  editor [jCarette, spencerSmith],
+  howPublishedU "https://macsphere.mcmaster.ca/bitstream/11375/25542/2/maclachlan_brooks_2020july_masc.pdf"]
+  "maclachlan2021"
+
+chen2022 = cMThesis [dong] "Solving Higher-Order ODEs in Drasil"
+  "McMaster University" 2022 [month Sep, address "Hamilton, ON, Canada",
+  editor [jCarette, spencerSmith],
+  howPublishedU "https://github.com/JacquesCarette/Drasil/blob/master/People/Dong/Thesis_Main.pdf"]
+  "chen2022"
 
 -- ** Wikipedia
 

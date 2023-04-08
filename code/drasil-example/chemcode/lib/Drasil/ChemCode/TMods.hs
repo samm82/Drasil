@@ -29,7 +29,7 @@ intLinProg = tm
   []
   [dRef ilpWiki]
   "canonIntLinProg" -- FIXME: this is likely needed for the same ModelKinds reason
-  [foldlSent_ [S "The above", phrase equation, -- FIXME: can this be called an "equation"?
+  [foldlSent [S "The above", phrase equation, -- FIXME: can this be called an "equation"?
     S "gives the canonical form of an integer linear",
     phrase program `sC` S "which is", Quote (foldlSent_ [
       S "a mathematical optimization or feasibility", phrase program,
@@ -37,7 +37,7 @@ intLinProg = tm
       S "[and] the objective function and the constraints", 
       sParen (S "other than the integer constraints"), S "are linear"]),
     refS ilpWiki],
-  S "The values of" +:+ ch xVec +:+ S "are unknown and will be solved for"
+  S "The values of" +:+ ch xVec +:+. S "are unknown and will be solved for"
   ]
   where
     ilpChunk =
