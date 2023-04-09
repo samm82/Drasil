@@ -168,12 +168,22 @@
                   <td>--</td>
                 </tr>
                 <tr>
+                  <td><em>elems</em></td>
+                  <td>Set of elements in a chemical reaction</td>
+                  <td>--</td>
+                </tr>
+                <tr>
                   <td><em>R</em></td>
                   <td>Reaction data type</td>
                   <td>--</td>
                 </tr>
                 <tr>
                   <td><em>r</em></td>
+                  <td>Generic reaction</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>r<sub>in</sub></em></td>
                   <td>Representation of a chemical equation</td>
                   <td>--</td>
                 </tr>
@@ -587,6 +597,55 @@
                     </tr>
                   </table>
                 </div>
+                <div id="DD:elemsFunc">
+                  <table class="ddefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>DD:elemsFunc</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td>
+                        <p class="paragraph">Set of elements in a chemical reaction</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Symbol</th>
+                      <td><p class="paragraph"><em>elems</em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>\[\text{elems}=e\in{}E\]</td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li>
+                            <em>elems</em> is the set of elements in a chemical reaction (Unitless)
+                          </li>
+                          <li><em>e</em> is the generic element (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td>
+                        <p class="paragraph">
+                          The output represents the set of elements that occur in a given chemical equation <em>r</em> (of type <em>R</em>).
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph">--</p></td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
                 <div id="DD:elementType">
                   <table class="ddefn">
                     <tr>
@@ -839,7 +898,7 @@
                   <th>Units</th>
                 </tr>
                 <tr>
-                  <td><em>r</em></td>
+                  <td><em>r<sub>in</sub></em></td>
                   <td>Representation of a chemical equation</td>
                   <td>--</td>
                 </tr>
@@ -992,6 +1051,14 @@
               <td></td>
             </tr>
             <tr>
+              <td><a href=#DD:elemsFunc>DD:elemsFunc</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
               <td><a href=#DD:elementType>DD:elementType</a></td>
               <td></td>
               <td></td>
@@ -1129,6 +1196,7 @@
             <tr>
               <th></th>
               <th><a href=#DD:countFunc>DD:countFunc</a></th>
+              <th><a href=#DD:elemsFunc>DD:elemsFunc</a></th>
               <th><a href=#DD:elementType>DD:elementType</a></th>
               <th><a href=#DD:compoundType>DD:compoundType</a></th>
               <th><a href=#DD:reactionType>DD:reactionType</a></th>
@@ -1137,6 +1205,17 @@
             </tr>
             <tr>
               <td><a href=#DD:countFunc>DD:countFunc</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#DD:elemsFunc>DD:elemsFunc</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1152,9 +1231,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#DD:compoundType>DD:compoundType</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1170,6 +1251,7 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></td>
@@ -1179,9 +1261,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1199,6 +1283,7 @@
             <tr>
               <th></th>
               <th><a href=#DD:countFunc>DD:countFunc</a></th>
+              <th><a href=#DD:elemsFunc>DD:elemsFunc</a></th>
               <th><a href=#DD:elementType>DD:elementType</a></th>
               <th><a href=#DD:compoundType>DD:compoundType</a></th>
               <th><a href=#DD:reactionType>DD:reactionType</a></th>
@@ -1215,6 +1300,7 @@
             </tr>
             <tr>
               <td><a href=#inputValues>FR:Input-Values</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1246,9 +1332,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#feasOut>FR:Feasible-Output</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1280,9 +1368,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#accurate>NFR:Accurate</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1314,6 +1404,7 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#reusable>NFR:Reusable</a></td>
@@ -1331,9 +1422,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#portable>NFR:Portable</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>

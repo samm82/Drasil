@@ -3,18 +3,22 @@ module Drasil.ChemCode.Quantities where
 import Language.Drasil -- hiding (matrix)
 import Language.Drasil.ShortHands
 
-import Data.Drasil.Concepts.Chemistry (compound, element, reaction)
+import Data.Drasil.Concepts.Chemistry (chemical, compound, element, reaction)
 
 inputs :: [QuantityDict]
-inputs = [r]
+inputs = [inputChemEqn]
 
 quants :: [QuantityDict]
-quants = inputs ++ [aMat, bVec, cVec, eMat, xVec, unaryVec, zeroVec, genE, genC, tupC, count, elemT, compT, reacT]
+quants = inputs ++ [aMat, bVec, cVec, eMat, xVec, unaryVec, zeroVec, genE,
+  genC, genR, tupC, count, elems, elemT, compT, reacT]
 
-r, aMat, bVec, cVec, eMat, xVec, unaryVec, zeroVec, genE, genC, tupC, count, elemT, compT, reacT :: QuantityDict
+inputChemEqn, aMat, bVec, cVec, eMat, xVec, unaryVec, zeroVec, genE, genC,
+  genR, tupC, count, elems, elemT, compT, reacT :: QuantityDict
 
-r = vcSt "r" (nounPhraseSP "representation of a chemical equation")
-  (autoStage lR) String -- FIXME: should this be a string?
+inputChemEqn = vcSt "inputChemEqn"
+  (nounPhraseSP "representation of a chemical equation")
+  (autoStage $ sub lR $ label "in") String
+  -- FIXME: should this be a string?
 
 aMat = vc "aMat" (nounPhraseSP "generic matrix")                               (vec cA) (Vect Real)
 bVec = vc "bVec" (nounPhraseSP "generic vector")                               (vec lB) (Vect Real)
@@ -27,15 +31,22 @@ zeroVec  = vc "zeroVec"  (nounPhraseSP "zero vector")  (vec $ variable "0") (Vec
 
 genE = vc "genE" (nounPhraseSent $ S "generic" +:+ phrase element) lE Element
 genC = vc "genC" (nounPhraseSent $ S "generic" +:+ phrase compound) lC Compound
+genR = vc "genR" (nounPhraseSent $ S "generic" +:+ phrase reaction) lR Reaction
 
 compoundTuple :: Space
 compoundTuple = Tuple [("elem", Element), ("count", Real)]
 
-tupC = vc "tupC" (nounPhraseSent $ S "generic tuple of a" +:+ phrase compound) (sub lT cC) compoundTuple
+tupC = vc "tupC" (nounPhraseSent $ S "generic tuple of a" +:+ phrase compound)
+  (sub lT cC) compoundTuple
 
 count = vc "count"
   (nounPhraseSent $ foldlSent_ [S "count of an", phrase element, S "in a", phrase compound])
   (label "count") (mkFunction [Element, Compound] Real)
+
+elems = vc "elems"
+  (nounPhraseSent $ foldlSent_ [S "set of", plural element, S "in a",
+    phrase chemical, phrase reaction])
+  (label "elems") (mkFunction [Reaction] $ Sequence Element)
 
 elemT = vcSt "elemT" (nounPhraseSent $ phrase element +:+ S "data type")
   (autoStage cE)

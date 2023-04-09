@@ -6,13 +6,14 @@ import Language.Drasil
 import Theory.Drasil
 
 import Data.Drasil.Citations (elemListWiki, smithChemSpec)
-import Data.Drasil.Concepts.Chemistry (compound, element, reaction)
+import Data.Drasil.Concepts.Chemistry (chemical, compound, element, equation,
+  reaction)
 import Data.Drasil.Concepts.Documentation (output_)
 
-import Drasil.ChemCode.Quantities (compT, count, elemT, genC, genE, reacT, tupC)
+import Drasil.ChemCode.Quantities (compT, count, elemT, genC, genE, genR, reacT, tupC, elems)
 
 dds :: [DataDefinition]
-dds = [countDD, elementDD, compoundDD, reactionDD]
+dds = [countDD, elemsDD, elementDD, compoundDD, reactionDD]
 
 countDD :: DataDefinition
 countDD = ddMENoRefs countExpr Nothing "countFunc"
@@ -24,6 +25,16 @@ countExpr :: ModelQDef
 countExpr = mkFuncDefByQ count [genE, genC]
   $ completeCase [(access tupC "count", isMember (sy tupC) (sy genC) $&& (access tupC "elem" $= sy genE)),
                   (int 0, not_ $ isMember (sy tupC) (sy genC) $&& (access tupC "elem" $= sy genE))]
+
+elemsDD :: DataDefinition
+elemsDD = ddMENoRefs elemsExpr Nothing "elemsFunc"
+  [foldlSent [S "The", phrase output_, S "represents the set of", plural element,
+    S "that occur in a given", phrase chemical, phrase equation, ch genR,
+    sParen (S "of type" +:+ eS (space $ genR ^. typ))]]
+
+elemsExpr :: ModelQDef
+elemsExpr = mkFuncDefByQ elems [genR]
+  $ isMember (sy genE) (space $ genE ^. typ)
 
 elementDD :: DataDefinition
 elementDD = ddME elementExpr [dRef smithChemSpec] Nothing "elementType"

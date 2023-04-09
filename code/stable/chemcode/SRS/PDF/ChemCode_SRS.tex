@@ -66,9 +66,13 @@ $\symbf{E}$ & Matrix representation of a chemical equation & --
 \\
 $e$ & Generic element & --
 \\
+$\text{elems}$ & Set of elements in a chemical reaction & --
+\\
 $R$ & Reaction data type & --
 \\
-$r$ & Representation of a chemical equation & --
+$r$ & Generic reaction & --
+\\
+${r_{\text{in}}}$ & Representation of a chemical equation & --
 \\
 ${t_{C}}$ & Generic tuple of a compound & --
 \\
@@ -317,6 +321,39 @@ RefBy &
 \noindent
 \begin{minipage}{\textwidth}
 \begin{tabular}{>{\raggedright}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.82\textwidth}}
+\toprule \textbf{Refname} & \textbf{DD:elemsFunc}
+\phantomsection 
+\label{DD:elemsFunc}
+\\ \midrule \\
+Label & Set of elements in a chemical reaction
+        
+\\ \midrule \\
+Symbol & $\text{elems}$
+         
+\\ \midrule \\
+Equation & \begin{displaymath}
+           \text{elems}=e\in{}E
+           \end{displaymath}
+\\ \midrule \\
+Description & \begin{symbDescription}
+              \item{$\text{elems}$ is the set of elements in a chemical reaction (Unitless)}
+              \item{$e$ is the generic element (Unitless)}
+              \end{symbDescription}
+\\ \midrule \\
+Notes & The output represents the set of elements that occur in a given chemical equation $r$ (of type $R$).
+        
+\\ \midrule \\
+Source & --
+         
+\\ \midrule \\
+RefBy & 
+\\ \bottomrule
+\end{tabular}
+\end{minipage}
+\vspace{\baselineskip}
+\noindent
+\begin{minipage}{\textwidth}
+\begin{tabular}{>{\raggedright}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.82\textwidth}}
 \toprule \textbf{Refname} & \textbf{DD:elementType}
 \phantomsection 
 \label{DD:elementType}
@@ -476,7 +513,7 @@ This section provides the functional requirements, the tasks and behaviours that
 \\
 \midrule
 \endhead
-$r$ & Representation of a chemical equation & --
+${r_{\text{in}}}$ & Representation of a chemical equation & --
 \\
 \bottomrule
 \caption{Required Inputs following \hyperref[inputValues]{FR:Input-Values}}
@@ -537,6 +574,8 @@ The purpose of the traceability matrices is to provide easy references on what h
 \endhead
 \hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  & 
 \\
+\hyperref[DD:elemsFunc]{DD:elemsFunc} &  &  &  &  & 
+\\
 \hyperref[DD:elementType]{DD:elementType} &  &  &  &  & 
 \\
 \hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  & 
@@ -573,49 +612,51 @@ The purpose of the traceability matrices is to provide easy references on what h
 \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
 \label{Table:TraceMatAvsAll}
 \end{longtable}
-\begin{longtable}{l l l l l l l}
+\begin{longtable}{l l l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}}
+\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}}
 \\
 \midrule
 \endhead
-\hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  &  & 
+\hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  &  &  & 
 \\
-\hyperref[DD:elementType]{DD:elementType} &  &  &  &  &  & 
+\hyperref[DD:elemsFunc]{DD:elemsFunc} &  &  &  &  &  &  & 
 \\
-\hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  &  & 
+\hyperref[DD:elementType]{DD:elementType} &  &  &  &  &  &  & 
 \\
-\hyperref[DD:reactionType]{DD:reactionType} &  &  &  &  &  & 
+\hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  &  &  & 
 \\
-\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} &  &  &  &  &  & 
+\hyperref[DD:reactionType]{DD:reactionType} &  &  &  &  &  &  & 
 \\
-\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg} &  &  &  &  & X & 
+\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} &  &  &  &  &  &  & 
+\\
+\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg} &  &  &  &  &  & X & 
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Items and Other Sections}
 \label{Table:TraceMatRefvsRef}
 \end{longtable}
-\begin{longtable}{l l l l l l l l l l l l l l l}
+\begin{longtable}{l l l l l l l l l l l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[portable]{NFR:Portable}}
+\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[portable]{NFR:Portable}}
 \\
 \midrule
 \endhead
-\hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[accurate]{NFR:Accurate} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[accurate]{NFR:Accurate} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[reusable]{NFR:Reusable} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[reusable]{NFR:Reusable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[portable]{NFR:Portable} &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[portable]{NFR:Portable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Requirements and Other Items}
