@@ -9,7 +9,7 @@ spencerSmith, henryFrankis, nKoothoor, dParnas, daAruliah, gWilson,
   lLund, brooks, mLightstone, lLai, pjAgerfalk, nKraiem, jRalyte, jBueche,
   fIncropera, dDewitt, tBergman, aLavine, jRobertson, sRobertson, 
   wlBeason, tlKohutek, jmBracci, qhQian, dyZhu, cfLee, grChen, dgFredlund,
-  jKrahn, dStolle, yCLi, ymChen, tltZhan, ssLing, pjCleall, pGuo,
+  jKrahn, dStolle, yCLi, ymChen, tltZhan, ssLing, pjCleall, pGuo, aBergholm,
   mCampidelli,   dmWiess, sPalmer, scottSmith, bKarchewski, rHuston, 
   hJosephs, nrMorgenstern, vePrice, samCrawford, rcHibbeler, olu, rodPierce,
   pWexler, dong, jCarette, jBalaci, ngConnelly, haFavre, atHutton, mNiazi,
@@ -19,6 +19,7 @@ pjAgerfalk    = person    "PJ"                        "Agerfalk"
 daAruliah     = personWM  "D"         ["A"]           "Aruliah"
 jBalaci       = person    "Jason"                     "Balaci"
 wlBeason      = personWM  "W"         ["Lynn"]        "Beason"
+aBergholm     = person    "A"                         "Bergholm"
 tBergman      = personWM  "T"         ["L"]           "Bergman"
 jmBracci      = personWM  "Joseph"    ["M"]           "Bracci"
 jBueche       = personWM  "J"         ["Frederick"]   "Bueche"

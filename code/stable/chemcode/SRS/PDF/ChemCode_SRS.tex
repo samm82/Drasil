@@ -176,7 +176,7 @@ This section first presents the problem description, which gives a high-level vi
 
 \subsection{Problem Description}
 \label{Sec:ProbDesc}
-A system is needed to balance chemical equations so they can be useful for other computations \cite{lund2023}. Additionally, since molecules only exist in positive integer quantities (since dividing a molecule changes it into different molecules), the coefficients used to balance the chemical equation must be whole numbers, and by convention should be as small as possible \cite{lund2023}.
+A system is needed to balance chemical equations so they can be useful for other computations \cite{lund2023}. Additionally, since molecules only exist in positive integer quantities (since dividing a molecule changes it into different molecules), the coefficients used to balance the chemical equation should be whole numbers, and by convention should be as small as possible \cite{lund2023}. There are some cases where the coefficients are not integers (see \cite{nonIntCoeffSource}), but this is not in the scope of this program.
 
 \subsubsection{Terminology and Definitions}
 \label{Sec:TermDefs}
@@ -670,6 +670,12 @@ For convenience, the following graphs can be found at the links below:
 \section{References}
 \label{Sec:References}
 \begin{filecontents*}{bibfile.bib}
+@techreport{nonIntCoeffSource,
+author={Bergholm, A.},
+title={Oxidation of Pyrite},
+institution={U. S. Department of the Interior},
+year={1995},
+address={Boulder, CO, USA}}
 @misc{drasilSource,
 author={Carette, Jacques and Smith, W. Spencer and Balaci, Jason and Wu, Ting-Yu and Crawford, Samuel J. and Chen, Dong and Szymczak, Dan and MacLachlan, Brooks and Scime, Dan and Miazi, Maryyam},
 title={Drasil},

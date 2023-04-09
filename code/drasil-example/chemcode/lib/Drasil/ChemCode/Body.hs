@@ -9,11 +9,12 @@ import Drasil.SRSDocument
 import Theory.Drasil (GenDefn)
 
 import Data.Drasil.Citations (chen2022, drasilSource, elemListWiki, hydrateSource,
-  ilpWiki, inorganicIUPAC, koothoor2013, lund2023, maclachlan2021, organicIUPAC,
-  parnasClements1986, polymerSource, smithChemSpec, smithLai2005)
+  ilpWiki, inorganicIUPAC, koothoor2013, lund2023, maclachlan2021,
+  nonIntCoeffSource, organicIUPAC, parnasClements1986, polymerSource,
+  smithChemSpec, smithLai2005)
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Computation (algorithm)
-import qualified Data.Drasil.Concepts.Documentation as Doc (srs)
+import qualified Data.Drasil.Concepts.Documentation as Doc (scope, srs)
 import Data.Drasil.Concepts.Documentation hiding (element, scope, srs)
 import Data.Drasil.Concepts.Math (mathcon, matrix, number, ode)
 import Data.Drasil.Concepts.Software (program, reusability)
@@ -143,13 +144,15 @@ orgOfDocIntro = foldlSent [atStartNP (the organization), S "of this",
   refS koothoor2013 `S.and_` refS smithLai2005]
 
 prob = foldlSent_ [S "balance", phrase chemical, plural equation,
-  -- S "with the smallest possible whole number coefficients",
   S "so they can be useful for other computations" +:+. refS lund2023,
   S "Additionally" `sC` S "since molecules only exist in positive integer",
   plural quantity, sParen (S "since dividing a molecule changes it into" +:+
     S "different molecules") `sC` S "the coefficients used to balance the",
-  phrase chemical, phrase equation, S "must be whole numbers" `sC`
-    S "and by convention should be as small as possible", refS lund2023]
+  phrase chemical, phrase equation, S "should be whole numbers" `sC`
+    S "and by convention should be as small as possible" +:+. refS lund2023,
+  S "There are some cases where the coefficients are not integers",
+  sParen (S "see" +:+ refS nonIntCoeffSource) `sC` S "but this is not in the",
+  phrase Doc.scope, S "of this", phrase program]
 
 -- SYSTEM CONTEXT
 
@@ -298,8 +301,8 @@ refDB = rdb citations concIns
 
 citations :: BibRef
 citations = [chen2022, drasilSource, elemListWiki, hydrateSource, ilpWiki,
-  inorganicIUPAC, koothoor2013, lund2023, maclachlan2021, organicIUPAC,
-  parnasClements1986, polymerSource, smithChemSpec, smithLai2005]
+  inorganicIUPAC, koothoor2013, lund2023, maclachlan2021, nonIntCoeffSource,
+  organicIUPAC, parnasClements1986, polymerSource, smithChemSpec, smithLai2005]
 
 concIns :: [ConceptInstance]
 concIns = assumps ++ funcReqs ++ nonfuncReqs ++ uChanges

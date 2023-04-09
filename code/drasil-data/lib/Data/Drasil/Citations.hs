@@ -10,8 +10,8 @@ import Data.Drasil.People
 
 campidelli, koothoor2013, parnas1972, parnasClements1984,
   parnasClements1986, smithLai2005, lineSource, pointSource,
-  hibbeler2004, lund2023, hydrateSource, polymerSource, inorganicIUPAC,
-  organicIUPAC, elemListWiki, smithChemSpec :: Citation
+  hibbeler2004, lund2023, hydrateSource, polymerSource, nonIntCoeffSource,
+  inorganicIUPAC, organicIUPAC, elemListWiki, smithChemSpec :: Citation
 
 campidelli = cBooklet
   "Glass-BR Software for the design and risk assessment of glass facades subjected to blast loading"
@@ -80,6 +80,11 @@ hydrateSource = cMisc [author [harpCollins], title "hydrate",
 -- FIXME: should use cBookE, but gets a "No author found" error when building
 polymerSource = cBookA [pWexler] "Encyclopedia of Toxicology" "Academic Press"
   2014 [address "Amsterdam, NL", edition 3] "polymerSource"
+
+nonIntCoeffSource = cTechReport [aBergholm] "Oxidation of Pyrite"
+  "U. S. Department of the Interior" 1995 [address "Boulder, CO, USA"]
+  "nonIntCoeffSource"
+  -- FIXME: this source also has editors; are they necessary to add?
 
 inorganicIUPAC = cBookA [iupac, ngConnelly, tDahmus, rmHartshorn, atHutton]
   "Nomenclature of Inorganic Chemistry: IUPAC Recommendations 2005"

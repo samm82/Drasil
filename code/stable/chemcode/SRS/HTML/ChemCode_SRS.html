@@ -365,7 +365,7 @@
           <div class="subsection">
             <h2>Problem Description</h2>
             <p class="paragraph">
-              A system is needed to balance chemical equations so they can be useful for other computations <a href=#lund2023>lund2023</a>. Additionally, since molecules only exist in positive integer quantities (since dividing a molecule changes it into different molecules), the coefficients used to balance the chemical equation must be whole numbers, and by convention should be as small as possible <a href=#lund2023>lund2023</a>.
+              A system is needed to balance chemical equations so they can be useful for other computations <a href=#lund2023>lund2023</a>. Additionally, since molecules only exist in positive integer quantities (since dividing a molecule changes it into different molecules), the coefficients used to balance the chemical equation should be whole numbers, and by convention should be as small as possible <a href=#lund2023>lund2023</a>. There are some cases where the coefficients are not integers (see <a href=#nonIntCoeffSource>nonIntCoeffSource</a>), but this is not in the scope of this program.
             </p>
             <div id="Sec:TermDefs">
               <div class="subsubsection">
@@ -1414,73 +1414,78 @@
         <h1>References</h1>
         <ul class="hide-list-style">
           <li>
+            <div id="nonIntCoeffSource">
+              [1]: U. S. Department of the Interior, Bergholm, A. "Oxidation of Pyrite." Boulder, CO, USA: 1995.
+            </div>
+          </li>
+          <li>
             <div id="drasilSource">
-              [1]: Carette, Jacques, Smith, W. Spencer, Balaci, Jason, Wu, Ting-Yu, Crawford, Samuel J., Chen, Dong, Szymczak, Dan, MacLachlan, Brooks, Scime, Dan, and Miazi, Maryyam. <em>Drasil</em>. February, 2021. <a href="https://jacquescarette.github.io/Drasil/">https://jacquescarette.github.io/Drasil/</a>.
+              [2]: Carette, Jacques, Smith, W. Spencer, Balaci, Jason, Wu, Ting-Yu, Crawford, Samuel J., Chen, Dong, Szymczak, Dan, MacLachlan, Brooks, Scime, Dan, and Miazi, Maryyam. <em>Drasil</em>. February, 2021. <a href="https://jacquescarette.github.io/Drasil/">https://jacquescarette.github.io/Drasil/</a>.
             </div>
           </li>
           <li>
             <div id="chen2022">
-              [2]: Chen, Dong. <em>Solving Higher-Order ODEs in Drasil</em>. Edited by Jacques Carette and W. Spencer Smith, McMaster University, Hamilton, ON, Canada: September, 2022. <a href="https://github.com/JacquesCarette/Drasil/blob/master/People/Dong/Thesis_Main.pdf">https://github.com/JacquesCarette/Drasil/blob/master/People/Dong/Thesis_Main.pdf</a>. Print.
+              [3]: Chen, Dong. <em>Solving Higher-Order ODEs in Drasil</em>. Edited by Jacques Carette and W. Spencer Smith, McMaster University, Hamilton, ON, Canada: September, 2022. <a href="https://github.com/JacquesCarette/Drasil/blob/master/People/Dong/Thesis_Main.pdf">https://github.com/JacquesCarette/Drasil/blob/master/People/Dong/Thesis_Main.pdf</a>. Print.
             </div>
           </li>
           <li>
             <div id="hydrateSource">
-              [3]: HarperCollins Publishers. <em>hydrate</em>. <em>Collins</em>, New York, NY, USA: HarperCollins,
+              [4]: HarperCollins Publishers. <em>hydrate</em>. <em>Collins</em>, New York, NY, USA: HarperCollins,
             </div>
           </li>
           <li>
             <div id="inorganicIUPAC">
-              [4]: International Union of Pure and Applied Chemistry, Connelly, Neil G., Damhus, Ture, Hartshorn, Richard M., and Hutton, Alan T. <em>Nomenclature of Inorganic Chemistry: IUPAC Recommendations 2005</em>. Cambridge, UK: The Royal Society of Chemistry, 2005. <a href="https://iupac.org/wp-content/uploads/2016/07/Red_Book_2005.pdf">https://iupac.org/wp-content/uploads/2016/07/Red_Book_2005.pdf</a>. Print.
+              [5]: International Union of Pure and Applied Chemistry, Connelly, Neil G., Damhus, Ture, Hartshorn, Richard M., and Hutton, Alan T. <em>Nomenclature of Inorganic Chemistry: IUPAC Recommendations 2005</em>. Cambridge, UK: The Royal Society of Chemistry, 2005. <a href="https://iupac.org/wp-content/uploads/2016/07/Red_Book_2005.pdf">https://iupac.org/wp-content/uploads/2016/07/Red_Book_2005.pdf</a>. Print.
             </div>
           </li>
           <li>
             <div id="organicIUPAC">
-              [5]: International Union of Pure and Applied Chemistry, Moss, G. P., Favre, Henri A., and Powell, Warren H. <em>Nomenclature of Organic Chemistry: IUPAC Recommendations and Preferred Names 2013</em>. Cambridge, UK: The Royal Society of Chemistry, 2013. <a href="https://iupac.qmul.ac.uk/BlueBook/PDF/">https://iupac.qmul.ac.uk/BlueBook/PDF/</a>. Print.
+              [6]: International Union of Pure and Applied Chemistry, Moss, G. P., Favre, Henri A., and Powell, Warren H. <em>Nomenclature of Organic Chemistry: IUPAC Recommendations and Preferred Names 2013</em>. Cambridge, UK: The Royal Society of Chemistry, 2013. <a href="https://iupac.qmul.ac.uk/BlueBook/PDF/">https://iupac.qmul.ac.uk/BlueBook/PDF/</a>. Print.
             </div>
           </li>
           <li>
             <div id="koothoor2013">
-              [6]: Koothoor, Nirmitha. <em>A document drive approach to certifying scientific computing software</em>. McMaster University, Hamilton, ON, Canada: 2013. Print.
+              [7]: Koothoor, Nirmitha. <em>A document drive approach to certifying scientific computing software</em>. McMaster University, Hamilton, ON, Canada: 2013. Print.
             </div>
           </li>
           <li>
             <div id="lund2023">
-              [7]: Lund, Lance. <em>Introduction to Chemistry</em>. Cambridge and Coon Rapids, MN, USA: LibreTexts, January, 2023. <a href="https://chem.libretexts.org/Courses/Anoka-Ramsey_Community_College/Introduction_to_Chemistry">https://chem.libretexts.org/Courses/Anoka-Ramsey_Community_College/Introduction_to_Chemistry</a>. Print.
+              [8]: Lund, Lance. <em>Introduction to Chemistry</em>. Cambridge and Coon Rapids, MN, USA: LibreTexts, January, 2023. <a href="https://chem.libretexts.org/Courses/Anoka-Ramsey_Community_College/Introduction_to_Chemistry">https://chem.libretexts.org/Courses/Anoka-Ramsey_Community_College/Introduction_to_Chemistry</a>. Print.
             </div>
           </li>
           <li>
             <div id="maclachlan2021">
-              [8]: MacLachlan, Brooks. <em>A Design Language for Scientific Computing Software in Drasil</em>. Edited by Jacques Carette and W. Spencer Smith, McMaster University, Hamilton, ON, Canada: November, 2021. <a href="https://macsphere.mcmaster.ca/bitstream/11375/25542/2/maclachlan_brooks_2020july_masc.pdf">https://macsphere.mcmaster.ca/bitstream/11375/25542/2/maclachlan_brooks_2020july_masc.pdf</a>. Print.
+              [9]: MacLachlan, Brooks. <em>A Design Language for Scientific Computing Software in Drasil</em>. Edited by Jacques Carette and W. Spencer Smith, McMaster University, Hamilton, ON, Canada: November, 2021. <a href="https://macsphere.mcmaster.ca/bitstream/11375/25542/2/maclachlan_brooks_2020july_masc.pdf">https://macsphere.mcmaster.ca/bitstream/11375/25542/2/maclachlan_brooks_2020july_masc.pdf</a>. Print.
             </div>
           </li>
           <li>
             <div id="parnasClements1986">
-              [9]: Parnas, David L. and Clements, P. C. "A rational design process: How and why to fake it." <em>IEEE Transactions on Software Engineering</em>, vol. 12, no. 2, Washington, USA: February, 1986. pp. 251&ndash;257. Print.
+              [10]: Parnas, David L. and Clements, P. C. "A rational design process: How and why to fake it." <em>IEEE Transactions on Software Engineering</em>, vol. 12, no. 2, Washington, USA: February, 1986. pp. 251&ndash;257. Print.
             </div>
           </li>
           <li>
             <div id="smithChemSpec">
-              [10]: Smith, W. Spencer. <em>Assignment 2</em>. February, 2020. <a href="https://gitlab.cas.mcmaster.ca/smiths/se2aa4_cs2me3/-/blob/master/Assignments/PreviousYears/2020/A2-ChemReacts/A2.pdf">https://gitlab.cas.mcmaster.ca/smiths/se2aa4_cs2me3/-/blob/master/Assignments/PreviousYears/2020/A2-ChemReacts/A2.pdf</a>.
+              [11]: Smith, W. Spencer. <em>Assignment 2</em>. February, 2020. <a href="https://gitlab.cas.mcmaster.ca/smiths/se2aa4_cs2me3/-/blob/master/Assignments/PreviousYears/2020/A2-ChemReacts/A2.pdf">https://gitlab.cas.mcmaster.ca/smiths/se2aa4_cs2me3/-/blob/master/Assignments/PreviousYears/2020/A2-ChemReacts/A2.pdf</a>.
             </div>
           </li>
           <li>
             <div id="smithLai2005">
-              [11]: Smith, W. Spencer and Lai, Lei. "A new requirements template for scientific computing." <em>Proceedings of the First International Workshop on Situational Requirements Engineering Processes - Methods, Techniques and Tools to Support Situation-Specific Requirements Engineering Processes, SREP'05</em>. Edited by PJ Agerfalk, N. Kraiem, and J. Ralyte, Paris, France: 2005. pp. 107&ndash;121. In conjunction with 13th IEEE International Requirements Engineering Conference,
+              [12]: Smith, W. Spencer and Lai, Lei. "A new requirements template for scientific computing." <em>Proceedings of the First International Workshop on Situational Requirements Engineering Processes - Methods, Techniques and Tools to Support Situation-Specific Requirements Engineering Processes, SREP'05</em>. Edited by PJ Agerfalk, N. Kraiem, and J. Ralyte, Paris, France: 2005. pp. 107&ndash;121. In conjunction with 13th IEEE International Requirements Engineering Conference,
             </div>
           </li>
           <li>
             <div id="polymerSource">
-              [12]: Wexler, Philip. <em>Encyclopedia of Toxicology</em>. 3st. ed., Amsterdam, NL: Academic Press, 2014. Print.
+              [13]: Wexler, Philip. <em>Encyclopedia of Toxicology</em>. 3st. ed., Amsterdam, NL: Academic Press, 2014. Print.
             </div>
           </li>
           <li>
             <div id="ilpWiki">
-              [13]: Wikipedia Contributors. <em>Integer programming</em>. March, 2023. <a href="https://en.wikipedia.org/wiki/Integer_programming">https://en.wikipedia.org/wiki/Integer_programming</a>.
+              [14]: Wikipedia Contributors. <em>Integer programming</em>. March, 2023. <a href="https://en.wikipedia.org/wiki/Integer_programming">https://en.wikipedia.org/wiki/Integer_programming</a>.
             </div>
           </li>
           <li>
             <div id="elemListWiki">
-              [14]: Wikipedia Contributors. <em>List of chemical elements</em>. January, 2023. <a href="https://en.wikipedia.org/wiki/List_of_chemical_elements">https://en.wikipedia.org/wiki/List_of_chemical_elements</a>.
+              [15]: Wikipedia Contributors. <em>List of chemical elements</em>. January, 2023. <a href="https://en.wikipedia.org/wiki/List_of_chemical_elements">https://en.wikipedia.org/wiki/List_of_chemical_elements</a>.
             </div>
           </li>
         </ul>
