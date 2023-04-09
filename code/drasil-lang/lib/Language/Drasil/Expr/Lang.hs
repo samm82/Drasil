@@ -144,6 +144,8 @@ data Expr where
   Operator :: AssocArithOper -> DiscreteDomainDesc Expr Expr -> Expr -> Expr
   -- | A different kind of 'IsIn'. A 'UID' is an element of an interval.
   RealI    :: UID -> RealInterval Expr Expr -> Expr
+  -- | Set comprehension
+  SetComp  :: Expr -> Expr -> Expr
 
 -- | Expressions are equal if their constructors and contents are equal.
 instance Eq Expr where

@@ -168,6 +168,9 @@ expr (NVVBinaryOp Scale a b)  sm = mkBOp sm P.Scale a b
 expr (Operator o d e)         sm = eop sm o d e
 expr (RealI c ri)             sm = renderRealInt sm (lookupC (sm ^. stg)
   (sm ^. ckdb) c) ri
+expr (SetComp r p)            sm = P.Fenced P.Curly P.Curly (P.Row [
+    expr r sm, P.Label " | ", expr p sm -- FIXME: pipe hack
+  ])
 
 -- | Common method of converting associative operations into printable layout AST.
 assocExpr :: P.Ops -> Int -> [Expr] -> PrintingInformation -> P.Expr

@@ -201,6 +201,9 @@ modelExpr (ForAll c s de)            sm = P.Row [
     P.MO P.ForAll, symbol $ lookupC (sm ^. stg) (sm ^. ckdb) c, P.MO P.IsIn, space sm s,
     P.MO P.Dot, modelExpr de sm
   ]
+modelExpr (SetComp r p)              sm = P.Fenced P.Curly P.Curly (P.Row [
+    modelExpr r sm, P.Label " | ", modelExpr p sm -- FIXME: pipe hack
+  ])
 
 -- | Common method of converting associative operations into printable layout AST.
 assocExpr :: P.Ops -> Int -> [ModelExpr] -> PrintingInformation -> P.Expr

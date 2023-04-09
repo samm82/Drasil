@@ -34,7 +34,7 @@ elemsDD = ddMENoRefs elemsExpr Nothing "elemsFunc"
 
 elemsExpr :: ModelQDef
 elemsExpr = mkFuncDefByQ elems [genR]
-  $ isMember (sy genE) (space $ genE ^. typ)
+  $ setComp genE (sy genE $= sy genE)
 
 elementDD :: DataDefinition
 elementDD = ddME elementExpr [dRef smithChemSpec] Nothing "elementType"

@@ -38,6 +38,7 @@ meNames (Operator _ _ e)      = meNames e
 meNames (Matrix a)            = concatMap (concatMap meNames) a
 meNames (RealI c b)           = c : meNamesRI b
 meNames (ForAll _ _ de)       = meNames de
+meNames (SetComp r p)         = meNames r ++ meNames p
 
 -- | Generic traversal of everything that could come from an interval to names (similar to 'meNames').
 meNamesRI :: RealInterval ModelExpr ModelExpr -> [UID]
@@ -78,6 +79,7 @@ meNames' (Operator _ _ e)      = meNames' e
 meNames' (Matrix a)            = concatMap (concatMap meNames') a
 meNames' (RealI c b)           = c : meNamesRI' b
 meNames' (ForAll _ _ de)       = meNames' de
+meNames' (SetComp r p)         = meNames' r ++ meNames' p
 
 -- | Generic traversal of everything that could come from an interval to names without functions (similar to 'meNames'').
 meNamesRI' :: RealInterval ModelExpr ModelExpr -> [UID]

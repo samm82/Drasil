@@ -163,6 +163,8 @@ data ModelExpr where
   
   -- | Universal quantification
   ForAll   :: UID -> Space -> ModelExpr -> ModelExpr
+  -- | Set comprehension
+  SetComp  :: ModelExpr -> ModelExpr -> ModelExpr
 
 -- | The variable type is just a renamed 'String'.
 type Variable = String
