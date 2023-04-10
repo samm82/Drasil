@@ -175,7 +175,8 @@ pOps Point    = pure $ text "."
 pOps Perc     = texSym "%"
 pOps LArrow   = commandD "leftarrow"  empty
 pOps RArrow   = commandD "rightarrow" empty
-pOps ForAll   = commandD "ForAll"     empty
+pOps ForAll   = commandD "forall"     empty
+pOps Exists  = commandD "exists"     empty
 pOps Partial  = commandD "partial"    empty
 
 -- | Prints fencing notation ("(),{},|,||").

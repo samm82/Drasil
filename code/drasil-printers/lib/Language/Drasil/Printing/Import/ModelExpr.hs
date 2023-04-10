@@ -126,7 +126,7 @@ modelExpr (AssocA MulRe l)           sm = P.Row $ mulExpr l MulRe sm
 modelExpr (Deriv 0 Part a _)         sm = P.Row [modelExpr a sm]
 modelExpr (Deriv 0 Total a _)        sm = P.Row [modelExpr a sm]
 modelExpr (Deriv n Part a b)         sm =
-  let st = [P.Spc P.Thin, P.MO P.Partial] in 
+  let st = [P.Spc P.Thin, P.MO P.Partial] in
     P.Div (P.Row (st ++ sup n ++ [modelExpr a sm]))
     (P.Row (st ++ [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) b] ++ sup n))
 modelExpr (Deriv n Total a b)        sm =
@@ -200,6 +200,10 @@ modelExpr (StatBinaryOp IsMember l r) sm = P.Row [modelExpr l sm, P.MO P.IsIn, m
 modelExpr (ForAll c s de)            sm = P.Row [
     P.MO P.ForAll, symbol $ lookupC (sm ^. stg) (sm ^. ckdb) c, P.MO P.IsIn, space sm s,
     P.MO P.Dot, modelExpr de sm
+  ]
+modelExpr (Exists c p)             sm = P.Row [P.MO P.Exists, P.Spc P.Thin,
+    P.Row $ intersperse (P.MO P.Comma) (map (`modelExpr` sm) c),
+    P.Label " | ", modelExpr p sm
   ]
 modelExpr (SetComp r p)              sm = P.Fenced P.Curly P.Curly (P.Row [
     modelExpr r sm, P.Label " | ", modelExpr p sm -- FIXME: pipe hack

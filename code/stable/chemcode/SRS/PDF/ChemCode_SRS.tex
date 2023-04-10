@@ -76,7 +76,11 @@ ${r_{\text{in}}}$ & Representation of a chemical equation & --
 \\
 ${t_{C}}$ & Generic tuple of a compound & --
 \\
+$x$ & Generic integer & --
+\\
 $\symbf{x}$ & Generic vector & --
+\\
+$y$ & Generic integer & --
 \\
 \bottomrule
 \caption{Table of Symbols}
@@ -332,12 +336,14 @@ Symbol & $\text{elems}$
          
 \\ \midrule \\
 Equation & \begin{displaymath}
-           \text{elems}=\{e\in{}E\text{ | }e=e\}
+           \text{elems}=\{e\in{}E\text{ | }\exists{}\,c\in{}C,y\in{}\mathbb{Z},x\in{}\mathbb{Z}\text{ | }y=x\}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
               \item{$\text{elems}$ is the set of elements in a chemical reaction (Unitless)}
               \item{$e$ is the generic element (Unitless)}
+              \item{$y$ is the generic integer (Unitless)}
+              \item{$x$ is the generic integer (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
 Notes & The output represents the set of elements that occur in a given chemical equation $r$ (of type $R$).

@@ -163,6 +163,8 @@ data ModelExpr where
   
   -- | Universal quantification
   ForAll   :: UID -> Space -> ModelExpr -> ModelExpr
+  -- | Existential quantification
+  Exists  :: [ModelExpr] -> ModelExpr -> ModelExpr
   -- | Set comprehension
   SetComp  :: ModelExpr -> ModelExpr -> ModelExpr
 

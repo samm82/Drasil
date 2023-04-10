@@ -10,10 +10,10 @@ inputs = [inputChemEqn]
 
 quants :: [QuantityDict]
 quants = inputs ++ [aMat, bVec, cVec, eMat, xVec, unaryVec, zeroVec, genE,
-  genC, genR, tupC, count, elems, elemT, compT, reacT]
+  genC, genR, genX, genY, tupC, count, elems, elemT, compT, reacT]
 
 inputChemEqn, aMat, bVec, cVec, eMat, xVec, unaryVec, zeroVec, genE, genC,
-  genR, tupC, count, elems, elemT, compT, reacT :: QuantityDict
+  genR, genX, genY, tupC, count, elems, elemT, compT, reacT :: QuantityDict
 
 inputChemEqn = vcSt "inputChemEqn"
   (nounPhraseSP "representation of a chemical equation")
@@ -32,6 +32,8 @@ zeroVec  = vc "zeroVec"  (nounPhraseSP "zero vector")  (vec $ variable "0") (Vec
 genE = vc "genE" (nounPhraseSent $ S "generic" +:+ phrase element) lE Element
 genC = vc "genC" (nounPhraseSent $ S "generic" +:+ phrase compound) lC Compound
 genR = vc "genR" (nounPhraseSent $ S "generic" +:+ phrase reaction) lR Reaction
+genX = vc "genX" (nounPhraseSent $ S "generic integer") lX Integer
+genY = vc "genY" (nounPhraseSent $ S "generic integer") lY Integer
 
 compoundTuple :: Space
 compoundTuple = Tuple [("elem", Element), ("count", Real)]

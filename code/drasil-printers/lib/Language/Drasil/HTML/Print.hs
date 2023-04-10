@@ -237,6 +237,7 @@ pOps Perc     = "%"
 pOps LArrow   = " &larr; "
 pOps RArrow   = " &rarr; "
 pOps ForAll   = " &forall; "
+pOps Exists  = " &exists; "
 pOps Partial  = "&part;"
 
 -- | Allows for open/closed variants of parenthesis, curly brackets, absolute value symbols, and normal symbols.

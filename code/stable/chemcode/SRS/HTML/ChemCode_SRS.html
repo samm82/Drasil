@@ -193,8 +193,18 @@
                   <td>--</td>
                 </tr>
                 <tr>
+                  <td><em>x</em></td>
+                  <td>Generic integer</td>
+                  <td>--</td>
+                </tr>
+                <tr>
                   <td><em><b>x</b></em></td>
                   <td>Generic vector</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>y</em></td>
+                  <td>Generic integer</td>
                   <td>--</td>
                 </tr>
               </table>
@@ -615,7 +625,9 @@
                     </tr>
                     <tr>
                       <th>Equation</th>
-                      <td>\[\text{elems}=\{e\in{}E\text{ | }e=e\}\]</td>
+                      <td>
+                        \[\text{elems}=\{e\in{}E\text{ | }\exists{}\,c\in{}C,y\in{}\mathbb{Z},x\in{}\mathbb{Z}\text{ | }y=x\}\]
+                      </td>
                     </tr>
                     <tr>
                       <th>Description</th>
@@ -625,6 +637,8 @@
                             <em>elems</em> is the set of elements in a chemical reaction (Unitless)
                           </li>
                           <li><em>e</em> is the generic element (Unitless)</li>
+                          <li><em>y</em> is the generic integer (Unitless)</li>
+                          <li><em>x</em> is the generic integer (Unitless)</li>
                         </ul>
                       </td>
                     </tr>

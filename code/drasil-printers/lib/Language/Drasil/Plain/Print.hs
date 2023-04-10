@@ -172,7 +172,8 @@ opsDoc Point = text "."
 opsDoc Perc = text "%"
 opsDoc LArrow = text " <- "
 opsDoc RArrow = text " -> "
-opsDoc ForAll = text " ForAll "
+opsDoc ForAll = text " forall "
+opsDoc Exists = text " exists "
 opsDoc Partial = text "partial"
 
 -- | Helper for printing the left side of some characters "(, {, \\|, |".

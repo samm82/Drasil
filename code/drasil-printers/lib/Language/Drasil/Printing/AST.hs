@@ -12,7 +12,7 @@ data Ops = IsIn | Integer | Real | Rational | Natural | Boolean | Element | Comp
   | Comma | Prime | Log | Ln | Sin | Cos | Tan | Sec | Csc | Cot | Arcsin | Arccos | Arctan | Not
   | Dim | Exp | Neg | Cross | Dot | Scale | Eq | NEq | Lt | Gt | LEq | GEq | Impl | Iff
   | Subt | And | Or | Add | Mul | Summ | Inte | Prod | Point | Perc | LArrow | RArrow | ForAll
-  | VAdd | VSub | Partial
+  | Exists | VAdd | VSub | Partial
 
 -- | Holds the type of "text fencing" ("(), {}, |, ||").
 data Fence = Paren | Curly | Norm | Abs

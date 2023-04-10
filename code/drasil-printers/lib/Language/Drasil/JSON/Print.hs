@@ -192,7 +192,8 @@ pOps Point    = "."
 pOps Perc     = "%"
 pOps LArrow   = " &larr; "
 pOps RArrow   = " &rarr; "
-pOps ForAll   = " ForAll "
+pOps ForAll   = " forall "
+pOps Exists  = " exists "
 pOps Partial  = "&part;"
 
 

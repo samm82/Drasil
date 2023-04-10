@@ -10,7 +10,8 @@ import Data.Drasil.Concepts.Chemistry (chemical, compound, element, equation,
   reaction)
 import Data.Drasil.Concepts.Documentation (output_)
 
-import Drasil.ChemCode.Quantities (compT, count, elemT, genC, genE, genR, reacT, tupC, elems)
+import Drasil.ChemCode.Quantities (compT, count, elemT, genC, genE, genR, genX,
+  genY, reacT, tupC, elems)
 
 dds :: [DataDefinition]
 dds = [countDD, elemsDD, elementDD, compoundDD, reactionDD]
@@ -34,7 +35,7 @@ elemsDD = ddMENoRefs elemsExpr Nothing "elemsFunc"
 
 elemsExpr :: ModelQDef
 elemsExpr = mkFuncDefByQ elems [genR]
-  $ setComp genE (sy genE $= sy genE)
+  $ setComp genE (exists [genC, genY, genX] $ sy genY $= sy genX)
 
 elementDD :: DataDefinition
 elementDD = ddME elementExpr [dRef smithChemSpec] Nothing "elementType"
