@@ -29,11 +29,11 @@ xVec = vc "xVec" (nounPhraseSP "generic vector")                               (
 unaryVec = vc "unaryVec" (nounPhraseSP "unary vector") (vec $ variable "1") (Vect Integer)
 zeroVec  = vc "zeroVec"  (nounPhraseSP "zero vector")  (vec $ variable "0") (Vect Integer)
 
-genE = vc "genE" (nounPhraseSent $ S "generic" +:+ phrase element) lE Element
+genE = vc "genE" (nounPhraseSent $ S "generic" +:+ phrase element)  lE Element
 genC = vc "genC" (nounPhraseSent $ S "generic" +:+ phrase compound) lC Compound
 genR = vc "genR" (nounPhraseSent $ S "generic" +:+ phrase reaction) lR Reaction
-genX = vc "genX" (nounPhraseSent $ S "generic integer") lX Integer
-genY = vc "genY" (nounPhraseSent $ S "generic integer") lY Integer
+genX = vc "genX" (nounPhraseSent $ S "generic real number")         lX Real
+genY = vc "genY" (nounPhraseSent $ S "generic integer")             lY Integer
 
 compoundTuple :: Space
 compoundTuple = Tuple [("elem", Element), ("count", Real)]
