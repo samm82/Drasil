@@ -146,6 +146,8 @@ modelExpr (C c)                      sm = symbol $ lookupC (sm ^. stg) (sm ^. ck
 modelExpr (FCall f [x])              sm =
   P.Row [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) f, parens $ modelExpr x sm]
 modelExpr (FCall f l)                sm = call sm f l
+modelExpr (TCons x)                  sm =
+  P.Fenced P.Paren P.Paren $ P.Row $ intersperse (P.MO P.Comma) $ map (`modelExpr` sm) x
 modelExpr (TAccess t l)              sm =
   P.Row [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) t, P.Label $ "." ++ l]
   -- FIXME: should period be captured better?

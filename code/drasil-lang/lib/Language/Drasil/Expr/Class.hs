@@ -221,6 +221,9 @@ class ExprC r where
   -- | Applies a given function with a list of parameters.
   apply :: (HasUID f, HasSymbol f) => f -> [r] -> r
 
+  -- | Constructs an instance of a tuple.
+  tCons :: [r] -> r
+
   -- | Accesses a given field of a tuple.
   access :: (HasUID f) => f -> String -> r
 
@@ -399,6 +402,9 @@ instance ExprC Expr where
   apply f [] = sy f
   apply f ps = FCall (f ^. uid) ps
 
+  -- | Constructs an instance of a tuple.
+  tCons = TCons
+
   -- | Accesses a given field of a tuple.
   access f = TAccess (f ^. uid)
 
@@ -575,6 +581,9 @@ instance ExprC M.ModelExpr where
   -- | Applies a given function with a list of parameters.
   apply f [] = sy f
   apply f ps = M.FCall (f ^. uid) ps
+
+  -- | Creates an instance of a tuple.
+  tCons = M.TCons
 
   -- | Accesses a given field of a tuple.
   access f = M.TAccess (f ^. uid)

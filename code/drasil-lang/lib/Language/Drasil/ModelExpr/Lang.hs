@@ -115,6 +115,8 @@ data ModelExpr where
   C         :: UID -> ModelExpr
   -- | Function applications.
   FCall     :: UID -> [ModelExpr] -> ModelExpr
+  -- | Tuple constructor.
+  TCons    :: [ModelExpr] -> ModelExpr
   -- | Tuple accessors.
   TAccess   :: UID -> String -> ModelExpr
   -- | For multi-case expressions, each pair represents one case.

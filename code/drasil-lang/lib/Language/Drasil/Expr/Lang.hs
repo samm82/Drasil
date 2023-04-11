@@ -105,6 +105,8 @@ data Expr where
   C        :: UID -> Expr
   -- | Function applications.
   FCall    :: UID -> [Expr] -> Expr
+  -- | Tuple constructor.
+  TCons    :: [Expr] -> Expr
   -- | Tuple accessors.
   TAccess  :: UID -> String -> Expr
   -- | For multi-case expressions, each pair represents one case.

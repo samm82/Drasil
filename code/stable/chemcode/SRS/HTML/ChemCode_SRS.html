@@ -626,7 +626,7 @@
                     <tr>
                       <th>Equation</th>
                       <td>
-                        \[\text{elems}=\{e\in{}E\text{ | }\exists{}\,c\in{}C,y\in{}\mathbb{Z},x\in{}\mathbb{R}\text{ | }y=x\}\]
+                        \[\text{elems}=\{e\in{}E\text{ | }\exists{}\,c\in{}C,y\in{}\mathbb{Z},x\in{}\mathbb{R}\text{ | }\left(\left(c,y\right)\in{}r\text{.prod}\lor{}\left(c,y\right)\in{}r\text{.reac}\right)\land{}\left(e,x\right)\in{}c\}\]
                       </td>
                     </tr>
                     <tr>
@@ -637,7 +637,9 @@
                             <em>elems</em> is the set of elements in a chemical reaction (Unitless)
                           </li>
                           <li><em>e</em> is the generic element (Unitless)</li>
+                          <li><em>c</em> is the generic compound (Unitless)</li>
                           <li><em>y</em> is the generic integer (Unitless)</li>
+                          <li><em>r</em> is the generic reaction (Unitless)</li>
                           <li><em>x</em> is the generic real number (Unitless)</li>
                         </ul>
                       </td>

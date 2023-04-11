@@ -21,7 +21,6 @@ import Language.Drasil.Printing.Import.Literal (literal)
 import Language.Drasil.Printing.Import.Symbol (symbol)
 import Language.Drasil.Printing.Import.Helpers (lookupC, parens)
 
-
 -- | Helper that creates an expression row given printing information, an operator, and an expression.
 mkCall :: PrintingInformation -> P.Ops -> Expr -> P.Expr
 mkCall s o e = P.Row [P.MO o, parens $ expr e s]
@@ -121,6 +120,8 @@ expr (C c)                    sm = symbol $ lookupC (sm ^. stg) (sm ^. ckdb) c
 expr (FCall f [x])            sm =
   P.Row [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) f, parens $ expr x sm]
 expr (FCall f l)              sm = call sm f l
+expr (TCons x)                sm =
+  P.Fenced P.Paren P.Paren $ P.Row $ intersperse (P.MO P.Comma) $ map (`expr` sm) x
 expr (TAccess t l)            sm =
   P.Row [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) t, P.Label $ "." ++ l]
   -- FIXME: should period be captured better?

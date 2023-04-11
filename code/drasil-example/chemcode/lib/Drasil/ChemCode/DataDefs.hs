@@ -35,7 +35,10 @@ elemsDD = ddMENoRefs elemsExpr Nothing "elemsFunc"
 
 elemsExpr :: ModelQDef
 elemsExpr = mkFuncDefByQ elems [genR]
-  $ setComp genE (exists [genC, genY, genX] $ sy genY $= sy genX)
+  $ setComp genE $ exists [genC, genY, genX] $
+    (isMember (tCons (map sy [genC, genY])) (access genR "prod") $|| --FIXME: this should use union, not or
+    isMember (tCons (map sy [genC, genY])) (access genR "reac")) $&&
+    isMember (tCons (map sy [genE, genX])) (sy genC)
 
 elementDD :: DataDefinition
 elementDD = ddME elementExpr [dRef smithChemSpec] Nothing "elementType"

@@ -336,13 +336,15 @@ Symbol & $\text{elems}$
          
 \\ \midrule \\
 Equation & \begin{displaymath}
-           \text{elems}=\{e\in{}E\text{ | }\exists{}\,c\in{}C,y\in{}\mathbb{Z},x\in{}\mathbb{R}\text{ | }y=x\}
+           \text{elems}=\{e\in{}E\text{ | }\exists{}\,c\in{}C,y\in{}\mathbb{Z},x\in{}\mathbb{R}\text{ | }\left(\left(c,y\right)\in{}r\text{.prod}\lor{}\left(c,y\right)\in{}r\text{.reac}\right)\land{}\left(e,x\right)\in{}c\}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
               \item{$\text{elems}$ is the set of elements in a chemical reaction (Unitless)}
               \item{$e$ is the generic element (Unitless)}
+              \item{$c$ is the generic compound (Unitless)}
               \item{$y$ is the generic integer (Unitless)}
+              \item{$r$ is the generic reaction (Unitless)}
               \item{$x$ is the generic real number (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
