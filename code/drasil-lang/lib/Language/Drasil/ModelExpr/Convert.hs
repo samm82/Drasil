@@ -103,7 +103,6 @@ expr (E.VVNBinaryOp v l r)   = VVNBinaryOp (vvnBinOp v) (expr l) (expr r)
 expr (E.NVVBinaryOp v l r)   = NVVBinaryOp (nvvBinOp v) (expr l) (expr r)
 expr (E.Operator ao dd e)    = Operator (assocArithOper ao) (domainDesc dd) (expr e)
 expr (E.RealI u ri)          = RealI u (realInterval ri)
-expr (E.Exists c p)          = Exists (map expr c) (expr p)
 expr (E.SetComp r p)         = SetComp (expr r) (expr p)
 
 realInterval :: RealInterval E.Expr E.Expr -> RealInterval ModelExpr ModelExpr
