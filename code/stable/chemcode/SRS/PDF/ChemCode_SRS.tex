@@ -152,6 +152,10 @@ The interaction between the product and the user is through a user interface. Th
 \item{Solve the integer linear programming problem for the inputted chemical equation}
 \end{itemize}
 \end{itemize}
+\subsection{User Characteristics}
+\label{Sec:UserChars}
+The end user of ChemCode should have an understanding of high school chemistry (namely stochiometry).
+
 \subsection{System Constraints}
 \label{Sec:SysConstraints}
 ChemCode will be developed using Drasil \cite{drasilSource}, ``a framework for generating high-quality documentation and code for Scientific Computing Software'' \cite{maclachlan2021}, with the goal of extending it by adding concepts relevant to the problem outlined in the \hyperref[Sec:ProbDesc]{problem description}. Since Drasil is built on the idea of reusability, external libraries will be used to solve the integer programming problems. This was previously done with ordinary differential equation (ODE) solvers, since ``creating a complete ODE solver in Drasil would take considerable time, and there are already many reliable external libraries ... tested by long use'' \cite[(pg. 24)]{chen2022}. These rationales also apply to ILP solvers.

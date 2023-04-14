@@ -63,7 +63,7 @@ mkSRS = [TableOfContents,
     GSDProg
       [
         SysCntxt [sysCtxIntro, LlC sysCtxFig, sysCtxDesc, sysCtxList]
-      -- , UsrChars [userCharacteristicsIntro],
+      , UsrChars [userChars]
       , SystCons [sysConstraints] []
       ],
   SSDSec $
@@ -157,6 +157,11 @@ readerChars :: [Sentence]
 readerChars = [phrase highSchoolChemistry +:+ sParen (S "namely stochiometry"),
   phrase thirdYear +:+ S "linear optimization" +:+
     sParen (S "namely integer programming")]
+
+userChars :: Contents
+userChars = foldlSP [S "The end", phrase user `S.of_` short progName,
+  S "should have an understanding of", phrase highSchoolChemistry,
+  sParen (S "namely stochiometry")]
 
 -- SYSTEM CONTEXT
 
