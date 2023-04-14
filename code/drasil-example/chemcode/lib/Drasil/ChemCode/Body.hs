@@ -114,8 +114,8 @@ justification = foldlSent [atStart chemical, plural equation,
   phrase element `S.onThe` phrase reactant `S.and_` phrase product,
   S "sides" `S.ofThe` phrase chemical +:+. phrase equation,
   S "Because balancing must be done before a given", phrase chemical,
-  phrase reaction, S "can be used", refS lund2023 `sC` S "it is useful to" +:+.
-    S "have a tool to automatically do this", S "This would improve the",
+  phrase reaction, S "can be used", refS lund2023 `sC` S "we want a" +:+.
+    S "tool for automatic balancing", S "This would improve the",
   S "productivity of scientists and engineers" `S.and_` S "reduce the" +:+.
     S "potential for human error", S "This", phrase program,
   S "should balance a given", phrase chemical, phrase equation,
