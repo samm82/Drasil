@@ -147,6 +147,8 @@ data Expr where
   -- | A different kind of 'IsIn'. A 'UID' is an element of an interval.
   RealI    :: UID -> RealInterval Expr Expr -> Expr
   -- | Set comprehension
+  -- FIXME: should this be in Expr? It makes sense to generate code for subdomains,
+  -- but generating a set that iterates over every real number, for example, doesn't
   SetComp  :: Expr -> Expr -> Expr
 
 -- | Expressions are equal if their constructors and contents are equal.
