@@ -283,6 +283,57 @@ RefBy & \hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}
 \\ \bottomrule
 \end{tabular}
 \end{minipage}
+\vspace{\baselineskip}
+\noindent
+\begin{minipage}{\textwidth}
+\begin{tabular}{>{\raggedright}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.82\textwidth}}
+\toprule \textbf{Refname} & \textbf{TM:lawConsMass}
+\phantomsection 
+\label{TM:lawConsMass}
+\\ \midrule \\
+Label & Law of conservation of mass
+        
+\\ \midrule \\
+Equation & \begin{displaymath}
+           \symbf{c} \symbf{x}
+           \end{displaymath}
+           \begin{displaymath}
+           \symbf{A} \symbf{x}\leq{}\symbf{b}
+           \end{displaymath}
+           \begin{displaymath}
+           \symbf{x}\geq{}\symbf{0}
+           \end{displaymath}
+           \begin{displaymath}
+           \symbf{x}\in{}\mathbb{Z}^{n}
+           \end{displaymath}
+\\ \midrule \\
+Description & \begin{symbDescription}
+              \item{$\symbf{c}$ is the generic vector (Unitless)}
+              \item{$\symbf{x}$ is the generic vector (Unitless)}
+              \end{symbDescription}
+              \begin{symbDescription}
+              \item{$\symbf{A}$ is the generic matrix (Unitless)}
+              \item{$\symbf{x}$ is the generic vector (Unitless)}
+              \item{$\symbf{b}$ is the generic vector (Unitless)}
+              \end{symbDescription}
+              \begin{symbDescription}
+              \item{$\symbf{x}$ is the generic vector (Unitless)}
+              \item{$\symbf{0}$ is the zero vector (Unitless)}
+              \end{symbDescription}
+              \begin{symbDescription}
+              \item{$\symbf{x}$ is the generic vector (Unitless)}
+              \end{symbDescription}
+\\ \midrule \\
+Notes & This law states that ``matter can neither be created nor destroyed in a chemical reaction ... but it may change forms to other substances'' \cite[(pg. 112)]{lund2023}.
+        
+\\ \midrule \\
+Source & \cite{lund2023}
+         
+\\ \midrule \\
+RefBy & 
+\\ \bottomrule
+\end{tabular}
+\end{minipage}
 \subsubsection{General Definitions}
 \label{Sec:GDs}
 There are no general definitions.
@@ -600,6 +651,8 @@ The purpose of the traceability matrices is to provide easy references on what h
 \\
 \hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} &  &  &  &  & 
 \\
+\hyperref[TM:lawConsMass]{TM:lawConsMass} &  &  &  &  & 
+\\
 \hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg} &  &  &  &  & 
 \\
 \hyperref[inputValues]{FR:Input-Values} &  &  &  &  & 
@@ -628,51 +681,53 @@ The purpose of the traceability matrices is to provide easy references on what h
 \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
 \label{Table:TraceMatAvsAll}
 \end{longtable}
-\begin{longtable}{l l l l l l l l}
+\begin{longtable}{l l l l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}}
+\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[TM:lawConsMass]{TM:lawConsMass}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}}
 \\
 \midrule
 \endhead
-\hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  &  &  & 
+\hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  &  &  &  & 
 \\
-\hyperref[DD:elemsFunc]{DD:elemsFunc} &  &  &  &  &  &  & 
+\hyperref[DD:elemsFunc]{DD:elemsFunc} &  &  &  &  &  &  &  & 
 \\
-\hyperref[DD:elementType]{DD:elementType} &  &  &  &  &  &  & 
+\hyperref[DD:elementType]{DD:elementType} &  &  &  &  &  &  &  & 
 \\
-\hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  &  &  & 
+\hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  &  &  &  & 
 \\
-\hyperref[DD:reactionType]{DD:reactionType} &  &  &  &  &  &  & 
+\hyperref[DD:reactionType]{DD:reactionType} &  &  &  &  &  &  &  & 
 \\
-\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} &  &  &  &  &  &  & 
+\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} &  &  &  &  &  &  &  & 
 \\
-\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg} &  &  &  &  &  & X & 
+\hyperref[TM:lawConsMass]{TM:lawConsMass} &  &  &  &  &  &  &  & 
+\\
+\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg} &  &  &  &  &  & X &  & 
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Items and Other Sections}
 \label{Table:TraceMatRefvsRef}
 \end{longtable}
-\begin{longtable}{l l l l l l l l l l l l l l l l}
+\begin{longtable}{l l l l l l l l l l l l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[portable]{NFR:Portable}}
+\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[TM:lawConsMass]{TM:lawConsMass}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[portable]{NFR:Portable}}
 \\
 \midrule
 \endhead
-\hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[accurate]{NFR:Accurate} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[accurate]{NFR:Accurate} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[reusable]{NFR:Reusable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[reusable]{NFR:Reusable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[portable]{NFR:Portable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[portable]{NFR:Portable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Requirements and Other Items}
