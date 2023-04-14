@@ -16,6 +16,7 @@ import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Computation (algorithm)
 import qualified Data.Drasil.Concepts.Documentation as Doc (scope, srs)
 import Data.Drasil.Concepts.Documentation hiding (element, scope, srs)
+import Data.Drasil.Concepts.Education (educon, highSchoolChemistry, thirdYear)
 import Data.Drasil.Concepts.Math (mathcon, matrix, number, ode)
 import Data.Drasil.Concepts.Software (program, reusability)
 import Data.Drasil.People (samCrawford)
@@ -41,7 +42,7 @@ printSetting :: PrintingInformation
 printSetting = piSys fullSI Equational defaultConfiguration
 
 mkSRS :: SRSDecl
-mkSRS = [TableOfContents, 
+mkSRS = [TableOfContents,
   RefSec $ RefProg intro [
     -- TUnits,
     tsymb tSymbIntro,
@@ -51,7 +52,7 @@ mkSRS = [TableOfContents,
     IntroProg justification (short progName)
       [ IPurpose $ purpDoc progName Verbose,
         IScope scope,
-        -- IChar [] (undIR ++ appStanddIR) [],
+        IChar [] readerChars [],
         IOrgSec orgOfDocIntro inModel (SRS.inModel [] []) EmptyS
       ],
   -- StkhldrSec $
@@ -63,7 +64,7 @@ mkSRS = [TableOfContents,
     GSDProg
       [
         SysCntxt [sysCtxIntro, LlC sysCtxFig, sysCtxDesc, sysCtxList]
-      -- , UsrChars [userCharacteristicsIntro],
+      , UsrChars [userChars]
       , SystCons [sysConstraints] []
       ],
   SSDSec $
@@ -76,7 +77,7 @@ mkSRS = [TableOfContents,
         ],
        SSDSolChSpec $ SCSProg
         [
-        Assumptions 
+        Assumptions
         , TMs [] (Label : stdFields)
         , GDs [] [] HideDerivation
         , DDs [] ([Label, Symbol] ++ stdFields) HideDerivation -- FIXME: may want to change later
@@ -129,7 +130,7 @@ justification = foldlSent [atStart chemical, plural equation,
 
 scope = foldlSent_ [
   S "all", phrase chemical, plural equation, S "with at most one more",
-  phrase compound, S "than" +:+. phrase element, S "Furthermore" `sC` 
+  phrase compound, S "than" +:+. phrase element, S "Furthermore" `sC`
     S "it also includes all inputted", phrase chemical, S "formulas that",
   foldlList Comma List [
     foldlSent_ [S "describe real", phrase chemical, plural compound],
@@ -153,6 +154,16 @@ prob = foldlSent_ [S "balance", phrase chemical, plural equation,
   S "There are some cases where the coefficients are not integers",
   sParen (S "see" +:+ refS nonIntCoeffSource) `sC` S "but this is not in the",
   phrase Doc.scope, S "of this", phrase program]
+
+readerChars :: [Sentence]
+readerChars = [phrase highSchoolChemistry +:+ sParen (S "namely stochiometry"),
+  phrase thirdYear +:+ S "linear optimization" +:+
+    sParen (S "namely integer programming")]
+
+userChars :: Contents
+userChars = foldlSP [S "The end", phrase user `S.of_` short progName,
+  S "should have an understanding of", phrase highSchoolChemistry,
+  sParen (S "namely stochiometry")]
 
 -- SYSTEM CONTEXT
 
@@ -200,7 +211,7 @@ sysCtxExtLibResp = [
     [S "Solve the integer linear programming problem for the inputted",
      phrase chemical, phrase equation]
   ]
-  
+
 sysCtxResp :: [Sentence]
 sysCtxResp = map (\x -> x +:+ S "Responsibilities") [titleize user,
   short progName, S "External" +:+ titleize library]
@@ -219,7 +230,7 @@ sysConstraints = foldlSP [short progName, S "will be developed using Drasil",
   S "relevant to the problem outlined in the" +:+.
   namedRef (SRS.probDesc ([]::[Contents]) ([]::[Section])) (phrase problemDescription),
   S "Since Drasil is built on the idea of", phrase reusability `sC` S "external" +:+.
-  S "libraries will be used to solve the integer programming problems", 
+  S "libraries will be used to solve the integer programming problems",
   S "This was previously done with", phrase ode, sParen (short ode), S "solvers" `sC`
   S "since", Quote (foldlSent_ [S "creating a complete", short ode, S "solver in Drasil",
     S "would take considerable time" `sC`S "and there are already many reliable external",
@@ -265,10 +276,13 @@ symbMap =
   cdb
     symbolsAll
     (nw progName : -- CI
+       -- CI
       nw sciCompS : -- NamedChunk
+       -- NamedChunk
       map nw [algorithm, program, reusability] ++ -- ConceptChunk
+       -- ConceptChunk
       map nw doccon ++ map nw doccon' ++ map nw chemCon ++ map nw mathcon ++
-      map nw acronyms ++ map nw symbolsAll)
+      map nw educon ++ map nw acronyms ++ map nw symbolsAll)
     srsDomains
     ([] :: [UnitDefn])
     dds

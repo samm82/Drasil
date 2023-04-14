@@ -4,7 +4,7 @@ module Data.Drasil.Concepts.Education where
 import Language.Drasil hiding (year)
 import Language.Drasil.Chunk.Concept.NamedCombinators
 
-import Data.Drasil.Concepts.Documentation (first, physics, second_, year)
+import Data.Drasil.Concepts.Documentation (first, physics, second_, third, year)
 import Data.Drasil.Concepts.PhysicalProperties (solid)
 
 -- | Collects all education-related concepts.
@@ -12,8 +12,8 @@ educon :: [NamedChunk]
 educon = [calculus, civil, degree_, engineering, structural, mechanics,
   undergraduate, highSchool, physical_, chemistry, undergradDegree,
   scndYrCalculus, solidMechanics, secondYear, structuralEng,
-  structuralMechanics, civilEng, highSchoolCalculus, highSchoolPhysics,
-  frstYr, physChem]
+  structuralMechanics, civilEng, highSchoolCalculus, highSchoolChemistry,
+  highSchoolPhysics, frstYr, thirdYear, physChem]
 
 -- * Educational Concepts
 
@@ -32,16 +32,18 @@ chemistry     = nc "chemistry"      (cn'  "chemistry"    )
 physical_     = nc "physical"       (cn'  "physical"     )--FIXME: Adjective
 
 undergradDegree, scndYrCalculus, solidMechanics, secondYear, structuralEng,
-  structuralMechanics, civilEng, highSchoolCalculus, highSchoolPhysics,
-  frstYr, physChem :: NamedChunk
+  structuralMechanics, civilEng, highSchoolCalculus, highSchoolChemistry,
+  highSchoolPhysics, frstYr, thirdYear, physChem :: NamedChunk
 
 civilEng            = compoundNC civil engineering
 physChem            = compoundNC physical_ chemistry
 highSchoolCalculus  = compoundNC highSchool calculus
+highSchoolChemistry = compoundNC highSchool chemistry
 highSchoolPhysics   = compoundNC highSchool physics
 scndYrCalculus      = compoundNC secondYear calculus
 frstYr              = compoundNC first year
 secondYear          = compoundNC second_ year
+thirdYear           = compoundNC third year
 solidMechanics      = compoundNC solid mechanics
 structuralEng       = compoundNC structural engineering
 structuralMechanics = compoundNC structural mechanics
