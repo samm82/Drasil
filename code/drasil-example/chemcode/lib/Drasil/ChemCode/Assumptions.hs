@@ -19,8 +19,10 @@ simpleForms        = cic "simpleForms"        simpleFormsDesc        "simpleForm
 elemCompDiffDesc, validFormsDesc, validEqnsDesc, correctInputFormatDesc,
   simpleFormsDesc :: Sentence
 
-elemCompDiffDesc = foldlSent [S "For all", phrase chemical, plural equation `sC`
-  S "there is at most one more", phrase compound, S "than", phrase element]
+elemCompDiffDesc = foldlSent [S "For all", phrase chemical,
+  plural equation `sC` S "the total number of", phrase chemical,
+  plural compound, S "is at most one more than the total number of",
+  plural element]
 
 validFormsDesc = foldlSent [S "All inputted", phrase chemical,
   S "formulas describe real", phrase chemical, plural compound]

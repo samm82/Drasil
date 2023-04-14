@@ -106,7 +106,7 @@ This document will be used as a starting point for subsequent development phases
 
 \subsection{Scope of Requirements}
 \label{Sec:ReqsScope}
-The scope of the requirements includes all chemical equations with at most one more compound than element. Furthermore, it also includes all inputted chemical formulas that describe real chemical compounds, are formatted following a set of conventions, and only consist of atomic symbols and subscripts.
+The scope of the requirements includes all inputted chemical equations where the total number of chemical compounds is at most one more than the total number of elements. The scope also includes all inputted chemical formulas that describe real chemical compounds, are formatted following a set of conventions, and only consist of atomic symbols and subscripts.
 
 \subsection{Characteristics of Intended Reader}
 \label{Sec:ReaderChars}
@@ -193,7 +193,7 @@ The instance models that govern ChemCode are presented in the \hyperref[Sec:IMs]
 This section simplifies the original problem and helps in developing the theoretical models by filling in the missing information for the physical system. The assumptions refine the scope by providing more detail.
 
 \begin{itemize}
-\item[elemCompDiff:\phantomsection\label{elemCompDiff}]{For all chemical equations, there is at most one more compound than element. (RefBy: \hyperref[allEqsPermitted]{UC:allEqsPermitted}.)}
+\item[elemCompDiff:\phantomsection\label{elemCompDiff}]{For all chemical equations, the total number of chemical compounds is at most one more than the total number of elements. (RefBy: \hyperref[allEqsPermitted]{UC:allEqsPermitted}.)}
 \item[validForms:\phantomsection\label{validForms}]{All inputted chemical formulas describe real chemical compounds. (RefBy: \hyperref[checkValidForms]{UC:checkValidForms}.)}
 \item[validEqns:\phantomsection\label{validEqns}]{All inputted chemical equations describe real chemical reactions. (RefBy: \hyperref[checkValidEqns]{UC:checkValidEqns}.)}
 \item[correctInputFormat:\phantomsection\label{correctInputFormat}]{All inputted chemical formulas follow the conventions laid out in \cite{inorganicIUPAC} and \cite{organicIUPAC} by the International Union of Pure and Applied Chemistry (IUPAC).}
