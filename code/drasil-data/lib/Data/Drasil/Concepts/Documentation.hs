@@ -40,7 +40,7 @@ doccon = [abbAcc, abbreviation, acronym, analysis, appendix, aspect, body, charO
   stakeholder, standard, statement, symbol_, sysCont, system, systemConstraint,
   systemdescription, tAuxConsts, tOfCont, tOfSymb, tOfUnit, inDatumConstraint, outDatumConstraint,
   table_, task, template, termAndDef, term_,
-  terminology, theory, traceyGraph, traceyMandG, traceyMatrix, type_, uncertCol,
+  terminology, theory, third, traceyGraph, traceyMandG, traceyMatrix, type_, uncertCol,
   uncertainty, useCase, useCaseTable, user, userCharacteristic, userInput,
   validation, value, variable, vav, vavPlan, verification, video, year]
 
@@ -96,7 +96,7 @@ abbreviation, acronym, analysis, appendix, aspect, body, characteristic, class_,
   result, reviewer, safety, scope, scpOfTheProjS, second_, section_, scenario,
   source, simulation, software, solution, summary, specific, specification, stakeholder,
   standard, statement, symbol_, system, table_, task, template, term_, terminology,
-  theory, traceyGraph, traceyMatrix, type_, uncertainty, user, useCase, validation,
+  theory, third, traceyGraph, traceyMatrix, type_, uncertainty, user, useCase, validation,
   value, variable, video, verification, year :: NamedChunk
 
 abbreviation    = nc "abbreviation"   (cn'    "abbreviation"       )
@@ -217,6 +217,7 @@ template        = nc "template"       (cn'    "template"           )
 term_           = nc "term"           (cn'    "term"               )
 terminology     = nc "terminology"    (cnIES  "terminology"        )
 theory          = nc "theory"         (cnIES  "theory"             )
+third           = nc "third"          (cn'    "third"              ) --Does it make sense for this to be here?
 traceyGraph     = nc "traceyGraph"    (cn'    "traceability graph" )
 traceyMatrix    = nc "traceyMatrix"   (cnICES "traceability matrix")
 type_           = nc "type"           (cn'    "type"               )
