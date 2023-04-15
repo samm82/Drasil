@@ -403,10 +403,10 @@ instance ExprC Expr where
   apply f ps = FCall (f ^. uid) ps
 
   -- | Constructs an instance of a tuple.
-  tCons = TCons
+  tCons = RCons
 
   -- | Accesses a given field of a tuple.
-  access f = TAccess (f ^. uid)
+  access f = RAccess (f ^. uid)
 
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.
   sy x = C (x ^. uid)
@@ -583,10 +583,10 @@ instance ExprC M.ModelExpr where
   apply f ps = M.FCall (f ^. uid) ps
 
   -- | Creates an instance of a tuple.
-  tCons = M.TCons
+  tCons = M.RCons
 
   -- | Accesses a given field of a tuple.
-  access f = M.TAccess (f ^. uid)
+  access f = M.RAccess (f ^. uid)
 
   -- Note how |sy| 'enforces' having a symbol
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.

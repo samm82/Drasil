@@ -35,11 +35,11 @@ genR = vc "genR" (nounPhraseSent $ S "generic" +:+ phrase reaction) lR Reaction
 genX = vc "genX" (nounPhraseSent $ S "generic real number")         lX Real
 genY = vc "genY" (nounPhraseSent $ S "generic integer")             lY Integer
 
-compoundTuple :: Space
-compoundTuple = Tuple [("elem", Element), ("count", Real)]
+compoundRecord :: Space
+compoundRecord = Record [("elem", Element), ("count", Real)]
 
-tupC = vc "tupC" (nounPhraseSent $ S "generic tuple of a" +:+ phrase compound)
-  (sub lT cC) compoundTuple
+tupC = vc "tupC" (nounPhraseSent $ S "generic record of a" +:+ phrase compound)
+  (sub lT cC) compoundRecord
 
 count = vc "count"
   (nounPhraseSent $ foldlSent_ [S "count of an", phrase element, S "in a", phrase compound])
@@ -66,10 +66,10 @@ elemT = vcSt "elemT" (nounPhraseSent $ phrase element +:+ S "data type")
   -- FIXME: move to drasil-data
 
 compT = vcSt "compT" (nounPhraseSent $ phrase compound +:+ S "data type")
-  (autoStage cC) (Sequence compoundTuple)
+  (autoStage cC) (Sequence compoundRecord)
 
 reacT = vcSt "reacT" (nounPhraseSent $ phrase reaction +:+ S "data type")
   (autoStage cR)
-  (Tuple [("prod", reacSide), ("reac", reacSide)])
+  (Record [("prod", reacSide), ("reac", reacSide)])
   where 
-    reacSide = Sequence $ Tuple [("comp", Compound), ("coeff", Integer)]
+    reacSide = Sequence $ Record [("comp", Compound), ("coeff", Integer)]

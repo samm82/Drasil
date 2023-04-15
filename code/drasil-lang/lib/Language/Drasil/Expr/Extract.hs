@@ -14,7 +14,7 @@ eNames (AssocB _ l)          = concatMap eNames l
 eNames (C c)                 = [c]
 eNames Lit{}                 = []
 eNames (FCall f x)           = f : concatMap eNames x
-eNames (TAccess f _)         = [f]
+eNames (RAccess f _)         = [f]
 eNames (Case _ ls)           = concatMap (eNames . fst) ls ++
                                concatMap (eNames . snd) ls
 eNames (UnaryOp _ u)         = eNames u
@@ -48,7 +48,7 @@ eNames' (AssocB _ l)          = concatMap eNames' l
 eNames' (C c)                 = [c]
 eNames' Lit{}                 = []
 eNames' (FCall _ x)           = concatMap eNames' x
-eNames' TAccess{}                 = []
+eNames' RAccess{}                 = []
 eNames' (Case _ ls)           = concatMap (eNames' . fst) ls ++ 
                                 concatMap (eNames' . snd) ls
 eNames' (UnaryOp _ u)         = eNames' u

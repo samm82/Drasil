@@ -16,8 +16,8 @@ meNames (C c)                 = [c]
 meNames Lit{}                 = []
 meNames Spc{}                 = []
 meNames (FCall f x)           = f : concatMap meNames x
-meNames (TCons x)             = concatMap meNames x
-meNames (TAccess f _)         = [f]
+meNames (RCons x)             = concatMap meNames x
+meNames (RAccess f _)         = [f]
 meNames (Case _ ls)           = concatMap (meNames . fst) ls ++
                                 concatMap (meNames . snd) ls
 meNames (ILP _ o cs)          = meNames o ++ concatMap meNames cs
@@ -59,8 +59,8 @@ meNames' (C c)                 = [c]
 meNames' Lit{}                 = []
 meNames' Spc{}                 = []
 meNames' (FCall _ x)           = concatMap meNames' x
-meNames' TCons{}               = []
-meNames' TAccess{}             = []
+meNames' RCons{}               = []
+meNames' RAccess{}             = []
 meNames' (Case _ ls)           = concatMap (meNames' . fst) ls ++ 
                                  concatMap (meNames' . snd) ls
 meNames' (ILP _ o cs)          = meNames' o ++ concatMap meNames' cs

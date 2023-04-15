@@ -120,9 +120,9 @@ expr (C c)                    sm = symbol $ lookupC (sm ^. stg) (sm ^. ckdb) c
 expr (FCall f [x])            sm =
   P.Row [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) f, parens $ expr x sm]
 expr (FCall f l)              sm = call sm f l
-expr (TCons x)                sm =
+expr (RCons x)                sm =
   P.Fenced P.Paren P.Paren $ P.Row $ intersperse (P.MO P.Comma) $ map (`expr` sm) x
-expr (TAccess t l)            sm =
+expr (RAccess t l)            sm =
   P.Row [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) t, P.Label $ "." ++ l]
   -- FIXME: should period be captured better?
 expr (Case _ ps)              sm =

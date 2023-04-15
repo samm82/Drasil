@@ -43,7 +43,7 @@ data Space =
   | DiscreteD [Double]
   | DiscreteS [String] --ex. let Meal = {"breakfast", "lunch", "dinner"}
   | Enum [String] --ex. like DiscreteS, but renders without quotations
-  | Tuple [(String, Space)]
+  | Record [(String, Space)]
   | Sequence Space
   | Element
   | Compound

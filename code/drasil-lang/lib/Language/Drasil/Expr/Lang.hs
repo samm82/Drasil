@@ -105,10 +105,10 @@ data Expr where
   C        :: UID -> Expr
   -- | Function applications.
   FCall    :: UID -> [Expr] -> Expr
-  -- | Tuple constructor.
-  TCons    :: [Expr] -> Expr
-  -- | Tuple accessors.
-  TAccess  :: UID -> String -> Expr
+  -- | Record constructor.
+  RCons    :: [Expr] -> Expr
+  -- | Record accessors.
+  RAccess  :: UID -> String -> Expr
   -- | For multi-case expressions, each pair represents one case.
   Case     :: Completeness -> [(Expr, Relation)] -> Expr
   -- | Represents a matrix of expressions.
@@ -260,8 +260,6 @@ instance Typed Expr Space where
       else Right $ "Function `" ++ show uid ++ "` expects parameters of types: " ++ show params ++ ", but received: " ++ show (lefts exst) ++ "."
     (Left s, _) -> Right $ "Function application on non-function `" ++ show uid ++ "` (" ++ show s ++ ")."
     (Right x, _) -> Right x
-
-  infer _ TAccess{} = Right "Not implemented." -- FIXME
 
   infer cxt (Case _ ers)
     | null ers = Right "Case contains no expressions, no type to infer."

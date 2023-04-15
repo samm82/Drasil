@@ -74,7 +74,7 @@ $r$ & Generic reaction & --
 \\
 ${r_{\text{in}}}$ & Representation of a chemical equation & --
 \\
-${t_{C}}$ & Generic tuple of a compound & --
+${t_{C}}$ & Generic record of a compound & --
 \\
 $x$ & Generic real number & --
 \\
@@ -365,7 +365,7 @@ Equation & \begin{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
               \item{$\text{count}$ is the count of an element in a compound (Unitless)}
-              \item{${t_{C}}$ is the generic tuple of a compound (Unitless)}
+              \item{${t_{C}}$ is the generic record of a compound (Unitless)}
               \item{$c$ is the generic compound (Unitless)}
               \item{$e$ is the generic element (Unitless)}
               \end{symbDescription}
@@ -464,7 +464,7 @@ Symbol & $C$
          
 \\ \midrule \\
 Equation & \begin{displaymath}
-           C=\text{sequence of}\,\text{tuple of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)
+           C=\text{sequence of}\,\text{record of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
@@ -496,7 +496,7 @@ Symbol & $R$
          
 \\ \midrule \\
 Equation & \begin{displaymath}
-           R=\text{tuple of}\,\left(\text{prod}\in{}\text{sequence of}\,\text{tuple of}\,\left(\text{comp}\in{}C,\,\text{coeff}\in{}\mathbb{Z}\right),\,\text{reac}\in{}\text{sequence of}\,\text{tuple of}\,\left(\text{comp}\in{}C,\,\text{coeff}\in{}\mathbb{Z}\right)\right)
+           R=\text{record of}\,\left(\text{prod}\in{}\text{sequence of}\,\text{record of}\,\left(\text{comp}\in{}C,\,\text{coeff}\in{}\mathbb{Z}\right),\,\text{reac}\in{}\text{sequence of}\,\text{record of}\,\left(\text{comp}\in{}C,\,\text{coeff}\in{}\mathbb{Z}\right)\right)
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
