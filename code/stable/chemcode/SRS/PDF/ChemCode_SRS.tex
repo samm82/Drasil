@@ -120,7 +120,7 @@ UC & Unlikely Change
 \end{longtable}
 \section{Introduction}
 \label{Sec:Intro}
-Chemical equations are common ways of representing chemical reactions but they must be balanced \cite{lund2023}. This process of balancing a chemical equation involves introducing coefficients before each chemical formula such that there are the same number of atoms of each element on the reactant and product sides of the chemical equation. Because balancing must be done before a given chemical reaction can be used \cite{lund2023}, it is useful to have a tool to automatically do this. This would improve the productivity of scientists and engineers and reduce the potential for human error. This program should balance a given chemical equation if it is feasible and if it is not, it should provide a descriptive message communicating this to the user. The program that performs these tasks as documented here will be called Chemistry Code (ChemCode).
+Chemical equations are common ways of representing chemical reactions but they must be balanced \cite{lund2023}. This process of balancing a chemical equation involves introducing coefficients before each chemical formula such that there are the same number of atoms of each element on the reactant and product sides of the chemical equation. Because balancing must be done before a given chemical reaction can be used \cite{lund2023}, we want a tool for automatic balancing. This would improve the productivity of scientists and engineers and reduce the potential for human error. This program should balance a given chemical equation if it is feasible and if it is not, it should provide a descriptive message communicating this to the user. The program that performs these tasks as documented here will be called Chemistry Code (ChemCode).
 
 The following section provides an overview of the Software Requirements Specification (SRS) for ChemCode. This section explains the purpose of this document, the scope of the requirements, the characteristics of the intended reader, and the organization of the document.
 
@@ -132,7 +132,7 @@ This document will be used as a starting point for subsequent development phases
 
 \subsection{Scope of Requirements}
 \label{Sec:ReqsScope}
-The scope of the requirements includes all chemical equations with at most one more compound than element. Furthermore, it also includes all inputted chemical formulas that describe real chemical compounds, are formatted following a set of conventions, and only consist of atomic symbols and subscripts.
+The scope of the requirements includes all inputted chemical equations where the total number of chemical compounds is at most one more than the total number of elements. The scope also includes all inputted chemical formulas that describe real chemical compounds, are formatted following a set of conventions, and only consist of atomic symbols and subscripts.
 
 \subsection{Characteristics of Intended Reader}
 \label{Sec:ReaderChars}
@@ -219,7 +219,7 @@ The instance models that govern ChemCode are presented in the \hyperref[Sec:IMs]
 This section simplifies the original problem and helps in developing the theoretical models by filling in the missing information for the physical system. The assumptions refine the scope by providing more detail.
 
 \begin{itemize}
-\item[elemCompDiff:\phantomsection\label{elemCompDiff}]{For all chemical equations, there is at most one more compound than element. (RefBy: \hyperref[allEqsPermitted]{UC:allEqsPermitted}.)}
+\item[elemCompDiff:\phantomsection\label{elemCompDiff}]{For all chemical equations, the total number of chemical compounds is at most one more than the total number of elements. (RefBy: \hyperref[allEqsPermitted]{UC:allEqsPermitted}.)}
 \item[validForms:\phantomsection\label{validForms}]{All inputted chemical formulas describe real chemical compounds. (RefBy: \hyperref[checkValidForms]{UC:checkValidForms}.)}
 \item[validEqns:\phantomsection\label{validEqns}]{All inputted chemical equations describe real chemical reactions. (RefBy: \hyperref[checkValidEqns]{UC:checkValidEqns}.)}
 \item[correctInputFormat:\phantomsection\label{correctInputFormat}]{All inputted chemical formulas follow the conventions laid out in \cite{inorganicIUPAC} and \cite{organicIUPAC} by the International Union of Pure and Applied Chemistry (IUPAC).}
