@@ -30,7 +30,8 @@ def main():
 	for e in [
 		("O2 -> O3", [3, 2]),
 		("C2H6 + O2 -> CO2 + H2O", [2, 7, 4, 6]),
-		("KMnO4 + HCl -> MnCl2 + KCl + Cl2 + H2O", [2, 16, 2, 2, 5, 8])
+		("KMnO4 + HCl -> MnCl2 + KCl + Cl2 + H2O", [2, 16, 2, 2, 5, 8]),
+		("Fe0.95O + O2 -> Fe2O3", [80, 17, 38])
 		]:
 		assert solve(convert(parse(e[0]))) == e[1]
 
