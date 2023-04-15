@@ -6,14 +6,14 @@ import Language.Drasil
 import Theory.Drasil
 
 import Drasil.ChemCode.Quantities (aMat, bVec, cVec, eMat, inputChemEqn,
-  unaryVec, xVec, zeroVec)
+  unaryVec, xVec, zeroVec, elems, genE)
 import Drasil.ChemCode.TMods (intLinProg)
 
 ims :: [InstanceModel]
 ims = [matRepresentation, chemEqIntLinProg]
 
 convertMatEq :: SimpleQDef
-convertMatEq = mkQuantDef eMat (sy eMat)
+convertMatEq = mkQuantDef eMat (forall [(genE, apply elems [sy inputChemEqn])] $ sy eMat)
 
 matRepresentation :: InstanceModel
 matRepresentation = imNoRefs

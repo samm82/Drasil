@@ -14,11 +14,11 @@ def count(e, c):
 
 def convert(r):
 	out = []
-	for e in elems(r):
+	for e in elems(r): # e_i
 		row = []
-		for c in r[0]:
-			row.append(count(e, c))
-		for c in r[1]:
-			row.append(-count(e, c))
+		for c in r[0]: # j
+			row.append(count(e, c)) # (i, )
+		for c in r[1]: # j
+			row.append(-count(e, c)) # (i, )
 		out.append(row)
 	return out

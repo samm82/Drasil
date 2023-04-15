@@ -84,6 +84,10 @@ data UFuncVV = NegV
 data UFuncVN = Norm | Dim
   deriving Eq
 
+-- | Statements involving 2 arguments.
+data StatBinOp = IsMember
+  deriving Eq
+
 -- | For case expressions (either complete or incomplete).
 data Completeness = Complete | Incomplete
   deriving Eq
@@ -133,6 +137,8 @@ data Expr where
   LABinaryOp    :: LABinOp -> Expr -> Expr -> Expr
   -- | Binary operator for ordering expressions (less than, greater than, etc.).
   OrdBinaryOp   :: OrdBinOp -> Expr -> Expr -> Expr
+  -- | Statement-related binary operations.
+  StatBinaryOp  :: StatBinOp -> Expr -> Expr -> Expr
   -- | Binary operator for @Vector x Vector -> Vector@ operations (cross product).
   VVVBinaryOp   :: VVVBinOp -> Expr -> Expr -> Expr
   -- | Binary operator for @Vector x Vector -> Number@ operations (dot product).
@@ -146,6 +152,10 @@ data Expr where
   Operator :: AssocArithOper -> DiscreteDomainDesc Expr Expr -> Expr -> Expr
   -- | A different kind of 'IsIn'. A 'UID' is an element of an interval.
   RealI    :: UID -> RealInterval Expr Expr -> Expr
+  -- | Universal quantification
+  -- FIXME: should this be in Expr? It makes sense to generate code for subdomains,
+  -- but generating code that iterates over every real number, for example, doesn't
+  ForAll :: [Expr] -> Expr -> Expr
   -- | Set comprehension
   -- FIXME: should this be in Expr? It makes sense to generate code for subdomains,
   -- but generating a set that iterates over every real number, for example, doesn't

@@ -188,6 +188,9 @@ class ExprC r where
   -- | Smart constructor for 'real interval' membership.
   realInterval :: HasUID c => c -> RealInterval r r -> r
 
+  -- | Smart constructor for 'universal quantification'.
+  forall :: (HasUID c, HasSymbol c) => [(c, r)] -> r -> r
+
   -- | Smart constructor for 'existential quantification'.
   exists :: (HasUID c, HasSymbol c, HasSpace c) => [c] -> r -> r
 
@@ -410,6 +413,8 @@ instance ExprC Expr where
 
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.
   sy x = C (x ^. uid)
+
+  forall c = ForAll (map (\(x, r) -> StatBinaryOp IsMember (sy x) r) c)
 
 instance ExprC M.ModelExpr where
   lit = M.Lit

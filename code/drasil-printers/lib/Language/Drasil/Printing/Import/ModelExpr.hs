@@ -203,6 +203,10 @@ modelExpr (ForAll c s de)            sm = P.Row [
     P.MO P.ForAll, symbol $ lookupC (sm ^. stg) (sm ^. ckdb) c, P.MO P.IsIn, space sm s,
     P.MO P.Dot, modelExpr de sm
   ]
+modelExpr (ForAll' c p)              sm = P.Row [P.MO P.ForAll, P.Spc P.Thin,
+    P.Row $ intersperse (P.MO P.Comma) (map (`modelExpr` sm) c),
+    P.Label " | ", modelExpr p sm
+  ]
 modelExpr (Exists c p)             sm = P.Row [P.MO P.Exists, P.Spc P.Thin,
     P.Row $ intersperse (P.MO P.Comma) (map (`modelExpr` sm) c),
     P.Label " | ", modelExpr p sm

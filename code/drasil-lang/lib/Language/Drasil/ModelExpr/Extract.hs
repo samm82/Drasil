@@ -39,6 +39,7 @@ meNames (Operator _ _ e)      = meNames e
 meNames (Matrix a)            = concatMap (concatMap meNames) a
 meNames (RealI c b)           = c : meNamesRI b
 meNames (ForAll _ _ de)       = meNames de
+meNames (ForAll' _ de)        = meNames de
 meNames (Exists r p)          = concatMap meNames r ++ meNames p
 meNames (SetComp r p)         = meNames r ++ meNames p
 
@@ -82,6 +83,7 @@ meNames' (Operator _ _ e)      = meNames' e
 meNames' (Matrix a)            = concatMap (concatMap meNames') a
 meNames' (RealI c b)           = c : meNamesRI' b
 meNames' (ForAll _ _ de)       = meNames' de
+meNames' (ForAll' _ de)        = meNames' de
 meNames' (Exists r p)          = concatMap meNames' r ++ meNames' p
 meNames' (SetComp r p)         = meNames' r ++ meNames' p
 
