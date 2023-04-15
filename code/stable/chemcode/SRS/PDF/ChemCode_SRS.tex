@@ -346,81 +346,6 @@ This section collects and defines all the data needed to build the instance mode
 \noindent
 \begin{minipage}{\textwidth}
 \begin{tabular}{>{\raggedright}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.82\textwidth}}
-\toprule \textbf{Refname} & \textbf{DD:countFunc}
-\phantomsection 
-\label{DD:countFunc}
-\\ \midrule \\
-Label & Count of an element in a compound
-        
-\\ \midrule \\
-Symbol & $\text{count}$
-         
-\\ \midrule \\
-Equation & \begin{displaymath}
-           \text{count}=\begin{cases}
-                        {c^{r}}\text{.count}, & {c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e\\
-                        0, & \neg{}{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e
-                        \end{cases}
-           \end{displaymath}
-\\ \midrule \\
-Description & \begin{symbDescription}
-              \item{$\text{count}$ is the count of an element in a compound (Unitless)}
-              \item{${c^{r}}$ is the generic record of a compound (Unitless)}
-              \item{$c$ is the generic compound (Unitless)}
-              \item{$e$ is the generic element (Unitless)}
-              \end{symbDescription}
-\\ \midrule \\
-Notes & The output represents the number of atoms of a given element $e$ (of type $E$) in a given compound $c$ (of type $C$).
-        
-\\ \midrule \\
-Source & --
-         
-\\ \midrule \\
-RefBy & 
-\\ \bottomrule
-\end{tabular}
-\end{minipage}
-\vspace{\baselineskip}
-\noindent
-\begin{minipage}{\textwidth}
-\begin{tabular}{>{\raggedright}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.82\textwidth}}
-\toprule \textbf{Refname} & \textbf{DD:elemsFunc}
-\phantomsection 
-\label{DD:elemsFunc}
-\\ \midrule \\
-Label & Set of elements in a chemical reaction
-        
-\\ \midrule \\
-Symbol & $\text{elems}$
-         
-\\ \midrule \\
-Equation & \begin{displaymath}
-           \text{elems}=\{e\in{}E\text{ | }\exists{}\,c\in{}C,y\in{}\mathbb{Z},x\in{}\mathbb{R}\text{ | }\left(\left(c,y\right)\in{}r\text{.prod}\lor{}\left(c,y\right)\in{}r\text{.reac}\right)\land{}\left(e,x\right)\in{}c\}
-           \end{displaymath}
-\\ \midrule \\
-Description & \begin{symbDescription}
-              \item{$\text{elems}$ is the set of elements in a chemical reaction (Unitless)}
-              \item{$e$ is the generic element (Unitless)}
-              \item{$c$ is the generic compound (Unitless)}
-              \item{$y$ is the generic integer (Unitless)}
-              \item{$x$ is the generic real number (Unitless)}
-              \item{$r$ is the generic reaction (Unitless)}
-              \end{symbDescription}
-\\ \midrule \\
-Notes & The output represents the set of elements that occur in a given chemical equation $r$ (of type $R$).
-        
-\\ \midrule \\
-Source & --
-         
-\\ \midrule \\
-RefBy & 
-\\ \bottomrule
-\end{tabular}
-\end{minipage}
-\vspace{\baselineskip}
-\noindent
-\begin{minipage}{\textwidth}
-\begin{tabular}{>{\raggedright}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.82\textwidth}}
 \toprule \textbf{Refname} & \textbf{DD:elementType}
 \phantomsection 
 \label{DD:elementType}
@@ -504,6 +429,81 @@ Description & \begin{symbDescription}
               \end{symbDescription}
 \\ \midrule \\
 Notes & A type representing a reaction.
+        
+\\ \midrule \\
+Source & --
+         
+\\ \midrule \\
+RefBy & 
+\\ \bottomrule
+\end{tabular}
+\end{minipage}
+\vspace{\baselineskip}
+\noindent
+\begin{minipage}{\textwidth}
+\begin{tabular}{>{\raggedright}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.82\textwidth}}
+\toprule \textbf{Refname} & \textbf{DD:countFunc}
+\phantomsection 
+\label{DD:countFunc}
+\\ \midrule \\
+Label & Count of an element in a compound
+        
+\\ \midrule \\
+Symbol & $\text{count}$
+         
+\\ \midrule \\
+Equation & \begin{displaymath}
+           \text{count}=\begin{cases}
+                        {c^{r}}\text{.count}, & {c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e\\
+                        0, & \neg{}{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e
+                        \end{cases}
+           \end{displaymath}
+\\ \midrule \\
+Description & \begin{symbDescription}
+              \item{$\text{count}$ is the count of an element in a compound (Unitless)}
+              \item{${c^{r}}$ is the generic record of a compound (Unitless)}
+              \item{$c$ is the generic compound (Unitless)}
+              \item{$e$ is the generic element (Unitless)}
+              \end{symbDescription}
+\\ \midrule \\
+Notes & The output represents the number of atoms of a given element $e$ (of type $E$) in a given compound $c$ (of type $C$).
+        
+\\ \midrule \\
+Source & --
+         
+\\ \midrule \\
+RefBy & 
+\\ \bottomrule
+\end{tabular}
+\end{minipage}
+\vspace{\baselineskip}
+\noindent
+\begin{minipage}{\textwidth}
+\begin{tabular}{>{\raggedright}p{0.13\textwidth}>{\raggedright\arraybackslash}p{0.82\textwidth}}
+\toprule \textbf{Refname} & \textbf{DD:elemsFunc}
+\phantomsection 
+\label{DD:elemsFunc}
+\\ \midrule \\
+Label & Set of elements in a chemical reaction
+        
+\\ \midrule \\
+Symbol & $\text{elems}$
+         
+\\ \midrule \\
+Equation & \begin{displaymath}
+           \text{elems}=\{e\in{}E\text{ | }\exists{}\,c\in{}C,y\in{}\mathbb{Z},x\in{}\mathbb{R}\text{ | }\left(\left(c,y\right)\in{}r\text{.prod}\lor{}\left(c,y\right)\in{}r\text{.reac}\right)\land{}\left(e,x\right)\in{}c\}
+           \end{displaymath}
+\\ \midrule \\
+Description & \begin{symbDescription}
+              \item{$\text{elems}$ is the set of elements in a chemical reaction (Unitless)}
+              \item{$e$ is the generic element (Unitless)}
+              \item{$c$ is the generic compound (Unitless)}
+              \item{$y$ is the generic integer (Unitless)}
+              \item{$x$ is the generic real number (Unitless)}
+              \item{$r$ is the generic reaction (Unitless)}
+              \end{symbDescription}
+\\ \midrule \\
+Notes & The output represents the set of elements that occur in a given chemical equation $r$ (of type $R$).
         
 \\ \midrule \\
 Source & --
@@ -639,15 +639,15 @@ The purpose of the traceability matrices is to provide easy references on what h
 \\
 \midrule
 \endhead
-\hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  & 
-\\
-\hyperref[DD:elemsFunc]{DD:elemsFunc} &  &  &  &  & 
-\\
 \hyperref[DD:elementType]{DD:elementType} &  &  &  &  & 
 \\
 \hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  & 
 \\
 \hyperref[DD:reactionType]{DD:reactionType} &  &  &  &  & 
+\\
+\hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  & 
+\\
+\hyperref[DD:elemsFunc]{DD:elemsFunc} &  &  &  &  & 
 \\
 \hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} &  &  &  &  & 
 \\
@@ -683,19 +683,19 @@ The purpose of the traceability matrices is to provide easy references on what h
 \end{longtable}
 \begin{longtable}{l l l l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[TM:lawConsMass]{TM:lawConsMass}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}}
+\textbf{} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[TM:lawConsMass]{TM:lawConsMass}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}}
 \\
 \midrule
 \endhead
-\hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  &  &  &  & 
-\\
-\hyperref[DD:elemsFunc]{DD:elemsFunc} &  &  &  &  &  &  &  & 
-\\
 \hyperref[DD:elementType]{DD:elementType} &  &  &  &  &  &  &  & 
 \\
 \hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  &  &  &  & 
 \\
 \hyperref[DD:reactionType]{DD:reactionType} &  &  &  &  &  &  &  & 
+\\
+\hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  &  &  &  & 
+\\
+\hyperref[DD:elemsFunc]{DD:elemsFunc} &  &  &  &  &  &  &  & 
 \\
 \hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} &  &  &  &  &  &  &  & 
 \\
@@ -709,7 +709,7 @@ The purpose of the traceability matrices is to provide easy references on what h
 \end{longtable}
 \begin{longtable}{l l l l l l l l l l l l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[TM:lawConsMass]{TM:lawConsMass}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[portable]{NFR:Portable}}
+\textbf{} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[TM:lawConsMass]{TM:lawConsMass}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[portable]{NFR:Portable}}
 \\
 \midrule
 \endhead

@@ -14,31 +14,7 @@ import Drasil.ChemCode.Quantities (compT, count, elemT, genC, genE, genR, genX,
   genY, reacT, tupC, elems)
 
 dds :: [DataDefinition]
-dds = [countDD, elemsDD, elementDD, compoundDD, reactionDD]
-
-countDD :: DataDefinition
-countDD = ddMENoRefs countExpr Nothing "countFunc"
-  [foldlSent [S "The", phrase output_, S "represents the number of atoms of a given",
-    phrase element, ch genE, sParen (S "of type" +:+ eS (space $ genE ^. typ)), S "in a given",
-    phrase compound, ch genC, sParen (S "of type" +:+ eS (space $ genC ^. typ))]]
-
-countExpr :: ModelQDef
-countExpr = mkFuncDefByQ count [genE, genC]
-  $ completeCase [(access tupC "count", isMember (sy tupC) (sy genC) $&& (access tupC "elem" $= sy genE)),
-                  (int 0, not_ $ isMember (sy tupC) (sy genC) $&& (access tupC "elem" $= sy genE))]
-
-elemsDD :: DataDefinition
-elemsDD = ddMENoRefs elemsExpr Nothing "elemsFunc"
-  [foldlSent [S "The", phrase output_, S "represents the set of", plural element,
-    S "that occur in a given", phrase chemical, phrase equation, ch genR,
-    sParen (S "of type" +:+ eS (space $ genR ^. typ))]]
-
-elemsExpr :: ModelQDef
-elemsExpr = mkFuncDefByQ elems [genR]
-  $ setComp genE $ exists [genC, genY, genX] $
-    (isMember (tCons (map sy [genC, genY])) (access genR "prod") $|| --FIXME: this should use union, not or
-    isMember (tCons (map sy [genC, genY])) (access genR "reac")) $&&
-    isMember (tCons (map sy [genE, genX])) (sy genC)
+dds = [elementDD, compoundDD, reactionDD, countDD, elemsDD]
 
 elementDD :: DataDefinition
 elementDD = ddME elementExpr [dRef smithChemSpec] Nothing "elementType"
@@ -64,3 +40,27 @@ reactionDD = ddMENoRefs reactionExpr Nothing "reactionType"
 
 reactionExpr :: ModelQDef
 reactionExpr = mkQuantDef reacT $ space (reacT ^. typ) -- FIXME: This is probably a hack
+
+countDD :: DataDefinition
+countDD = ddMENoRefs countExpr Nothing "countFunc"
+  [foldlSent [S "The", phrase output_, S "represents the number of atoms of a given",
+    phrase element, ch genE, sParen (S "of type" +:+ eS (space $ genE ^. typ)), S "in a given",
+    phrase compound, ch genC, sParen (S "of type" +:+ eS (space $ genC ^. typ))]]
+
+countExpr :: ModelQDef
+countExpr = mkFuncDefByQ count [genE, genC]
+  $ completeCase [(access tupC "count", isMember (sy tupC) (sy genC) $&& (access tupC "elem" $= sy genE)),
+                  (int 0, not_ $ isMember (sy tupC) (sy genC) $&& (access tupC "elem" $= sy genE))]
+
+elemsDD :: DataDefinition
+elemsDD = ddMENoRefs elemsExpr Nothing "elemsFunc"
+  [foldlSent [S "The", phrase output_, S "represents the set of", plural element,
+    S "that occur in a given", phrase chemical, phrase equation, ch genR,
+    sParen (S "of type" +:+ eS (space $ genR ^. typ))]]
+
+elemsExpr :: ModelQDef
+elemsExpr = mkFuncDefByQ elems [genR]
+  $ setComp genE $ exists [genC, genY, genX] $
+    (isMember (tCons (map sy [genC, genY])) (access genR "prod") $|| --FIXME: this should use union, not or
+    isMember (tCons (map sy [genC, genY])) (access genR "reac")) $&&
+    isMember (tCons (map sy [genE, genX])) (sy genC)

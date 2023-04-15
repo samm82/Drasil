@@ -629,117 +629,6 @@
                 <p class="paragraph">
                   This section collects and defines all the data needed to build the instance models.
                 </p>
-                <div id="DD:countFunc">
-                  <table class="ddefn">
-                    <tr>
-                      <th>Refname</th>
-                      <td><b>DD:countFunc</b></td>
-                    </tr>
-                    <tr>
-                      <th>Label</th>
-                      <td><p class="paragraph">Count of an element in a compound</p></td>
-                    </tr>
-                    <tr>
-                      <th>Symbol</th>
-                      <td><p class="paragraph"><em>count</em></p></td>
-                    </tr>
-                    <tr>
-                      <th>Equation</th>
-                      <td>
-                        \[\text{count}=\begin{cases}
-                                       {c^{r}}\text{.count}, & {c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e\\
-                                       0, & \neg{}{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e
-                                       \end{cases}\]
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Description</th>
-                      <td>
-                        <ul class="hide-list-style-no-indent">
-                          <li>
-                            <em>count</em> is the count of an element in a compound (Unitless)
-                          </li>
-                          <li>
-                            <em>c<sup>r</sup></em> is the generic record of a compound (Unitless)
-                          </li>
-                          <li><em>c</em> is the generic compound (Unitless)</li>
-                          <li><em>e</em> is the generic element (Unitless)</li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Notes</th>
-                      <td>
-                        <p class="paragraph">
-                          The output represents the number of atoms of a given element <em>e</em> (of type <em>E</em>) in a given compound <em>c</em> (of type <em>C</em>).
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Source</th>
-                      <td><p class="paragraph">--</p></td>
-                    </tr>
-                    <tr>
-                      <th>RefBy</th>
-                      <td><p class="paragraph"></p></td>
-                    </tr>
-                  </table>
-                </div>
-                <div id="DD:elemsFunc">
-                  <table class="ddefn">
-                    <tr>
-                      <th>Refname</th>
-                      <td><b>DD:elemsFunc</b></td>
-                    </tr>
-                    <tr>
-                      <th>Label</th>
-                      <td>
-                        <p class="paragraph">Set of elements in a chemical reaction</p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Symbol</th>
-                      <td><p class="paragraph"><em>elems</em></p></td>
-                    </tr>
-                    <tr>
-                      <th>Equation</th>
-                      <td>
-                        \[\text{elems}=\{e\in{}E\text{ | }\exists{}\,c\in{}C,y\in{}\mathbb{Z},x\in{}\mathbb{R}\text{ | }\left(\left(c,y\right)\in{}r\text{.prod}\lor{}\left(c,y\right)\in{}r\text{.reac}\right)\land{}\left(e,x\right)\in{}c\}\]
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Description</th>
-                      <td>
-                        <ul class="hide-list-style-no-indent">
-                          <li>
-                            <em>elems</em> is the set of elements in a chemical reaction (Unitless)
-                          </li>
-                          <li><em>e</em> is the generic element (Unitless)</li>
-                          <li><em>c</em> is the generic compound (Unitless)</li>
-                          <li><em>y</em> is the generic integer (Unitless)</li>
-                          <li><em>x</em> is the generic real number (Unitless)</li>
-                          <li><em>r</em> is the generic reaction (Unitless)</li>
-                        </ul>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Notes</th>
-                      <td>
-                        <p class="paragraph">
-                          The output represents the set of elements that occur in a given chemical equation <em>r</em> (of type <em>R</em>).
-                        </p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <th>Source</th>
-                      <td><p class="paragraph">--</p></td>
-                    </tr>
-                    <tr>
-                      <th>RefBy</th>
-                      <td><p class="paragraph"></p></td>
-                    </tr>
-                  </table>
-                </div>
                 <div id="DD:elementType">
                   <table class="ddefn">
                     <tr>
@@ -861,6 +750,117 @@
                     <tr>
                       <th>Notes</th>
                       <td><p class="paragraph">A type representing a reaction.</p></td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph">--</p></td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
+                <div id="DD:countFunc">
+                  <table class="ddefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>DD:countFunc</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td><p class="paragraph">Count of an element in a compound</p></td>
+                    </tr>
+                    <tr>
+                      <th>Symbol</th>
+                      <td><p class="paragraph"><em>count</em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>
+                        \[\text{count}=\begin{cases}
+                                       {c^{r}}\text{.count}, & {c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e\\
+                                       0, & \neg{}{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e
+                                       \end{cases}\]
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li>
+                            <em>count</em> is the count of an element in a compound (Unitless)
+                          </li>
+                          <li>
+                            <em>c<sup>r</sup></em> is the generic record of a compound (Unitless)
+                          </li>
+                          <li><em>c</em> is the generic compound (Unitless)</li>
+                          <li><em>e</em> is the generic element (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td>
+                        <p class="paragraph">
+                          The output represents the number of atoms of a given element <em>e</em> (of type <em>E</em>) in a given compound <em>c</em> (of type <em>C</em>).
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph">--</p></td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
+                <div id="DD:elemsFunc">
+                  <table class="ddefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>DD:elemsFunc</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td>
+                        <p class="paragraph">Set of elements in a chemical reaction</p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Symbol</th>
+                      <td><p class="paragraph"><em>elems</em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>
+                        \[\text{elems}=\{e\in{}E\text{ | }\exists{}\,c\in{}C,y\in{}\mathbb{Z},x\in{}\mathbb{R}\text{ | }\left(\left(c,y\right)\in{}r\text{.prod}\lor{}\left(c,y\right)\in{}r\text{.reac}\right)\land{}\left(e,x\right)\in{}c\}\]
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li>
+                            <em>elems</em> is the set of elements in a chemical reaction (Unitless)
+                          </li>
+                          <li><em>e</em> is the generic element (Unitless)</li>
+                          <li><em>c</em> is the generic compound (Unitless)</li>
+                          <li><em>y</em> is the generic integer (Unitless)</li>
+                          <li><em>x</em> is the generic real number (Unitless)</li>
+                          <li><em>r</em> is the generic reaction (Unitless)</li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Notes</th>
+                      <td>
+                        <p class="paragraph">
+                          The output represents the set of elements that occur in a given chemical equation <em>r</em> (of type <em>R</em>).
+                        </p>
+                      </td>
                     </tr>
                     <tr>
                       <th>Source</th>
@@ -1137,22 +1137,6 @@
               <th><a href=#simpleForms>A:simpleForms</a></th>
             </tr>
             <tr>
-              <td><a href=#DD:countFunc>DD:countFunc</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><a href=#DD:elemsFunc>DD:elemsFunc</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
               <td><a href=#DD:elementType>DD:elementType</a></td>
               <td></td>
               <td></td>
@@ -1170,6 +1154,22 @@
             </tr>
             <tr>
               <td><a href=#DD:reactionType>DD:reactionType</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#DD:countFunc>DD:countFunc</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#DD:elemsFunc>DD:elemsFunc</a></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1297,36 +1297,14 @@
           <table class="table">
             <tr>
               <th></th>
-              <th><a href=#DD:countFunc>DD:countFunc</a></th>
-              <th><a href=#DD:elemsFunc>DD:elemsFunc</a></th>
               <th><a href=#DD:elementType>DD:elementType</a></th>
               <th><a href=#DD:compoundType>DD:compoundType</a></th>
               <th><a href=#DD:reactionType>DD:reactionType</a></th>
+              <th><a href=#DD:countFunc>DD:countFunc</a></th>
+              <th><a href=#DD:elemsFunc>DD:elemsFunc</a></th>
               <th><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></th>
               <th><a href=#TM:lawConsMass>TM:lawConsMass</a></th>
               <th><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></th>
-            </tr>
-            <tr>
-              <td><a href=#DD:countFunc>DD:countFunc</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><a href=#DD:elemsFunc>DD:elemsFunc</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
             </tr>
             <tr>
               <td><a href=#DD:elementType>DD:elementType</a></td>
@@ -1352,6 +1330,28 @@
             </tr>
             <tr>
               <td><a href=#DD:reactionType>DD:reactionType</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#DD:countFunc>DD:countFunc</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#DD:elemsFunc>DD:elemsFunc</a></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1403,11 +1403,11 @@
           <table class="table">
             <tr>
               <th></th>
-              <th><a href=#DD:countFunc>DD:countFunc</a></th>
-              <th><a href=#DD:elemsFunc>DD:elemsFunc</a></th>
               <th><a href=#DD:elementType>DD:elementType</a></th>
               <th><a href=#DD:compoundType>DD:compoundType</a></th>
               <th><a href=#DD:reactionType>DD:reactionType</a></th>
+              <th><a href=#DD:countFunc>DD:countFunc</a></th>
+              <th><a href=#DD:elemsFunc>DD:elemsFunc</a></th>
               <th><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></th>
               <th><a href=#TM:lawConsMass>TM:lawConsMass</a></th>
               <th><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></th>
