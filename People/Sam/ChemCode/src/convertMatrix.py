@@ -9,4 +9,14 @@ c6 = [(E.H, 2), (E.O, 1)]
 
 r = ([c1, c2, c3], [c4, c5, c6])
 
+def elems(r):
+	out = set()
+	for i in [0, 1]:
+		for c in r[i]:
+			for e in c:
+				out.add(e[0])
+	return out
+
+print(elems(r))
+
 A = [[3, 8, 1, -12, -4, -2], [1, 0, 0, -1, 0, 0], [4, 4, 3, -40, -3, -1], [0, 2, 1, -3, -2, 0], [0, 1, 0, -12, 0, 0]]
