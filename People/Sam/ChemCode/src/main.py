@@ -27,5 +27,12 @@ def main():
 	assert res == [1, 12, 21, 1, 21, 12]
 	# print(res)
 
+	for e in [
+		("O2 -> O3", [3, 2]),
+		("C2H6 + O2 -> CO2 + H2O", [2, 7, 4, 6]),
+		("KMnO4 + HCl -> MnCl2 + KCl + Cl2 + H2O", [2, 16, 2, 2, 5, 8])
+		]:
+		assert solve(convert(parse(e[0]))) == e[1]
+
 if __name__ == '__main__':
 	main()
