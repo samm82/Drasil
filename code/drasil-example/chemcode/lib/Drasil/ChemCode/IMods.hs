@@ -5,11 +5,25 @@ import qualified Data.List.NonEmpty as NE
 import Language.Drasil
 import Theory.Drasil
 
-import Drasil.ChemCode.Quantities (aMat, bVec, cVec, eMat, unaryVec, xVec, zeroVec)
+import Drasil.ChemCode.Quantities (aMat, bVec, cVec, eMat, inputChemEqn,
+  unaryVec, xVec, zeroVec)
 import Drasil.ChemCode.TMods (intLinProg)
 
 ims :: [InstanceModel]
-ims = [chemEqIntLinProg]
+ims = [matRepresentation, chemEqIntLinProg]
+
+convertMatEq :: SimpleQDef
+convertMatEq = mkQuantDef eMat (sy eMat)
+
+matRepresentation :: InstanceModel
+matRepresentation = imNoRefs
+  (equationalModel' convertMatEq)
+  [qwUC inputChemEqn] -- FIXME: why should I need to convert the Unitals to QuantityDicts?
+  eMat
+  []
+  Nothing -- Derivation: (Just $ mkDerivName [S "parts of deriv"])
+  "matRepresentation"
+  [] -- TODO: Notes
 
 chemEqIntLinProg :: InstanceModel
 chemEqIntLinProg = imNoRefs

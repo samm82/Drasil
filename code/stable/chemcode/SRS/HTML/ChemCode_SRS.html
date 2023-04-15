@@ -901,6 +901,52 @@
                 <p class="paragraph">
                   This section transforms the problem defined in the <a href=#Sec:ProbDesc>problem description</a> into one which is expressed in mathematical terms. It uses concrete symbols defined in the <a href=#Sec:DDs>data definitions</a> to replace the abstract symbols in the models identified in <a href=#Sec:TMs>theoretical models</a> and <a href=#Sec:GDs>general definitions</a>.
                 </p>
+                <div id="IM:matRepresentation">
+                  <table class="idefn">
+                    <tr>
+                      <th>Refname</th>
+                      <td><b>IM:matRepresentation</b></td>
+                    </tr>
+                    <tr>
+                      <th>Label</th>
+                      <td>
+                        <p class="paragraph">
+                          Matrix representation of a chemical equation
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Input</th>
+                      <td><p class="paragraph"><em>r<sub>in</sub></em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Output</th>
+                      <td><p class="paragraph"><em><b>E</b></em></p></td>
+                    </tr>
+                    <tr>
+                      <th>Equation</th>
+                      <td>\[\symbf{E}=\symbf{E}\]</td>
+                    </tr>
+                    <tr>
+                      <th>Description</th>
+                      <td>
+                        <ul class="hide-list-style-no-indent">
+                          <li>
+                            <em><b>E</b></em> is the matrix representation of a chemical equation (Unitless)
+                          </li>
+                        </ul>
+                      </td>
+                    </tr>
+                    <tr>
+                      <th>Source</th>
+                      <td><p class="paragraph">--</p></td>
+                    </tr>
+                    <tr>
+                      <th>RefBy</th>
+                      <td><p class="paragraph"></p></td>
+                    </tr>
+                  </table>
+                </div>
                 <div id="IM:chemEqIntLinProg">
                   <table class="idefn">
                     <tr>
@@ -1214,6 +1260,14 @@
               <td></td>
             </tr>
             <tr>
+              <td><a href=#IM:matRepresentation>IM:matRepresentation</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
               <td><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></td>
               <td></td>
               <td></td>
@@ -1325,10 +1379,12 @@
               <th><a href=#DD:elemsFunc>DD:elemsFunc</a></th>
               <th><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></th>
               <th><a href=#TM:lawConsMass>TM:lawConsMass</a></th>
+              <th><a href=#IM:matRepresentation>IM:matRepresentation</a></th>
               <th><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></th>
             </tr>
             <tr>
               <td><a href=#DD:elementType>DD:elementType</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1348,9 +1404,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#DD:reactionType>DD:reactionType</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1370,9 +1428,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#DD:elemsFunc>DD:elemsFunc</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1392,9 +1452,23 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#TM:lawConsMass>TM:lawConsMass</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#IM:matRepresentation>IM:matRepresentation</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1414,6 +1488,7 @@
               <td>X</td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
           </table>
           <p class="caption">
@@ -1431,6 +1506,7 @@
               <th><a href=#DD:elemsFunc>DD:elemsFunc</a></th>
               <th><a href=#TM:canonIntLinProg>TM:canonIntLinProg</a></th>
               <th><a href=#TM:lawConsMass>TM:lawConsMass</a></th>
+              <th><a href=#IM:matRepresentation>IM:matRepresentation</a></th>
               <th><a href=#IM:chemEqIntLinProg>IM:chemEqIntLinProg</a></th>
               <th><a href=#inputValues>FR:Input-Values</a></th>
               <th><a href=#convertMatrix>FR:Convert-to-Matrix</a></th>
@@ -1443,6 +1519,7 @@
             </tr>
             <tr>
               <td><a href=#findBalancedForm>GS:findBalancedForm</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1478,9 +1555,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#inputValues>FR:Input-Values</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1516,9 +1595,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#feasOut>FR:Feasible-Output</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1554,9 +1635,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#accurate>NFR:Accurate</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1592,6 +1675,7 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#reusable>NFR:Reusable</a></td>
@@ -1611,9 +1695,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#portable>NFR:Portable</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
