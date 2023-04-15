@@ -1,6 +1,6 @@
 from convertMatrix import convert
 from elementClass import E
-from format import parse
+from format import parse, process, splitEq
 from solveILP import solve
 
 def main():
@@ -26,7 +26,9 @@ def main():
         ("C2H6 -> CO2 + H2O", None),
         ("K4FeC6N6 + K2S2O3 -> CO2 + K2SO4 + NO2 + FeS", None) # modified to follow assumptions
         ]:
-        assert solve(convert(parse(e[0]))) == e[1]
+        out = solve(convert(parse(e[0])))
+        assert out == e[1]
+        print(process(e[0], out))
 
 if __name__ == '__main__':
     main()
