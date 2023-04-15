@@ -147,6 +147,11 @@
                   <td>--</td>
                 </tr>
                 <tr>
+                  <td><em>c<sup>r</sup></em></td>
+                  <td>Generic record of a compound</td>
+                  <td>--</td>
+                </tr>
+                <tr>
                   <td><em><b>c</b></em></td>
                   <td>Generic vector</td>
                   <td>--</td>
@@ -189,11 +194,6 @@
                 <tr>
                   <td><em>r<sub>in</sub></em></td>
                   <td>Representation of a chemical equation</td>
-                  <td>--</td>
-                </tr>
-                <tr>
-                  <td><em>t<sub>C</sub></em></td>
-                  <td>Generic record of a compound</td>
                   <td>--</td>
                 </tr>
                 <tr>
@@ -647,8 +647,8 @@
                       <th>Equation</th>
                       <td>
                         \[\text{count}=\begin{cases}
-                                       {t_{C}}\text{.count}, & {t_{C}}\in{}c\land{}{t_{C}}\text{.elem}=e\\
-                                       0, & \neg{}{t_{C}}\in{}c\land{}{t_{C}}\text{.elem}=e
+                                       {c^{r}}\text{.count}, & {c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e\\
+                                       0, & \neg{}{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e
                                        \end{cases}\]
                       </td>
                     </tr>
@@ -660,7 +660,7 @@
                             <em>count</em> is the count of an element in a compound (Unitless)
                           </li>
                           <li>
-                            <em>t<sub>C</sub></em> is the generic record of a compound (Unitless)
+                            <em>c<sup>r</sup></em> is the generic record of a compound (Unitless)
                           </li>
                           <li><em>c</em> is the generic compound (Unitless)</li>
                           <li><em>e</em> is the generic element (Unitless)</li>

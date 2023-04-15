@@ -39,7 +39,7 @@ compoundRecord :: Space
 compoundRecord = Record [("elem", Element), ("count", Real)]
 
 tupC = vc "tupC" (nounPhraseSent $ S "generic record of a" +:+ phrase compound)
-  (sub lT cC) compoundRecord
+  (sup lC lR) compoundRecord
 
 count = vc "count"
   (nounPhraseSent $ foldlSent_ [S "count of an", phrase element, S "in a", phrase compound])

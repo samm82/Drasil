@@ -56,6 +56,8 @@ $C$ & Compound data type & --
 \\
 $c$ & Generic compound & --
 \\
+${c^{r}}$ & Generic record of a compound & --
+\\
 $\symbf{c}$ & Generic vector & --
 \\
 $\text{count}$ & Count of an element in a compound & --
@@ -73,8 +75,6 @@ $R$ & Reaction data type & --
 $r$ & Generic reaction & --
 \\
 ${r_{\text{in}}}$ & Representation of a chemical equation & --
-\\
-${t_{C}}$ & Generic record of a compound & --
 \\
 $x$ & Generic real number & --
 \\
@@ -358,14 +358,14 @@ Symbol & $\text{count}$
 \\ \midrule \\
 Equation & \begin{displaymath}
            \text{count}=\begin{cases}
-                        {t_{C}}\text{.count}, & {t_{C}}\in{}c\land{}{t_{C}}\text{.elem}=e\\
-                        0, & \neg{}{t_{C}}\in{}c\land{}{t_{C}}\text{.elem}=e
+                        {c^{r}}\text{.count}, & {c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e\\
+                        0, & \neg{}{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e
                         \end{cases}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
               \item{$\text{count}$ is the count of an element in a compound (Unitless)}
-              \item{${t_{C}}$ is the generic record of a compound (Unitless)}
+              \item{${c^{r}}$ is the generic record of a compound (Unitless)}
               \item{$c$ is the generic compound (Unitless)}
               \item{$e$ is the generic element (Unitless)}
               \end{symbDescription}
