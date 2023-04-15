@@ -27,6 +27,7 @@ import Drasil.ChemCode.Assumptions (assumps)
 import Drasil.ChemCode.Changes (uChanges)
 import Drasil.ChemCode.DataDefs (dds)
 import Drasil.ChemCode.Figures (sysCtxFig)
+import Drasil.ChemCode.Goals (goals)
 import Drasil.ChemCode.IMods (ims)
 import Drasil.ChemCode.Quantities (inputs, quants)
 import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
@@ -73,7 +74,7 @@ mkSRS = [TableOfContents,
         SSDProblem $ PDProg prob []
         [ TermsAndDefs Nothing terms
         -- , PhySysDesc glassBR physSystParts physSystFig []
-        -- , Goals goalInputs
+        , Goals goalInputs
         ],
        SSDSolChSpec $ SCSProg
         [
@@ -238,6 +239,9 @@ sysConstraints = foldlSP [short progName, S "will be developed using Drasil",
     S "libraries ... tested by long use"]) +:+. complexRef chen2022 (Page [24]),
   S "These rationales also apply to ILP solvers"]
 
+goalInputs :: [Sentence]
+goalInputs = map (\x -> S "a" +:+ phrase x) inputs
+
 symbolsAll :: [QuantityDict]
 symbolsAll = quants
 
@@ -320,7 +324,7 @@ citations = [chen2022, drasilSource, elemListWiki, hydrateSource, ilpWiki,
   organicIUPAC, parnasClements1986, polymerSource, smithChemSpec, smithLai2005]
 
 concIns :: [ConceptInstance]
-concIns = assumps ++ funcReqs ++ nonfuncReqs ++ uChanges
+concIns = assumps ++ goals ++ funcReqs ++ nonfuncReqs ++ uChanges
 
 stdFields :: Fields
 stdFields = [DefiningEquation, Description Verbose IncludeUnits, Notes, Source, RefBy]
