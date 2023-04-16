@@ -70,6 +70,8 @@ $e$ & Generic element & --
 \\
 $\text{elems}$ & Set of elements in a chemical reaction & --
 \\
+$i$ & Generic integer & --
+\\
 $R$ & Reaction data type & --
 \\
 $r$ & Generic reaction & --
@@ -543,7 +545,7 @@ Output & $\symbf{E}$
          
 \\ \midrule \\
 Equation & \begin{displaymath}
-           \symbf{E}=\forall{}\,{e\in{}\text{elems}\left({r_{\text{in}}}\right)}\text{ | }\symbf{E}
+           \symbf{E}=\forall{}\,i\in{}|\text{elems}\left({r_{\text{in}}}\right)|,e\in{}\text{elems}\left({r_{\text{in}}}\right)\text{ | }\symbf{E}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}

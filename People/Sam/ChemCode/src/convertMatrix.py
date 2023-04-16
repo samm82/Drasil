@@ -17,8 +17,8 @@ def convert(r):
 	for e in elems(r): # e_i
 		row = []
 		for c in r[0]: # j
-			row.append(count(e, c)) # (i, )
+			row.append(count(e, c)) # (i, j < |r.reac|)
 		for c in r[1]: # j
-			row.append(-count(e, c)) # (i, )
+			row.append(-count(e, c)) # (i, j >= |r.reac|)
 		out.append(row)
 	return out
