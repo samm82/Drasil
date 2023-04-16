@@ -71,6 +71,9 @@ ordBinOp E.GEq = GEq
 statBinOp :: E.StatBinOp -> StatBinOp
 statBinOp E.IsMember = IsMember
 
+spaceBinOp :: E.SpaceBinOp -> SpaceBinOp
+spaceBinOp E.IsIn = IsIn
+
 vvvBinOp :: E.VVVBinOp -> VVVBinOp
 vvvBinOp E.Cross = Cross
 vvvBinOp E.VAdd = VAdd
@@ -84,6 +87,7 @@ nvvBinOp E.Scale = Scale
 
 expr :: E.Expr -> ModelExpr
 expr (E.Lit a)               = Lit a
+expr (E.Spc a)               = Spc a
 expr (E.AssocA ao es)        = AssocA (assocArithOper ao) $ map expr es
 expr (E.AssocB bo es)        = AssocB (assocBoolOper bo) $ map expr es
 expr (E.C u)                 = C u
@@ -102,6 +106,7 @@ expr (E.EqBinaryOp e l r)    = EqBinaryOp (eqBinOp e) (expr l) (expr r)
 expr (E.LABinaryOp la l r)   = LABinaryOp (laBinOp la) (expr l) (expr r)
 expr (E.OrdBinaryOp o l r)   = OrdBinaryOp (ordBinOp o) (expr l) (expr r)
 expr (E.StatBinaryOp o l r)  = StatBinaryOp (statBinOp o) (expr l) (expr r)
+expr (E.SpaceBinaryOp o l r) = SpaceBinaryOp (spaceBinOp o) (expr l) (expr r)
 expr (E.VVVBinaryOp v l r)   = VVVBinaryOp (vvvBinOp v) (expr l) (expr r)
 expr (E.VVNBinaryOp v l r)   = VVNBinaryOp (vvnBinOp v) (expr l) (expr r)
 expr (E.NVVBinaryOp v l r)   = NVVBinaryOp (nvvBinOp v) (expr l) (expr r)

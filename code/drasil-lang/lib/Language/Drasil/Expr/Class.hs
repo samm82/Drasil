@@ -16,7 +16,7 @@ import Language.Drasil.Symbol
 import Language.Drasil.Expr.Lang
 import Language.Drasil.Literal.Lang
 import Language.Drasil.Space (DomainDesc(..), HasSpace(..), RTopology(..),
-  RealInterval)
+  RealInterval, Space)
 import qualified Language.Drasil.ModelExpr.Lang as M
 import Language.Drasil.ModelExpr.Class (ModelExprC(..))
 import Language.Drasil.Literal.Class (LiteralC(..))
@@ -189,7 +189,7 @@ class ExprC r where
   realInterval :: HasUID c => c -> RealInterval r r -> r
 
   -- | Smart constructor for 'universal quantification'.
-  forall :: (HasUID c, HasSymbol c) => [(c, r)] -> r -> r
+  forall :: (HasUID c, HasSymbol c, HasSpace c) => [c] -> r -> r
 
   -- | Smart constructor for 'existential quantification'.
   exists :: (HasUID c, HasSymbol c, HasSpace c) => [c] -> r -> r
@@ -233,6 +233,9 @@ class ExprC r where
   -- Note how |sy| 'enforces' having a symbol
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.
   sy :: (HasUID c, HasSymbol c) => c -> r
+
+  -- | Check if a value belongs to a Space.
+  isIn' :: r -> Space -> r
 
 instance ExprC Expr where
   lit = Lit
@@ -414,7 +417,10 @@ instance ExprC Expr where
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.
   sy x = C (x ^. uid)
 
-  forall c = ForAll (map (\(x, r) -> StatBinaryOp IsMember (sy x) r) c)
+  -- | Check if a value belongs to a Space.
+  isIn' a s = SpaceBinaryOp IsIn a (Spc s)
+
+  forall c = ForAll (map (\x -> isIn' (sy x) (x ^. typ)) c)
 
 instance ExprC M.ModelExpr where
   lit = M.Lit

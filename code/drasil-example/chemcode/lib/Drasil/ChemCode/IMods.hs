@@ -14,11 +14,13 @@ ims = [matRepresentation, chemEqIntLinProg]
 
 convertMatEq :: SimpleQDef
 convertMatEq = mkQuantDef qMat (forall [
-    (genI, abs_ $ apply elems [sy inputChemEqn]),
+    genI,
+    --, abs_ $ apply elems [sy inputChemEqn])
     -- (genE, apply elems [sy inputChemEqn]),
-    (genJ, abs_ (access inputChemEqn "reac") `addRe`
-      abs_ (access inputChemEqn "prod"))
-  ] $ sy qMat)
+    genJ]
+    --, abs_ (access inputChemEqn "reac") `addRe`
+      -- abs_ (access inputChemEqn "prod"))
+  $ sy qMat)
 
 matRepresentation :: InstanceModel
 matRepresentation = imNoRefs

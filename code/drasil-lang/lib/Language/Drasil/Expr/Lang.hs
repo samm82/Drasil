@@ -84,6 +84,11 @@ data UFuncVV = NegV
 data UFuncVN = Norm | Dim
   deriving Eq
 
+-- | @Value -> Space -> Bool@ operators.
+data SpaceBinOp = IsIn
+  deriving Eq
+
+
 -- | Statements involving 2 arguments.
 data StatBinOp = IsMember
   deriving Eq
@@ -100,6 +105,8 @@ data Completeness = Complete | Incomplete
 data Expr where
   -- | Brings a literal into the expression language.
   Lit :: Literal -> Expr
+  -- | Brings a space into the expression language.
+  Spc       :: Space -> Expr
   -- | Takes an associative arithmetic operator with a list of expressions.
   AssocA   :: AssocArithOper -> [Expr] -> Expr
   -- | Takes an associative boolean operator with a list of expressions.
@@ -137,6 +144,8 @@ data Expr where
   LABinaryOp    :: LABinOp -> Expr -> Expr -> Expr
   -- | Binary operator for ordering expressions (less than, greater than, etc.).
   OrdBinaryOp   :: OrdBinOp -> Expr -> Expr -> Expr
+  -- | Space-related binary operations.
+  SpaceBinaryOp :: SpaceBinOp -> Expr -> Expr -> Expr
   -- | Statement-related binary operations.
   StatBinaryOp  :: StatBinOp -> Expr -> Expr -> Expr
   -- | Binary operator for @Vector x Vector -> Vector@ operations (cross product).
