@@ -168,11 +168,6 @@
                   <td>--</td>
                 </tr>
                 <tr>
-                  <td><em><b>E</b></em></td>
-                  <td>Matrix representation of a chemical equation</td>
-                  <td>--</td>
-                </tr>
-                <tr>
                   <td><em>e</em></td>
                   <td>Generic element</td>
                   <td>--</td>
@@ -185,6 +180,11 @@
                 <tr>
                   <td><em>i</em></td>
                   <td>Generic integer</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em><b>Q</b></em></td>
+                  <td>Matrix representation of a chemical equation</td>
                   <td>--</td>
                 </tr>
                 <tr>
@@ -926,12 +926,12 @@
                     </tr>
                     <tr>
                       <th>Output</th>
-                      <td><p class="paragraph"><em><b>E</b></em></p></td>
+                      <td><p class="paragraph"><em><b>Q</b></em></p></td>
                     </tr>
                     <tr>
                       <th>Equation</th>
                       <td>
-                        \[\symbf{E}=\forall{}\,i\in{}|\text{elems}\left({r_{\text{in}}}\right)|,e\in{}\text{elems}\left({r_{\text{in}}}\right)\text{ | }\symbf{E}\]
+                        \[\symbf{Q}=\forall{}\,i\in{}|\text{elems}\left({r_{\text{in}}}\right)|,e\in{}\text{elems}\left({r_{\text{in}}}\right)\text{ | }\symbf{Q}\]
                       </td>
                     </tr>
                     <tr>
@@ -939,7 +939,7 @@
                       <td>
                         <ul class="hide-list-style-no-indent">
                           <li>
-                            <em><b>E</b></em> is the matrix representation of a chemical equation (Unitless)
+                            <em><b>Q</b></em> is the matrix representation of a chemical equation (Unitless)
                           </li>
                         </ul>
                       </td>
@@ -970,7 +970,7 @@
                     </tr>
                     <tr>
                       <th>Input</th>
-                      <td><p class="paragraph"><em><b>E</b></em></p></td>
+                      <td><p class="paragraph"><em><b>Q</b></em></p></td>
                     </tr>
                     <tr>
                       <th>Output</th>
@@ -981,7 +981,7 @@
                       <td>
                         \[\begin{aligned}
                            & \text{minimize} &  & \symbf{1}\cdot{}\symbf{x}\\
-                           & \text{subject to} &  & \symbf{E} \symbf{x}=\symbf{0},\\
+                           & \text{subject to} &  & \symbf{Q} \symbf{x}=\symbf{0},\\
                            & \, &  & \symbf{x}\gt{}\symbf{0},\\
                            & \text{and} &  & \symbf{x}\in{}\mathbb{Z}^{n}
                           \end{aligned}\]
@@ -994,7 +994,7 @@
                           <li><em><b>1</b></em> is the unary vector (Unitless)</li>
                           <li><em><b>x</b></em> is the generic vector (Unitless)</li>
                           <li>
-                            <em><b>E</b></em> is the matrix representation of a chemical equation (Unitless)
+                            <em><b>Q</b></em> is the matrix representation of a chemical equation (Unitless)
                           </li>
                           <li><em><b>0</b></em> is the zero vector (Unitless)</li>
                         </ul>
@@ -1004,7 +1004,7 @@
                       <th>Notes</th>
                       <td>
                         <p class="paragraph">
-                          This is a specific instance of the ILP from <a href=#TM:canonIntLinProg>TM:canonIntLinProg</a> with <em><b>A</b> = <b>E</b></em>, <em><b>b</b> = <b>0</b></em>, and <em><b>c</b> = <b>1</b></em>. The goal and constraints are also modified.
+                          This is a specific instance of the ILP from <a href=#TM:canonIntLinProg>TM:canonIntLinProg</a> with <em><b>A</b> = <b>Q</b></em>, <em><b>b</b> = <b>0</b></em>, and <em><b>c</b> = <b>1</b></em>. The goal and constraints are also modified.
                         </p>
                       </td>
                     </tr>

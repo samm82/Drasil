@@ -64,13 +64,13 @@ $\text{count}$ & Count of an element in a compound & --
 \\
 $E$ & Element data type & --
 \\
-$\symbf{E}$ & Matrix representation of a chemical equation & --
-\\
 $e$ & Generic element & --
 \\
 $\text{elems}$ & Set of elements in a chemical reaction & --
 \\
 $i$ & Generic integer & --
+\\
+$\symbf{Q}$ & Matrix representation of a chemical equation & --
 \\
 $R$ & Reaction data type & --
 \\
@@ -541,15 +541,15 @@ Label & Matrix representation of a chemical equation
 Input & ${r_{\text{in}}}$
         
 \\ \midrule \\
-Output & $\symbf{E}$
+Output & $\symbf{Q}$
          
 \\ \midrule \\
 Equation & \begin{displaymath}
-           \symbf{E}=\forall{}\,i\in{}|\text{elems}\left({r_{\text{in}}}\right)|,e\in{}\text{elems}\left({r_{\text{in}}}\right)\text{ | }\symbf{E}
+           \symbf{Q}=\forall{}\,i\in{}|\text{elems}\left({r_{\text{in}}}\right)|,e\in{}\text{elems}\left({r_{\text{in}}}\right)\text{ | }\symbf{Q}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
-              \item{$\symbf{E}$ is the matrix representation of a chemical equation (Unitless)}
+              \item{$\symbf{Q}$ is the matrix representation of a chemical equation (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
 Source & --
@@ -570,7 +570,7 @@ RefBy &
 Label & Integer linear program for a chemical equation
         
 \\ \midrule \\
-Input & $\symbf{E}$
+Input & $\symbf{Q}$
         
 \\ \midrule \\
 Output & $\symbf{x}$
@@ -579,7 +579,7 @@ Output & $\symbf{x}$
 Equation & \begin{displaymath}
            \begin{aligned}
             & \text{minimize} &  & \symbf{1}\cdot{}\symbf{x}\\
-            & \text{subject to} &  & \symbf{E} \symbf{x}=\symbf{0},\\
+            & \text{subject to} &  & \symbf{Q} \symbf{x}=\symbf{0},\\
             & \, &  & \symbf{x}\gt{}\symbf{0},\\
             & \text{and} &  & \symbf{x}\in{}\mathbb{Z}^{n}
            \end{aligned}
@@ -588,11 +588,11 @@ Equation & \begin{displaymath}
 Description & \begin{symbDescription}
               \item{$\symbf{1}$ is the unary vector (Unitless)}
               \item{$\symbf{x}$ is the generic vector (Unitless)}
-              \item{$\symbf{E}$ is the matrix representation of a chemical equation (Unitless)}
+              \item{$\symbf{Q}$ is the matrix representation of a chemical equation (Unitless)}
               \item{$\symbf{0}$ is the zero vector (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
-Notes & This is a specific instance of the ILP from \hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} with $\symbf{A}=\symbf{E}$, $\symbf{b}=\symbf{0}$, and $\symbf{c}=\symbf{1}$. The goal and constraints are also modified.
+Notes & This is a specific instance of the ILP from \hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} with $\symbf{A}=\symbf{Q}$, $\symbf{b}=\symbf{0}$, and $\symbf{c}=\symbf{1}$. The goal and constraints are also modified.
         
 \\ \midrule \\
 Source & --

@@ -9,10 +9,10 @@ inputs :: [QuantityDict]
 inputs = [inputChemEqn]
 
 quants :: [QuantityDict]
-quants = inputs ++ [aMat, bVec, cVec, eMat, xVec, unaryVec, zeroVec, genE,
+quants = inputs ++ [aMat, bVec, cVec, qMat, xVec, unaryVec, zeroVec, genE,
   genC, genI, genR, genX, genY, tupC, count, elems, elemT, compT, reacT]
 
-inputChemEqn, aMat, bVec, cVec, eMat, xVec, unaryVec, zeroVec, genE, genC,
+inputChemEqn, aMat, bVec, cVec, qMat, xVec, unaryVec, zeroVec, genE, genC,
   genI, genR, genX, genY, tupC, count, elems, elemT, compT,
   reacT :: QuantityDict
 
@@ -24,7 +24,7 @@ inputChemEqn = vcSt "inputChemEqn"
 aMat = vc "aMat" (nounPhraseSP "generic matrix")                               (vec cA) (Vect Real)
 bVec = vc "bVec" (nounPhraseSP "generic vector")                               (vec lB) (Vect Real)
 cVec = vc "cVec" (nounPhraseSP "generic vector")                               (vec lC) (Vect Real)
-eMat = vc "eMat" (nounPhraseSP "matrix representation of a chemical equation") (vec cE) (Vect Real)
+qMat = vc "qMat" (nounPhraseSP "matrix representation of a chemical equation") (vec cQ) (Vect Real)
 xVec = vc "xVec" (nounPhraseSP "generic vector")                               (vec lX) (Vect Integer)
 
 unaryVec = vc "unaryVec" (nounPhraseSP "unary vector") (vec $ variable "1") (Vect Integer)
