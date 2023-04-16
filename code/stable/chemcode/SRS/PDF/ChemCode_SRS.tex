@@ -70,6 +70,8 @@ $\text{elems}$ & Set of elements in a chemical reaction & --
 \\
 $i$ & Generic integer & --
 \\
+$j$ & Generic integer & --
+\\
 $\symbf{Q}$ & Matrix representation of a chemical equation & --
 \\
 $R$ & Reaction data type & --
@@ -545,7 +547,7 @@ Output & $\symbf{Q}$
          
 \\ \midrule \\
 Equation & \begin{displaymath}
-           \symbf{Q}=\forall{}\,i\in{}|\text{elems}\left({r_{\text{in}}}\right)|,e\in{}\text{elems}\left({r_{\text{in}}}\right)\text{ | }\symbf{Q}
+           \symbf{Q}=\forall{}\,i\in{}|\text{elems}\left({r_{\text{in}}}\right)|,j\in{}|{r_{\text{in}}}\text{.reac}|+|{r_{\text{in}}}\text{.prod}|\text{ | }\symbf{Q}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}

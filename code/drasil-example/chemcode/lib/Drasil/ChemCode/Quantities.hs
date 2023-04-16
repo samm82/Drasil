@@ -10,10 +10,10 @@ inputs = [inputChemEqn]
 
 quants :: [QuantityDict]
 quants = inputs ++ [aMat, bVec, cVec, qMat, xVec, unaryVec, zeroVec, genE,
-  genC, genI, genR, genX, genY, tupC, count, elems, elemT, compT, reacT]
+  genC, genI, genJ, genR, genX, genY, tupC, count, elems, elemT, compT, reacT]
 
 inputChemEqn, aMat, bVec, cVec, qMat, xVec, unaryVec, zeroVec, genE, genC,
-  genI, genR, genX, genY, tupC, count, elems, elemT, compT,
+  genI, genJ, genR, genX, genY, tupC, count, elems, elemT, compT,
   reacT :: QuantityDict
 
 inputChemEqn = vcSt "inputChemEqn"
@@ -33,6 +33,7 @@ zeroVec  = vc "zeroVec"  (nounPhraseSP "zero vector")  (vec $ variable "0") (Vec
 genE = vc "genE" (nounPhraseSent $ S "generic" +:+ phrase element)  lE Element
 genC = vc "genC" (nounPhraseSent $ S "generic" +:+ phrase compound) lC Compound
 genI = vc "genI" (nounPhraseSent $ S "generic integer")             lI Integer
+genJ = vc "genJ" (nounPhraseSent $ S "generic integer")             lJ Integer
 genR = vc "genR" (nounPhraseSent $ S "generic" +:+ phrase reaction) lR Reaction
 genX = vc "genX" (nounPhraseSent $ S "generic real number")         lX Real
 genY = vc "genY" (nounPhraseSent $ S "generic integer")             lY Integer
