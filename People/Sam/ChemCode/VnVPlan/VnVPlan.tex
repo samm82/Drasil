@@ -131,6 +131,8 @@
   \testref{test_inf_over_valid_eqn} \\
   Apr. 17, 2023 & 1.2.1 & Revise \nameref{autoTestVerTools} based on
   feedback \\
+  & 1.2.2 & Revise output messages for \nameref{infeasTest} based on feedback
+  and changes to scope \\
 \end{xltabular}
 
 \section{Abbreviations and Acronyms} \label{sec_abbrsAcrs}
@@ -438,9 +440,10 @@ input/output is a design decision that is not made at this stage.
 
     Input: $\ce{C2H6} \rightarrow \ce{CO2} + \ce{H2O}$
 
-    Output: ``This reaction is infeasible because \ce{O} is present on one side
-    of the equation but not the other, violating the Law of Conservation of
-    Mass.''
+    Output: ``This reaction is infeasible.''
+    %  because \ce{O} is present on one side
+    % of the equation but not the other, violating the Law of Conservation of
+    % Mass.''
 
     Test Case Derivation: The inputted chemical equation is infeasible since
     every element does not exist on both sides of the equation, which violates
@@ -454,16 +457,18 @@ input/output is a design decision that is not made at this stage.
     Input: $\ce{K4FeC6N6} + \ce{K2S2O3} \rightarrow \ce{CO2} + \ce{K2SO4} +
       \ce{NO2} + \ce{FeS}$ (modified from \cite{hamid_balancing_2019})
 
-    Output: ``This reaction is infeasible, likely because it is overconstrained.''
+    Output: ``This reaction is infeasible.''
+    % , likely because it is overconstrained.''
 
     Test Case Derivation: The inputted chemical equation is infeasible since
     each compound has more than one element, so changing any coefficient
     affects the number of some other element, causing a chain reaction that
     does not converge. There is no solution to this system other than the
-    trivial solution ($\mathbf{0}$) \cite{hamid_balancing_2019}. The message
-    uses the word ``likely'' because there are other potential reasons for a
-    chemical reaction to be infeasible, but based on empirical analysis, it
-    being overconstrained is the most likely reason.
+    trivial solution ($\mathbf{0}$) \cite{hamid_balancing_2019}.
+    % The message
+    % uses the word ``likely'' because there are other potential reasons for a
+    % chemical reaction to be infeasible, but based on empirical analysis, it
+    % being overconstrained is the most likely reason.
 
 \end{enumerate}
 
