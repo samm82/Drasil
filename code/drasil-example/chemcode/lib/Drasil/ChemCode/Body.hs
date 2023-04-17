@@ -25,6 +25,7 @@ import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 
 import Drasil.ChemCode.Assumptions (assumps)
 import Drasil.ChemCode.Changes (uChanges)
+import Drasil.ChemCode.Concepts (progName)
 import Drasil.ChemCode.DataDefs (dds)
 import Drasil.ChemCode.Figures (physSysFig, sysCtxFig)
 import Drasil.ChemCode.Goals (goals)
@@ -334,8 +335,3 @@ concIns = assumps ++ goals ++ funcReqs ++ nonfuncReqs ++ uChanges
 
 stdFields :: Fields
 stdFields = [DefiningEquation, Description Verbose IncludeUnits, Notes, Source, RefBy]
-
-
--- MOVE TO CONCEPTS
-progName :: CI -- name of example
-progName = commonIdeaWithDict "progName" (pn "Chemistry Code") "ChemCode" []

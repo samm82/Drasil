@@ -1,16 +1,18 @@
 module Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs) where
 
 import Language.Drasil hiding (matrix)
-import Drasil.DocLang.SRS (propCorSol)
+import Drasil.DocLang.SRS (propCorSol, userChar)
 import Language.Drasil.Chunk.Concept.NamedCombinators
 import qualified Language.Drasil.Sentence.Combinators as S
 
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Documentation (assumption, code, environment,
   funcReqDom, likelyChg, mg, mis, module_, nonFuncReqDom, output_, property,
-  requirement, srs, traceyMatrix, unlikelyChg, vavPlan, propOfCorSol)
+  requirement, srs, traceyMatrix, unlikelyChg, vav, vavPlan, propOfCorSol)
 import Data.Drasil.Concepts.Math (matrix)
 import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
+
+import Drasil.ChemCode.Concepts (progName)
 
 
 {--Functional Requirements--}
@@ -39,7 +41,7 @@ infeasOutDesc = foldlSent [S "If the inputted", phrase chemical, phrase equation
 {--Nonfunctional Requirements--}
 
 nonfuncReqs :: [ConceptInstance]
-nonfuncReqs = [accurate, verifiable, reusable, portable]
+nonfuncReqs = [accurate, verifiable, understandable, reusable, portable]
 -- nonfuncReqs = [accurate, verifiable, understandable, reusable, maintainable, portable]
 
 -- correct :: ConceptInstance
@@ -55,13 +57,16 @@ accurate = cic "accurate" (foldlSent [atStart chemical, plural equation,
  
 verifiable :: ConceptInstance
 verifiable = cic "verifiable" (foldlSent [
-  atStartNP (the code), S "is tested with complete",
-  phrase vavPlan]) "Verifiable" nonFuncReqDom
+  atStartNP (the code), S "is tested following the",
+  titleize vav, sParen (S "VnV"), S "Plan"]) "Verifiable" nonFuncReqDom
 
--- understandable :: ConceptInstance
--- understandable = cic "understandable" (foldlSent [
---   atStartNP (the code), S "is modularized with complete",
---   phraseNP (mg `and_` mis)]) "Understandable" nonFuncReqDom
+understandable :: ConceptInstance
+understandable = cic "understandable" (foldlSent [
+  S "A new intended user", sParen (S "as described by" +:+
+    refS (userChar ([]::[Contents]) ([]::[Section]))),
+  S "should be able to learn how to use", short progName, S "in an acceptable",
+  S "amount of time" `sC` S "as measured by the procedure in Section 10 of",
+  S "the VnV Plan"]) "Understandable" nonFuncReqDom
 
 reusable :: ConceptInstance
 reusable = cic "reusable" (foldlSent [atStartNP (the code), S "is modularized"])
