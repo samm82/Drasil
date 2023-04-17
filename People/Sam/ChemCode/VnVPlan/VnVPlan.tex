@@ -310,7 +310,9 @@ to ensure the Haskell code\footnote{Since Drasil is built with Haskell, the
 HLint \cite{hlint} standards and builds properly and that the
 generated artifacts match the ``stable'' (i.e., manually verified) versions.
 Since Drasil also generates Makefiles \cite{carette_drasil_2021}, they will
-also be used. Since the code for \progname{} will be generated
+also be used to build the code and run tests (as described in Sections
+\ref{feasTest} and \ref{infeasTest}) on it. Since the code for
+\progname{} will be generated
 by Drasil, the Drasil team may potentially use other tools as part of its
 verification (e.g., linters).
 
@@ -356,7 +358,7 @@ complexity/likelihood of the situation arising during use of \progname{}.
 
 \end{enumerate}
 
-\subsubsection{Feasible Reaction Testing}
+\subsubsection{Feasible Reaction Testing} \label{feasTest}
 
 The following tests are for equations of feasible chemical reactions and
 will be performed automatically. Providing the correct output for an inputted
@@ -418,7 +420,7 @@ input/output is a design decision that is not made at this stage.
 
 \end{enumerate}
 
-\subsubsection{Infeasible Reaction Testing}
+\subsubsection{Infeasible Reaction Testing} \label{infeasTest}
 
 The following tests are for equations of infeasible chemical reactions and
 will be performed automatically. Providing the correct output for an inputted
