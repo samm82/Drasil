@@ -5,8 +5,8 @@ import qualified Data.List.NonEmpty as NE
 import Language.Drasil
 import Theory.Drasil
 
-import Drasil.ChemCode.Quantities (aMat, bVec, cVec, qMat, inputChemEqn,
-  unaryVec, xVec, zeroVec, elems, genI, genJ)
+import Drasil.ChemCode.Quantities (aMat, bVec, cVec, qMat, qEnt, inputChemEqn,
+  unaryVec, xVec, zeroVec, elems, count, genC, genE, genI, genJ)
 import Drasil.ChemCode.TMods (intLinProg)
 
 ims :: [InstanceModel]
@@ -16,7 +16,13 @@ convertMatEq :: SimpleQDef
 convertMatEq = mkQuantDef qMat (forall [genI, genJ]
   $ ((int 0 $<= sy genI $< abs_ (apply elems [sy inputChemEqn])) $&&
       (int 0 $<= sy genJ $< (abs_ (access inputChemEqn "reac") `addRe`
-        abs_ (access inputChemEqn "prod")))) $=> sy qMat)
+        abs_ (access inputChemEqn "prod")))) $=>
+        sy qEnt $= completeCase [
+          (apply count $ map sy [genE, genC],
+            sy genJ $< abs_ (access inputChemEqn "reac")),
+          (neg $ apply count $ map sy [genE, genC],
+            not_ (sy genJ $< abs_ (access inputChemEqn "reac")))
+        ])
 
 matRepresentation :: InstanceModel
 matRepresentation = imNoRefs

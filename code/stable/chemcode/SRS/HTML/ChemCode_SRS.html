@@ -193,6 +193,11 @@
                   <td>--</td>
                 </tr>
                 <tr>
+                  <td><em>q<sub>ij</sub></em></td>
+                  <td>Element of <em><b>Q</b></em></td>
+                  <td>--</td>
+                </tr>
+                <tr>
                   <td><em>R</em></td>
                   <td>Reaction data type</td>
                   <td>--</td>
@@ -936,7 +941,10 @@
                     <tr>
                       <th>Equation</th>
                       <td>
-                        \[\symbf{Q}=\forall{}\,i\in{}\mathbb{Z},j\in{}\mathbb{Z}\text{ | }0\leq{}i\lt{}|\text{elems}\left({r_{\text{in}}}\right)|\land{}0\leq{}j\lt{}|{r_{\text{in}}}\text{.reac}|+|{r_{\text{in}}}\text{.prod}|\implies{}\symbf{Q}\]
+                        \[\symbf{Q}=\forall{}\,i\in{}\mathbb{Z},j\in{}\mathbb{Z}\text{ | }0\leq{}i\lt{}|\text{elems}\left({r_{\text{in}}}\right)|\land{}0\leq{}j\lt{}|{r_{\text{in}}}\text{.reac}|+|{r_{\text{in}}}\text{.prod}|\implies{}{q_{\text{ij}}}=\begin{cases}
+                                                                                                                                                                                                                                                          \text{count}\left(e,c\right), & j\lt{}|{r_{\text{in}}}\text{.reac}|\\
+                                                                                                                                                                                                                                                          -\left(\text{count}\left(e,c\right)\right), & \neg{}j\lt{}|{r_{\text{in}}}\text{.reac}|
+                                                                                                                                                                                                                                                          \end{cases}\]
                       </td>
                     </tr>
                     <tr>
@@ -954,6 +962,14 @@
                             <em>r<sub>in</sub></em> is the representation of a chemical equation (Unitless)
                           </li>
                           <li><em>j</em> is the generic integer (Unitless)</li>
+                          <li>
+                            <em>q<sub>ij</sub></em> is the element of <em><b>Q</b></em> (Unitless)
+                          </li>
+                          <li>
+                            <em>count</em> is the count of an element in a compound (Unitless)
+                          </li>
+                          <li><em>e</em> is the generic element (Unitless)</li>
+                          <li><em>c</em> is the generic compound (Unitless)</li>
                         </ul>
                       </td>
                     </tr>

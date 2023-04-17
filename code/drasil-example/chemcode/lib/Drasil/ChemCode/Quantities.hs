@@ -9,22 +9,23 @@ inputs :: [QuantityDict]
 inputs = [inputChemEqn]
 
 quants :: [QuantityDict]
-quants = inputs ++ [aMat, bVec, cVec, qMat, xVec, unaryVec, zeroVec, genE,
-  genC, genI, genJ, genR, genX, genY, tupC, count, elems, elemT, compT, reacT]
+quants = inputs ++ [aMat, bVec, cVec, qMat, qEnt, xVec, unaryVec, zeroVec,
+  genE, genC, genI, genJ, genR, genX, genY, tupC, count, elems, elemT, compT,
+  reacT]
 
-inputChemEqn, aMat, bVec, cVec, qMat, xVec, unaryVec, zeroVec, genE, genC,
-  genI, genJ, genR, genX, genY, tupC, count, elems, elemT, compT,
+inputChemEqn, aMat, bVec, cVec, qMat, qEnt, xVec, unaryVec, zeroVec, genE,
+  genC, genI, genJ, genR, genX, genY, tupC, count, elems, elemT, compT,
   reacT :: QuantityDict
 
 inputChemEqn = vcSt "inputChemEqn"
   (nounPhraseSP "representation of a chemical equation")
-  (autoStage $ sub lR $ label "in") String
-  -- FIXME: should this be a string?
+  (autoStage $ sub lR $ label "in") Reaction
 
 aMat = vc "aMat" (nounPhraseSP "generic matrix")                               (vec cA) (Vect Real)
 bVec = vc "bVec" (nounPhraseSP "generic vector")                               (vec lB) (Vect Real)
 cVec = vc "cVec" (nounPhraseSP "generic vector")                               (vec lC) (Vect Real)
 qMat = vc "qMat" (nounPhraseSP "matrix representation of a chemical equation") (vec cQ) (Vect Real)
+qEnt = vc "qEnt" (nounPhraseSent $ S "element of" +:+ ch qMat)                 (sub lQ $ label "ij") Real -- FIXME: symbol hack
 xVec = vc "xVec" (nounPhraseSP "generic vector")                               (vec lX) (Vect Integer)
 
 unaryVec = vc "unaryVec" (nounPhraseSP "unary vector") (vec $ variable "1") (Vect Integer)
