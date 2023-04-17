@@ -26,7 +26,7 @@ import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 import Drasil.ChemCode.Assumptions (assumps)
 import Drasil.ChemCode.Changes (uChanges)
 import Drasil.ChemCode.DataDefs (dds)
-import Drasil.ChemCode.Figures (sysCtxFig)
+import Drasil.ChemCode.Figures (physSysFig, sysCtxFig)
 import Drasil.ChemCode.Goals (goals)
 import Drasil.ChemCode.Quantities (inputs, quants)
 import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
@@ -72,7 +72,7 @@ mkSRS = [TableOfContents,
       [
         SSDProblem $ PDProg prob []
         [ TermsAndDefs Nothing terms
-        -- , PhySysDesc glassBR physSystParts physSystFig []
+        , PhySysDesc progName physSysParts physSysFig []
         , Goals goalInputs
         ],
        SSDSolChSpec $ SCSProg
@@ -236,6 +236,12 @@ sysConstraints = foldlSP [short progName, S "will be developed using Drasil",
     S "would take considerable time" `sC`S "and there are already many reliable external",
     S "libraries ... tested by long use"]) +:+. complexRef chen2022 (Page [24]),
   S "These rationales also apply to ILP solvers"]
+
+physSysParts :: [Sentence]
+physSysParts = map foldlSent[
+    [S "The", plural reactant, S "of a given", phrase chemical, phrase reaction],
+    [S "The", plural product, S "of the same", phrase chemical, phrase reaction]
+  ]
 
 goalInputs :: [Sentence]
 goalInputs = map (\x -> S "a" +:+ phrase x) inputs

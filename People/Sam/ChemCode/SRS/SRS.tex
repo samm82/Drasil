@@ -24,6 +24,7 @@
 \usepackage[version=4]{mhchem}
 \usepackage{tikz}
 \usetikzlibrary{positioning}
+\usetikzlibrary{decorations.pathreplacing}
 
 %\usepackage[round]{natbib}
 
@@ -289,7 +290,9 @@
   and change sequence to set) \\
   & 1.4.9 & Add reaction data type \\
   Mar. 13, 2023 & 1.4.10 & Fix error in \ddref{count} \\
-  Mar. 14, 2023 & 1.4.11 & Reflect change to \ddref{elems} in \imref{matRep} \\
+  Mar. 14, 2023 & 1.5.0 & Reflect change to \ddref{elems} in \imref{matRep} \\
+  Apr. 17, 2023 & 1.5.1 & Add (commented out) TikZ code for figure in
+  \nameref{sec_phySystDesc} and fixed order of the elements of the system \\
 \end{xltabular}
 
 % ~\newpage
@@ -730,13 +733,24 @@ $$
   \ce{CH4} + \ce{2O2} \rightarrow \ce{CO2} + \ce{2H2O}
 $$
 
+% \begin{tikzpicture}
+%   \node (reactants) {$\ce{CH4} + \ce{2O2}$};
+%   \node[right of=reactants] (arrow) [right=0.25cm] {$\rightarrow$};
+%   \node[right of=arrow] (products) [right=-0.5cm] {\ce{CO2} + \ce{2H2O}};
+
+%   \draw[decorate,decoration={brace,amplitude=10pt}]
+%   (reactants.north west) -- (reactants.north east) node[midway,above=10pt] {Reactants};
+%   \draw[decorate,decoration={brace,amplitude=10pt}]
+%   (products.north west) -- (products.north east) node[midway,above=10pt] {Products};
+% \end{tikzpicture}
+
 The physical system of \progname{} includes the following elements:
 
 \begin{itemize}
 
-  \item[PS1:] The products of a given chemical reaction.
+  \item[PS1:] The reactants of a given chemical reaction.
 
-  \item[PS2:] The reactants of the same chemical reaction.
+  \item[PS2:] The products of the same chemical reaction.
 
 \end{itemize}
 
