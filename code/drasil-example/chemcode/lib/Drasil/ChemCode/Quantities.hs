@@ -11,6 +11,9 @@ inputs = [r]
 quants :: [QuantityDict]
 quants = inputs ++ [aMat, bVec, cVec, xVec, zeroVec, elemT]
 
+constants :: [ConstQDef]
+constants = [maintainFrac]
+
 r, aMat, bVec, cVec, xVec, zeroVec, elemT :: QuantityDict
 
 r = vcSt "r" (nounPhraseSP "representation of a chemical equation")
@@ -37,3 +40,9 @@ elemT = vcSt "elemT" (nounPhraseSent $ phrase element +:+ S "data type")
               "Md", "No", "Lr", "Rf", "Db", "Sg", "Bh", "Hs", "Mt", "Ds", "Rg",
               "Cn", "Nh", "Fl", "Mc", "Lv", "Ts", "Og"])
   -- FIXME: move to drasil-data
+
+maintainFrac :: ConstQDef
+maintainFrac = mkQuantDef (vc "maintainFrac"
+  (nounPhraseSP "maintainability fraction") (label "MAINTAIN_FRAC") Real)
+  (perc 10 2)
+  -- FIXME: move concept to drasil-data?

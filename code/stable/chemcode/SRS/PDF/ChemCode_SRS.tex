@@ -54,6 +54,8 @@ $\symbf{c}$ & Generic vector & --
 \\
 $E$ & Element data type & --
 \\
+$\text{MAINTAIN_FRAC}$ & Maintainability fraction & --
+\\
 $r$ & Representation of a chemical equation & --
 \\
 $\symbf{x}$ & Generic vector & --
@@ -342,6 +344,7 @@ This section provides the non-functional requirements, the qualities that the so
 \item[Understandable:\phantomsection\label{understandable}]{A new intended user (as described by \hyperref[Sec:UserChars]{Sec:User Characteristics}) should be able to learn how to use ChemCode in an acceptable amount of time, as measured by the procedure in Section 10 of the VnV Plan.}
 \item[Usable:\phantomsection\label{usable}]{An intended user (as described by \hyperref[Sec:UserChars]{Sec:User Characteristics}) should find ChemCode easy to use, as measured by the procedure in Section 11 of the VnV Plan.}
 \item[Reusable:\phantomsection\label{reusable}]{The code is modularized.}
+\item[Maintainable:\phantomsection\label{maintainable}]{The development time for any of the likely changes should not exceed $\text{MAINTAIN_FRAC}$ of the original development time.}
 \item[Portable:\phantomsection\label{portable}]{The code is able to be run in different environments.}
 \end{itemize}
 \section{Likely Changes}
@@ -409,6 +412,8 @@ The purpose of the traceability matrices is to provide easy references on what h
 \\
 \hyperref[reusable]{NFR:Reusable} &  &  &  &  & 
 \\
+\hyperref[maintainable]{NFR:Maintainable} &  &  &  &  & 
+\\
 \hyperref[portable]{NFR:Portable} &  &  &  &  & 
 \\
 \hyperref[allEqsPermitted]{UC:allEqsPermitted} & X &  &  &  & 
@@ -435,35 +440,37 @@ The purpose of the traceability matrices is to provide easy references on what h
 \caption{Traceability Matrix Showing the Connections Between Items and Other Sections}
 \label{Table:TraceMatRefvsRef}
 \end{longtable}
-\begin{longtable}{l l l l l l l l l l l l l}
+\begin{longtable}{l l l l l l l l l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[TM:intLinProg]{TM:intLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[understandable]{NFR:Understandable}} & \textbf{\hyperref[usable]{NFR:Usable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[portable]{NFR:Portable}}
+\textbf{} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[TM:intLinProg]{TM:intLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[understandable]{NFR:Understandable}} & \textbf{\hyperref[usable]{NFR:Usable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[maintainable]{NFR:Maintainable}} & \textbf{\hyperref[portable]{NFR:Portable}}
 \\
 \midrule
 \endhead
-\hyperref[findBalancedForm]{GS:findBalancedForm} &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[findBalancedForm]{GS:findBalancedForm} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[outputInfeasMsg]{GS:outputInfeasMsg} &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[outputInfeasMsg]{GS:outputInfeasMsg} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[accurate]{NFR:Accurate} &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[accurate]{NFR:Accurate} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[understandable]{NFR:Understandable} &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[understandable]{NFR:Understandable} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[usable]{NFR:Usable} &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[usable]{NFR:Usable} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[reusable]{NFR:Reusable} &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[reusable]{NFR:Reusable} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[portable]{NFR:Portable} &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[maintainable]{NFR:Maintainable} &  &  &  &  &  &  &  &  &  &  &  &  & 
+\\
+\hyperref[portable]{NFR:Portable} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Requirements, Goal Statements and Other Items}
@@ -515,6 +522,22 @@ For convenience, the following graphs can be found at the links below:
 \item{\hyperref{../../../../traceygraphs/chemcode/allvsr.svg}{}{}{TraceGraphAllvsR}}
 \item{\hyperref{../../../../traceygraphs/chemcode/allvsall.svg}{}{}{TraceGraphAllvsAll}}
 \end{itemize}
+\section{Values of Auxiliary Constants}
+\label{Sec:AuxConstants}
+This section contains the standard values that are used for calculations in ChemCode.
+
+\begin{longtable}{l l l l}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} & \textbf{Unit}
+\\
+\midrule
+\endhead
+$\text{MAINTAIN_FRAC}$ & maintainability fraction & $10.0\%$ & --
+\\
+\bottomrule
+\caption{Auxiliary Constants}
+\label{Table:TAuxConsts}
+\end{longtable}
 \section{References}
 \label{Sec:References}
 \begin{filecontents*}{bibfile.bib}

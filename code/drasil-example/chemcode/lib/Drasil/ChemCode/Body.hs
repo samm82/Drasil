@@ -29,7 +29,7 @@ import Drasil.ChemCode.Concepts (progName)
 import Drasil.ChemCode.DataDefs (dds)
 import Drasil.ChemCode.Figures (physSysFig, sysCtxFig)
 import Drasil.ChemCode.Goals (goals)
-import Drasil.ChemCode.Quantities (inputs, quants)
+import Drasil.ChemCode.Quantities (constants, inputs, quants)
 import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
 import Drasil.ChemCode.TMods (tms)
 
@@ -96,7 +96,7 @@ mkSRS = [TableOfContents,
   LCsSec,
   UCsSec,
   TraceabilitySec $ TraceabilityProg $ traceMatStandard si,
-  -- AuxConstntSec $ AuxConsProg glassBR auxiliaryConstants,  
+  AuxConstntSec $ AuxConsProg progName constants,
   Bibliography
   ]
 
@@ -250,7 +250,7 @@ goalInputs :: [Sentence]
 goalInputs = map (\x -> S "a" +:+ phrase x) inputs
 
 symbolsAll :: [QuantityDict]
-symbolsAll = quants
+symbolsAll = quants ++ map qw constants
 
 acronyms :: [CI]
 acronyms = [assumption, progName, Doc.srs, thModel, dataDefn, requirement,
@@ -277,7 +277,7 @@ si =
       _outputs     = [] :: [QuantityDict],
       _defSequence = [] :: [Block SimpleQDef],
       _constraints = [] :: [ConstrainedChunk],
-      _constants   = [] :: [ConstQDef],
+      _constants   = constants,
       _sysinfodb   = symbMap,
       _usedinfodb  = usedDB,
        refdb       = refDB

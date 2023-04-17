@@ -94,6 +94,9 @@
           <li>
             <a href=#Sec:TraceMatrices>Traceability Matrices and Graphs</a>
           </li>
+          <li>
+            <a href=#Sec:AuxConstants>Values of Auxiliary Constants</a>
+          </li>
           <li><a href=#Sec:References>References</a></li>
         </ul>
       </div>
@@ -140,6 +143,11 @@
                 <tr>
                   <td><em>E</em></td>
                   <td>Element data type</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>MAINTAIN_FRAC</em></td>
+                  <td>Maintainability fraction</td>
                   <td>--</td>
                 </tr>
                 <tr>
@@ -669,6 +677,11 @@
               </p>
               <p><div id="reusable">Reusable: The code is modularized.</div></p>
               <p>
+                <div id="maintainable">
+                  Maintainable: The development time for any of the likely changes should not exceed <em>MAINTAIN_FRAC</em> of the original development time.
+                </div>
+              </p>
+              <p>
                 <div id="portable">
                   Portable: The code is able to be run in different environments.
                 </div>
@@ -872,6 +885,14 @@
               <td></td>
             </tr>
             <tr>
+              <td><a href=#maintainable>NFR:Maintainable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
               <td><a href=#portable>NFR:Portable</a></td>
               <td></td>
               <td></td>
@@ -945,10 +966,12 @@
               <th><a href=#understandable>NFR:Understandable</a></th>
               <th><a href=#usable>NFR:Usable</a></th>
               <th><a href=#reusable>NFR:Reusable</a></th>
+              <th><a href=#maintainable>NFR:Maintainable</a></th>
               <th><a href=#portable>NFR:Portable</a></th>
             </tr>
             <tr>
               <td><a href=#findBalancedForm>GS:findBalancedForm</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -976,9 +999,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#inputValues>FR:Input-Values</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1006,9 +1031,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#feasOut>FR:Feasible-Output</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1036,9 +1063,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#accurate>NFR:Accurate</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1066,9 +1095,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#understandable>NFR:Understandable</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1096,6 +1127,7 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#reusable>NFR:Reusable</a></td>
@@ -1111,9 +1143,27 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#maintainable>NFR:Maintainable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#portable>NFR:Portable</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1185,6 +1235,31 @@
             <a href="../../../../traceygraphs/chemcode/allvsall.svg">TraceGraphAllvsAll</a>
           </li>
         </ul>
+      </div>
+    </div>
+    <div id="Sec:AuxConstants">
+      <div class="section">
+        <h1>Values of Auxiliary Constants</h1>
+        <p class="paragraph">
+          This section contains the standard values that are used for calculations in ChemCode.
+        </p>
+        <div id="Table:TAuxConsts">
+          <table class="table">
+            <tr>
+              <th>Symbol</th>
+              <th>Description</th>
+              <th>Value</th>
+              <th>Unit</th>
+            </tr>
+            <tr>
+              <td><em>MAINTAIN_FRAC</em></td>
+              <td>maintainability fraction</td>
+              <td><em>10.0%</em></td>
+              <td>--</td>
+            </tr>
+          </table>
+          <p class="caption">Auxiliary Constants</p>
+        </div>
       </div>
     </div>
     <div id="Sec:References">

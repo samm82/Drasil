@@ -13,6 +13,7 @@ import Data.Drasil.Concepts.Math (matrix)
 import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 
 import Drasil.ChemCode.Concepts (progName)
+import Drasil.ChemCode.Quantities (maintainFrac)
 
 
 {--Functional Requirements--}
@@ -41,8 +42,8 @@ infeasOutDesc = foldlSent [S "If the inputted", phrase chemical, phrase equation
 {--Nonfunctional Requirements--}
 
 nonfuncReqs :: [ConceptInstance]
-nonfuncReqs = [accurate, verifiable, understandable, usable, reusable, portable]
--- nonfuncReqs = [accurate, verifiable, understandable, reusable, maintainable, portable]
+nonfuncReqs = [accurate, verifiable, understandable, usable, reusable,
+  maintainable, portable]
 
 -- correct :: ConceptInstance
 -- correct = cic "correct" (foldlSent [
@@ -80,12 +81,11 @@ reusable :: ConceptInstance
 reusable = cic "reusable" (foldlSent [atStartNP (the code), S "is modularized"])
   "Reusable" nonFuncReqDom
 
--- maintainable :: ConceptInstance
--- maintainable = cic "maintainable" (foldlSent [
---   S "The traceability between", foldlList Comma List [plural requirement,
---   plural assumption, plural thModel, plural genDefn, plural dataDefn, plural inModel,
---   plural likelyChg, plural unlikelyChg, plural module_], S "is completely recorded in",
---   plural traceyMatrix, S "in the", getAcc srs `S.and_` phrase mg]) "Maintainable" nonFuncReqDom
+maintainable :: ConceptInstance
+maintainable = cic "maintainable" (foldlSent [
+  S "The development time for any of the", plural likelyChg,
+  S "should not exceed", ch maintainFrac, S "of the original development time"])
+  "Maintainable" nonFuncReqDom
 
 portable :: ConceptInstance
 portable = cic "portable" (foldlSent [
