@@ -41,7 +41,7 @@ infeasOutDesc = foldlSent [S "If the inputted", phrase chemical, phrase equation
 {--Nonfunctional Requirements--}
 
 nonfuncReqs :: [ConceptInstance]
-nonfuncReqs = [accurate, verifiable, understandable, reusable, portable]
+nonfuncReqs = [accurate, verifiable, understandable, usable, reusable, portable]
 -- nonfuncReqs = [accurate, verifiable, understandable, reusable, maintainable, portable]
 
 -- correct :: ConceptInstance
@@ -67,6 +67,14 @@ understandable = cic "understandable" (foldlSent [
   S "should be able to learn how to use", short progName, S "in an acceptable",
   S "amount of time" `sC` S "as measured by the procedure in Section 10 of",
   S "the VnV Plan"]) "Understandable" nonFuncReqDom
+
+usable :: ConceptInstance
+usable = cic "usable" (foldlSent [
+  S "An intended user", sParen (S "as described by" +:+
+    refS (userChar ([]::[Contents]) ([]::[Section]))),
+  S "should find", short progName, S "easy to use" `sC`
+    S "as measured by the procedure in Section 11 of the VnV Plan"])
+  "Usable" nonFuncReqDom
 
 reusable :: ConceptInstance
 reusable = cic "reusable" (foldlSent [atStartNP (the code), S "is modularized"])
