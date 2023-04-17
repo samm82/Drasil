@@ -547,11 +547,15 @@ Output & $\symbf{Q}$
          
 \\ \midrule \\
 Equation & \begin{displaymath}
-           \symbf{Q}=\forall{}\,i\in{}\mathbb{Z},j\in{}\mathbb{Z}\text{ | }\symbf{Q}
+           \symbf{Q}=\forall{}\,i\in{}\mathbb{Z},j\in{}\mathbb{Z}\text{ | }0\leq{}i\lt{}|\text{elems}\left({r_{\text{in}}}\right)|\land{}0\leq{}j\lt{}|{r_{\text{in}}}\text{.reac}|+|{r_{\text{in}}}\text{.prod}|\implies{}\symbf{Q}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
               \item{$\symbf{Q}$ is the matrix representation of a chemical equation (Unitless)}
+              \item{$i$ is the generic integer (Unitless)}
+              \item{$\text{elems}$ is the set of elements in a chemical reaction (Unitless)}
+              \item{${r_{\text{in}}}$ is the representation of a chemical equation (Unitless)}
+              \item{$j$ is the generic integer (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
 Source & --

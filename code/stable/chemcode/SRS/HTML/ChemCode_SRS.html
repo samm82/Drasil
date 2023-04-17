@@ -936,7 +936,7 @@
                     <tr>
                       <th>Equation</th>
                       <td>
-                        \[\symbf{Q}=\forall{}\,i\in{}\mathbb{Z},j\in{}\mathbb{Z}\text{ | }\symbf{Q}\]
+                        \[\symbf{Q}=\forall{}\,i\in{}\mathbb{Z},j\in{}\mathbb{Z}\text{ | }0\leq{}i\lt{}|\text{elems}\left({r_{\text{in}}}\right)|\land{}0\leq{}j\lt{}|{r_{\text{in}}}\text{.reac}|+|{r_{\text{in}}}\text{.prod}|\implies{}\symbf{Q}\]
                       </td>
                     </tr>
                     <tr>
@@ -946,6 +946,14 @@
                           <li>
                             <em><b>Q</b></em> is the matrix representation of a chemical equation (Unitless)
                           </li>
+                          <li><em>i</em> is the generic integer (Unitless)</li>
+                          <li>
+                            <em>elems</em> is the set of elements in a chemical reaction (Unitless)
+                          </li>
+                          <li>
+                            <em>r<sub>in</sub></em> is the representation of a chemical equation (Unitless)
+                          </li>
+                          <li><em>j</em> is the generic integer (Unitless)</li>
                         </ul>
                       </td>
                     </tr>
