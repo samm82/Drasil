@@ -127,8 +127,10 @@
   Mar. 4, 2023 & 1.1.0 & Replace method of solving with integer programming and
   improve Revision History table format \\
   Mar. 6, 2023 & 1.1.1 & Update document based on feedback from Dr.~Smith \\
-  Mar. 7, 2023 & 1.1.2 & Clarify rationale for output string in
+  Mar. 7, 2023 & 1.2.0 & Clarify rationale for output string in
   \testref{test_inf_over_valid_eqn} \\
+  Apr. 17, 2023 & 1.2.1 & Revise \nameref{autoTestVerTools} based on
+  feedback \\
 \end{xltabular}
 
 \section{Abbreviations and Acronyms} \label{sec_abbrsAcrs}
@@ -295,13 +297,16 @@ this project is merged into the main branch of the Drasil repository.
 The implementation will also likely be reviewed by Drasil team members in the
 future, as related to future work on Drasil.
 
-\subsection{Automated Testing and Verification Tools}
+\subsection{Automated Testing and Verification Tools} \label{autoTestVerTools}
 
 Since the initial implementation of \progname{} will be in Python, pytest will
 be used to automate testing and measure coverage where appropriate. Other
 frameworks for automated testing will be added if/when code for \progname{} is
 generated in more languages. The Drasil repository uses continuous integration
-to ensure the code follows HLint standards and builds properly and that the
+to ensure the Haskell code\footnote{Since Drasil is built with Haskell, the
+  implementation of \progname{} in Drasil will also be in Haskell. There are
+  currently no plans for \progname{} to be implemented in Haskell.} follows
+HLint standards and builds properly and that the
 generated artifacts match the ``stable'' (i.e., manually verified) versions.
 Since Drasil also generates Makefiles \cite{carette_drasil_2021}, they will
 also be used. Since the code for \progname{} will be generated
