@@ -12,15 +12,18 @@ import Drasil.ChemCode.Assumptions
 import Drasil.ChemCode.Concepts (progName)
 
 lChanges :: [ConceptInstance]
-lChanges = [complexForms, calcMoles, detLimReag, identifyPhaseLabels]
+lChanges = [complexForms, calcMoles, detLimReag, calcYield, calcExcess, identifyPhaseLabels]
 
-complexForms, calcMoles, detLimReag, identifyPhaseLabels :: ConceptInstance
+complexForms, calcMoles, detLimReag, calcYield, calcExcess, identifyPhaseLabels :: ConceptInstance
 complexForms = cic "complexForms"      complexFormsDesc      "complexForms"      likeChgDom
 calcMoles = cic "calcMoles"      calcMolesDesc      "calcMoles"      likeChgDom
 detLimReag = cic "detLimReag"      detLimReagDesc      "detLimReag"      likeChgDom
+calcYield = cic "calcYield"      calcYieldDesc      "calcYield"      likeChgDom
+calcExcess = cic "calcExcess"      calcExcessDesc      "calcExcess"      likeChgDom
 identifyPhaseLabels = cic "identifyPhaseLabels" identifyPhaseLabelsDesc "identifyPhaseLabels" likeChgDom
 
-complexFormsDesc, calcMolesDesc, detLimReagDesc, identifyPhaseLabelsDesc :: Sentence
+complexFormsDesc, calcMolesDesc, detLimReagDesc, calcYieldDesc, calcExcessDesc,
+  identifyPhaseLabelsDesc :: Sentence
 complexFormsDesc = foldlSent [refS simpleForms, S "assumes that inputted",
   phrase chemical +:+. S "formulas only consist of atomic symbols and subscripts",
   S "In the future" `sC` S "the user might be able to input more complex",
@@ -30,18 +33,27 @@ complexFormsDesc = foldlSent [refS simpleForms, S "assumes that inputted",
   ]
 
 calcMolesDesc = likeChgGivenHelper (foldlSent_ [S "the amount of one substance",
-  sParen (S "in" +:+ plural mole), S "in a", phrase reaction]) (foldlSent_ [
-    S "calculate the amount of every other substance",
-    sParen (S "also in" +:+ plural mole), S "required/produced by the",
-    phrase reaction
+  inMolesInReac]) (foldlSent_ [S "calculate the amount of every other substance",
+    alsoInMoles, S "required/produced by the", phrase reaction
   ])
   -- TODO: from lund2023
 
-detLimReagDesc = likeChgGivenHelper (foldlSent_ [S "the amount of each",
-  phrase reactant, sParen (S "in" +:+ plural mole), S "in a", phrase reaction])
+detLimReagDesc = likeChgGivenHelper amountMultReac
   (foldlSent_ [
     S "determine the limiting" +:+. (phrase reactant :+: sParen (S "s")),
     S "This is dependent on", refS calcMoles
+  ])
+  -- TODO: from lund2023
+
+calcYieldDesc = likeChgGivenHelper amountMultReac (foldlSent_ [
+    S "calculate the theoretical yield of each", phrase product +:+. alsoInMoles,
+    S "This is dependent on", refS detLimReag
+  ])
+  -- TODO: from lund2023
+
+calcExcessDesc = likeChgGivenHelper amountMultReac (foldlSent_ [
+    S "calculate the amount of excess", phrase reactant :+: sParen (S "s") +:+.
+    alsoInMoles, S "This is dependent on", refS detLimReag
   ])
   -- TODO: from lund2023
 
@@ -53,16 +65,15 @@ identifyPhaseLabelsDesc = likeChgGivenHelper (foldlSent_ [S "the phase labels fo
     -- TODO: from lund2023
     -- TODO: dependent on LC10
 
+inMolesInReac, alsoInMoles, amountMultReac :: Sentence
+inMolesInReac = sParen (S "in" +:+ plural mole) +:+ S "in a" +:+ phrase reaction
+alsoInMoles  = sParen (S "also in" +:+ plural mole)
+amountMultReac = S "the amount of more than one" +:+ phrase reactant +:+ inMolesInReac
+
 likeChgGivenHelper :: Sentence -> Sentence -> Sentence
 likeChgGivenHelper given action = foldlSent [S "In the future" `sC` short progName,
   S "might be able to" `sC` S "given", given `sC` action]
 
--- LC4: In the future, ChemCode might be able to, given the amount of more than one reactant
--- (in moles) in a reaction, calculate the theoretical yield of each product (also in moles).1
--- This is dependent on LC3.
--- LC5: In the future, ChemCode might be able to, given the amount of more than one reactant
--- (in moles) in a reaction, calculate the amount of excess reactant(s) (also in moles).1
--- This is dependent on LC3.
 -- LC6: The system currently assumes that inputted chemical formulas follow the conventions
 -- laid out in [23] and [24]. In the future, ChemCode might be able to parse valid inputted
 -- chemical formulas that do not follow these conventions and format them correctly when
