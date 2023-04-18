@@ -10,6 +10,7 @@ import Data.Drasil.Concepts.Chemistry (chemical, reaction)
 import Data.Drasil.Concepts.Math (equation)
 import Data.Drasil.Concepts.Software (program)
 
+import Drasil.ChemCode.Concepts (balanced)
 import Drasil.ChemCode.Quantities (aMat, bVec, cVec, xVec, zeroVec, genE, genI,
   genR, count)
 
@@ -60,7 +61,9 @@ lawConsMass = tm
   [foldlSent [S "This law states that", Quote (foldlSent_ [
       S "matter can neither be created nor destroyed in a", phrase chemical,
       phrase reaction, S "... but it may change forms to other substances"]),
-    complexRef lund2023 (Page [112])]
+    complexRef lund2023 (Page [112])],
+   foldlSent [S "The above", phrase equation, S "assumes that", ch genR,
+      S "is", phrase balanced]
   ]
   where
     consMassChunk =
