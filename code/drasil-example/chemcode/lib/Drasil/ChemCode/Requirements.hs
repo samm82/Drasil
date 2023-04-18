@@ -5,6 +5,7 @@ import Drasil.DocLang.SRS (propCorSol, userChar)
 import Language.Drasil.Chunk.Concept.NamedCombinators
 import qualified Language.Drasil.Sentence.Combinators as S
 
+import Data.Drasil.Citations (lund2023)
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Documentation (assumption, code, environment,
   funcReqDom, likelyChg, mg, mis, module_, nonFuncReqDom, output_, property,
@@ -53,7 +54,7 @@ nonfuncReqs = [accurate, verifiable, understandable, usable, reusable,
 
 accurate :: ConceptInstance
 accurate = cic "accurate" (foldlSent [atStart chemical, plural equation,
-  S "are only useful if they are balanced" `sC`
+  S "are only useful if they are balanced", refS lund2023 `sC`
     S "so computed coefficients should be exact"]) "Accurate" nonFuncReqDom
  
 verifiable :: ConceptInstance
@@ -65,15 +66,15 @@ understandable :: ConceptInstance
 understandable = cic "understandable" (foldlSent [
   S "A new intended user", sParen (S "as described by" +:+
     refS (userChar ([]::[Contents]) ([]::[Section]))),
-  S "should be able to learn how to use", short progName, S "in an acceptable",
+  S "is able to learn how to use", short progName, S "in an acceptable",
   S "amount of time" `sC` S "as measured by the procedure in Section 10 of",
   S "the VnV Plan"]) "Understandable" nonFuncReqDom
 
 usable :: ConceptInstance
 usable = cic "usable" (foldlSent [
   S "An intended user", sParen (S "as described by" +:+
-    refS (userChar ([]::[Contents]) ([]::[Section]))),
-  S "should find", short progName, S "easy to use" `sC`
+    refS (userChar ([]::[Contents]) ([]::[Section]))), S "finds",
+  short progName, S "easy to use" `sC`
     S "as measured by the procedure in Section 11 of the VnV Plan"])
   "Usable" nonFuncReqDom
 
@@ -84,10 +85,13 @@ reusable = cic "reusable" (foldlSent [atStartNP (the code), S "is modularized"])
 maintainable :: ConceptInstance
 maintainable = cic "maintainable" (foldlSent [
   S "The development time for any of the", plural likelyChg,
-  S "should not exceed", ch maintainFrac, S "of the original development time"])
+  S "will not exceed", ch maintainFrac, S "of the original development time"])
   "Maintainable" nonFuncReqDom
 
 portable :: ConceptInstance
 portable = cic "portable" (foldlSent [
-  atStartNP (the code), S "is able to be run in different", plural environment])
+  atStartNP (the code), S "is able to be run on systems with the",
+  S "corresponding programming language installed" `sC` S "including" +:+.
+  S "systems running on Windows or macOS", S"The tests from the VnV Plan",
+  S "should pass in these environments"])
   "Portable" nonFuncReqDom

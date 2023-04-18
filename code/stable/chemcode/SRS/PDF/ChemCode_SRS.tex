@@ -339,13 +339,13 @@ $r$ & Representation of a chemical equation & --
 This section provides the non-functional requirements, the qualities that the software is expected to exhibit.
 
 \begin{itemize}
-\item[Accurate:\phantomsection\label{accurate}]{Chemical equations are only useful if they are balanced, so computed coefficients should be exact.}
+\item[Accurate:\phantomsection\label{accurate}]{Chemical equations are only useful if they are balanced \cite{lund2023}, so computed coefficients should be exact.}
 \item[Verifiable:\phantomsection\label{verifiable}]{The code is tested following the Verification and Validation (VnV) Plan.}
-\item[Understandable:\phantomsection\label{understandable}]{A new intended user (as described by \hyperref[Sec:UserChars]{Sec:User Characteristics}) should be able to learn how to use ChemCode in an acceptable amount of time, as measured by the procedure in Section 10 of the VnV Plan.}
-\item[Usable:\phantomsection\label{usable}]{An intended user (as described by \hyperref[Sec:UserChars]{Sec:User Characteristics}) should find ChemCode easy to use, as measured by the procedure in Section 11 of the VnV Plan.}
+\item[Understandable:\phantomsection\label{understandable}]{A new intended user (as described by \hyperref[Sec:UserChars]{Sec:User Characteristics}) is able to learn how to use ChemCode in an acceptable amount of time, as measured by the procedure in Section 10 of the VnV Plan.}
+\item[Usable:\phantomsection\label{usable}]{An intended user (as described by \hyperref[Sec:UserChars]{Sec:User Characteristics}) finds ChemCode easy to use, as measured by the procedure in Section 11 of the VnV Plan.}
 \item[Reusable:\phantomsection\label{reusable}]{The code is modularized.}
-\item[Maintainable:\phantomsection\label{maintainable}]{The development time for any of the likely changes should not exceed $\text{MAINTAIN_FRAC}$ of the original development time.}
-\item[Portable:\phantomsection\label{portable}]{The code is able to be run in different environments.}
+\item[Maintainable:\phantomsection\label{maintainable}]{The development time for any of the likely changes will not exceed $\text{MAINTAIN_FRAC}$ of the original development time.}
+\item[Portable:\phantomsection\label{portable}]{The code is able to be run on systems with the corresponding programming language installed, including systems running on Windows or macOS. The tests from the VnV Plan should pass in these environments.}
 \end{itemize}
 \section{Likely Changes}
 \label{Sec:LCs}
