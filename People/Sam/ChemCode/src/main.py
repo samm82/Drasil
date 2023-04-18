@@ -22,6 +22,7 @@ def main():
         ("O2 -> O3", [3, 2]),
         ("C2H6 + O2 -> CO2 + H2O", [2, 7, 4, 6]),
         ("KMnO4 + HCl -> MnCl2 + KCl + Cl2 + H2O", [2, 16, 2, 2, 5, 8]),
+        ("Li2CO3 -> Li2O + CO2", [1, 1, 1]),
         ("Fe0.95O + O2 -> Fe2O3", [80, 17, 38]),
         ("C2H6 -> CO2 + H2O", None),
         ("K4FeC6N6 + K2S2O3 -> CO2 + K2SO4 + NO2 + FeS", None) # modified to follow assumptions

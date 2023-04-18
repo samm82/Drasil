@@ -127,8 +127,14 @@
   Mar. 4, 2023 & 1.1.0 & Replace method of solving with integer programming and
   improve Revision History table format \\
   Mar. 6, 2023 & 1.1.1 & Update document based on feedback from Dr.~Smith \\
-  Mar. 7, 2023 & 1.1.2 & Clarify rationale for output string in
+  Mar. 7, 2023 & 1.2.0 & Clarify rationale for output string in
   \testref{test_inf_over_valid_eqn} \\
+  Apr. 17, 2023 & 1.2.1 & Revise \nameref{autoTestVerTools} based on
+  feedback \\
+  & 1.2.2 & Revise output messages for \nameref{infeasTest} based on feedback
+  and changes to scope \\
+  & 1.2.3 & Add test for trivial valid chemical equation
+  (\testref{test_trival_valid_eqn}) \\
 \end{xltabular}
 
 \section{Abbreviations and Acronyms} \label{sec_abbrsAcrs}
@@ -295,16 +301,22 @@ this project is merged into the main branch of the Drasil repository.
 The implementation will also likely be reviewed by Drasil team members in the
 future, as related to future work on Drasil.
 
-\subsection{Automated Testing and Verification Tools}
+\subsection{Automated Testing and Verification Tools} \label{autoTestVerTools}
 
-Since the initial implementation of \progname{} will be in Python, pytest will
+Since the initial implementation of \progname{} will be in Python, pytest
+\cite{pytest} will
 be used to automate testing and measure coverage where appropriate. Other
 frameworks for automated testing will be added if/when code for \progname{} is
 generated in more languages. The Drasil repository uses continuous integration
-to ensure the code follows HLint standards and builds properly and that the
+to ensure the Haskell code\footnote{Since Drasil is built with Haskell, the
+  implementation of \progname{} in Drasil will also be in Haskell. There are
+  currently no plans for \progname{} to be implemented in Haskell.} follows
+HLint \cite{hlint} standards and builds properly and that the
 generated artifacts match the ``stable'' (i.e., manually verified) versions.
 Since Drasil also generates Makefiles \cite{carette_drasil_2021}, they will
-also be used. Since the code for \progname{} will be generated
+also be used to build the code and run tests (as described in Sections
+\ref{feasTest} and \ref{infeasTest}) on it. Since the code for
+\progname{} will be generated
 by Drasil, the Drasil team may potentially use other tools as part of its
 verification (e.g., linters).
 
@@ -350,7 +362,7 @@ complexity/likelihood of the situation arising during use of \progname{}.
 
 \end{enumerate}
 
-\subsubsection{Feasible Reaction Testing}
+\subsubsection{Feasible Reaction Testing} \label{feasTest}
 
 The following tests are for equations of feasible chemical reactions and
 will be performed automatically. Providing the correct output for an inputted
@@ -399,6 +411,18 @@ input/output is a design decision that is not made at this stage.
     Test Case Derivation: The inputted chemical equation is
     valid and larger than the one from \testref{test_valid_eqn}.
 
+  \item[T\refstepcounter{testnum}\thetestnum \label{test_trival_valid_eqn}:]
+    \textbf{Test for Trivial Valid Equation}
+
+    Input: $\ce{Li2CO3} \rightarrow \ce{Li2O} + \ce{CO2}$
+    \cite{helmenstine_names_2019}
+
+    Output: $\ce{Li2CO3} \rightarrow \ce{Li2O} + \ce{CO2}$
+    \cite{helmenstine_names_2019}
+
+    Test Case Derivation: The inputted chemical equation is already balanced,
+    so the expected output is the original equation with nothing changed.
+
   \item[T\refstepcounter{testnum}\thetestnum \label{test_nonstoich_valid_eqn}:]
     \textbf{Test for Valid Equation with Nonstoichiometric Compound}
 
@@ -412,7 +436,9 @@ input/output is a design decision that is not made at this stage.
 
 \end{enumerate}
 
-\subsubsection{Infeasible Reaction Testing}
+\newpage
+
+\subsubsection{Infeasible Reaction Testing} \label{infeasTest}
 
 The following tests are for equations of infeasible chemical reactions and
 will be performed automatically. Providing the correct output for an inputted
@@ -430,9 +456,10 @@ input/output is a design decision that is not made at this stage.
 
     Input: $\ce{C2H6} \rightarrow \ce{CO2} + \ce{H2O}$
 
-    Output: ``This reaction is infeasible because \ce{O} is present on one side
-    of the equation but not the other, violating the Law of Conservation of
-    Mass.''
+    Output: ``This reaction is infeasible.''
+    %  because \ce{O} is present on one side
+    % of the equation but not the other, violating the Law of Conservation of
+    % Mass.''
 
     Test Case Derivation: The inputted chemical equation is infeasible since
     every element does not exist on both sides of the equation, which violates
@@ -446,18 +473,22 @@ input/output is a design decision that is not made at this stage.
     Input: $\ce{K4FeC6N6} + \ce{K2S2O3} \rightarrow \ce{CO2} + \ce{K2SO4} +
       \ce{NO2} + \ce{FeS}$ (modified from \cite{hamid_balancing_2019})
 
-    Output: ``This reaction is infeasible, likely because it is overconstrained.''
+    Output: ``This reaction is infeasible.''
+    % , likely because it is overconstrained.''
 
     Test Case Derivation: The inputted chemical equation is infeasible since
     each compound has more than one element, so changing any coefficient
     affects the number of some other element, causing a chain reaction that
     does not converge. There is no solution to this system other than the
-    trivial solution ($\mathbf{0}$) \cite{hamid_balancing_2019}. The message
-    uses the word ``likely'' because there are other potential reasons for a
-    chemical reaction to be infeasible, but based on empirical analysis, it
-    being overconstrained is the most likely reason.
+    trivial solution ($\mathbf{0}$) \cite{hamid_balancing_2019}.
+    % The message
+    % uses the word ``likely'' because there are other potential reasons for a
+    % chemical reaction to be infeasible, but based on empirical analysis, it
+    % being overconstrained is the most likely reason.
 
 \end{enumerate}
+
+\newpage
 
 \subsection{Tests for Nonfunctional Requirements} \label{sec_sysNFReqs}
 
@@ -488,8 +519,6 @@ implementation of \progname{}.
 
 \end{enumerate}
 
-\newpage
-
 \subsubsection{Understandability Testing}
 
 \begin{enumerate}
@@ -506,6 +535,8 @@ implementation of \progname{}.
     the SRS \cite{srs}.
 
 \end{enumerate}
+
+\newpage
 
 \subsubsection{Usability Testing}
 
@@ -561,19 +592,28 @@ implementation of \progname{}.
 
 \end{enumerate}
 
+\newpage
+
+\subsection{Traceability Between Test Cases and Requirements} \label{sec_test_req_trace}
+
+The purpose of the traceability matrices is to provide easy references on what
+has to be additionally modified if a certain component is changed.  Every time a
+component is changed, the items in the column of that component that are marked
+with an ``X'' may have to be modified as well. Table~\ref{Table:trace} shows the
+dependencies of tests on the requirements from the SRS \cite{srs}. Note that
+the maintainability requirement (\nfrref{NFR_maintainability}) has no
+associated test case(s); this is because it is the responsibility of the
+Drasil team (see \nameref{sec_sysNFReqs}).
+
+\section{Unit Test Description} \label{sec_unit_tests}
+
+As mentioned in the \nameref{sec_desVerPlan}, design documentation will not be
+written manually or generated by Drasil. Therefore, any unit tests will be
+based on the generated code itself. Unit testing may be outside the scope of
+the \progname{} project, but if not, this section will be
+filled in once the code for \progname{} is generated by Drasil.
+
 \begin{landscape}
-
-  \subsection{Traceability Between Test Cases and Requirements} \label{sec_test_req_trace}
-
-  The purpose of the traceability matrices is to provide easy references on what
-  has to be additionally modified if a certain component is changed.  Every time a
-  component is changed, the items in the column of that component that are marked
-  with an ``X'' may have to be modified as well. Table~\ref{Table:trace} shows the
-  dependencies of tests on the requirements from the SRS \cite{srs}. Note that
-  the maintainability requirement (\nfrref{NFR_maintainability}) has no
-  associated test case(s); this is because it is the responsibility of the
-  Drasil team (see \nameref{sec_sysNFReqs}).
-
   \begin{table}[h!]
     \centering
     \begin{tabular}{|c|c|c|c|c|c|c|c|c|c|c|c|c|}
@@ -583,6 +623,7 @@ implementation of \progname{}.
       \testref{test_small_valid_eqn}         & X              & X                & X                 &                       & X                & X                   &                       &                                &                        &                              &                          &                            \\ \hline
       \testref{test_valid_eqn}               & X              & X                & X                 &                       & X                & X                   &                       &                                &                        &                              &                          &                            \\ \hline
       \testref{test_large_valid_eqn}         & X              & X                & X                 &                       & X                & X                   &                       &                                &                        &                              &                          &                            \\ \hline
+      \testref{test_trival_valid_eqn}        & X              & X                & X                 &                       & X                & X                   &                       &                                &                        &                              &                          &                            \\ \hline
       \testref{test_nonstoich_valid_eqn}     & X              & X                & X                 &                       & X                & X                   &                       &                                &                        &                              &                          &                            \\ \hline
       \testref{test_inf_cons_mass_valid_eqn} & X              & X                & X                 & X                     &                  &                     &                       &                                &                        &                              &                          &                            \\ \hline
       \testref{test_inf_over_valid_eqn}      & X              & X                & X                 & X                     &                  &                     &                       &                                &                        &                              &                          &                            \\ \hline
@@ -597,14 +638,6 @@ implementation of \progname{}.
   \end{table}
 
 \end{landscape}
-
-\section{Unit Test Description} \label{sec_unit_tests}
-
-As mentioned in the \nameref{sec_desVerPlan}, design documentation will not be
-written manually or generated by Drasil. Therefore, any unit tests will be
-based on the generated code itself. Unit testing may be outside the scope of
-the \progname{} project, but if not, this section will be
-filled in once the code for \progname{} is generated by Drasil.
 
 % \subsection{Unit Testing Scope}
 

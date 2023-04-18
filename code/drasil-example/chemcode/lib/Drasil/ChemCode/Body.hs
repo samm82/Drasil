@@ -25,11 +25,12 @@ import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 
 import Drasil.ChemCode.Assumptions (assumps)
 import Drasil.ChemCode.Changes (uChanges)
+import Drasil.ChemCode.Concepts (progName)
 import Drasil.ChemCode.DataDefs (dds)
-import Drasil.ChemCode.Figures (sysCtxFig)
+import Drasil.ChemCode.Figures (physSysFig, sysCtxFig)
 import Drasil.ChemCode.Goals (goals)
 import Drasil.ChemCode.IMods (ims)
-import Drasil.ChemCode.Quantities (inputs, quants)
+import Drasil.ChemCode.Quantities (constants, inputs, quants)
 import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
 import Drasil.ChemCode.TMods (tms)
 
@@ -73,7 +74,7 @@ mkSRS = [TableOfContents,
       [
         SSDProblem $ PDProg prob []
         [ TermsAndDefs Nothing terms
-        -- , PhySysDesc glassBR physSystParts physSystFig []
+        , PhySysDesc progName physSysParts physSysFig []
         , Goals goalInputs
         ],
        SSDSolChSpec $ SCSProg
@@ -97,7 +98,7 @@ mkSRS = [TableOfContents,
   LCsSec,
   UCsSec,
   TraceabilitySec $ TraceabilityProg $ traceMatStandard si,
-  -- AuxConstntSec $ AuxConsProg glassBR auxiliaryConstants,  
+  AuxConstntSec $ AuxConsProg progName constants,
   Bibliography
   ]
 
@@ -108,22 +109,24 @@ tSymbIntro = [TSPurpose, -- SymbConvention [Lit (nw chemistry)],
 
 justification, scope, orgOfDocIntro, prob :: Sentence
 justification = foldlSent [atStart chemical, plural equation,
-  S "are common ways of representing", phrase chemical, plural reaction,
-  S "but they must be balanced" +:+. refS lund2023, -- to ensure the Law of
-  -- Conservation of Mass (\tmref{TM_ConsMass}) is observed
-  S "This process of balancing a", phrase chemical, phrase equation,
-  S "involves introducing coefficients before each", phrase chemical,
-  S "formula such that there are the same number of atoms of each",
-  phrase element `S.onThe` phrase reactant `S.and_` phrase product,
-  S "sides" `S.ofThe` phrase chemical +:+. phrase equation,
-  S "Because balancing must be done before a given", phrase chemical,
-  phrase reaction, S "can be used", refS lund2023 `sC` S "we want a" +:+.
-    S "tool for automatic balancing", S "This would improve the",
-  S "productivity of scientists and engineers" `S.and_` S "reduce the" +:+.
-    S "potential for human error", S "This", phrase program,
+  S "are common ways of representing", phrase chemical, plural reaction +:+.
+  sParen (refS physSysFig +:+ S "shows an example of a" +:+ phrase chemical +:+
+    phrase equation), S "Subscripts indicate the number of atoms of each",
+  phrase element, S "present in the given", phrase chemical +:+. phrase compound,
+  S "A", phrase chemical, phrase equation, S "is", Quote (S "balanced"),
+  S "if there are the same number of atoms of each", phrase element,
+  S "before and after the", phrase reaction +:+. (S "takes place" `sC`
+    S "which satisfies the Law of Conservation of Mass"), -- (\tmref{TM_ConsMass})
+  atStart chemical, plural equation, S "are balanced by introducing",
+  S "coefficients before each", phrase chemical, S "formula" +:+.
+  sParen (S "this coefficient may be" +:+ Quote (S "1") `sC` S "in which" +:+
+    S "case is implicit and not added to the" +:+ phrase equation),
+  S "We want a tool to balance", phrase chemical, plural equation +:+.
+    (S "automatically to improve the productivity of scientists and engineers" `S.and_`
+      S "reduce the potential for human error"), S "This", phrase program,
   S "should balance a given", phrase chemical, phrase equation,
   S "if it is feasible" -- (see \nameref{sec_termsDefs})
-    `S.and_` S "if it is not" `sC` S "it should provide a descriptive",
+    `S.and_` S "if it is not" `sC` S "it should provide a",
   phrase message, S "communicating this to the" +:+. phrase user,
   atStartNP (the program), S "that performs these tasks as documented here",
   S "will be called", introduceAbb progName
@@ -239,11 +242,17 @@ sysConstraints = foldlSP [short progName, S "will be developed using Drasil",
     S "libraries ... tested by long use"]) +:+. complexRef chen2022 (Page [24]),
   S "These rationales also apply to ILP solvers"]
 
+physSysParts :: [Sentence]
+physSysParts = map foldlSent[
+    [S "The", plural reactant, S "of a given", phrase chemical, phrase reaction],
+    [S "The", plural product, S "of the same", phrase chemical, phrase reaction]
+  ]
+
 goalInputs :: [Sentence]
 goalInputs = map (\x -> S "a" +:+ phrase x) inputs
 
 symbolsAll :: [QuantityDict]
-symbolsAll = quants
+symbolsAll = quants ++ map qw constants
 
 acronyms :: [CI]
 acronyms = [assumption, progName, Doc.srs, thModel, dataDefn, inModel, requirement,
@@ -270,7 +279,7 @@ si =
       _outputs     = [] :: [QuantityDict],
       _defSequence = [] :: [Block SimpleQDef],
       _constraints = [] :: [ConstrainedChunk],
-      _constants   = [] :: [ConstQDef],
+      _constants   = constants,
       _sysinfodb   = symbMap,
       _usedinfodb  = usedDB,
        refdb       = refDB
@@ -328,8 +337,3 @@ concIns = assumps ++ goals ++ funcReqs ++ nonfuncReqs ++ uChanges
 
 stdFields :: Fields
 stdFields = [DefiningEquation, Description Verbose IncludeUnits, Notes, Source, RefBy]
-
-
--- MOVE TO CONCEPTS
-progName :: CI -- name of example
-progName = commonIdeaWithDict "progName" (pn "Chemistry Code") "ChemCode" []

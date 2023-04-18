@@ -67,6 +67,7 @@
                 <a href=#Sec:ProbDesc>Problem Description</a>
                 <ul class="list">
                   <li><a href=#Sec:TermDefs>Terminology and Definitions</a></li>
+                  <li><a href=#Sec:PhysSyst>Physical System Description</a></li>
                   <li><a href=#Sec:GoalStmt>Goal Statements</a></li>
                 </ul>
               </li>
@@ -93,6 +94,9 @@
           <li><a href=#Sec:UCs>Unlikely Changes</a></li>
           <li>
             <a href=#Sec:TraceMatrices>Traceability Matrices and Graphs</a>
+          </li>
+          <li>
+            <a href=#Sec:AuxConstants>Values of Auxiliary Constants</a>
           </li>
           <li><a href=#Sec:References>References</a></li>
         </ul>
@@ -185,6 +189,11 @@
                 <tr>
                   <td><em>j</em></td>
                   <td>Generic integer</td>
+                  <td>--</td>
+                </tr>
+                <tr>
+                  <td><em>MAINTAIN_FRAC</em></td>
+                  <td>Maintainability fraction</td>
                   <td>--</td>
                 </tr>
                 <tr>
@@ -292,7 +301,7 @@
       <div class="section">
         <h1>Introduction</h1>
         <p class="paragraph">
-          Chemical equations are common ways of representing chemical reactions but they must be balanced <a href=#lund2023>lund2023</a>. This process of balancing a chemical equation involves introducing coefficients before each chemical formula such that there are the same number of atoms of each element on the reactant and product sides of the chemical equation. Because balancing must be done before a given chemical reaction can be used <a href=#lund2023>lund2023</a>, we want a tool for automatic balancing. This would improve the productivity of scientists and engineers and reduce the potential for human error. This program should balance a given chemical equation if it is feasible and if it is not, it should provide a descriptive message communicating this to the user. The program that performs these tasks as documented here will be called Chemistry Code (ChemCode).
+          Chemical equations are common ways of representing chemical reactions (<a href=#Figure:physSysFig>Fig:physSysFig</a> shows an example of a chemical equation). Subscripts indicate the number of atoms of each element present in the given chemical compound. A chemical equation is "balanced" if there are the same number of atoms of each element before and after the reaction takes place, which satisfies the Law of Conservation of Mass. Chemical equations are balanced by introducing coefficients before each chemical formula (this coefficient may be "1", in which case is implicit and not added to the equation). We want a tool to balance chemical equations automatically to improve the productivity of scientists and engineers and reduce the potential for human error. This program should balance a given chemical equation if it is feasible and if it is not, it should provide a message communicating this to the user. The program that performs these tasks as documented here will be called Chemistry Code (ChemCode).
         </p>
         <p class="paragraph">
           The following section provides an overview of the Software Requirements Specification (SRS) for ChemCode. This section explains the purpose of this document, the scope of the requirements, the characteristics of the intended reader, and the organization of the document.
@@ -457,6 +466,24 @@
                     Reaction: An interaction between different types of matter that results in at least one new substance being formed <a href=#lund2023>lund2023</a>.
                   </li>
                 </ul>
+              </div>
+            </div>
+            <div id="Sec:PhysSyst">
+              <div class="subsubsection">
+                <h3>Physical System Description</h3>
+                <p class="paragraph">
+                  The physical system of ChemCode, as shown in <a href=#Figure:physSysFig>Fig:physSysFig</a>, includes the following elements:
+                </p>
+                <div class="list">
+                  <p>PS1: The reactants of a given chemical reaction.</p>
+                  <p>PS2: The products of the same chemical reaction.</p>
+                </div>
+                <div id="Figure:physSysFig">
+                  <figure>
+                    <img src="../../../../datafiles/chemcode/physSysFig.png" alt="Physical System Description" >
+                    <figcaption>Physical System Description</figcaption>
+                  </figure>
+                </div>
               </div>
             </div>
             <div id="Sec:GoalStmt">
@@ -1115,18 +1142,33 @@
             <div class="list">
               <p>
                 <div id="accurate">
-                  Accurate: Chemical equations are only useful if they are balanced, so computed coefficients should be exact.
+                  Accurate: Chemical equations are only useful if they are balanced <a href=#lund2023>lund2023</a>, so computed coefficients should be exact.
                 </div>
               </p>
               <p>
                 <div id="verifiable">
-                  Verifiable: The code is tested with complete verification and validation plan.
+                  Verifiable: The code is tested following the Verification and Validation (VnV) Plan.
+                </div>
+              </p>
+              <p>
+                <div id="understandable">
+                  Understandable: A new intended user (as described by <a href=#Sec:UserChars>Sec:User Characteristics</a>) is able to learn how to use ChemCode in an acceptable amount of time, as measured by the procedure in Section 10 of the VnV Plan.
+                </div>
+              </p>
+              <p>
+                <div id="usable">
+                  Usable: An intended user (as described by <a href=#Sec:UserChars>Sec:User Characteristics</a>) finds ChemCode easy to use, as measured by the procedure in Section 11 of the VnV Plan.
                 </div>
               </p>
               <p><div id="reusable">Reusable: The code is modularized.</div></p>
               <p>
+                <div id="maintainable">
+                  Maintainable: The development time for any of the likely changes will not exceed <em>MAINTAIN_FRAC</em> of the original development time.
+                </div>
+              </p>
+              <p>
                 <div id="portable">
-                  Portable: The code is able to be run in different environments.
+                  Portable: The code is able to be run on systems with the corresponding programming language installed, including systems running on Windows or macOS. The tests from the VnV Plan should pass in these environments.
                 </div>
               </p>
             </div>
@@ -1360,7 +1402,31 @@
               <td></td>
             </tr>
             <tr>
+              <td><a href=#understandable>NFR:Understandable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#usable>NFR:Usable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
               <td><a href=#reusable>NFR:Reusable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#maintainable>NFR:Maintainable</a></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1550,11 +1616,17 @@
               <th><a href=#infeasOut>FR:Infeasible-Output</a></th>
               <th><a href=#accurate>NFR:Accurate</a></th>
               <th><a href=#verifiable>NFR:Verifiable</a></th>
+              <th><a href=#understandable>NFR:Understandable</a></th>
+              <th><a href=#usable>NFR:Usable</a></th>
               <th><a href=#reusable>NFR:Reusable</a></th>
+              <th><a href=#maintainable>NFR:Maintainable</a></th>
               <th><a href=#portable>NFR:Portable</a></th>
             </tr>
             <tr>
               <td><a href=#findBalancedForm>GS:findBalancedForm</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1592,9 +1664,15 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#inputValues>FR:Input-Values</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1632,9 +1710,15 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#feasOut>FR:Feasible-Output</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1672,9 +1756,15 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#accurate>NFR:Accurate</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1712,6 +1802,55 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#understandable>NFR:Understandable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#usable>NFR:Usable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#reusable>NFR:Reusable</a></td>
@@ -1732,9 +1871,38 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#maintainable>NFR:Maintainable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#portable>NFR:Portable</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1811,6 +1979,31 @@
             <a href="../../../../traceygraphs/chemcode/allvsall.svg">TraceGraphAllvsAll</a>
           </li>
         </ul>
+      </div>
+    </div>
+    <div id="Sec:AuxConstants">
+      <div class="section">
+        <h1>Values of Auxiliary Constants</h1>
+        <p class="paragraph">
+          This section contains the standard values that are used for calculations in ChemCode.
+        </p>
+        <div id="Table:TAuxConsts">
+          <table class="table">
+            <tr>
+              <th>Symbol</th>
+              <th>Description</th>
+              <th>Value</th>
+              <th>Unit</th>
+            </tr>
+            <tr>
+              <td><em>MAINTAIN_FRAC</em></td>
+              <td>maintainability fraction</td>
+              <td><em>10.0%</em></td>
+              <td>--</td>
+            </tr>
+          </table>
+          <p class="caption">Auxiliary Constants</p>
+        </div>
       </div>
     </div>
     <div id="Sec:References">

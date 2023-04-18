@@ -1,16 +1,20 @@
 module Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs) where
 
 import Language.Drasil hiding (matrix)
-import Drasil.DocLang.SRS (propCorSol)
+import Drasil.DocLang.SRS (propCorSol, userChar)
 import Language.Drasil.Chunk.Concept.NamedCombinators
 import qualified Language.Drasil.Sentence.Combinators as S
 
+import Data.Drasil.Citations (lund2023)
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Documentation (assumption, code, environment,
   funcReqDom, likelyChg, mg, mis, module_, nonFuncReqDom, output_, property,
-  requirement, srs, traceyMatrix, unlikelyChg, vavPlan, propOfCorSol)
+  requirement, srs, traceyMatrix, unlikelyChg, vav, vavPlan, propOfCorSol)
 import Data.Drasil.Concepts.Math (matrix)
 import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
+
+import Drasil.ChemCode.Concepts (progName)
+import Drasil.ChemCode.Quantities (maintainFrac)
 
 
 {--Functional Requirements--}
@@ -39,8 +43,8 @@ infeasOutDesc = foldlSent [S "If the inputted", phrase chemical, phrase equation
 {--Nonfunctional Requirements--}
 
 nonfuncReqs :: [ConceptInstance]
-nonfuncReqs = [accurate, verifiable, reusable, portable]
--- nonfuncReqs = [accurate, verifiable, understandable, reusable, maintainable, portable]
+nonfuncReqs = [accurate, verifiable, understandable, usable, reusable,
+  maintainable, portable]
 
 -- correct :: ConceptInstance
 -- correct = cic "correct" (foldlSent [
@@ -50,31 +54,44 @@ nonfuncReqs = [accurate, verifiable, reusable, portable]
 
 accurate :: ConceptInstance
 accurate = cic "accurate" (foldlSent [atStart chemical, plural equation,
-  S "are only useful if they are balanced" `sC`
+  S "are only useful if they are balanced", refS lund2023 `sC`
     S "so computed coefficients should be exact"]) "Accurate" nonFuncReqDom
  
 verifiable :: ConceptInstance
 verifiable = cic "verifiable" (foldlSent [
-  atStartNP (the code), S "is tested with complete",
-  phrase vavPlan]) "Verifiable" nonFuncReqDom
+  atStartNP (the code), S "is tested following the",
+  titleize vav, sParen (S "VnV"), S "Plan"]) "Verifiable" nonFuncReqDom
 
--- understandable :: ConceptInstance
--- understandable = cic "understandable" (foldlSent [
---   atStartNP (the code), S "is modularized with complete",
---   phraseNP (mg `and_` mis)]) "Understandable" nonFuncReqDom
+understandable :: ConceptInstance
+understandable = cic "understandable" (foldlSent [
+  S "A new intended user", sParen (S "as described by" +:+
+    refS (userChar ([]::[Contents]) ([]::[Section]))),
+  S "is able to learn how to use", short progName, S "in an acceptable",
+  S "amount of time" `sC` S "as measured by the procedure in Section 10 of",
+  S "the VnV Plan"]) "Understandable" nonFuncReqDom
+
+usable :: ConceptInstance
+usable = cic "usable" (foldlSent [
+  S "An intended user", sParen (S "as described by" +:+
+    refS (userChar ([]::[Contents]) ([]::[Section]))), S "finds",
+  short progName, S "easy to use" `sC`
+    S "as measured by the procedure in Section 11 of the VnV Plan"])
+  "Usable" nonFuncReqDom
 
 reusable :: ConceptInstance
 reusable = cic "reusable" (foldlSent [atStartNP (the code), S "is modularized"])
   "Reusable" nonFuncReqDom
 
--- maintainable :: ConceptInstance
--- maintainable = cic "maintainable" (foldlSent [
---   S "The traceability between", foldlList Comma List [plural requirement,
---   plural assumption, plural thModel, plural genDefn, plural dataDefn, plural inModel,
---   plural likelyChg, plural unlikelyChg, plural module_], S "is completely recorded in",
---   plural traceyMatrix, S "in the", getAcc srs `S.and_` phrase mg]) "Maintainable" nonFuncReqDom
+maintainable :: ConceptInstance
+maintainable = cic "maintainable" (foldlSent [
+  S "The development time for any of the", plural likelyChg,
+  S "will not exceed", ch maintainFrac, S "of the original development time"])
+  "Maintainable" nonFuncReqDom
 
 portable :: ConceptInstance
 portable = cic "portable" (foldlSent [
-  atStartNP (the code), S "is able to be run in different", plural environment])
+  atStartNP (the code), S "is able to be run on systems with the",
+  S "corresponding programming language installed" `sC` S "including" +:+.
+  S "systems running on Windows or macOS", S"The tests from the VnV Plan",
+  S "should pass in these environments"])
   "Portable" nonFuncReqDom

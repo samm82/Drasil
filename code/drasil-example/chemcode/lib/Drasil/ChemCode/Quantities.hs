@@ -13,6 +13,9 @@ quants = inputs ++ [aMat, bVec, cVec, qMat, qEnt, xVec, unaryVec, zeroVec,
   genE, genC, genI, genJ, genR, genX, genY, tupC, count, elems, elemT, compT,
   reacT]
 
+constants :: [ConstQDef]
+constants = [maintainFrac]
+
 inputChemEqn, aMat, bVec, cVec, qMat, qEnt, xVec, unaryVec, zeroVec, genE,
   genC, genI, genJ, genR, genX, genY, tupC, count, elems, elemT, compT,
   reacT :: QuantityDict
@@ -77,3 +80,9 @@ reacT = vcSt "reacT" (nounPhraseSent $ phrase reaction +:+ S "data type")
   (Record [("prod", reacSide), ("reac", reacSide)])
   where 
     reacSide = Sequence $ Record [("comp", Compound), ("coeff", Integer)]
+
+maintainFrac :: ConstQDef
+maintainFrac = mkQuantDef (vc "maintainFrac"
+  (nounPhraseSP "maintainability fraction") (label "MAINTAIN_FRAC") Real)
+  (perc 10 2)
+  -- FIXME: move concept to drasil-data?

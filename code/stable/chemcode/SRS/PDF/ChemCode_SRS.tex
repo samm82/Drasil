@@ -72,6 +72,8 @@ $i$ & Generic integer & --
 \\
 $j$ & Generic integer & --
 \\
+$\text{MAINTAIN_FRAC}$ & Maintainability fraction & --
+\\
 $\symbf{Q}$ & Matrix representation of a chemical equation & --
 \\
 ${q_{\text{ij}}}$ & Element of $\symbf{Q}$ & --
@@ -126,7 +128,7 @@ UC & Unlikely Change
 \end{longtable}
 \section{Introduction}
 \label{Sec:Intro}
-Chemical equations are common ways of representing chemical reactions but they must be balanced \cite{lund2023}. This process of balancing a chemical equation involves introducing coefficients before each chemical formula such that there are the same number of atoms of each element on the reactant and product sides of the chemical equation. Because balancing must be done before a given chemical reaction can be used \cite{lund2023}, we want a tool for automatic balancing. This would improve the productivity of scientists and engineers and reduce the potential for human error. This program should balance a given chemical equation if it is feasible and if it is not, it should provide a descriptive message communicating this to the user. The program that performs these tasks as documented here will be called Chemistry Code (ChemCode).
+Chemical equations are common ways of representing chemical reactions (\hyperref[Figure:physSysFig]{Fig:physSysFig} shows an example of a chemical equation). Subscripts indicate the number of atoms of each element present in the given chemical compound. A chemical equation is ``balanced'' if there are the same number of atoms of each element before and after the reaction takes place, which satisfies the Law of Conservation of Mass. Chemical equations are balanced by introducing coefficients before each chemical formula (this coefficient may be ``1'', in which case is implicit and not added to the equation). We want a tool to balance chemical equations automatically to improve the productivity of scientists and engineers and reduce the potential for human error. This program should balance a given chemical equation if it is feasible and if it is not, it should provide a message communicating this to the user. The program that performs these tasks as documented here will be called Chemistry Code (ChemCode).
 
 The following section provides an overview of the Software Requirements Specification (SRS) for ChemCode. This section explains the purpose of this document, the scope of the requirements, the characteristics of the intended reader, and the organization of the document.
 
@@ -216,6 +218,21 @@ This subsection provides a list of terms that are used in the subsequent section
 \item{Reactant: A substance involved in and changed by a chemical reaction.}
 \item{Reaction: An interaction between different types of matter that results in at least one new substance being formed \cite{lund2023}.}
 \end{itemize}
+\subsubsection{Physical System Description}
+\label{Sec:PhysSyst}
+The physical system of ChemCode, as shown in \hyperref[Figure:physSysFig]{Fig:physSysFig}, includes the following elements:
+
+\begin{itemize}
+\item[PS1:]{The reactants of a given chemical reaction.}
+\item[PS2:]{The products of the same chemical reaction.}
+\end{itemize}
+\begin{figure}
+\begin{center}
+\includegraphics[width=\textwidth]{../../../../datafiles/chemcode/physSysFig.png}
+\caption{Physical System Description}
+\label{Figure:physSysFig}
+\end{center}
+\end{figure}
 \subsubsection{Goal Statements}
 \label{Sec:GoalStmt}
 Given a representation of a chemical equation, the goal statements are:
@@ -648,10 +665,13 @@ ${r_{\text{in}}}$ & Representation of a chemical equation & --
 This section provides the non-functional requirements, the qualities that the software is expected to exhibit.
 
 \begin{itemize}
-\item[Accurate:\phantomsection\label{accurate}]{Chemical equations are only useful if they are balanced, so computed coefficients should be exact.}
-\item[Verifiable:\phantomsection\label{verifiable}]{The code is tested with complete verification and validation plan.}
+\item[Accurate:\phantomsection\label{accurate}]{Chemical equations are only useful if they are balanced \cite{lund2023}, so computed coefficients should be exact.}
+\item[Verifiable:\phantomsection\label{verifiable}]{The code is tested following the Verification and Validation (VnV) Plan.}
+\item[Understandable:\phantomsection\label{understandable}]{A new intended user (as described by \hyperref[Sec:UserChars]{Sec:User Characteristics}) is able to learn how to use ChemCode in an acceptable amount of time, as measured by the procedure in Section 10 of the VnV Plan.}
+\item[Usable:\phantomsection\label{usable}]{An intended user (as described by \hyperref[Sec:UserChars]{Sec:User Characteristics}) finds ChemCode easy to use, as measured by the procedure in Section 11 of the VnV Plan.}
 \item[Reusable:\phantomsection\label{reusable}]{The code is modularized.}
-\item[Portable:\phantomsection\label{portable}]{The code is able to be run in different environments.}
+\item[Maintainable:\phantomsection\label{maintainable}]{The development time for any of the likely changes will not exceed $\text{MAINTAIN_FRAC}$ of the original development time.}
+\item[Portable:\phantomsection\label{portable}]{The code is able to be run on systems with the corresponding programming language installed, including systems running on Windows or macOS. The tests from the VnV Plan should pass in these environments.}
 \end{itemize}
 \section{Likely Changes}
 \label{Sec:LCs}
@@ -726,7 +746,13 @@ The purpose of the traceability matrices is to provide easy references on what h
 \\
 \hyperref[verifiable]{NFR:Verifiable} &  &  &  &  & 
 \\
+\hyperref[understandable]{NFR:Understandable} &  &  &  &  & 
+\\
+\hyperref[usable]{NFR:Usable} &  &  &  &  & 
+\\
 \hyperref[reusable]{NFR:Reusable} &  &  &  &  & 
+\\
+\hyperref[maintainable]{NFR:Maintainable} &  &  &  &  & 
 \\
 \hyperref[portable]{NFR:Portable} &  &  &  &  & 
 \\
@@ -768,31 +794,37 @@ The purpose of the traceability matrices is to provide easy references on what h
 \caption{Traceability Matrix Showing the Connections Between Items and Other Sections}
 \label{Table:TraceMatRefvsRef}
 \end{longtable}
-\begin{longtable}{l l l l l l l l l l l l l l l l l l}
+\begin{longtable}{l l l l l l l l l l l l l l l l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[TM:lawConsMass]{TM:lawConsMass}} & \textbf{\hyperref[IM:matRepresentation]{IM:matRepresentation}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[portable]{NFR:Portable}}
+\textbf{} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[TM:lawConsMass]{TM:lawConsMass}} & \textbf{\hyperref[IM:matRepresentation]{IM:matRepresentation}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[understandable]{NFR:Understandable}} & \textbf{\hyperref[usable]{NFR:Usable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[maintainable]{NFR:Maintainable}} & \textbf{\hyperref[portable]{NFR:Portable}}
 \\
 \midrule
 \endhead
-\hyperref[findBalancedForm]{GS:findBalancedForm} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[findBalancedForm]{GS:findBalancedForm} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[outputInfeasMsg]{GS:outputInfeasMsg} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[outputInfeasMsg]{GS:outputInfeasMsg} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[accurate]{NFR:Accurate} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[accurate]{NFR:Accurate} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[reusable]{NFR:Reusable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[understandable]{NFR:Understandable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[portable]{NFR:Portable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\hyperref[usable]{NFR:Usable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\\
+\hyperref[reusable]{NFR:Reusable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\\
+\hyperref[maintainable]{NFR:Maintainable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
+\\
+\hyperref[portable]{NFR:Portable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Requirements, Goal Statements and Other Items}
@@ -844,6 +876,22 @@ For convenience, the following graphs can be found at the links below:
 \item{\hyperref{../../../../traceygraphs/chemcode/allvsr.svg}{}{}{TraceGraphAllvsR}}
 \item{\hyperref{../../../../traceygraphs/chemcode/allvsall.svg}{}{}{TraceGraphAllvsAll}}
 \end{itemize}
+\section{Values of Auxiliary Constants}
+\label{Sec:AuxConstants}
+This section contains the standard values that are used for calculations in ChemCode.
+
+\begin{longtable}{l l l l}
+\toprule
+\textbf{Symbol} & \textbf{Description} & \textbf{Value} & \textbf{Unit}
+\\
+\midrule
+\endhead
+$\text{MAINTAIN_FRAC}$ & maintainability fraction & $10.0\%$ & --
+\\
+\bottomrule
+\caption{Auxiliary Constants}
+\label{Table:TAuxConsts}
+\end{longtable}
 \section{References}
 \label{Sec:References}
 \begin{filecontents*}{bibfile.bib}
