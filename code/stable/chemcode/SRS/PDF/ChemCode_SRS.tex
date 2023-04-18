@@ -357,6 +357,9 @@ This section lists the likely changes to be made to the software.
 \item[calcYield:\phantomsection\label{calcYield}]{In the future, ChemCode might be able to, given the amount of more than one reactant (in moles) in a reaction, calculate the theoretical yield of each product (also in moles). This is dependent on \hyperref[detLimReag]{LC:detLimReag}.}
 \item[calcExcess:\phantomsection\label{calcExcess}]{In the future, ChemCode might be able to, given the amount of more than one reactant (in moles) in a reaction, calculate the amount of excess reactant(s) (also in moles). This is dependent on \hyperref[detLimReag]{LC:detLimReag}.}
 \item[incorrectInputFormat:\phantomsection\label{incorrectInputFormat}]{\hyperref[correctInputFormat]{A:correctInputFormat} assumes that inputted chemical formulas follow the conventions laid out in \cite{inorganicIUPAC} and \cite{organicIUPAC}. In the future, ChemCode might be able to parse valid inputted chemical formulas that do not follow these conventions and format them correctly when outputting them.}
+\item[termsOfMass:\phantomsection\label{termsOfMass}]{In the future, the user might be able to enter the amounts required by \hyperref[calcMoles]{LC:calcMoles}, \hyperref[detLimReag]{LC:detLimReag}, \hyperref[calcYield]{LC:calcYield}, and \hyperref[calcExcess]{LC:calcExcess} in terms of mass (e.g., in grams).}
+\item[classRxns:\phantomsection\label{classRxns}]{In the future, ChemCode might be able to classify a chemical reaction as ``combination (or synthesis), decomposition, combustion, single replacement, [or] double replacement'' \cite[(pg. 301)]{lund2023}.}
+\item[classMoreRxns:\phantomsection\label{classMoreRxns}]{In the future, ChemCode might be able to classify oxidation-reduction reactions, ... acid-base reactions, and condensation reactions \cite[(pg. 301)]{lund2023}. This should be done after \hyperref[classRxns]{LC:classRxns}.}
 \item[identifyPhaseLabels:\phantomsection\label{identifyPhaseLabels}]{In the future, ChemCode might be able to, given the phase labels for the reactants of a chemical reaction, identify the phase labels for the products, which would involve determining solubility.}
 \end{itemize}
 \section{Unlikely Changes}
@@ -435,6 +438,12 @@ The purpose of the traceability matrices is to provide easy references on what h
 \hyperref[calcExcess]{LC:calcExcess} &  &  &  &  & 
 \\
 \hyperref[incorrectInputFormat]{LC:incorrectInputFormat} &  &  &  & X & 
+\\
+\hyperref[termsOfMass]{LC:termsOfMass} &  &  &  &  & 
+\\
+\hyperref[classRxns]{LC:classRxns} &  &  &  &  & 
+\\
+\hyperref[classMoreRxns]{LC:classMoreRxns} &  &  &  &  & 
 \\
 \hyperref[identifyPhaseLabels]{LC:identifyPhaseLabels} &  &  &  &  & 
 \\

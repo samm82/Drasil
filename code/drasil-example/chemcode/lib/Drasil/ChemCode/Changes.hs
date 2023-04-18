@@ -11,28 +11,32 @@ import Data.Drasil.SI_Units (mole)
 
 import Drasil.ChemCode.Assumptions
 import Drasil.ChemCode.Concepts (progName)
-import Data.Drasil.Citations (organicIUPAC, inorganicIUPAC)
+import Data.Drasil.Citations (inorganicIUPAC, lund2023, organicIUPAC)
 
 lChanges :: [ConceptInstance]
 lChanges = [complexForms, calcMoles, detLimReag, calcYield, calcExcess,
-  incorrectInputFormat, identifyPhaseLabels]
+  incorrectInputFormat, termsOfMass, classRxns, classMoreRxns, identifyPhaseLabels]
 
 complexForms, calcMoles, detLimReag, calcYield, calcExcess, incorrectInputFormat,
-  identifyPhaseLabels :: ConceptInstance
+  termsOfMass, classRxns, classMoreRxns, identifyPhaseLabels :: ConceptInstance
 complexForms = cic "complexForms"      complexFormsDesc      "complexForms"      likeChgDom
 calcMoles = cic "calcMoles"      calcMolesDesc      "calcMoles"      likeChgDom
 detLimReag = cic "detLimReag"      detLimReagDesc      "detLimReag"      likeChgDom
 calcYield = cic "calcYield"      calcYieldDesc      "calcYield"      likeChgDom
 calcExcess = cic "calcExcess"      calcExcessDesc      "calcExcess"      likeChgDom
 incorrectInputFormat = cic "incorrectInputFormat"      incorrectInputFormatDesc      "incorrectInputFormat"      likeChgDom
+termsOfMass = cic "termsOfMass"      termsOfMassDesc      "termsOfMass"      likeChgDom
+classRxns = cic "classRxns"      classRxnsDesc      "classRxns"      likeChgDom
+classMoreRxns = cic "classMoreRxns"      classMoreRxnsDesc      "classMoreRxns"      likeChgDom
 identifyPhaseLabels = cic "identifyPhaseLabels" identifyPhaseLabelsDesc "identifyPhaseLabels" likeChgDom
 
 complexFormsDesc, calcMolesDesc, detLimReagDesc, calcYieldDesc, calcExcessDesc,
-  incorrectInputFormatDesc, identifyPhaseLabelsDesc :: Sentence
+  incorrectInputFormatDesc, termsOfMassDesc, classRxnsDesc, classMoreRxnsDesc,
+  identifyPhaseLabelsDesc :: Sentence
 complexFormsDesc = foldlSent [refS simpleForms, S "assumes that inputted",
   phrase chemical +:+. S "formulas only consist of atomic symbols and subscripts",
   S "In the future" `sC` S "the user might be able to input more complex",
-  phrase chemical, S "formulas" `sC` S "such as those containing", 
+  phrase chemical, S "formulas" `sC` S "such as those containing",
   foldlList Comma Options (map S ["dots", "parentheses", "hyphens",
     "superscripts"]) -- FIXME: and/or support?
   ]
@@ -69,6 +73,29 @@ incorrectInputFormatDesc = foldlSent [refS correctInputFormat, S "assumes that i
   S "formulas that do not follow these conventions and format them correctly when outputting them"
   ]
 
+termsOfMassDesc = foldlSent [actorMightBeAbleTo (S "the user"),
+  S "enter the amounts required by", foldlList Comma List $ map refS [
+    calcMoles, detLimReag, calcYield, calcExcess], S "in terms of mass",
+    sParen (S "e.g., in grams") -- FIXME: define 'gram'
+  ]
+  -- TODO: from lund2023
+
+classRxnsDesc = foldlSent [actorMightBeAbleTo (short progName),
+  S "classify a", phrase chemical, phrase reaction, S "as",
+  Quote (S "combination (or synthesis), decomposition, combustion, single" +:+
+    S "replacement, [or] double replacement"), complexRef lund2023 $ Page [301]
+    -- FIXME: "or" in square brackets with foldlList?
+  ]
+  -- TODO: from lund2023
+
+classMoreRxnsDesc = foldlSent [actorMightBeAbleTo (short progName),
+  S "classify", foldlList Comma List (map (\x -> S x +:+ plural reaction) [
+    "oxidation-reduction", "... acid-base", "condensation"]) +:+.
+    complexRef lund2023 (Page [301]), S "This should be done after",
+    refS classRxns
+  ]
+  -- TODO: from lund2023
+
 identifyPhaseLabelsDesc = likeChgGivenHelper (foldlSent_ [S "the phase labels for the",
   plural reactant, S "of a", phrase chemical, phrase reaction]) (foldlSent_ [
     S "identify the phase labels for the", plural product `sC` S "which would",
@@ -83,16 +110,12 @@ alsoInMoles  = sParen (S "also in" +:+ plural mole)
 amountMultReac = S "the amount of more than one" +:+ phrase reactant +:+ inMolesInReac
 
 likeChgGivenHelper :: Sentence -> Sentence -> Sentence
-likeChgGivenHelper given action = foldlSent [S "In the future" `sC` short progName,
-  S "might be able to" `sC` S "given", given `sC` action]
+likeChgGivenHelper given action = actorMightBeAbleTo (short progName) `sC`
+  S "given" +:+. (given `sC` action)
 
--- LC7: In the future, the user might be able to enter the amounts required by LC2, LC3, LC4,
--- and LC5 in terms of mass (e.g., in grams).1
--- LC8: In the future, ChemCode might be able to classify a chemical reaction as “combination
--- (or synthesis), decomposition, combustion, single replacement, [or] double replacement” [9, p. 301].1
--- LC9: In the future, ChemCode might also be able to classify “oxidation-reduction reactions,
--- . . . acid-base reactions, and condensation reactions” [9, p. 301].1 This should be done
--- after LC8.
+actorMightBeAbleTo :: Sentence -> Sentence
+actorMightBeAbleTo actor = S "In the future" `sC` actor +:+ S "might be able to"
+
 -- LC10: In the future, ChemCode might allow the user to input phase labels.1
 -- LC11: In the future, ChemCode might be able to, given the phase labels for the reactants of
 -- a reaction, identify the phase labels for the products, which would involve determining
