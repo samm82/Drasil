@@ -15,6 +15,7 @@ import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 
 import Drasil.ChemCode.Concepts (progName)
 import Drasil.ChemCode.Quantities (maintainFrac)
+import Drasil.ChemCode.IMods (chemEqIntLinProg)
 
 
 {--Functional Requirements--}
@@ -55,7 +56,8 @@ nonfuncReqs = [accurate, verifiable, understandable, usable, reusable,
 accurate :: ConceptInstance
 accurate = cic "accurate" (foldlSent [atStart chemical, plural equation,
   S "are only useful if they are balanced", refS lund2023 `sC`
-    S "so computed coefficients should be exact"]) "Accurate" nonFuncReqDom
+    S "so computed coefficients from", refS chemEqIntLinProg,
+    S "should be exact"]) "Accurate" nonFuncReqDom
  
 verifiable :: ConceptInstance
 verifiable = cic "verifiable" (foldlSent [
