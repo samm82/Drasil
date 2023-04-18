@@ -12,14 +12,15 @@ import Drasil.ChemCode.Assumptions
 import Drasil.ChemCode.Concepts (progName)
 
 lChanges :: [ConceptInstance]
-lChanges = [complexForms, calcMoles, identifyPhaseLabels]
+lChanges = [complexForms, calcMoles, detLimReag, identifyPhaseLabels]
 
-complexForms, calcMoles, identifyPhaseLabels :: ConceptInstance
+complexForms, calcMoles, detLimReag, identifyPhaseLabels :: ConceptInstance
 complexForms = cic "complexForms"      complexFormsDesc      "complexForms"      likeChgDom
 calcMoles = cic "calcMoles"      calcMolesDesc      "calcMoles"      likeChgDom
+detLimReag = cic "detLimReag"      detLimReagDesc      "detLimReag"      likeChgDom
 identifyPhaseLabels = cic "identifyPhaseLabels" identifyPhaseLabelsDesc "identifyPhaseLabels" likeChgDom
 
-complexFormsDesc, calcMolesDesc, identifyPhaseLabelsDesc :: Sentence
+complexFormsDesc, calcMolesDesc, detLimReagDesc, identifyPhaseLabelsDesc :: Sentence
 complexFormsDesc = foldlSent [refS simpleForms, S "assumes that inputted",
   phrase chemical +:+. S "formulas only consist of atomic symbols and subscripts",
   S "In the future" `sC` S "the user might be able to input more complex",
@@ -36,6 +37,14 @@ calcMolesDesc = likeChgGivenHelper (foldlSent_ [S "the amount of one substance",
   ])
   -- TODO: from lund2023
 
+detLimReagDesc = likeChgGivenHelper (foldlSent_ [S "the amount of each",
+  phrase reactant, sParen (S "in" +:+ plural mole), S "in a", phrase reaction])
+  (foldlSent_ [
+    S "determine the limiting" +:+. (phrase reactant :+: sParen (S "s")),
+    S "This is dependent on", refS calcMoles
+  ])
+  -- TODO: from lund2023
+
 identifyPhaseLabelsDesc = likeChgGivenHelper (foldlSent_ [S "the phase labels for the",
   plural reactant, S "of a", phrase chemical, phrase reaction]) (foldlSent_ [
     S "identify the phase labels for the", plural product `sC` S "which would",
@@ -48,8 +57,6 @@ likeChgGivenHelper :: Sentence -> Sentence -> Sentence
 likeChgGivenHelper given action = foldlSent [S "In the future" `sC` short progName,
   S "might be able to" `sC` S "given", given `sC` action]
 
--- LC3: In the future, ChemCode might be able to, given the amount of each reactant (in
--- moles) in a reaction, determine the limiting reactant(s).1 This is dependent on LC2.
 -- LC4: In the future, ChemCode might be able to, given the amount of more than one reactant
 -- (in moles) in a reaction, calculate the theoretical yield of each product (also in moles).1
 -- This is dependent on LC3.
