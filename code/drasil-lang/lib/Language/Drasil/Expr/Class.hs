@@ -188,11 +188,8 @@ class ExprC r where
   -- | Smart constructor for 'real interval' membership.
   realInterval :: HasUID c => c -> RealInterval r r -> r
 
-  -- | Smart constructor for 'universal quantification'.
-  forall :: (HasUID c, HasSymbol c, HasSpace c) => [c] -> r -> r
-
-  -- | Smart constructor for 'existential quantification'.
-  exists :: (HasUID c, HasSymbol c, HasSpace c) => [c] -> r -> r
+  -- | Smart constructors for 'quantification's.
+  forall, exists :: (HasUID c, HasSymbol c, HasSpace c) => [c] -> r -> r
 
   -- | Smart constructor for 'set comprehension'.
   setComp :: (HasUID c, HasSymbol c, HasSpace c) => c -> r -> r
@@ -610,6 +607,9 @@ instance ExprC M.ModelExpr where
   -- Note how |sy| 'enforces' having a symbol
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.
   sy x = M.C (x ^. uid)
+
+  -- | Smart constructor for 'universal quantification'.
+  forall c = M.ForAll' (map (\x -> isIn (sy x) (x ^. typ)) c)
 
   -- | Smart constructor for 'existential quantification'.
   exists c = M.Exists (map (\x -> isIn (sy x) (x ^. typ)) c)

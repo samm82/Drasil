@@ -10,7 +10,7 @@ import Data.Drasil.Concepts.Chemistry (chemical, reaction)
 import Data.Drasil.Concepts.Math (equation)
 import Data.Drasil.Concepts.Software (program)
 
-import Drasil.ChemCode.Quantities (aMat, bVec, cVec, xVec, zeroVec)
+import Drasil.ChemCode.Quantities (aMat, bVec, cVec, xVec, zeroVec, genE, genR)
 
 tms :: [TheoryModel]
 tms = [intLinProg, lawConsMass]
@@ -46,16 +46,13 @@ intLinProg = tm
 
 lawConsMass :: TheoryModel
 lawConsMass = tm
-  (ilpModel "lawConsMass" (cn' "law of conservation of mass")
-    $ maxILP xVec cVec
-      $ sy aMat `mulRe` sy xVec $<= sy bVec NE.:| [sy xVec $>= sy zeroVec, isIn (sy xVec) (Vect Integer)])
+  (equationalModel "lawConsMass" (cn' "law of conservation of mass")
+    $ fromEqn' "" (cn "") EmptyS (label "Law of Conservation of Mass") Real
+      $ forall [genE, genR] (sy genE $= sy genR))
   ([] :: [QuantityDict]) -- FIXME: I should not need to manually define the type signature for this to type check
   [consMassChunk] -- FIXME: why do I need this?
   []
-  [sy cVec `mulRe` sy xVec,
-   sy aMat `mulRe` sy xVec $<= sy bVec,
-   sy xVec $>= sy zeroVec,
-   isIn (sy xVec) (Vect Integer)] -- FIXME: apparently this is needed since generation doesn't happen from ModelKinds
+  [sy genE $= sy genR] -- FIXME: apparently this is needed since generation doesn't happen from ModelKinds
   []
   [dRef lund2023]
   "lawConsMass" -- FIXME: this is likely needed for the same ModelKinds reason
