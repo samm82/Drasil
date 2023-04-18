@@ -5,13 +5,13 @@ import Prelude hiding (product)
 import Language.Drasil
 import qualified Language.Drasil.Sentence.Combinators as S
 
+import Data.Drasil.Citations (inorganicIUPAC, lund2023, organicIUPAC)
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Documentation (likeChgDom, unlikeChgDom)
 import Data.Drasil.SI_Units (mole)
 
 import Drasil.ChemCode.Assumptions
 import Drasil.ChemCode.Concepts (progName)
-import Data.Drasil.Citations (inorganicIUPAC, lund2023, organicIUPAC)
 
 -- LIKELY CHANGES
 
@@ -56,19 +56,19 @@ calcMolesDesc = likeChgGivenHelper (foldlSent_ [S "the amount of one substance",
 detLimReagDesc = likeChgGivenHelper amountMultReac
   (foldlSent_ [
     S "determine the limiting" +:+. (phrase reactant :+: sParen (S "s")),
-    S "This is dependent on", refS calcMoles
+    dependentOn calcMoles
   ])
   -- TODO: from lund2023
 
 calcYieldDesc = likeChgGivenHelper amountMultReac (foldlSent_ [
     S "calculate the theoretical yield of each", phrase product +:+. alsoInMoles,
-    S "This is dependent on", refS detLimReag
+    dependentOn detLimReag
   ])
   -- TODO: from lund2023
 
 calcExcessDesc = likeChgGivenHelper amountMultReac (foldlSent_ [
     S "calculate the amount of excess", phrase reactant :+: sParen (S "s") +:+.
-    alsoInMoles, S "This is dependent on", refS detLimReag
+    alsoInMoles, dependentOn detLimReag
   ])
   -- TODO: from lund2023
 
@@ -109,13 +109,13 @@ inputPhaseLabelsDesc = actorMightBeAbleTo (S "the user") +:+. S "input phase lab
 findPhaseLabelsDesc = likeChgGivenHelper (foldlSent_ [S "the phase labels for the",
   plural reactant, S "of a", phrase chemical, phrase reaction]) (foldlSent_ [
     S "identify the phase labels for the", plural product `sC` S "which would" +:+.
-    S "involve determining solubility", S "This is dependent on", refS inputPhaseLabels
+    S "involve determining solubility", dependentOn inputPhaseLabels
   ])
     -- TODO: from lund2023
 
 reacTakePlaceDesc = foldlSent [actorMightBeAbleTo (short progName),
   S "identify when a", phrase chemical, phrase reaction +:+. S "will not take place",
-  S "This is dependent on", refS findPhaseLabels
+  dependentOn findPhaseLabels
   ]
   -- TODO: from lund2023
 
@@ -132,6 +132,9 @@ likeChgGivenHelper given action = actorMightBeAbleTo (short progName) `sC`
 
 actorMightBeAbleTo :: Sentence -> Sentence
 actorMightBeAbleTo actor = S "In the future" `sC` actor +:+ S "might be able to"
+
+dependentOn :: (HasUID r, HasRefAddress r, HasShortName r) => r -> Sentence
+dependentOn r = S "This is dependent on" +:+ refS r
 
 -- UNLIKELY CHANGES
 
