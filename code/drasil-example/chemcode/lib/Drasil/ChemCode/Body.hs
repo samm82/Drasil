@@ -20,12 +20,13 @@ import Data.Drasil.Concepts.Education (educon, highSchoolChemistry, thirdYear)
 import Data.Drasil.Concepts.Math (mathcon, matrix, number, ode)
 import Data.Drasil.Concepts.Software (program, reusability)
 import Data.Drasil.People (samCrawford)
+import Data.Drasil.SI_Units (mole)
 import Data.Drasil.Software.Products (sciCompS)
 import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 
 import Drasil.ChemCode.Assumptions (assumps)
-import Drasil.ChemCode.Changes (uChanges)
-import Drasil.ChemCode.Concepts (progName)
+import Drasil.ChemCode.Changes (lChanges, uChanges)
+import Drasil.ChemCode.Concepts
 import Drasil.ChemCode.DataDefs (dds)
 import Drasil.ChemCode.Figures (physSysFig, sysCtxFig)
 import Drasil.ChemCode.Goals (goals)
@@ -135,13 +136,15 @@ justification = foldlSent [atStart chemical, plural equation,
 scope = foldlSent_ [
   S "all inputted", phrase chemical, plural equation, S "where the total",
   S "number of", phrase chemical, plural compound, S "is at most",
-  S "one more than the total number of" +:+. plural element, S "The",
-  phrase Doc.scope, S "also includes all inputted", phrase chemical,
-  S "formulas that", foldlList Comma List [
+  S "one more than the total number of" +:+. plural element, S "These",
+  phrase chemical, plural equation, S "will be balanced with integer" +:+.
+  S "coefficients", S "The", phrase Doc.scope, S "also includes all inputted",
+  phrase chemical, S "formulas that", foldlList Comma List [
     foldlSent_ [S "describe real", phrase chemical, plural compound],
     S "are formatted following a set of conventions",
-    S "only consist of atomic symbols and subscripts"
-    ]
+    S "only consist of atomic symbols and subscripts" +:+ sParen (
+      S "including the fractional subscripts in" +:+ plural nonStoicComp
+    )]
   ]
 
 orgOfDocIntro = foldlSent [atStartNP (the organization), S "of this",
@@ -259,8 +262,12 @@ acronyms = [assumption, progName, Doc.srs, thModel, dataDefn, inModel, requireme
   unlikelyChg, ode, iupac] -- genDefn, 
 
 terms :: [ConceptChunk]
-terms = [compound, element, equation, hydrate, isotope, polyIon, polymer,
-  product, reactant, reaction]
+terms = [balanced, compound, element, equation, feasible, formula, hydrate,
+  isotope, nonStoicComp, polyIon, polymer, product, reactant, reaction,
+  stoichiometry]
+
+units :: [UnitDefn]
+units = [mole]
 
 si :: SystemInformation
 si =
@@ -290,15 +297,13 @@ symbMap =
   cdb
     symbolsAll
     (nw progName : -- CI
-       -- CI
       nw sciCompS : -- NamedChunk
-       -- NamedChunk
-      map nw [algorithm, program, reusability] ++ -- ConceptChunk
-       -- ConceptChunk
+      map nw [algorithm, balanced, program, reusability] ++ -- ConceptChunk
+      map nw units ++ -- UnitDefn
       map nw doccon ++ map nw doccon' ++ map nw chemCon ++ map nw mathcon ++
       map nw educon ++ map nw acronyms ++ map nw symbolsAll)
     srsDomains
-    ([] :: [UnitDefn])
+    units
     dds
     ims
     ([] :: [GenDefn])
@@ -333,7 +338,7 @@ citations = [chen2022, drasilSource, elemListWiki, hydrateSource, ilpWiki,
   organicIUPAC, parnasClements1986, polymerSource, smithChemSpec, smithLai2005]
 
 concIns :: [ConceptInstance]
-concIns = assumps ++ goals ++ funcReqs ++ nonfuncReqs ++ uChanges
+concIns = assumps ++ goals ++ funcReqs ++ nonfuncReqs ++ lChanges ++ uChanges
 
 stdFields :: Fields
 stdFields = [DefiningEquation, Description Verbose IncludeUnits, Notes, Source, RefBy]

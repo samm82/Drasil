@@ -140,7 +140,7 @@ This document will be used as a starting point for subsequent development phases
 
 \subsection{Scope of Requirements}
 \label{Sec:ReqsScope}
-The scope of the requirements includes all inputted chemical equations where the total number of chemical compounds is at most one more than the total number of elements. The scope also includes all inputted chemical formulas that describe real chemical compounds, are formatted following a set of conventions, and only consist of atomic symbols and subscripts.
+The scope of the requirements includes all inputted chemical equations where the total number of chemical compounds is at most one more than the total number of elements. These chemical equations will be balanced with integer coefficients. The scope also includes all inputted chemical formulas that describe real chemical compounds, are formatted following a set of conventions, and only consist of atomic symbols and subscripts (including the fractional subscripts in nonstoichiometric compounds).
 
 \subsection{Characteristics of Intended Reader}
 \label{Sec:ReaderChars}
@@ -207,16 +207,21 @@ A system is needed to balance chemical equations so they can be useful for other
 This subsection provides a list of terms that are used in the subsequent sections and their meaning, with the purpose of reducing ambiguity and making it easier to correctly understand the requirements.
 
 \begin{itemize}
+\item{Balanced: (Referring to a chemical equation) following the Law of Conservation of Matter.}
 \item{Compound: A molecule made up of more than one atom, which may or may not be of different elements.}
 \item{Element: The group of all atoms with the same number of protons in the atomic nucleus. For example, all atoms with one proton are hydrogen atoms.}
 \item{Equation: A textual representation of a chemical reaction.}
+\item{Feasible: (Referring to a chemical equation) able to be balanced.}
+\item{Formula: A textual representation of a chemical compound.}
 \item{Hydrate: ``a compound formed by the chemical combination of water and some other substance in a definite molecular ratio'' \cite{hydrateSource}.}
 \item{Isotope: An atom that is the same element as another but has a different number of neutrons \cite{lund2023}.}
+\item{Nonstoichiometric compound: ``Any solid chemical compound in which the numbers of atoms of the elements present cannot be expressed as a ratio of small positive integers''.}
 \item{Polyatomic ion: A group of atoms ``bonded together that carr[ies] an overall electric charge'' \cite{lund2023}.}
 \item{Polymer: A macromolecule ``formed by the chemical bonding of large numbers of smaller molecules'' \cite{polymerSource}.}
 \item{Product: A substance formed by a chemical reaction.}
 \item{Reactant: A substance involved in and changed by a chemical reaction.}
 \item{Reaction: An interaction between different types of matter that results in at least one new substance being formed \cite{lund2023}.}
+\item{Stoichiometry: ``The calculation of the quantities of reactants or products in a chemical reaction using the relationships found in a balanced chemical equation'' \cite[(pg. 337)]{lund2023}.}
 \end{itemize}
 \subsubsection{Physical System Description}
 \label{Sec:PhysSyst}
@@ -252,8 +257,9 @@ This section simplifies the original problem and helps in developing the theoret
 \item[elemCompDiff:\phantomsection\label{elemCompDiff}]{For all chemical equations, the total number of chemical compounds is at most one more than the total number of elements. (RefBy: \hyperref[allEqsPermitted]{UC:allEqsPermitted}.)}
 \item[validForms:\phantomsection\label{validForms}]{All inputted chemical formulas describe real chemical compounds. (RefBy: \hyperref[checkValidForms]{UC:checkValidForms}.)}
 \item[validEqns:\phantomsection\label{validEqns}]{All inputted chemical equations describe real chemical reactions. (RefBy: \hyperref[checkValidEqns]{UC:checkValidEqns}.)}
-\item[correctInputFormat:\phantomsection\label{correctInputFormat}]{All inputted chemical formulas follow the conventions laid out in \cite{inorganicIUPAC} and \cite{organicIUPAC} by the International Union of Pure and Applied Chemistry (IUPAC).}
-\item[simpleForms:\phantomsection\label{simpleForms}]{All inputted chemical formulas only consist of atomic symbols and subscripts. This means that they cannot contain dots, parentheses, hyphens, or superscripts, so hydrates, polymers, and formulas with isotopes and some with polyatomic ions will not be present in inputted chemical equations.}
+\item[correctInputFormat:\phantomsection\label{correctInputFormat}]{All inputted chemical formulas follow the conventions laid out in \cite{inorganicIUPAC} and \cite{organicIUPAC} by the International Union of Pure and Applied Chemistry (IUPAC). (RefBy: \hyperref[incInputFormat]{LC:incInputFormat}.)}
+\item[simpleForms:\phantomsection\label{simpleForms}]{All inputted chemical formulas only consist of atomic symbols and subscripts. This means that they cannot contain dots, parentheses, hyphens, or superscripts, so hydrates, polymers, and formulas with isotopes and some with polyatomic ions will not be present in inputted chemical equations. (RefBy: \hyperref[complexForms]{LC:complexForms}.)}
+\item[intCoeffs:\phantomsection\label{intCoeffs}]{All chemical equations will be balanced using integer coefficients. (RefBy: \hyperref[nonintCoeffs]{UC:nonintCoeffs}.)}
 \end{itemize}
 \subsubsection{Theoretical Models}
 \label{Sec:TMs}
@@ -675,90 +681,133 @@ This section provides the non-functional requirements, the qualities that the so
 \label{Sec:LCs}
 This section lists the likely changes to be made to the software.
 
+\begin{itemize}
+\item[complexForms:\phantomsection\label{complexForms}]{\hyperref[simpleForms]{A:simpleForms} assumes that inputted chemical formulas only consist of atomic symbols and subscripts. In the future, the user might be able to input more complex chemical formulas, such as those containing dots, parentheses, hyphens, or superscripts.}
+\item[calcMoles:\phantomsection\label{calcMoles}]{In the future, ChemCode might be able to, given the amount of one substance (in moles) in a reaction, calculate the amount of every other substance (also in moles) required/produced by the reaction.}
+\item[detLimReag:\phantomsection\label{detLimReag}]{In the future, ChemCode might be able to, given the amount of more than one reactant (in moles) in a reaction, determine the limiting reactant(s). This is dependent on \hyperref[calcMoles]{LC:calcMoles}.}
+\item[calcYield:\phantomsection\label{calcYield}]{In the future, ChemCode might be able to, given the amount of more than one reactant (in moles) in a reaction, calculate the theoretical yield of each product (also in moles). This is dependent on \hyperref[detLimReag]{LC:detLimReag}.}
+\item[calcExcess:\phantomsection\label{calcExcess}]{In the future, ChemCode might be able to, given the amount of more than one reactant (in moles) in a reaction, calculate the amount of excess reactant(s) (also in moles). This is dependent on \hyperref[detLimReag]{LC:detLimReag}.}
+\item[incInputFormat:\phantomsection\label{incInputFormat}]{\hyperref[correctInputFormat]{A:correctInputFormat} assumes that inputted chemical formulas follow the conventions laid out in \cite{inorganicIUPAC} and \cite{organicIUPAC}. In the future, ChemCode might be able to parse valid inputted chemical formulas that do not follow these conventions and format them correctly when outputting them.}
+\item[termsOfMass:\phantomsection\label{termsOfMass}]{In the future, the user might be able to enter the amounts required by \hyperref[calcMoles]{LC:calcMoles}, \hyperref[detLimReag]{LC:detLimReag}, \hyperref[calcYield]{LC:calcYield}, and \hyperref[calcExcess]{LC:calcExcess} in terms of mass (e.g., in grams).}
+\item[classReacs:\phantomsection\label{classReacs}]{In the future, ChemCode might be able to classify a chemical reaction as ``combination (or synthesis), decomposition, combustion, single replacement, [or] double replacement'' \cite[(pg. 301)]{lund2023}.}
+\item[classMoreReacs:\phantomsection\label{classMoreReacs}]{In the future, ChemCode might be able to classify oxidation-reduction reactions, ... acid-base reactions, and condensation reactions \cite[(pg. 301)]{lund2023}. This should be done after \hyperref[classReacs]{LC:classReacs}.}
+\item[inputPhaseLabels:\phantomsection\label{inputPhaseLabels}]{In the future, the user might be able to input phase labels.}
+\item[findPhaseLabels:\phantomsection\label{findPhaseLabels}]{In the future, ChemCode might be able to, given the phase labels for the reactants of a chemical reaction, identify the phase labels for the products, which would involve determining solubility. This is dependent on \hyperref[inputPhaseLabels]{LC:inputPhaseLabels}.}
+\item[reacTakePlace:\phantomsection\label{reacTakePlace}]{In the future, ChemCode might be able to identify when a chemical reaction will not take place. This is dependent on \hyperref[findPhaseLabels]{LC:findPhaseLabels}.}
+\end{itemize}
 \section{Unlikely Changes}
 \label{Sec:UCs}
 This section lists the unlikely changes to be made to the software.
 
 \begin{itemize}
-\item[allEqsPermitted:\phantomsection\label{allEqsPermitted}]{\hyperref[elemCompDiff]{A:elemCompDiff} assumes...}
-\item[checkValidForms:\phantomsection\label{checkValidForms}]{\hyperref[validForms]{A:validForms} assumes...}
-\item[checkValidEqns:\phantomsection\label{checkValidEqns}]{\hyperref[validEqns]{A:validEqns} assumes...}
+\item[allEqsPermitted:\phantomsection\label{allEqsPermitted}]{\hyperref[elemCompDiff]{A:elemCompDiff} assumes that for all inputted chemical equations, there is at most one more compound than element.  Manual empirical analysis of chemical equations without this constraint led to unexpected results, and preliminary investigation did not find any proof that these types of reactions never take place. Therefore, this constraint will remain an assumption and is unlikely to be relaxed.}
+\item[checkValidForms:\phantomsection\label{checkValidForms}]{\hyperref[validForms]{A:validForms} assumes that all inputted chemical formulas describe real chemical compounds. While there are extensive libraries of chemical compounds, it is impossible to verify that any database of chemical compounds is complete for the sake of verifying user input. Therefore, it is unlikely that there will be a reliable way of ensuring the user only inputs real chemical formulas.}
+\item[checkValidEqns:\phantomsection\label{checkValidEqns}]{\hyperref[validEqns]{A:validEqns} assumes that all inputted chemical equations describe real chemical reactions. While there are extensive libraries of chemical reactions, it is impossible to verify that any database of chemical reactions is complete for the sake of verifying user input. Therefore, it is unlikely that there will be a reliable way of ensuring the user only inputs real chemical equations.}
+\item[nonintCoeffs:\phantomsection\label{nonintCoeffs}]{\hyperref[intCoeffs]{A:intCoeffs} assumes that all inputted chemical equations will be balanced using integer coefficients. While there are some cases where these coefficients are not integers (see \cite{nonIntCoeffSource}), the overwhelming majority of chemical equations are balanced using integer coefficients, since this can represent the numbers of molecules present in a reaction. Therefore, only integer coefficients will be used for balancing chemical equations.}
 \end{itemize}
 \section{Traceability Matrices and Graphs}
 \label{Sec:TraceMatrices}
 The purpose of the traceability matrices is to provide easy references on what has to be additionally modified if a certain component is changed. Every time a component is changed, the items in the column of that component that are marked with an ``X'' should be modified as well. \hyperref[Table:TraceMatAvsA]{Tab:TraceMatAvsA} shows the dependencies of assumptions on the assumptions. \hyperref[Table:TraceMatAvsAll]{Tab:TraceMatAvsAll} shows the dependencies of data definitions, theoretical models, general definitions, instance models, requirements, likely changes, and unlikely changes on the assumptions. \hyperref[Table:TraceMatRefvsRef]{Tab:TraceMatRefvsRef} shows the dependencies of data definitions, theoretical models, general definitions, and instance models with each other. \hyperref[Table:TraceMatAllvsR]{Tab:TraceMatAllvsR} shows the dependencies of requirements, goal statements on the data definitions, theoretical models, general definitions, and instance models.
 
-\begin{longtable}{l l l l l l}
+\begin{longtable}{l l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}} & \textbf{\hyperref[simpleForms]{A:simpleForms}}
+\textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}} & \textbf{\hyperref[simpleForms]{A:simpleForms}} & \textbf{\hyperref[intCoeffs]{A:intCoeffs}}
 \\
 \midrule
 \endhead
-\hyperref[elemCompDiff]{A:elemCompDiff} &  &  &  &  & 
+\hyperref[elemCompDiff]{A:elemCompDiff} &  &  &  &  &  & 
 \\
-\hyperref[validForms]{A:validForms} &  &  &  &  & 
+\hyperref[validForms]{A:validForms} &  &  &  &  &  & 
 \\
-\hyperref[validEqns]{A:validEqns} &  &  &  &  & 
+\hyperref[validEqns]{A:validEqns} &  &  &  &  &  & 
 \\
-\hyperref[correctInputFormat]{A:correctInputFormat} &  &  &  &  & 
+\hyperref[correctInputFormat]{A:correctInputFormat} &  &  &  &  &  & 
 \\
-\hyperref[simpleForms]{A:simpleForms} &  &  &  &  & 
+\hyperref[simpleForms]{A:simpleForms} &  &  &  &  &  & 
+\\
+\hyperref[intCoeffs]{A:intCoeffs} &  &  &  &  &  & 
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Assumptions}
 \label{Table:TraceMatAvsA}
 \end{longtable}
-\begin{longtable}{l l l l l l}
+\begin{longtable}{l l l l l l l}
 \toprule
-\textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}} & \textbf{\hyperref[simpleForms]{A:simpleForms}}
+\textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}} & \textbf{\hyperref[simpleForms]{A:simpleForms}} & \textbf{\hyperref[intCoeffs]{A:intCoeffs}}
 \\
 \midrule
 \endhead
-\hyperref[DD:elementType]{DD:elementType} &  &  &  &  & 
+\hyperref[DD:elementType]{DD:elementType} &  &  &  &  &  & 
 \\
-\hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  & 
+\hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  &  & 
 \\
-\hyperref[DD:reactionType]{DD:reactionType} &  &  &  &  & 
+\hyperref[DD:reactionType]{DD:reactionType} &  &  &  &  &  & 
 \\
-\hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  & 
+\hyperref[DD:countFunc]{DD:countFunc} &  &  &  &  &  & 
 \\
-\hyperref[DD:elemsFunc]{DD:elemsFunc} &  &  &  &  & 
+\hyperref[DD:elemsFunc]{DD:elemsFunc} &  &  &  &  &  & 
 \\
-\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} &  &  &  &  & 
+\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} &  &  &  &  &  & 
 \\
-\hyperref[TM:lawConsMass]{TM:lawConsMass} &  &  &  &  & 
+\hyperref[TM:lawConsMass]{TM:lawConsMass} &  &  &  &  &  & 
 \\
-\hyperref[IM:matRepresentation]{IM:matRepresentation} &  &  &  &  & 
+\hyperref[IM:matRepresentation]{IM:matRepresentation} &  &  &  &  &  & 
 \\
-\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg} &  &  &  &  & 
+\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg} &  &  &  &  &  & 
 \\
-\hyperref[inputValues]{FR:Input-Values} &  &  &  &  & 
+\hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  & 
 \\
-\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  & 
+\hyperref[convertMatrix]{FR:Convert-to-Matrix} &  &  &  &  &  & 
 \\
-\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  & 
+\hyperref[feasOut]{FR:Feasible-Output} &  &  &  &  &  & 
 \\
-\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  & 
+\hyperref[infeasOut]{FR:Infeasible-Output} &  &  &  &  &  & 
 \\
-\hyperref[accurate]{NFR:Accurate} &  &  &  &  & 
+\hyperref[accurate]{NFR:Accurate} &  &  &  &  &  & 
 \\
-\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  & 
+\hyperref[verifiable]{NFR:Verifiable} &  &  &  &  &  & 
 \\
-\hyperref[understandable]{NFR:Understandable} &  &  &  &  & 
+\hyperref[understandable]{NFR:Understandable} &  &  &  &  &  & 
 \\
-\hyperref[usable]{NFR:Usable} &  &  &  &  & 
+\hyperref[usable]{NFR:Usable} &  &  &  &  &  & 
 \\
-\hyperref[reusable]{NFR:Reusable} &  &  &  &  & 
+\hyperref[reusable]{NFR:Reusable} &  &  &  &  &  & 
 \\
-\hyperref[maintainable]{NFR:Maintainable} &  &  &  &  & 
+\hyperref[maintainable]{NFR:Maintainable} &  &  &  &  &  & 
 \\
-\hyperref[portable]{NFR:Portable} &  &  &  &  & 
+\hyperref[portable]{NFR:Portable} &  &  &  &  &  & 
 \\
-\hyperref[allEqsPermitted]{UC:allEqsPermitted} & X &  &  &  & 
+\hyperref[complexForms]{LC:complexForms} &  &  &  &  & X & 
 \\
-\hyperref[checkValidForms]{UC:checkValidForms} &  & X &  &  & 
+\hyperref[calcMoles]{LC:calcMoles} &  &  &  &  &  & 
 \\
-\hyperref[checkValidEqns]{UC:checkValidEqns} &  &  & X &  & 
+\hyperref[detLimReag]{LC:detLimReag} &  &  &  &  &  & 
+\\
+\hyperref[calcYield]{LC:calcYield} &  &  &  &  &  & 
+\\
+\hyperref[calcExcess]{LC:calcExcess} &  &  &  &  &  & 
+\\
+\hyperref[incInputFormat]{LC:incInputFormat} &  &  &  & X &  & 
+\\
+\hyperref[termsOfMass]{LC:termsOfMass} &  &  &  &  &  & 
+\\
+\hyperref[classReacs]{LC:classReacs} &  &  &  &  &  & 
+\\
+\hyperref[classMoreReacs]{LC:classMoreReacs} &  &  &  &  &  & 
+\\
+\hyperref[inputPhaseLabels]{LC:inputPhaseLabels} &  &  &  &  &  & 
+\\
+\hyperref[findPhaseLabels]{LC:findPhaseLabels} &  &  &  &  &  & 
+\\
+\hyperref[reacTakePlace]{LC:reacTakePlace} &  &  &  &  &  & 
+\\
+\hyperref[allEqsPermitted]{UC:allEqsPermitted} & X &  &  &  &  & 
+\\
+\hyperref[checkValidForms]{UC:checkValidForms} &  & X &  &  &  & 
+\\
+\hyperref[checkValidEqns]{UC:checkValidEqns} &  &  & X &  &  & 
+\\
+\hyperref[nonintCoeffs]{UC:nonintCoeffs} &  &  &  &  &  & X
 \\
 \bottomrule
 \caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
