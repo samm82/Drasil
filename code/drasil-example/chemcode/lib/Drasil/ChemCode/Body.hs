@@ -20,6 +20,7 @@ import Data.Drasil.Concepts.Education (educon, highSchoolChemistry, thirdYear)
 import Data.Drasil.Concepts.Math (mathcon, matrix, number, ode)
 import Data.Drasil.Concepts.Software (program, reusability)
 import Data.Drasil.People (samCrawford)
+import Data.Drasil.SI_Units (mole)
 import Data.Drasil.Software.Products (sciCompS)
 import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 
@@ -260,6 +261,9 @@ terms :: [ConceptChunk]
 terms = [compound, element, equation, hydrate, isotope, polyIon, polymer,
   product, reactant, reaction]
 
+units :: [UnitDefn]
+units = [mole]
+
 si :: SystemInformation
 si =
   SI
@@ -288,15 +292,13 @@ symbMap =
   cdb
     symbolsAll
     (nw progName : -- CI
-       -- CI
       nw sciCompS : -- NamedChunk
-       -- NamedChunk
       map nw [algorithm, program, reusability] ++ -- ConceptChunk
-       -- ConceptChunk
+      map nw units ++ -- UnitDefn
       map nw doccon ++ map nw doccon' ++ map nw chemCon ++ map nw mathcon ++
       map nw educon ++ map nw acronyms ++ map nw symbolsAll)
     srsDomains
-    ([] :: [UnitDefn])
+    units
     dds
     ([] :: [InstanceModel])
     ([] :: [GenDefn])

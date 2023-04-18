@@ -6,38 +6,48 @@ import Language.Drasil
 
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Documentation (likeChgDom, unlikeChgDom)
+import Data.Drasil.SI_Units (mole)
 
 import Drasil.ChemCode.Assumptions
 import Drasil.ChemCode.Concepts (progName)
 
 lChanges :: [ConceptInstance]
-lChanges = [complexForms, identifyPhaseLabels]
+lChanges = [complexForms, calcMoles, identifyPhaseLabels]
 
-complexForms, identifyPhaseLabels :: ConceptInstance
+complexForms, calcMoles, identifyPhaseLabels :: ConceptInstance
 complexForms = cic "complexForms"      complexFormsDesc      "complexForms"      likeChgDom
+calcMoles = cic "calcMoles"      calcMolesDesc      "calcMoles"      likeChgDom
 identifyPhaseLabels = cic "identifyPhaseLabels" identifyPhaseLabelsDesc "identifyPhaseLabels" likeChgDom
 
-complexFormsDesc, identifyPhaseLabelsDesc :: Sentence
+complexFormsDesc, calcMolesDesc, identifyPhaseLabelsDesc :: Sentence
 complexFormsDesc = foldlSent [refS simpleForms, S "assumes that inputted",
   phrase chemical +:+. S "formulas only consist of atomic symbols and subscripts",
   S "In the future" `sC` S "the user might be able to input more complex",
   phrase chemical, S "formulas" `sC` S "such as those containing", 
   foldlList Comma Options (map S ["dots", "parentheses", "hyphens",
-  "superscripts"]) -- FIXME: and/or support?
+    "superscripts"]) -- FIXME: and/or support?
   ]
+
+calcMolesDesc = likeChgGivenHelper (foldlSent_ [S "the amount of one substance",
+  sParen (S "in" +:+ plural mole), S "in a", phrase reaction]) (foldlSent_ [
+    S "calculate the amount of every other substance",
+    sParen (S "also in" +:+ plural mole), S "required/produced by the",
+    phrase reaction
+  ])
+  -- TODO: from lund2023
 
 identifyPhaseLabelsDesc = likeChgGivenHelper (foldlSent_ [S "the phase labels for the",
   plural reactant, S "of a", phrase chemical, phrase reaction]) (foldlSent_ [
     S "identify the phase labels for the", plural product `sC` S "which would",
-    S "involve determining solubility"])
+    S "involve determining solubility"
+  ])
+    -- TODO: from lund2023
+    -- TODO: dependent on LC10
 
 likeChgGivenHelper :: Sentence -> Sentence -> Sentence
 likeChgGivenHelper given action = foldlSent [S "In the future" `sC` short progName,
   S "might be able to" `sC` S "given", given `sC` action]
 
--- LC2: In the future, ChemCode might be able to, given the amount of one substance (in
--- moles) in a reaction, calculate the amount required/produced of every other substance
--- (also in moles) in the reaction.1
 -- LC3: In the future, ChemCode might be able to, given the amount of each reactant (in
 -- moles) in a reaction, determine the limiting reactant(s).1 This is dependent on LC2.
 -- LC4: In the future, ChemCode might be able to, given the amount of more than one reactant
