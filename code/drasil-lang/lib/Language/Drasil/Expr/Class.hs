@@ -237,8 +237,9 @@ class ExprC r where
   -- | Check if a value belongs to a Space.
   isIn' :: r -> Space -> r
 
-  -- | Smart constructor for annotating expressions with "the _ such that"
+  -- | Smart constructors for annotating expressions
   theSuchThat :: String -> r -> r
+  suchThat :: r -> r -> r
 
 instance ExprC Expr where
   lit = Lit
@@ -425,9 +426,9 @@ instance ExprC Expr where
 
   forall c = ForAll (map (\x -> isIn' (sy x) (x ^. typ)) c)
 
-  -- | Smart constructor for annotating expressions with "the _ such that"
-  theSuchThat s = Annotated ("the " ++ s ++ " such that ")
-
+  -- | Smart constructors for annotating expressions
+  theSuchThat s = Annotated ("the " ++ s ++ " such that")
+  suchThat = InfixAnnotated "such that "
 
 instance ExprC M.ModelExpr where
   lit = M.Lit
@@ -616,5 +617,6 @@ instance ExprC M.ModelExpr where
   -- | Smart constructor for 'set membership'.
   setComp c = M.SetComp (isIn (sy c) (c ^. typ))
 
-  -- | Smart constructor for annotating expressions with "the _ such that"
-  theSuchThat s = M.Annotated ("the " ++ s ++ " such that ")
+  -- | Smart constructors for annotating expressions
+  theSuchThat s = M.Annotated ("the " ++ s ++ " such that")
+  suchThat = M.InfixAnnotated "such that "

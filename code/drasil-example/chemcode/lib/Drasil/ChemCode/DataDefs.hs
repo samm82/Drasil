@@ -49,9 +49,10 @@ countDD = ddMENoRefs countExpr Nothing "countFunc"
 
 countExpr :: ModelQDef
 countExpr = mkFuncDefByQ count [genE, genC]
-  $ completeCase [(access (sy tupC) "count", isMember (sy tupC) (sy genC) $&&
-                    (access (sy tupC) "elem" $= sy genE)),
-                  (int 0, not_ $ isMember (sy tupC) (sy genC) $&&
+  $ completeCase [(access (sy tupC) "count" `suchThat` (access (sy tupC) "elem" $= sy genE),
+                    exists [tupC] $ isMember (sy tupC) (sy genC) $&&
+                     (access (sy tupC) "elem" $= sy genE)),
+                  (int 0, not_ $ exists [tupC] $  isMember (sy tupC) (sy genC) $&&
                     (access (sy tupC) "elem" $= sy genE))]
 
 elemsDD :: DataDefinition

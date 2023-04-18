@@ -33,6 +33,7 @@ eNames (Operator _ _ e)      = eNames e
 eNames (Matrix a)            = concatMap (concatMap eNames) a
 eNames (RealI c b)           = c : eNamesRI b
 eNames (Annotated _ e)       = eNames e
+eNames (InfixAnnotated _ e1 e2)       = eNames e1 ++ eNames e2
 
 -- | Generic traversal of everything that could come from an interval to names (similar to 'eNames').
 eNamesRI :: RealInterval Expr Expr -> [UID]
@@ -68,6 +69,7 @@ eNames' (Operator _ _ e)      = eNames' e
 eNames' (Matrix a)            = concatMap (concatMap eNames') a
 eNames' (RealI c b)           = c : eNamesRI' b
 eNames' (Annotated _ e)       = eNames' e
+eNames' (InfixAnnotated _ e1 e2)       = eNames' e1 ++ eNames' e2
 
 -- | Generic traversal of everything that could come from an interval to names without functions (similar to 'eNames'').
 eNamesRI' :: RealInterval Expr Expr -> [UID]

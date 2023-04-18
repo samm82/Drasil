@@ -171,7 +171,9 @@ expr (RealI c ri)             sm = renderRealInt sm (lookupC (sm ^. stg)
 expr (SetComp r p)            sm = P.Fenced P.Curly P.Curly (P.Row [
     expr r sm, P.Label " | ", expr p sm -- FIXME: pipe hack
   ])
-expr (Annotated s e)          sm = P.Row [P.Label s, expr e sm]
+expr (Annotated s e)          sm = P.Row [P.Label s, P.Spc P.Thin, expr e sm]
+expr (InfixAnnotated s e1 e2) sm = P.Row [expr e1 sm, P.Spc P.Thin,
+  P.Label s, P.Spc P.Thin, expr e2 sm]
 
 -- | Common method of converting associative operations into printable layout AST.
 assocExpr :: P.Ops -> Int -> [Expr] -> PrintingInformation -> P.Expr

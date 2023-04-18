@@ -43,6 +43,7 @@ meNames (ForAll' _ de)        = meNames de
 meNames (Exists r p)          = concatMap meNames r ++ meNames p
 meNames (SetComp r p)         = meNames r ++ meNames p
 meNames (Annotated _ e)       = meNames e
+meNames (InfixAnnotated _ e1 e2) = meNames e1 ++ meNames e2
 
 -- | Generic traversal of everything that could come from an interval to names (similar to 'meNames').
 meNamesRI :: RealInterval ModelExpr ModelExpr -> [UID]
@@ -88,6 +89,7 @@ meNames' (ForAll' _ de)        = meNames' de
 meNames' (Exists r p)          = concatMap meNames' r ++ meNames' p
 meNames' (SetComp r p)         = meNames' r ++ meNames' p
 meNames' (Annotated _ e)       = meNames' e
+meNames' (InfixAnnotated _ e1 e2) = meNames' e1 ++ meNames' e2
 
 -- | Generic traversal of everything that could come from an interval to names without functions (similar to 'meNames'').
 meNamesRI' :: RealInterval ModelExpr ModelExpr -> [UID]

@@ -842,8 +842,8 @@
                       <th>Equation</th>
                       <td>
                         \[\text{count}=\begin{cases}
-                                       {c^{r}}\text{.count}, & {c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e\\
-                                       0, & \neg{}{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e
+                                       {c^{r}}\text{.count}\,\text{such that }\,{c^{r}}\text{.elem}=e, & \exists{}\,{{c^{r}}\in{}\text{record of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)}\text{ | }{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e\\
+                                       0, & \neg{}\exists{}\,{{c^{r}}\in{}\text{record of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)}\text{ | }{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e
                                        \end{cases}\]
                       </td>
                     </tr>
@@ -857,8 +857,8 @@
                           <li>
                             <em>c<sup>r</sup></em> is the generic record of a compound (Unitless)
                           </li>
-                          <li><em>c</em> is the generic compound (Unitless)</li>
                           <li><em>e</em> is the generic element (Unitless)</li>
+                          <li><em>c</em> is the generic compound (Unitless)</li>
                         </ul>
                       </td>
                     </tr>
@@ -968,10 +968,10 @@
                     <tr>
                       <th>Equation</th>
                       <td>
-                        \[\symbf{Q}=\text{the matrix such that }\forall{}\,i\in{}\mathbb{Z},j\in{}\mathbb{Z}\text{ | }0\leq{}i\lt{}|\text{elems}\left({r_{\text{in}}}\right)|\land{}0\leq{}j\lt{}|{r_{\text{in}}}\text{.reac}|+|{r_{\text{in}}}\text{.prod}|\implies{}{q_{\text{ij}}}=\begin{cases}
-                                                                                                                                                                                                                                                                                      \text{count}\left({\text{elems}\left({r_{\text{in}}}\right)}_{i},{{r_{\text{in}}}\text{.reac}}_{j}\text{.comp}\right), & j\lt{}|{r_{\text{in}}}\text{.reac}|\\
-                                                                                                                                                                                                                                                                                      -\left(\text{count}\left({\text{elems}\left({r_{\text{in}}}\right)}_{i},{{r_{\text{in}}}\text{.prod}}_{j-|{r_{\text{in}}}\text{.reac}|}\text{.comp}\right)\right), & \neg{}j\lt{}|{r_{\text{in}}}\text{.reac}|
-                                                                                                                                                                                                                                                                                      \end{cases}\]
+                        \[\symbf{Q}=\text{the matrix such that}\,\forall{}\,i\in{}\mathbb{Z},j\in{}\mathbb{Z}\text{ | }0\leq{}i\lt{}|\text{elems}\left({r_{\text{in}}}\right)|\land{}0\leq{}j\lt{}|{r_{\text{in}}}\text{.reac}|+|{r_{\text{in}}}\text{.prod}|\implies{}{q_{\text{ij}}}=\begin{cases}
+                                                                                                                                                                                                                                                                                       \text{count}\left({\text{elems}\left({r_{\text{in}}}\right)}_{i},{{r_{\text{in}}}\text{.reac}}_{j}\text{.comp}\right), & j\lt{}|{r_{\text{in}}}\text{.reac}|\\
+                                                                                                                                                                                                                                                                                       -\left(\text{count}\left({\text{elems}\left({r_{\text{in}}}\right)}_{i},{{r_{\text{in}}}\text{.prod}}_{j-|{r_{\text{in}}}\text{.reac}|}\text{.comp}\right)\right), & \neg{}j\lt{}|{r_{\text{in}}}\text{.reac}|
+                                                                                                                                                                                                                                                                                       \end{cases}\]
                       </td>
                     </tr>
                     <tr>

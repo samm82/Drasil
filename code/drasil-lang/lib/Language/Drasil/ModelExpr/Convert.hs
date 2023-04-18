@@ -115,6 +115,7 @@ expr (E.RealI u ri)          = RealI u (realInterval ri)
 expr (E.ForAll r p)          = ForAll' (map expr r) (expr p)
 expr (E.SetComp r p)         = SetComp (expr r) (expr p)
 expr (E.Annotated s e)       = Annotated s (expr e)
+expr (E.InfixAnnotated s e1 e2) = InfixAnnotated s (expr e1) (expr e2)
 
 realInterval :: RealInterval E.Expr E.Expr -> RealInterval ModelExpr ModelExpr
 realInterval (Bounded (li, l) (ri, r)) = Bounded (li, expr l) (ri, expr r)

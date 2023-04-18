@@ -485,16 +485,16 @@ Symbol & $\text{count}$
 \\ \midrule \\
 Equation & \begin{displaymath}
            \text{count}=\begin{cases}
-                        {c^{r}}\text{.count}, & {c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e\\
-                        0, & \neg{}{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e
+                        {c^{r}}\text{.count}\,\text{such that }\,{c^{r}}\text{.elem}=e, & \exists{}\,{{c^{r}}\in{}\text{record of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)}\text{ | }{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e\\
+                        0, & \neg{}\exists{}\,{{c^{r}}\in{}\text{record of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)}\text{ | }{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e
                         \end{cases}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
               \item{$\text{count}$ is the count of an element in a compound (Unitless)}
               \item{${c^{r}}$ is the generic record of a compound (Unitless)}
-              \item{$c$ is the generic compound (Unitless)}
               \item{$e$ is the generic element (Unitless)}
+              \item{$c$ is the generic compound (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
 Notes & The output represents the number of atoms of a given element $e$ (of type $E$) in a given compound $c$ (of type $C$).
@@ -566,10 +566,10 @@ Output & $\symbf{Q}$
          
 \\ \midrule \\
 Equation & \begin{displaymath}
-           \symbf{Q}=\text{the matrix such that }\forall{}\,i\in{}\mathbb{Z},j\in{}\mathbb{Z}\text{ | }0\leq{}i\lt{}|\text{elems}\left({r_{\text{in}}}\right)|\land{}0\leq{}j\lt{}|{r_{\text{in}}}\text{.reac}|+|{r_{\text{in}}}\text{.prod}|\implies{}{q_{\text{ij}}}=\begin{cases}
-                                                                                                                                                                                                                                                                       \text{count}\left({\text{elems}\left({r_{\text{in}}}\right)}_{i},{{r_{\text{in}}}\text{.reac}}_{j}\text{.comp}\right), & j\lt{}|{r_{\text{in}}}\text{.reac}|\\
-                                                                                                                                                                                                                                                                       -\left(\text{count}\left({\text{elems}\left({r_{\text{in}}}\right)}_{i},{{r_{\text{in}}}\text{.prod}}_{j-|{r_{\text{in}}}\text{.reac}|}\text{.comp}\right)\right), & \neg{}j\lt{}|{r_{\text{in}}}\text{.reac}|
-                                                                                                                                                                                                                                                                       \end{cases}
+           \symbf{Q}=\text{the matrix such that}\,\forall{}\,i\in{}\mathbb{Z},j\in{}\mathbb{Z}\text{ | }0\leq{}i\lt{}|\text{elems}\left({r_{\text{in}}}\right)|\land{}0\leq{}j\lt{}|{r_{\text{in}}}\text{.reac}|+|{r_{\text{in}}}\text{.prod}|\implies{}{q_{\text{ij}}}=\begin{cases}
+                                                                                                                                                                                                                                                                        \text{count}\left({\text{elems}\left({r_{\text{in}}}\right)}_{i},{{r_{\text{in}}}\text{.reac}}_{j}\text{.comp}\right), & j\lt{}|{r_{\text{in}}}\text{.reac}|\\
+                                                                                                                                                                                                                                                                        -\left(\text{count}\left({\text{elems}\left({r_{\text{in}}}\right)}_{i},{{r_{\text{in}}}\text{.prod}}_{j-|{r_{\text{in}}}\text{.reac}|}\text{.comp}\right)\right), & \neg{}j\lt{}|{r_{\text{in}}}\text{.reac}|
+                                                                                                                                                                                                                                                                        \end{cases}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
