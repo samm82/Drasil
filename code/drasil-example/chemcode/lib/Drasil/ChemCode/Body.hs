@@ -26,7 +26,7 @@ import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 
 import Drasil.ChemCode.Assumptions (assumps)
 import Drasil.ChemCode.Changes (lChanges, uChanges)
-import Drasil.ChemCode.Concepts (progName)
+import Drasil.ChemCode.Concepts
 import Drasil.ChemCode.DataDefs (dds)
 import Drasil.ChemCode.Figures (physSysFig, sysCtxFig)
 import Drasil.ChemCode.Goals (goals)
@@ -140,8 +140,9 @@ scope = foldlSent_ [
   phrase chemical, S "formulas that", foldlList Comma List [
     foldlSent_ [S "describe real", phrase chemical, plural compound],
     S "are formatted following a set of conventions",
-    S "only consist of atomic symbols and subscripts"
-    ]
+    S "only consist of atomic symbols and subscripts" +:+ sParen (
+      S "including the fractional subscripts in" +:+ plural nonStoicComp
+    )]
   ]
 
 orgOfDocIntro = foldlSent [atStartNP (the organization), S "of this",
@@ -259,8 +260,9 @@ acronyms = [assumption, progName, Doc.srs, thModel, dataDefn, requirement,
   unlikelyChg, ode, iupac] -- genDefn, inModel
 
 terms :: [ConceptChunk]
-terms = [compound, element, equation, hydrate, isotope, polyIon, polymer,
-  product, reactant, reaction]
+terms = [balanced, compound, element, equation, feasible, formula, hydrate,
+  isotope, nonStoicComp, polyIon, polymer, product, reactant, reaction,
+  stoichiometry]
 
 units :: [UnitDefn]
 units = [mole]
@@ -294,7 +296,7 @@ symbMap =
     symbolsAll
     (nw progName : -- CI
       nw sciCompS : -- NamedChunk
-      map nw [algorithm, program, reusability] ++ -- ConceptChunk
+      map nw [algorithm, balanced, program, reusability] ++ -- ConceptChunk
       map nw units ++ -- UnitDefn
       map nw doccon ++ map nw doccon' ++ map nw chemCon ++ map nw mathcon ++
       map nw educon ++ map nw acronyms ++ map nw symbolsAll)

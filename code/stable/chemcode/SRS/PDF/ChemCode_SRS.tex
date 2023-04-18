@@ -108,7 +108,7 @@ This document will be used as a starting point for subsequent development phases
 
 \subsection{Scope of Requirements}
 \label{Sec:ReqsScope}
-The scope of the requirements includes all inputted chemical equations where the total number of chemical compounds is at most one more than the total number of elements. These chemical equations will be balanced with integer coefficients. The scope also includes all inputted chemical formulas that describe real chemical compounds, are formatted following a set of conventions, and only consist of atomic symbols and subscripts.
+The scope of the requirements includes all inputted chemical equations where the total number of chemical compounds is at most one more than the total number of elements. These chemical equations will be balanced with integer coefficients. The scope also includes all inputted chemical formulas that describe real chemical compounds, are formatted following a set of conventions, and only consist of atomic symbols and subscripts (including the fractional subscripts in nonstoichiometric compounds).
 
 \subsection{Characteristics of Intended Reader}
 \label{Sec:ReaderChars}
@@ -175,16 +175,21 @@ A system is needed to balance chemical equations so they can be useful for other
 This subsection provides a list of terms that are used in the subsequent sections and their meaning, with the purpose of reducing ambiguity and making it easier to correctly understand the requirements.
 
 \begin{itemize}
+\item{Balanced: (Referring to a chemical equation) following the Law of Conservation of Matter.}
 \item{Compound: A molecule made up of more than one atom, which may or may not be of different elements.}
 \item{Element: The group of all atoms with the same number of protons in the atomic nucleus. For example, all atoms with one proton are hydrogen atoms.}
 \item{Equation: A textual representation of a chemical reaction.}
+\item{Feasible: (Referring to a chemical equation) able to be balanced.}
+\item{Formula: A textual representation of a chemical compound.}
 \item{Hydrate: ``a compound formed by the chemical combination of water and some other substance in a definite molecular ratio'' \cite{hydrateSource}.}
 \item{Isotope: An atom that is the same element as another but has a different number of neutrons \cite{lund2023}.}
+\item{Nonstoichiometric compound: ``Any solid chemical compound in which the numbers of atoms of the elements present cannot be expressed as a ratio of small positive integers''.}
 \item{Polyatomic ion: A group of atoms ``bonded together that carr[ies] an overall electric charge'' \cite{lund2023}.}
 \item{Polymer: A macromolecule ``formed by the chemical bonding of large numbers of smaller molecules'' \cite{polymerSource}.}
 \item{Product: A substance formed by a chemical reaction.}
 \item{Reactant: A substance involved in and changed by a chemical reaction.}
 \item{Reaction: An interaction between different types of matter that results in at least one new substance being formed \cite{lund2023}.}
+\item{Stoichiometry: ``The calculation of the quantities of reactants or products in a chemical reaction using the relationships found in a balanced chemical equation'' \cite[(pg. 337)]{lund2023}.}
 \end{itemize}
 \subsubsection{Physical System Description}
 \label{Sec:PhysSyst}
