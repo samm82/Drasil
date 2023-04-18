@@ -453,7 +453,7 @@
                   </p>
                   <p>
                     <div id="correctInputFormat">
-                      correctInputFormat: All inputted chemical formulas follow the conventions laid out in <a href=#inorganicIUPAC>inorganicIUPAC</a> and <a href=#organicIUPAC>organicIUPAC</a> by the International Union of Pure and Applied Chemistry (IUPAC). (RefBy: <a href=#incorrectInputFormat>LC:incorrectInputFormat</a>.)
+                      correctInputFormat: All inputted chemical formulas follow the conventions laid out in <a href=#inorganicIUPAC>inorganicIUPAC</a> and <a href=#organicIUPAC>organicIUPAC</a> by the International Union of Pure and Applied Chemistry (IUPAC). (RefBy: <a href=#incInputFormat>LC:incInputFormat</a>.)
                     </div>
                   </p>
                   <p>
@@ -719,8 +719,8 @@
             </div>
           </p>
           <p>
-            <div id="incorrectInputFormat">
-              incorrectInputFormat: <a href=#correctInputFormat>A:correctInputFormat</a> assumes that inputted chemical formulas follow the conventions laid out in <a href=#inorganicIUPAC>inorganicIUPAC</a> and <a href=#organicIUPAC>organicIUPAC</a>. In the future, ChemCode might be able to parse valid inputted chemical formulas that do not follow these conventions and format them correctly when outputting them.
+            <div id="incInputFormat">
+              incInputFormat: <a href=#correctInputFormat>A:correctInputFormat</a> assumes that inputted chemical formulas follow the conventions laid out in <a href=#inorganicIUPAC>inorganicIUPAC</a> and <a href=#organicIUPAC>organicIUPAC</a>. In the future, ChemCode might be able to parse valid inputted chemical formulas that do not follow these conventions and format them correctly when outputting them.
             </div>
           </p>
           <p>
@@ -729,18 +729,28 @@
             </div>
           </p>
           <p>
-            <div id="classRxns">
-              classRxns: In the future, ChemCode might be able to classify a chemical reaction as "combination (or synthesis), decomposition, combustion, single replacement, [or] double replacement" <a href=#lund2023>lund2023</a> (pg. 301).
+            <div id="classReacs">
+              classReacs: In the future, ChemCode might be able to classify a chemical reaction as "combination (or synthesis), decomposition, combustion, single replacement, [or] double replacement" <a href=#lund2023>lund2023</a> (pg. 301).
             </div>
           </p>
           <p>
-            <div id="classMoreRxns">
-              classMoreRxns: In the future, ChemCode might be able to classify oxidation-reduction reactions, ... acid-base reactions, and condensation reactions <a href=#lund2023>lund2023</a> (pg. 301). This should be done after <a href=#classRxns>LC:classRxns</a>.
+            <div id="classMoreReacs">
+              classMoreReacs: In the future, ChemCode might be able to classify oxidation-reduction reactions, ... acid-base reactions, and condensation reactions <a href=#lund2023>lund2023</a> (pg. 301). This should be done after <a href=#classReacs>LC:classReacs</a>.
             </div>
           </p>
           <p>
-            <div id="identifyPhaseLabels">
-              identifyPhaseLabels: In the future, ChemCode might be able to, given the phase labels for the reactants of a chemical reaction, identify the phase labels for the products, which would involve determining solubility.
+            <div id="inputPhaseLabels">
+              inputPhaseLabels: In the future, the user might be able to input phase labels.
+            </div>
+          </p>
+          <p>
+            <div id="findPhaseLabels">
+              findPhaseLabels: In the future, ChemCode might be able to, given the phase labels for the reactants of a chemical reaction, identify the phase labels for the products, which would involve determining solubility. This is dependent on <a href=#inputPhaseLabels>LC:inputPhaseLabels</a>.
+            </div>
+          </p>
+          <p>
+            <div id="reacTakePlace">
+              reacTakePlace: In the future, ChemCode might be able to identify when a chemical reaction will not take place. This is dependent on <a href=#findPhaseLabels>LC:findPhaseLabels</a>.
             </div>
           </p>
         </div>
@@ -987,7 +997,7 @@
               <td></td>
             </tr>
             <tr>
-              <td><a href=#incorrectInputFormat>LC:incorrectInputFormat</a></td>
+              <td><a href=#incInputFormat>LC:incInputFormat</a></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1003,7 +1013,7 @@
               <td></td>
             </tr>
             <tr>
-              <td><a href=#classRxns>LC:classRxns</a></td>
+              <td><a href=#classReacs>LC:classReacs</a></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1011,7 +1021,7 @@
               <td></td>
             </tr>
             <tr>
-              <td><a href=#classMoreRxns>LC:classMoreRxns</a></td>
+              <td><a href=#classMoreReacs>LC:classMoreReacs</a></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1019,7 +1029,23 @@
               <td></td>
             </tr>
             <tr>
-              <td><a href=#identifyPhaseLabels>LC:identifyPhaseLabels</a></td>
+              <td><a href=#inputPhaseLabels>LC:inputPhaseLabels</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#findPhaseLabels>LC:findPhaseLabels</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#reacTakePlace>LC:reacTakePlace</a></td>
               <td></td>
               <td></td>
               <td></td>
