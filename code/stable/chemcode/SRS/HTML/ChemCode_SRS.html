@@ -241,7 +241,7 @@
           <div class="subsection">
             <h2>Scope of Requirements</h2>
             <p class="paragraph">
-              The scope of the requirements includes all inputted chemical equations where the total number of chemical compounds is at most one more than the total number of elements. The scope also includes all inputted chemical formulas that describe real chemical compounds, are formatted following a set of conventions, and only consist of atomic symbols and subscripts.
+              The scope of the requirements includes all inputted chemical equations where the total number of chemical compounds is at most one more than the total number of elements. These chemical equations will be balanced with integer coefficients. The scope also includes all inputted chemical formulas that describe real chemical compounds, are formatted following a set of conventions, and only consist of atomic symbols and subscripts.
             </p>
           </div>
         </div>
@@ -459,6 +459,11 @@
                   <p>
                     <div id="simpleForms">
                       simpleForms: All inputted chemical formulas only consist of atomic symbols and subscripts. This means that they cannot contain dots, parentheses, hyphens, or superscripts, so hydrates, polymers, and formulas with isotopes and some with polyatomic ions will not be present in inputted chemical equations. (RefBy: <a href=#complexForms>LC:complexForms</a>.)
+                    </div>
+                  </p>
+                  <p>
+                    <div id="intCoeffs">
+                      intCoeffs: All chemical equations will be balanced using integer coefficients.
                     </div>
                   </p>
                 </div>
@@ -796,9 +801,11 @@
               <th><a href=#validEqns>A:validEqns</a></th>
               <th><a href=#correctInputFormat>A:correctInputFormat</a></th>
               <th><a href=#simpleForms>A:simpleForms</a></th>
+              <th><a href=#intCoeffs>A:intCoeffs</a></th>
             </tr>
             <tr>
               <td><a href=#elemCompDiff>A:elemCompDiff</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -812,9 +819,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#validEqns>A:validEqns</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -828,9 +837,20 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#simpleForms>A:simpleForms</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#intCoeffs>A:intCoeffs</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -851,9 +871,11 @@
               <th><a href=#validEqns>A:validEqns</a></th>
               <th><a href=#correctInputFormat>A:correctInputFormat</a></th>
               <th><a href=#simpleForms>A:simpleForms</a></th>
+              <th><a href=#intCoeffs>A:intCoeffs</a></th>
             </tr>
             <tr>
               <td><a href=#DD:elementType>DD:elementType</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -867,9 +889,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#inputValues>FR:Input-Values</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -883,9 +907,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#feasOut>FR:Feasible-Output</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -899,9 +925,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#accurate>NFR:Accurate</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -915,9 +943,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#understandable>NFR:Understandable</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -931,9 +961,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#reusable>NFR:Reusable</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -947,9 +979,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#portable>NFR:Portable</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -963,9 +997,11 @@
               <td></td>
               <td></td>
               <td>X</td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#calcMoles>LC:calcMoles</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -979,9 +1015,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#calcYield>LC:calcYield</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -995,6 +1033,7 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#incInputFormat>LC:incInputFormat</a></td>
@@ -1003,9 +1042,11 @@
               <td></td>
               <td>X</td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#termsOfMass>LC:termsOfMass</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1019,9 +1060,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#classMoreReacs>LC:classMoreReacs</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1035,9 +1078,11 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#findPhaseLabels>LC:findPhaseLabels</a></td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1051,10 +1096,12 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#allEqsPermitted>UC:allEqsPermitted</a></td>
               <td>X</td>
+              <td></td>
               <td></td>
               <td></td>
               <td></td>
@@ -1067,12 +1114,14 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
             </tr>
             <tr>
               <td><a href=#checkValidEqns>UC:checkValidEqns</a></td>
               <td></td>
               <td></td>
               <td>X</td>
+              <td></td>
               <td></td>
               <td></td>
             </tr>

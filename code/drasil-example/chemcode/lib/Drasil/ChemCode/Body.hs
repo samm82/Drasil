@@ -134,9 +134,10 @@ justification = foldlSent [atStart chemical, plural equation,
 scope = foldlSent_ [
   S "all inputted", phrase chemical, plural equation, S "where the total",
   S "number of", phrase chemical, plural compound, S "is at most",
-  S "one more than the total number of" +:+. plural element, S "The",
-  phrase Doc.scope, S "also includes all inputted", phrase chemical,
-  S "formulas that", foldlList Comma List [
+  S "one more than the total number of" +:+. plural element, S "These",
+  phrase chemical, plural equation, S "will be balanced with integer" +:+.
+  S "coefficients", S "The", phrase Doc.scope, S "also includes all inputted",
+  phrase chemical, S "formulas that", foldlList Comma List [
     foldlSent_ [S "describe real", phrase chemical, plural compound],
     S "are formatted following a set of conventions",
     S "only consist of atomic symbols and subscripts"
