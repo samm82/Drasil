@@ -331,12 +331,14 @@ Label & Law of conservation of mass
         
 \\ \midrule \\
 Equation & \begin{displaymath}
-           \forall{}\,e\in{}E,r\in{}R\text{ | }e=r
+           \forall{}\,e\in{}E,r\in{}R\text{ | }\displaystyle\sum{\text{count}\left(e,r_{i}\text{.comp}\right) {r\text{.reac}}_{i}\text{.coeff}}=\displaystyle\sum{\text{count}\left(e,r_{i}\text{.comp}\right) {r\text{.prod}}_{i}\text{.coeff}}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
+              \item{$\text{count}$ is the count of an element in a compound (Unitless)}
               \item{$e$ is the generic element (Unitless)}
               \item{$r$ is the generic reaction (Unitless)}
+              \item{$i$ is the generic integer (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
 Notes & This law states that ``matter can neither be created nor destroyed in a chemical reaction ... but it may change forms to other substances'' \cite[(pg. 112)]{lund2023}.

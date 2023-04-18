@@ -10,7 +10,8 @@ import Data.Drasil.Concepts.Chemistry (chemical, reaction)
 import Data.Drasil.Concepts.Math (equation)
 import Data.Drasil.Concepts.Software (program)
 
-import Drasil.ChemCode.Quantities (aMat, bVec, cVec, xVec, zeroVec, genE, genR)
+import Drasil.ChemCode.Quantities (aMat, bVec, cVec, xVec, zeroVec, genE, genI,
+  genR, count)
 
 tms :: [TheoryModel]
 tms = [intLinProg, lawConsMass]
@@ -35,7 +36,7 @@ intLinProg = tm
     phrase program `sC` S "which is", Quote (foldlSent_ [
       S "a mathematical optimization or feasibility", phrase program,
       S "in which some or all of the variables are restricted to be integers",
-      S "[and] the objective function and the constraints", 
+      S "[and] the objective function and the constraints",
       sParen (S "other than the integer constraints"), S "are linear"]),
     refS ilpWiki],
   S "The values of" +:+ ch xVec +:+. S "are unknown and will be solved for"
@@ -64,4 +65,9 @@ lawConsMass = tm
   where
     consMassChunk =
       dccWDS "consMassChunk" (nounPhraseSP "law of conservation of mass") (S "") -- FIXME: ?
-    consMassExpr = forall [genE, genR] (sy genE $= sy genR)
+    consMassExpr = forall [genE, genR]
+      (sideOfConsMassExpr "reac" $= sideOfConsMassExpr "prod")
+    sideOfConsMassExpr s = sumAll (eqSymb genI) (
+      apply count [sy genE, access (idx (sy genR) (sy genI)) "comp"] `mulRe`
+      access (idx (access (sy genR) s) (sy genI)) "coeff"
+      )

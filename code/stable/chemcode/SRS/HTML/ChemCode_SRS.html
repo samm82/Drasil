@@ -645,14 +645,20 @@
                     </tr>
                     <tr>
                       <th>Equation</th>
-                      <td>\[\forall{}\,e\in{}E,r\in{}R\text{ | }e=r\]</td>
+                      <td>
+                        \[\forall{}\,e\in{}E,r\in{}R\text{ | }\displaystyle\sum{\text{count}\left(e,r_{i}\text{.comp}\right) {r\text{.reac}}_{i}\text{.coeff}}=\displaystyle\sum{\text{count}\left(e,r_{i}\text{.comp}\right) {r\text{.prod}}_{i}\text{.coeff}}\]
+                      </td>
                     </tr>
                     <tr>
                       <th>Description</th>
                       <td>
                         <ul class="hide-list-style-no-indent">
+                          <li>
+                            <em>count</em> is the count of an element in a compound (Unitless)
+                          </li>
                           <li><em>e</em> is the generic element (Unitless)</li>
                           <li><em>r</em> is the generic reaction (Unitless)</li>
+                          <li><em>i</em> is the generic integer (Unitless)</li>
                         </ul>
                       </td>
                     </tr>
