@@ -13,7 +13,7 @@ ims :: [InstanceModel]
 ims = [matRepresentation, chemEqIntLinProg]
 
 convertMatEq :: SimpleQDef
-convertMatEq = mkQuantDef qMat (forall [genI, genJ]
+convertMatEq = mkQuantDef qMat (theSuchThat "matrix" $ forall [genI, genJ]
   $ ((int 0 $<= sy genI $< abs_ (apply elems [sy inputChemEqn])) $&&
       (int 0 $<= sy genJ $< (abs_ (getReactionSide "reac") `addRe`
         abs_ (getReactionSide "prod")))) $=>

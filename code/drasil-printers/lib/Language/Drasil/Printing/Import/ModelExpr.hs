@@ -213,6 +213,7 @@ modelExpr (Exists c p)             sm = P.Row [P.MO P.Exists, P.Spc P.Thin,
 modelExpr (SetComp r p)              sm = P.Fenced P.Curly P.Curly (P.Row [
     modelExpr r sm, P.Label " | ", modelExpr p sm -- FIXME: pipe hack
   ])
+modelExpr (Annotated s e)            sm = P.Row [P.Label s, modelExpr e sm]
 
 -- | Common method of converting associative operations into printable layout AST.
 assocExpr :: P.Ops -> Int -> [ModelExpr] -> PrintingInformation -> P.Expr

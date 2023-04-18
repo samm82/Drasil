@@ -114,6 +114,7 @@ expr (E.Operator ao dd e)    = Operator (assocArithOper ao) (domainDesc dd) (exp
 expr (E.RealI u ri)          = RealI u (realInterval ri)
 expr (E.ForAll r p)          = ForAll' (map expr r) (expr p)
 expr (E.SetComp r p)         = SetComp (expr r) (expr p)
+expr (E.Annotated s e)       = Annotated s (expr e)
 
 realInterval :: RealInterval E.Expr E.Expr -> RealInterval ModelExpr ModelExpr
 realInterval (Bounded (li, l) (ri, r)) = Bounded (li, expr l) (ri, expr r)

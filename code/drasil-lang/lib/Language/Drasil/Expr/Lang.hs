@@ -170,6 +170,9 @@ data Expr where
   -- but generating a set that iterates over every real number, for example, doesn't
   SetComp  :: Expr -> Expr -> Expr
 
+  -- | Annotated Expr
+  Annotated :: String -> Expr -> Expr
+
 -- | Expressions are equal if their constructors and contents are equal.
 instance Eq Expr where
   Lit a               == Lit b               =   a == b

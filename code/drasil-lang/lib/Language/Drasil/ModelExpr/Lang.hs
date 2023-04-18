@@ -172,6 +172,9 @@ data ModelExpr where
   -- | Set comprehension
   SetComp  :: ModelExpr -> ModelExpr -> ModelExpr
 
+  -- | Annotated ModelExpr
+  Annotated :: String -> ModelExpr -> ModelExpr
+
 -- | The variable type is just a renamed 'String'.
 type Variable = String
 
