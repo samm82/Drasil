@@ -7,7 +7,7 @@ import qualified Language.Drasil.Sentence.Combinators as S
 
 import Data.Drasil.Citations (inorganicIUPAC, lund2023, organicIUPAC)
 import Data.Drasil.Concepts.Chemistry
-import Data.Drasil.Concepts.Documentation (likeChgDom, unlikeChgDom)
+import Data.Drasil.Concepts.Documentation (assumption, likeChgDom, unlikeChgDom)
 import Data.Drasil.SI_Units (mole)
 
 import Drasil.ChemCode.Assumptions
@@ -142,14 +142,32 @@ uChanges :: [ConceptInstance]
 uChanges = [allEqsPermitted, checkValidForms, checkValidEqns]
 
 allEqsPermitted, checkValidForms, checkValidEqns :: ConceptInstance
-allEqsPermitted = cic "allEqsPermitted"      allEqsPermittedDesc      "allEqsPermitted"      unlikeChgDom
-checkValidForms = cic "checkValidForms"      checkValidFormsDesc      "checkValidForms"      unlikeChgDom
-checkValidEqns = cic "checkValidEqns"      checkValidEqnsDesc      "checkValidEqns"      unlikeChgDom
+allEqsPermitted = cic "allEqsPermitted" allEqsPermittedDesc "allEqsPermitted" unlikeChgDom
+checkValidForms = cic "checkValidForms" checkValidFormsDesc "checkValidForms" unlikeChgDom
+checkValidEqns  = cic "checkValidEqns"  checkValidEqnsDesc  "checkValidEqns"  unlikeChgDom
 
 allEqsPermittedDesc, checkValidFormsDesc, checkValidEqnsDesc :: Sentence
 
-allEqsPermittedDesc = foldlSent [refS elemCompDiff, S "assumes.."]
+allEqsPermittedDesc = foldlSent [refS elemCompDiff, S "assumes that for all",
+  S "inputted", phrase chemical, plural equation `sC` S "there is at most one more",
+  phrase compound, S "than" +:+. phrase element, S " Manual empirical analysis of",
+  phrase chemical, plural equation, S "without this constraint led to unexpected",
+  S "results" `sC` S "and preliminary investigation did not find any proof that these",
+  S "types of", plural reaction +:+. S "never take place", S "Therefore" `sC`
+    S "this constraint will remain an", phrase assumption,
+  S "and is unlikely to be relaxed"]
 
-checkValidFormsDesc = foldlSent [refS validForms, S "assumes.."]
+checkValidFormsDesc = databaseHelper validForms (S "formulas")    (plural compound)
+checkValidEqnsDesc  = databaseHelper validEqns  (plural equation) (plural reaction)
 
-checkValidEqnsDesc  = foldlSent [refS validEqns, S "assumes.."]
+-- HELPERS FOR UNLIKELY CHANGES
+
+databaseHelper :: (HasUID r, HasRefAddress r, HasShortName r) => r -> Sentence
+  -> Sentence -> Sentence
+databaseHelper source a b = foldlSent [refS source, S "assumes that all",
+  S "inputted", phrase chemical, a, S "describe real", phrase chemical +:+. b,
+  S "While there are extensive libraries of", phrase chemical, b `sC`
+    S "it is impossible to verify that any database of", phrase chemical,
+  b +:+. S "is complete for the sake of verifying user input",
+  S "Therefore" `sC` S "it is unlikely that there will be a reliable way of",
+  S "ensuring the user only inputs real", phrase chemical, a]

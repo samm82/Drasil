@@ -370,9 +370,9 @@ This section lists the likely changes to be made to the software.
 This section lists the unlikely changes to be made to the software.
 
 \begin{itemize}
-\item[allEqsPermitted:\phantomsection\label{allEqsPermitted}]{\hyperref[elemCompDiff]{A:elemCompDiff} assumes...}
-\item[checkValidForms:\phantomsection\label{checkValidForms}]{\hyperref[validForms]{A:validForms} assumes...}
-\item[checkValidEqns:\phantomsection\label{checkValidEqns}]{\hyperref[validEqns]{A:validEqns} assumes...}
+\item[allEqsPermitted:\phantomsection\label{allEqsPermitted}]{\hyperref[elemCompDiff]{A:elemCompDiff} assumes that for all inputted chemical equations, there is at most one more compound than element.  Manual empirical analysis of chemical equations without this constraint led to unexpected. results, and preliminary investigation did not find any proof that these types of reactions never take place. Therefore, this constraint will remain an assumption and is unlikely to be relaxed.}
+\item[checkValidForms:\phantomsection\label{checkValidForms}]{\hyperref[validForms]{A:validForms} assumes that all inputted chemical formulas describe real chemical compounds. While there are extensive libraries of chemical compounds, it is impossible to verify that any database of chemical compounds is complete for the sake of verifying user input. Therefore, it is unlikely that there will be a reliable way of ensuring the user only inputs real chemical formulas.}
+\item[checkValidEqns:\phantomsection\label{checkValidEqns}]{\hyperref[validEqns]{A:validEqns} assumes that all inputted chemical equations describe real chemical reactions. While there are extensive libraries of chemical reactions, it is impossible to verify that any database of chemical reactions is complete for the sake of verifying user input. Therefore, it is unlikely that there will be a reliable way of ensuring the user only inputs real chemical equations.}
 \end{itemize}
 \section{Traceability Matrices and Graphs}
 \label{Sec:TraceMatrices}
