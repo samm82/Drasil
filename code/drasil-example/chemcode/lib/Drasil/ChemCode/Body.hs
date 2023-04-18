@@ -33,7 +33,7 @@ import Drasil.ChemCode.Goals (goals)
 import Drasil.ChemCode.IMods (ims)
 import Drasil.ChemCode.Quantities (constants, inputs, quants)
 import Drasil.ChemCode.Requirements (funcReqs, nonfuncReqs)
-import Drasil.ChemCode.TMods (tms)
+import Drasil.ChemCode.TMods (balanced, tms)
 
 srs :: Document
 srs = mkDoc mkSRS (S.forGen titleize phrase) si

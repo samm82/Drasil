@@ -10,9 +10,14 @@ import Data.Drasil.Concepts.Chemistry (chemical, reaction)
 import Data.Drasil.Concepts.Math (equation)
 import Data.Drasil.Concepts.Software (program)
 
-import Drasil.ChemCode.Concepts (balanced)
 import Drasil.ChemCode.Quantities (aMat, bVec, cVec, xVec, zeroVec, genE, genI,
   genR, count)
+
+balanced :: ConceptChunk
+balanced = dccWDS "balanced" (cn' "balanced")
+  (sParen (S "Referring to a" +:+ phrase chemical +:+ phrase equation) +:+
+    S "following the Law of Conservation of Matter" +:+ sParen (refS lawConsMass))
+-- This should really be in Concept.hs, but this causes an import cycle
 
 tms :: [TheoryModel]
 tms = [intLinProg, lawConsMass]
