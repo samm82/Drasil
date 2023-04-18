@@ -207,7 +207,6 @@ Given a representation of a chemical equation, the goal statements are:
 
 \begin{itemize}
 \item[findBalancedForm:\phantomsection\label{findBalancedForm}]{Find its balanced form with the smallest positive integer coefficients if it is feasible.}
-\item[outputInfeasMsg:\phantomsection\label{outputInfeasMsg}]{Output a descriptive message if it is infeasible.}
 \end{itemize}
 \subsection{Solution Characteristics Specification}
 \label{Sec:SolCharSpec}
@@ -222,7 +221,7 @@ This section simplifies the original problem and helps in developing the theoret
 \item[validForms:\phantomsection\label{validForms}]{All inputted chemical formulas describe real chemical compounds. (RefBy: \hyperref[checkValidForms]{UC:checkValidForms}.)}
 \item[validEqns:\phantomsection\label{validEqns}]{All inputted chemical equations describe real chemical reactions. (RefBy: \hyperref[checkValidEqns]{UC:checkValidEqns}.)}
 \item[correctInputFormat:\phantomsection\label{correctInputFormat}]{All inputted chemical formulas follow the conventions laid out in \cite{inorganicIUPAC} and \cite{organicIUPAC} by the International Union of Pure and Applied Chemistry (IUPAC).}
-\item[simpleForms:\phantomsection\label{simpleForms}]{All inputted chemical formulas only consist of atomic symbols and subscripts. This means that they cannot contain dots, parentheses, hyphens, or superscripts, so hydrates, polymers, and formulas with isotopes and some with polyatomic ions will not be present in inputted chemical equations.}
+\item[simpleForms:\phantomsection\label{simpleForms}]{All inputted chemical formulas only consist of atomic symbols and subscripts. This means that they cannot contain dots, parentheses, hyphens, or superscripts, so hydrates, polymers, and formulas with isotopes and some with polyatomic ions will not be present in inputted chemical equations. (RefBy: \hyperref[complexForms]{LC:complexForms}.)}
 \end{itemize}
 \subsubsection{Theoretical Models}
 \label{Sec:TMs}
@@ -351,6 +350,10 @@ This section provides the non-functional requirements, the qualities that the so
 \label{Sec:LCs}
 This section lists the likely changes to be made to the software.
 
+\begin{itemize}
+\item[complexForms:\phantomsection\label{complexForms}]{\hyperref[simpleForms]{A:simpleForms} assumes that inputted chemical formulas only consist of atomic symbols and subscripts. In the future, the user might be able to input more complex chemical formulas, such as those containing dots, parentheses, hyphens, or superscripts.}
+\item[identifyPhaseLabels:\phantomsection\label{identifyPhaseLabels}]{In the future, ChemCode might be able to, given the phase labels for the reactants of a chemical reaction, identify the phase labels for the products, which would involve determining solubility.}
+\end{itemize}
 \section{Unlikely Changes}
 \label{Sec:UCs}
 This section lists the unlikely changes to be made to the software.
@@ -416,6 +419,10 @@ The purpose of the traceability matrices is to provide easy references on what h
 \\
 \hyperref[portable]{NFR:Portable} &  &  &  &  & 
 \\
+\hyperref[complexForms]{LC:complexForms} &  &  &  &  & X
+\\
+\hyperref[identifyPhaseLabels]{LC:identifyPhaseLabels} &  &  &  &  & 
+\\
 \hyperref[allEqsPermitted]{UC:allEqsPermitted} & X &  &  &  & 
 \\
 \hyperref[checkValidForms]{UC:checkValidForms} &  & X &  &  & 
@@ -447,8 +454,6 @@ The purpose of the traceability matrices is to provide easy references on what h
 \midrule
 \endhead
 \hyperref[findBalancedForm]{GS:findBalancedForm} &  &  &  &  &  &  &  &  &  &  &  &  & 
-\\
-\hyperref[outputInfeasMsg]{GS:outputInfeasMsg} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
 \hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\

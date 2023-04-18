@@ -24,7 +24,7 @@ import Data.Drasil.Software.Products (sciCompS)
 import Data.Drasil.TheoryConcepts (dataDefn, genDefn, inModel, thModel)
 
 import Drasil.ChemCode.Assumptions (assumps)
-import Drasil.ChemCode.Changes (uChanges)
+import Drasil.ChemCode.Changes (lChanges, uChanges)
 import Drasil.ChemCode.Concepts (progName)
 import Drasil.ChemCode.DataDefs (dds)
 import Drasil.ChemCode.Figures (physSysFig, sysCtxFig)
@@ -331,7 +331,7 @@ citations = [chen2022, drasilSource, elemListWiki, hydrateSource, ilpWiki,
   organicIUPAC, parnasClements1986, polymerSource, smithChemSpec, smithLai2005]
 
 concIns :: [ConceptInstance]
-concIns = assumps ++ goals ++ funcReqs ++ nonfuncReqs ++ uChanges
+concIns = assumps ++ goals ++ funcReqs ++ nonfuncReqs ++ lChanges ++ uChanges
 
 stdFields :: Fields
 stdFields = [DefiningEquation, Description Verbose IncludeUnits, Notes, Source, RefBy]

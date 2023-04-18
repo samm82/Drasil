@@ -418,11 +418,6 @@
                       findBalancedForm: Find its balanced form with the smallest positive integer coefficients if it is feasible.
                     </div>
                   </p>
-                  <p>
-                    <div id="outputInfeasMsg">
-                      outputInfeasMsg: Output a descriptive message if it is infeasible.
-                    </div>
-                  </p>
                 </div>
               </div>
             </div>
@@ -463,7 +458,7 @@
                   </p>
                   <p>
                     <div id="simpleForms">
-                      simpleForms: All inputted chemical formulas only consist of atomic symbols and subscripts. This means that they cannot contain dots, parentheses, hyphens, or superscripts, so hydrates, polymers, and formulas with isotopes and some with polyatomic ions will not be present in inputted chemical equations.
+                      simpleForms: All inputted chemical formulas only consist of atomic symbols and subscripts. This means that they cannot contain dots, parentheses, hyphens, or superscripts, so hydrates, polymers, and formulas with isotopes and some with polyatomic ions will not be present in inputted chemical equations. (RefBy: <a href=#complexForms>LC:complexForms</a>.)
                     </div>
                   </p>
                 </div>
@@ -697,7 +692,18 @@
         <p class="paragraph">
           This section lists the likely changes to be made to the software.
         </p>
-        <div class="list"></div>
+        <div class="list">
+          <p>
+            <div id="complexForms">
+              complexForms: <a href=#simpleForms>A:simpleForms</a> assumes that inputted chemical formulas only consist of atomic symbols and subscripts. In the future, the user might be able to input more complex chemical formulas, such as those containing dots, parentheses, hyphens, or superscripts.
+            </div>
+          </p>
+          <p>
+            <div id="identifyPhaseLabels">
+              identifyPhaseLabels: In the future, ChemCode might be able to, given the phase labels for the reactants of a chemical reaction, identify the phase labels for the products, which would involve determining solubility.
+            </div>
+          </p>
+        </div>
       </div>
     </div>
     <div id="Sec:UCs">
@@ -901,6 +907,22 @@
               <td></td>
             </tr>
             <tr>
+              <td><a href=#complexForms>LC:complexForms</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>X</td>
+            </tr>
+            <tr>
+              <td><a href=#identifyPhaseLabels>LC:identifyPhaseLabels</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
               <td><a href=#allEqsPermitted>UC:allEqsPermitted</a></td>
               <td>X</td>
               <td></td>
@@ -971,22 +993,6 @@
             </tr>
             <tr>
               <td><a href=#findBalancedForm>GS:findBalancedForm</a></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-              <td></td>
-            </tr>
-            <tr>
-              <td><a href=#outputInfeasMsg>GS:outputInfeasMsg</a></td>
               <td></td>
               <td></td>
               <td></td>
