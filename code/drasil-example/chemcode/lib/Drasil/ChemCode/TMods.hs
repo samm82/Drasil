@@ -48,11 +48,11 @@ lawConsMass :: TheoryModel
 lawConsMass = tm
   (equationalModel "lawConsMass" (cn' "law of conservation of mass")
     $ fromEqn' "" (cn "") EmptyS (label "Law of Conservation of Mass") Real
-      $ forall [genE, genR] (sy genE $= sy genR))
+    consMassExpr)
   ([] :: [QuantityDict]) -- FIXME: I should not need to manually define the type signature for this to type check
   [consMassChunk] -- FIXME: why do I need this?
   []
-  [sy genE $= sy genR] -- FIXME: apparently this is needed since generation doesn't happen from ModelKinds
+  [consMassExpr] -- FIXME: apparently this is needed since generation doesn't happen from ModelKinds
   []
   [dRef lund2023]
   "lawConsMass" -- FIXME: this is likely needed for the same ModelKinds reason
@@ -64,3 +64,4 @@ lawConsMass = tm
   where
     consMassChunk =
       dccWDS "consMassChunk" (nounPhraseSP "law of conservation of mass") (S "") -- FIXME: ?
+    consMassExpr = forall [genE, genR] (sy genE $= sy genR)
