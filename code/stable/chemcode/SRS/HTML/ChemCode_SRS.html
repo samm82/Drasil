@@ -453,7 +453,7 @@
                   </p>
                   <p>
                     <div id="correctInputFormat">
-                      correctInputFormat: All inputted chemical formulas follow the conventions laid out in <a href=#inorganicIUPAC>inorganicIUPAC</a> and <a href=#organicIUPAC>organicIUPAC</a> by the International Union of Pure and Applied Chemistry (IUPAC).
+                      correctInputFormat: All inputted chemical formulas follow the conventions laid out in <a href=#inorganicIUPAC>inorganicIUPAC</a> and <a href=#organicIUPAC>organicIUPAC</a> by the International Union of Pure and Applied Chemistry (IUPAC). (RefBy: <a href=#incorrectInputFormat>LC:incorrectInputFormat</a>.)
                     </div>
                   </p>
                   <p>
@@ -719,6 +719,11 @@
             </div>
           </p>
           <p>
+            <div id="incorrectInputFormat">
+              incorrectInputFormat: <a href=#correctInputFormat>A:correctInputFormat</a> assumes that inputted chemical formulas follow the conventions laid out in <a href=#inorganicIUPAC>inorganicIUPAC</a> and <a href=#organicIUPAC>organicIUPAC</a>. In the future, ChemCode might be able to parse valid inputted chemical formulas that do not follow these conventions and format them correctly when outputting them.
+            </div>
+          </p>
+          <p>
             <div id="identifyPhaseLabels">
               identifyPhaseLabels: In the future, ChemCode might be able to, given the phase labels for the reactants of a chemical reaction, identify the phase labels for the products, which would involve determining solubility.
             </div>
@@ -964,6 +969,14 @@
               <td></td>
               <td></td>
               <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><a href=#incorrectInputFormat>LC:incorrectInputFormat</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>X</td>
               <td></td>
             </tr>
             <tr>

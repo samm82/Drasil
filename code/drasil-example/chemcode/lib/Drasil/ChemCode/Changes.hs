@@ -3,6 +3,7 @@ module Drasil.ChemCode.Changes where
 import Prelude hiding (product)
 
 import Language.Drasil
+import qualified Language.Drasil.Sentence.Combinators as S
 
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Documentation (likeChgDom, unlikeChgDom)
@@ -10,20 +11,24 @@ import Data.Drasil.SI_Units (mole)
 
 import Drasil.ChemCode.Assumptions
 import Drasil.ChemCode.Concepts (progName)
+import Data.Drasil.Citations (organicIUPAC, inorganicIUPAC)
 
 lChanges :: [ConceptInstance]
-lChanges = [complexForms, calcMoles, detLimReag, calcYield, calcExcess, identifyPhaseLabels]
+lChanges = [complexForms, calcMoles, detLimReag, calcYield, calcExcess,
+  incorrectInputFormat, identifyPhaseLabels]
 
-complexForms, calcMoles, detLimReag, calcYield, calcExcess, identifyPhaseLabels :: ConceptInstance
+complexForms, calcMoles, detLimReag, calcYield, calcExcess, incorrectInputFormat,
+  identifyPhaseLabels :: ConceptInstance
 complexForms = cic "complexForms"      complexFormsDesc      "complexForms"      likeChgDom
 calcMoles = cic "calcMoles"      calcMolesDesc      "calcMoles"      likeChgDom
 detLimReag = cic "detLimReag"      detLimReagDesc      "detLimReag"      likeChgDom
 calcYield = cic "calcYield"      calcYieldDesc      "calcYield"      likeChgDom
 calcExcess = cic "calcExcess"      calcExcessDesc      "calcExcess"      likeChgDom
+incorrectInputFormat = cic "incorrectInputFormat"      incorrectInputFormatDesc      "incorrectInputFormat"      likeChgDom
 identifyPhaseLabels = cic "identifyPhaseLabels" identifyPhaseLabelsDesc "identifyPhaseLabels" likeChgDom
 
 complexFormsDesc, calcMolesDesc, detLimReagDesc, calcYieldDesc, calcExcessDesc,
-  identifyPhaseLabelsDesc :: Sentence
+  incorrectInputFormatDesc, identifyPhaseLabelsDesc :: Sentence
 complexFormsDesc = foldlSent [refS simpleForms, S "assumes that inputted",
   phrase chemical +:+. S "formulas only consist of atomic symbols and subscripts",
   S "In the future" `sC` S "the user might be able to input more complex",
@@ -57,6 +62,13 @@ calcExcessDesc = likeChgGivenHelper amountMultReac (foldlSent_ [
   ])
   -- TODO: from lund2023
 
+incorrectInputFormatDesc = foldlSent [refS correctInputFormat, S "assumes that inputted",
+  phrase chemical, S "formulas follow the conventions laid out in" +:+.
+  (refS inorganicIUPAC `S.and_` refS organicIUPAC), S "In the future" `sC` short progName,
+  S "might be able to parse valid inputted", phrase chemical,
+  S "formulas that do not follow these conventions and format them correctly when outputting them"
+  ]
+
 identifyPhaseLabelsDesc = likeChgGivenHelper (foldlSent_ [S "the phase labels for the",
   plural reactant, S "of a", phrase chemical, phrase reaction]) (foldlSent_ [
     S "identify the phase labels for the", plural product `sC` S "which would",
@@ -74,10 +86,6 @@ likeChgGivenHelper :: Sentence -> Sentence -> Sentence
 likeChgGivenHelper given action = foldlSent [S "In the future" `sC` short progName,
   S "might be able to" `sC` S "given", given `sC` action]
 
--- LC6: The system currently assumes that inputted chemical formulas follow the conventions
--- laid out in [23] and [24]. In the future, ChemCode might be able to parse valid inputted
--- chemical formulas that do not follow these conventions and format them correctly when
--- outputting them.
 -- LC7: In the future, the user might be able to enter the amounts required by LC2, LC3, LC4,
 -- and LC5 in terms of mass (e.g., in grams).1
 -- LC8: In the future, ChemCode might be able to classify a chemical reaction as “combination

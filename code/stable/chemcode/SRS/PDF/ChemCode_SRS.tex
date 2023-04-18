@@ -220,7 +220,7 @@ This section simplifies the original problem and helps in developing the theoret
 \item[elemCompDiff:\phantomsection\label{elemCompDiff}]{For all chemical equations, the total number of chemical compounds is at most one more than the total number of elements. (RefBy: \hyperref[allEqsPermitted]{UC:allEqsPermitted}.)}
 \item[validForms:\phantomsection\label{validForms}]{All inputted chemical formulas describe real chemical compounds. (RefBy: \hyperref[checkValidForms]{UC:checkValidForms}.)}
 \item[validEqns:\phantomsection\label{validEqns}]{All inputted chemical equations describe real chemical reactions. (RefBy: \hyperref[checkValidEqns]{UC:checkValidEqns}.)}
-\item[correctInputFormat:\phantomsection\label{correctInputFormat}]{All inputted chemical formulas follow the conventions laid out in \cite{inorganicIUPAC} and \cite{organicIUPAC} by the International Union of Pure and Applied Chemistry (IUPAC).}
+\item[correctInputFormat:\phantomsection\label{correctInputFormat}]{All inputted chemical formulas follow the conventions laid out in \cite{inorganicIUPAC} and \cite{organicIUPAC} by the International Union of Pure and Applied Chemistry (IUPAC). (RefBy: \hyperref[incorrectInputFormat]{LC:incorrectInputFormat}.)}
 \item[simpleForms:\phantomsection\label{simpleForms}]{All inputted chemical formulas only consist of atomic symbols and subscripts. This means that they cannot contain dots, parentheses, hyphens, or superscripts, so hydrates, polymers, and formulas with isotopes and some with polyatomic ions will not be present in inputted chemical equations. (RefBy: \hyperref[complexForms]{LC:complexForms}.)}
 \end{itemize}
 \subsubsection{Theoretical Models}
@@ -356,6 +356,7 @@ This section lists the likely changes to be made to the software.
 \item[detLimReag:\phantomsection\label{detLimReag}]{In the future, ChemCode might be able to, given the amount of more than one reactant (in moles) in a reaction, determine the limiting reactant(s). This is dependent on \hyperref[calcMoles]{LC:calcMoles}.}
 \item[calcYield:\phantomsection\label{calcYield}]{In the future, ChemCode might be able to, given the amount of more than one reactant (in moles) in a reaction, calculate the theoretical yield of each product (also in moles). This is dependent on \hyperref[detLimReag]{LC:detLimReag}.}
 \item[calcExcess:\phantomsection\label{calcExcess}]{In the future, ChemCode might be able to, given the amount of more than one reactant (in moles) in a reaction, calculate the amount of excess reactant(s) (also in moles). This is dependent on \hyperref[detLimReag]{LC:detLimReag}.}
+\item[incorrectInputFormat:\phantomsection\label{incorrectInputFormat}]{\hyperref[correctInputFormat]{A:correctInputFormat} assumes that inputted chemical formulas follow the conventions laid out in \cite{inorganicIUPAC} and \cite{organicIUPAC}. In the future, ChemCode might be able to parse valid inputted chemical formulas that do not follow these conventions and format them correctly when outputting them.}
 \item[identifyPhaseLabels:\phantomsection\label{identifyPhaseLabels}]{In the future, ChemCode might be able to, given the phase labels for the reactants of a chemical reaction, identify the phase labels for the products, which would involve determining solubility.}
 \end{itemize}
 \section{Unlikely Changes}
@@ -432,6 +433,8 @@ The purpose of the traceability matrices is to provide easy references on what h
 \hyperref[calcYield]{LC:calcYield} &  &  &  &  & 
 \\
 \hyperref[calcExcess]{LC:calcExcess} &  &  &  &  & 
+\\
+\hyperref[incorrectInputFormat]{LC:incorrectInputFormat} &  &  &  & X & 
 \\
 \hyperref[identifyPhaseLabels]{LC:identifyPhaseLabels} &  &  &  &  & 
 \\
