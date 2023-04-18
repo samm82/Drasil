@@ -463,7 +463,7 @@
                   </p>
                   <p>
                     <div id="intCoeffs">
-                      intCoeffs: All chemical equations will be balanced using integer coefficients.
+                      intCoeffs: All chemical equations will be balanced using integer coefficients. (RefBy: <a href=#nonintCoeffs>UC:nonintCoeffs</a>.)
                     </div>
                   </p>
                 </div>
@@ -770,7 +770,7 @@
         <div class="list">
           <p>
             <div id="allEqsPermitted">
-              allEqsPermitted: <a href=#elemCompDiff>A:elemCompDiff</a> assumes that for all inputted chemical equations, there is at most one more compound than element.  Manual empirical analysis of chemical equations without this constraint led to unexpected. results, and preliminary investigation did not find any proof that these types of reactions never take place. Therefore, this constraint will remain an assumption and is unlikely to be relaxed.
+              allEqsPermitted: <a href=#elemCompDiff>A:elemCompDiff</a> assumes that for all inputted chemical equations, there is at most one more compound than element.  Manual empirical analysis of chemical equations without this constraint led to unexpected results, and preliminary investigation did not find any proof that these types of reactions never take place. Therefore, this constraint will remain an assumption and is unlikely to be relaxed.
             </div>
           </p>
           <p>
@@ -781,6 +781,11 @@
           <p>
             <div id="checkValidEqns">
               checkValidEqns: <a href=#validEqns>A:validEqns</a> assumes that all inputted chemical equations describe real chemical reactions. While there are extensive libraries of chemical reactions, it is impossible to verify that any database of chemical reactions is complete for the sake of verifying user input. Therefore, it is unlikely that there will be a reliable way of ensuring the user only inputs real chemical equations.
+            </div>
+          </p>
+          <p>
+            <div id="nonintCoeffs">
+              nonintCoeffs: <a href=#intCoeffs>A:intCoeffs</a> assumes that all inputted chemical equations will be balanced using integer coefficients. While there are some cases where these coefficients are not integers (see <a href=#nonIntCoeffSource>nonIntCoeffSource</a>), the overwhelming majority of chemical equations are balanced using integer coefficients, since this can represent the numbers of molecules present in a reaction. Therefore, only integer coefficients will be used for balancing chemical equations.
             </div>
           </p>
         </div>
@@ -1124,6 +1129,15 @@
               <td></td>
               <td></td>
               <td></td>
+            </tr>
+            <tr>
+              <td><a href=#nonintCoeffs>UC:nonintCoeffs</a></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>X</td>
             </tr>
           </table>
           <p class="caption">

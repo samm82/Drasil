@@ -5,7 +5,8 @@ import Prelude hiding (product)
 import Language.Drasil
 import qualified Language.Drasil.Sentence.Combinators as S
 
-import Data.Drasil.Citations (inorganicIUPAC, lund2023, organicIUPAC)
+import Data.Drasil.Citations (inorganicIUPAC, lund2023, nonIntCoeffSource,
+  organicIUPAC)
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Documentation (assumption, likeChgDom, unlikeChgDom)
 import Data.Drasil.SI_Units (mole)
@@ -74,9 +75,10 @@ calcExcessDesc = likeChgGivenHelper amountMultReac (foldlSent_ [
 
 incInputFormatDesc = foldlSent [refS correctInputFormat, S "assumes that inputted",
   phrase chemical, S "formulas follow the conventions laid out in" +:+.
-  (refS inorganicIUPAC `S.and_` refS organicIUPAC), S "In the future" `sC` short progName,
-  S "might be able to parse valid inputted", phrase chemical,
-  S "formulas that do not follow these conventions and format them correctly when outputting them"
+  (refS inorganicIUPAC `S.and_` refS organicIUPAC), S "In the future" `sC`
+    short progName, S "might be able to parse valid inputted", phrase chemical,
+  S "formulas that do not follow these conventions and format them correctly",
+  S "when outputting them"
   ]
 
 termsOfMassDesc = foldlSent [actorMightBeAbleTo (S "the user"),
@@ -139,14 +141,15 @@ dependentOn r = S "This is dependent on" +:+ refS r
 -- UNLIKELY CHANGES
 
 uChanges :: [ConceptInstance]
-uChanges = [allEqsPermitted, checkValidForms, checkValidEqns]
+uChanges = [allEqsPermitted, checkValidForms, checkValidEqns, nonintCoeffs]
 
-allEqsPermitted, checkValidForms, checkValidEqns :: ConceptInstance
+allEqsPermitted, checkValidForms, checkValidEqns, nonintCoeffs :: ConceptInstance
 allEqsPermitted = cic "allEqsPermitted" allEqsPermittedDesc "allEqsPermitted" unlikeChgDom
 checkValidForms = cic "checkValidForms" checkValidFormsDesc "checkValidForms" unlikeChgDom
 checkValidEqns  = cic "checkValidEqns"  checkValidEqnsDesc  "checkValidEqns"  unlikeChgDom
+nonintCoeffs    = cic "nonintCoeffs"    nonintCoeffsDesc    "nonintCoeffs"    unlikeChgDom
 
-allEqsPermittedDesc, checkValidFormsDesc, checkValidEqnsDesc :: Sentence
+allEqsPermittedDesc, checkValidFormsDesc, checkValidEqnsDesc, nonintCoeffsDesc :: Sentence
 
 allEqsPermittedDesc = foldlSent [refS elemCompDiff, S "assumes that for all",
   S "inputted", phrase chemical, plural equation `sC` S "there is at most one more",
@@ -159,6 +162,15 @@ allEqsPermittedDesc = foldlSent [refS elemCompDiff, S "assumes that for all",
 
 checkValidFormsDesc = databaseHelper validForms (S "formulas")    (plural compound)
 checkValidEqnsDesc  = databaseHelper validEqns  (plural equation) (plural reaction)
+
+nonintCoeffsDesc = foldlSent [refS intCoeffs, S "assumes that all inputted",
+  phrase chemical, plural equation +:+. S "will be balanced using integer coefficients",
+  S "While there are some cases where these coefficients are not integers",
+  sParen (S "see" +:+ refS nonIntCoeffSource) `sC` S "the overwhelming majority of",
+  phrase chemical, plural equation, S "are balanced using integer coefficients" `sC`
+    S "since this can represent the numbers of molecules present in a" +:+.
+    phrase reaction, S "Therefore" `sC` S "only integer coefficients will be used",
+  S "for balancing", phrase chemical, plural equation]
 
 -- HELPERS FOR UNLIKELY CHANGES
 
