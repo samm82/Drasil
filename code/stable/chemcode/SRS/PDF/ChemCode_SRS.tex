@@ -567,8 +567,8 @@ Output & $\symbf{Q}$
 \\ \midrule \\
 Equation & \begin{displaymath}
            \symbf{Q}=\forall{}\,i\in{}\mathbb{Z},j\in{}\mathbb{Z}\text{ | }0\leq{}i\lt{}|\text{elems}\left({r_{\text{in}}}\right)|\land{}0\leq{}j\lt{}|{r_{\text{in}}}\text{.reac}|+|{r_{\text{in}}}\text{.prod}|\implies{}{q_{\text{ij}}}=\begin{cases}
-                                                                                                                                                                                                                                           \text{count}\left(e,c\right), & j\lt{}|{r_{\text{in}}}\text{.reac}|\\
-                                                                                                                                                                                                                                           -\left(\text{count}\left(e,c\right)\right), & \neg{}j\lt{}|{r_{\text{in}}}\text{.reac}|
+                                                                                                                                                                                                                                           \text{count}\left({\text{elems}\left({r_{\text{in}}}\right)}_{i},{{r_{\text{in}}}\text{.reac}}_{j}\text{.comp}\right), & j\lt{}|{r_{\text{in}}}\text{.reac}|\\
+                                                                                                                                                                                                                                           -\left(\text{count}\left({\text{elems}\left({r_{\text{in}}}\right)}_{i},{{r_{\text{in}}}\text{.prod}}_{j-|{r_{\text{in}}}\text{.reac}|}\text{.comp}\right)\right), & \neg{}j\lt{}|{r_{\text{in}}}\text{.reac}|
                                                                                                                                                                                                                                            \end{cases}
            \end{displaymath}
 \\ \midrule \\
@@ -580,8 +580,6 @@ Description & \begin{symbDescription}
               \item{$j$ is the generic integer (Unitless)}
               \item{${q_{\text{ij}}}$ is the element of $\symbf{Q}$ (Unitless)}
               \item{$\text{count}$ is the count of an element in a compound (Unitless)}
-              \item{$e$ is the generic element (Unitless)}
-              \item{$c$ is the generic compound (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
 Source & --

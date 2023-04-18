@@ -15,14 +15,23 @@ ims = [matRepresentation, chemEqIntLinProg]
 convertMatEq :: SimpleQDef
 convertMatEq = mkQuantDef qMat (forall [genI, genJ]
   $ ((int 0 $<= sy genI $< abs_ (apply elems [sy inputChemEqn])) $&&
-      (int 0 $<= sy genJ $< (abs_ (access inputChemEqn "reac") `addRe`
-        abs_ (access inputChemEqn "prod")))) $=>
+      (int 0 $<= sy genJ $< (abs_ (getReactionSide "reac") `addRe`
+        abs_ (getReactionSide "prod")))) $=>
         sy qEnt $= completeCase [
-          (apply count $ map sy [genE, genC],
-            sy genJ $< abs_ (access inputChemEqn "reac")),
-          (neg $ apply count $ map sy [genE, genC],
-            not_ (sy genJ $< abs_ (access inputChemEqn "reac")))
+          (apply count [elemInElems, compInReac],
+            sy genJ $< abs_ (getReactionSide "reac")),
+          (neg $ apply count [elemInElems, compInProd],
+            not_ (sy genJ $< abs_ (getReactionSide "reac")))
         ])
+  where
+    elemInElems, compInReac, compInProd :: Expr
+    elemInElems = idx (apply elems [sy inputChemEqn]) (sy genI)
+    compInReac = compHelper "reac" (sy genJ)
+    compInProd = compHelper "prod" (sy genJ $- abs_ (getReactionSide "reac"))
+    compHelper :: String -> Expr -> Expr
+    compHelper s i = access (idx (getReactionSide s) i) "comp"
+    getReactionSide :: String -> Expr
+    getReactionSide = access (sy inputChemEqn)
 
 matRepresentation :: InstanceModel
 matRepresentation = imNoRefs

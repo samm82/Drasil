@@ -228,7 +228,7 @@ class ExprC r where
   tCons :: [r] -> r
 
   -- | Accesses a given field of a tuple.
-  access :: (HasUID f) => f -> String -> r
+  access :: r -> String -> r
 
   -- Note how |sy| 'enforces' having a symbol
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.
@@ -412,7 +412,7 @@ instance ExprC Expr where
   tCons = RCons
 
   -- | Accesses a given field of a tuple.
-  access f = RAccess (f ^. uid)
+  access = RAccess
 
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.
   sy x = C (x ^. uid)
@@ -597,7 +597,7 @@ instance ExprC M.ModelExpr where
   tCons = M.RCons
 
   -- | Accesses a given field of a tuple.
-  access f = M.RAccess (f ^. uid)
+  access = M.RAccess
 
   -- Note how |sy| 'enforces' having a symbol
   -- | Create an 'Expr' from a 'Symbol'ic Chunk.

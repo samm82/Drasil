@@ -49,8 +49,10 @@ countDD = ddMENoRefs countExpr Nothing "countFunc"
 
 countExpr :: ModelQDef
 countExpr = mkFuncDefByQ count [genE, genC]
-  $ completeCase [(access tupC "count", isMember (sy tupC) (sy genC) $&& (access tupC "elem" $= sy genE)),
-                  (int 0, not_ $ isMember (sy tupC) (sy genC) $&& (access tupC "elem" $= sy genE))]
+  $ completeCase [(access (sy tupC) "count", isMember (sy tupC) (sy genC) $&&
+                    (access (sy tupC) "elem" $= sy genE)),
+                  (int 0, not_ $ isMember (sy tupC) (sy genC) $&&
+                    (access (sy tupC) "elem" $= sy genE))]
 
 elemsDD :: DataDefinition
 elemsDD = ddMENoRefs elemsExpr Nothing "elemsFunc"
@@ -61,6 +63,6 @@ elemsDD = ddMENoRefs elemsExpr Nothing "elemsFunc"
 elemsExpr :: ModelQDef
 elemsExpr = mkFuncDefByQ elems [genR]
   $ setComp genE $ exists [genC, genY, genX] $
-    (isMember (tCons (map sy [genC, genY])) (access genR "prod") $|| --FIXME: this should use union, not or
-    isMember (tCons (map sy [genC, genY])) (access genR "reac")) $&&
+    (isMember (tCons (map sy [genC, genY])) (access (sy genR) "prod") $|| --FIXME: this should use union, not or
+    isMember (tCons (map sy [genC, genY])) (access (sy genR) "reac")) $&&
     isMember (tCons (map sy [genE, genX])) (sy genC)

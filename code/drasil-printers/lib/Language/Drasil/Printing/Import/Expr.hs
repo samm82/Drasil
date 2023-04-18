@@ -122,8 +122,7 @@ expr (FCall f [x])            sm =
 expr (FCall f l)              sm = call sm f l
 expr (RCons x)                sm =
   P.Fenced P.Paren P.Paren $ P.Row $ intersperse (P.MO P.Comma) $ map (`expr` sm) x
-expr (RAccess t l)            sm =
-  P.Row [symbol $ lookupC (sm ^. stg) (sm ^. ckdb) t, P.Label $ "." ++ l]
+expr (RAccess r f)            sm = P.Row [expr r sm, P.Label $ "." ++ f]
   -- FIXME: should period be captured better?
 expr (Case _ ps)              sm =
   if length ps < 2

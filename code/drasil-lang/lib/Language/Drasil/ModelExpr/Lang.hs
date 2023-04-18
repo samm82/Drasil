@@ -118,7 +118,7 @@ data ModelExpr where
   -- | Record constructor.
   RCons    :: [ModelExpr] -> ModelExpr
   -- | Record accessors.
-  RAccess   :: UID -> String -> ModelExpr
+  RAccess   :: ModelExpr -> String -> ModelExpr
   -- | For multi-case expressions, each pair represents one case.
   Case      :: Completeness -> [(ModelExpr, ModelExpr)] -> ModelExpr
   -- | For integer linear programs.

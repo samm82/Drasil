@@ -119,7 +119,7 @@ data Expr where
   -- | Record constructor.
   RCons    :: [Expr] -> Expr
   -- | Record accessors.
-  RAccess  :: UID -> String -> Expr
+  RAccess  :: Expr -> String -> Expr
   -- | For multi-case expressions, each pair represents one case.
   Case     :: Completeness -> [(Expr, Relation)] -> Expr
   -- | Represents a matrix of expressions.
