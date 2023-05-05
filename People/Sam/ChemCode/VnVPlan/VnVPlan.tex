@@ -133,8 +133,10 @@
   feedback \\
   & 1.2.2 & Revise output messages for \nameref{infeasTest} based on feedback
   and changes to scope \\
-  & 1.2.3 & Add test for trivial valid chemical equation
+  & 2.0 & Add test for trivial valid chemical equation
   (\testref{test_trival_valid_eqn}) \\
+  May 5, 2023 & 2.1 & Improve wording of \nameref{sec_objs} and intro to
+  \nameref{sec_sysNFReqs} \\
 \end{xltabular}
 
 \section{Abbreviations and Acronyms} \label{sec_abbrsAcrs}
@@ -173,9 +175,9 @@ The software that will be tested is \progname{}, a tool for automatically
 balancing chemical equations so that they may be useful
 \cite{lund_introduction_2023}.
 
-\subsection{Objectives}
+\subsection{Objectives} \label{sec_objs}
 
-The primary objectives of this plan are to build confidence in the software's
+The nontrivial objectives of this plan are to build confidence in the software's
 correctness and to ensure that this project meets the goals of both CAS 741 and
 Drasil. This means that certain areas are out of the scope of this project,
 such as usability and (potentially) unit testing.
@@ -493,8 +495,7 @@ input/output is a design decision that is not made at this stage.
 \subsection{Tests for Nonfunctional Requirements} \label{sec_sysNFReqs}
 
 There are no tests for maintainability because this is the responsibility of
-the Drasil team, as Drasil is responsible for generated the actual
-implementation of \progname{}.
+the Drasil team, as Drasil is responsible for generating \progname{}.
 
 \subsubsection{Accuracy Testing}
 

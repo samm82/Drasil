@@ -91,7 +91,7 @@ inorganicIUPAC = cBookA [iupac, ngConnelly, tDahmus, rmHartshorn, atHutton]
   "The Royal Society of Chemistry" 2005 [address "Cambridge, UK",
   howPublishedU "https://iupac.org/wp-content/uploads/2016/07/Red_Book_2005.pdf"]
   "inorganicIUPAC"
-
+  
 organicIUPAC = cBookA [iupac, gpMoss, haFavre, whPowell]
   "Nomenclature of Organic Chemistry: IUPAC Recommendations and Preferred Names 2013"
   "The Royal Society of Chemistry" 2013 [address "Cambridge, UK",
