@@ -472,10 +472,10 @@ Symbol & $\text{count}$
          
 \\ \midrule \\
 Equation & \begin{displaymath}
-           \text{count}=\begin{cases}
-                        {c^{r}}\text{.count}\,\text{such that }\,{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e, & \exists{}\,{{c^{r}}\in{}\text{record of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)}\text{ | }{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e\\
-                        0, & \neg{}\exists{}\,{{c^{r}}\in{}\text{record of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)}\text{ | }{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e
-                        \end{cases}
+           \text{count}\left(e,c\right)=\begin{cases}
+                                        {c^{r}}\text{.count}\,\text{such that }\,{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e, & \exists{}\,{{c^{r}}\in{}\text{record of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)}\text{ | }{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e\\
+                                        0, & \neg{}\exists{}\,{{c^{r}}\in{}\text{record of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)}\text{ | }{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e
+                                        \end{cases}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
@@ -510,7 +510,7 @@ Symbol & $\text{elems}$
          
 \\ \midrule \\
 Equation & \begin{displaymath}
-           \text{elems}=\{e\in{}E\text{ | }\exists{}\,c\in{}C,y\in{}\mathbb{Z},x\in{}\mathbb{R}\text{ | }\left(\left(c,y\right)\in{}r\text{.prod}\lor{}\left(c,y\right)\in{}r\text{.reac}\right)\land{}\left(e,x\right)\in{}c\}
+           \text{elems}\left(r\right)=\{e\in{}E\text{ | }\exists{}\,c\in{}C,y\in{}\mathbb{Z},x\in{}\mathbb{R}\text{ | }\left(\left(c,y\right)\in{}r\text{.prod}\lor{}\left(c,y\right)\in{}r\text{.reac}\right)\land{}\left(e,x\right)\in{}c\}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
@@ -966,7 +966,7 @@ address={Cambridge, UK},
 howpublished={\url{https://iupac.qmul.ac.uk/BlueBook/PDF/}}}
 @mastersthesis{koothoor2013,
 author={Koothoor, Nirmitha},
-title={A document drive approach to certifying scientific computing software},
+title={A Document Driven Approach to Certifying Scientific Computing Software},
 school={McMaster University},
 year={2013},
 address={Hamilton, ON, Canada}}
