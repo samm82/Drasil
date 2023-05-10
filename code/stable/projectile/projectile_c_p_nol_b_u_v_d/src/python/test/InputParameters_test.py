@@ -9,10 +9,13 @@ import sys
 sys.path.append("../")
 from python import InputParameters
 
+def read_inParams(filename):
+    return InputParameters.InputParameters(Path("test/test_input") / f"{filename}.txt")
+
 # \brief Tests reading valid input
 def test_valid_input():
     for filename in ["default_float", "default_int"]:
-        inParams = InputParameters.InputParameters(Path("test/test_input") / f"{filename}.txt")
+        inParams = read_inParams(filename)
 
         assert isclose(inParams.v_launch, 20)
         if filename.endswith("float"):
