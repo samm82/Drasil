@@ -1,0 +1,3 @@
+s = The target was hit.
+d_offset = -0.18367346938993734
+t_flight = 2.8861496557024258
