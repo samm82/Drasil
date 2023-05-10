@@ -4,9 +4,8 @@
 
 from math import isclose
 from pathlib import Path
-
-import sys
-sys.path.append("../")
+from sys import path
+path.append("../")
 from python import InputParameters
 
 def read_inParams(filename):
