@@ -15,8 +15,8 @@ from io import StringIO
 
 valid_input_files = ["default_float", "default_int"]
 expected_valid_inputs = [
-    ("default_float", 20, 0.785398, 41),
-    ("default_int",   20, 1,        41),
+    ("default_float", 20.0, 0.785398, 41.0),
+    ("default_int",   20,   1,        41),
 ]
 invalid_input_files = ["too_large_theta", "zero_p_target", "zero_theta",
     "zero_v_launch"]
