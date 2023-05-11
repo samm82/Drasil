@@ -46,7 +46,7 @@ def test_input_constraints_valid(filename):
 
 # \brief Tests constraint checking invalid input
 @mark.parametrize("filename", invalid_input_files)
-def test_input_constraints_valid(filename):
+def test_input_constraints_invalid(filename):
     inParams = read_inParams(filename)
 
     stdout = StringIO()
