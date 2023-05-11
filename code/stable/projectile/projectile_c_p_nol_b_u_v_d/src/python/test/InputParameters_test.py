@@ -18,9 +18,12 @@ expected_valid_inputs = [
     ("default_float", 20, 0.785398, 41),
     ("default_int",   20, 1,        41),
 ]
+invalid_input_files = ["too_large_theta", "zero_p_target", "zero_theta",
+    "zero_v_launch"]
 
 def read_inParams(filename):
-    return InputParameters.InputParameters(Path("test/test_input") / f"{filename}.txt")
+    return InputParameters.InputParameters(
+        Path("test/test_input") / f"{filename}.txt")
 
 # \brief Tests reading valid input
 @mark.parametrize("filename,v_launch,theta,p_target", expected_valid_inputs)
@@ -40,3 +43,13 @@ def test_input_constraints_valid(filename):
     with redirect_stdout(stdout):  
         inParams.input_constraints()
     assert stdout.getvalue() == ""
+
+# \brief Tests constraint checking invalid input
+@mark.parametrize("filename", invalid_input_files)
+def test_input_constraints_valid(filename):
+    inParams = read_inParams(filename)
+
+    stdout = StringIO()
+    with redirect_stdout(stdout):  
+        inParams.input_constraints()
+    assert "Warning: " in stdout.getvalue()
