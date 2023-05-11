@@ -1,13 +1,10 @@
-## \file InputParametersTest.py
+## \file InputParameters_test.py
 # \author Samuel J. Crawford
 # \brief Runs tests for the input of parameters
 
 from math import isclose
-from pathlib import Path
 from pytest import mark
-from sys import path
-path.append("../")
-from python import InputParameters
+from TestHelpers import read_inParams
 
 # for capturing stdout
 from contextlib import redirect_stdout
@@ -20,10 +17,6 @@ expected_valid_inputs = [
 ]
 invalid_input_files = ["too_large_theta", "zero_p_target", "zero_theta",
     "zero_v_launch"]
-
-def read_inParams(filename):
-    return InputParameters.InputParameters(
-        Path("test/test_input") / f"{filename}.txt")
 
 # \brief Tests reading valid input
 @mark.parametrize("filename,v_launch,theta,p_target", expected_valid_inputs)

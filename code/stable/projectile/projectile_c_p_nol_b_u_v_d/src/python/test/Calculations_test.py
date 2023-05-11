@@ -1,14 +1,14 @@
-## \file InputParametersTest.py
+## \file Calculations_test.py
 # \author Samuel J. Crawford
 # \brief Runs tests for the input of parameters
 
 from math import isclose
-from pathlib import Path
 from pytest import mark
+from TestHelpers import read_inParams
+
 from sys import path
 path.append("../")
 from python import Calculations
-from python import InputParameters
 
 g = 9.8
 valid_input_files = ["default_float", "default_int"]
@@ -25,10 +25,6 @@ expected_valid_input_calculations = [
 
 def get_expected(field):
     return [(d["filename"], d[field]) for d in expected_valid_input_calculations]
-
-def read_inParams(filename):
-    return InputParameters.InputParameters(
-        Path("test/test_input") / f"{filename}.txt")
 
 # \brief Tests reading valid input
 @mark.parametrize("filename,t_flight", get_expected("t_flight"))
