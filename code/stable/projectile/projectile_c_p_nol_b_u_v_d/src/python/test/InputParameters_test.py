@@ -14,21 +14,22 @@ from contextlib import redirect_stdout
 from io import StringIO
 
 valid_input_files = ["default_float", "default_int"]
+expected_valid_inputs = [
+    ("default_float", 20, 0.785398, 41),
+    ("default_int",   20, 1,        41),
+]
 
 def read_inParams(filename):
     return InputParameters.InputParameters(Path("test/test_input") / f"{filename}.txt")
 
 # \brief Tests reading valid input
-@mark.parametrize("filename", valid_input_files)
-def test_get_input_valid(filename):
+@mark.parametrize("filename,v_launch,theta,p_target", expected_valid_inputs)
+def test_get_input_valid(filename, v_launch, theta, p_target):
     inParams = read_inParams(filename)
 
-    assert isclose(inParams.v_launch, 20)
-    if filename.endswith("float"):
-        assert isclose(inParams.theta, 0.785398)
-    elif filename.endswith("int"):
-        assert isclose(inParams.theta, 1)
-    assert isclose(inParams.p_target, 41)
+    assert isclose(inParams.v_launch, v_launch)
+    assert isclose(inParams.theta, theta)
+    assert isclose(inParams.p_target, p_target)
 
 # \brief Tests constraint checking valid input
 @mark.parametrize("filename", valid_input_files)
