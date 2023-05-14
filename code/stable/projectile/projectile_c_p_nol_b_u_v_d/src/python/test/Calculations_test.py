@@ -17,11 +17,13 @@ expected_valid_input_calculations = [
         "filename": "default_float",
         "t_flight": 2.8861496557,
         "p_land":   40.816326531,
+        "d_offset": -0.183673469,
     },
     {
         "filename": "default_int",
         "t_flight": 3.4345754482,
         "p_land":   37.114180687,
+        "d_offset": -3.885819313,
     },
 ]
 
@@ -40,3 +42,11 @@ def test_func_t_flight(filename, t_flight):
 def test_func_p_land(filename, p_land):
     inParams = read_inParams(filename)
     assert isclose(Calculations.func_p_land(inParams, g), p_land)
+
+# \brief Tests calculation of d_offset with valid input
+@mark.parametrize("filename,d_offset", get_expected("d_offset"))
+def test_func_d_offset(filename, d_offset):
+    inParams = read_inParams(filename)
+    assert isclose(Calculations.func_d_offset(
+        inParams, Calculations.func_p_land(inParams, g)), d_offset,
+        abs_tol=1e-09) # needed for cancellation?
