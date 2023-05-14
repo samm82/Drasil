@@ -23,10 +23,11 @@ expected_valid_input_calculations = [
     },
 ]
 
+# \brief Returns a list of tuples with relevant value for each valid input
 def get_expected(field):
     return [(d["filename"], d[field]) for d in expected_valid_input_calculations]
 
-# \brief Tests reading valid input
+# \brief Tests calculation of t_flight with valid input
 @mark.parametrize("filename,t_flight", get_expected("t_flight"))
 def test_func_t_flight(filename, t_flight):
     inParams = read_inParams(filename)
