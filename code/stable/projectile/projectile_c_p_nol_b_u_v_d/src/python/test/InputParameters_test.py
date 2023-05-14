@@ -15,8 +15,12 @@ expected_valid_inputs = [
     ("default_float", 20.0, 0.785398, 41.0),
     ("default_int",   20,   1,        41),
 ]
-invalid_input_files = ["too_large_theta", "zero_p_target", "zero_theta",
-    "zero_v_launch"]
+invalid_input_files = [
+    "zero_v_launch",   # violates lower bound of v_launch
+    "zero_theta",      # violates lower bound of theta p_target
+    "too_large_theta", # violates upper bound of theta p_target
+    "zero_p_target",   # violates lower bound of p_target
+]
 
 # \brief Tests reading valid input
 @mark.parametrize("filename,v_launch,theta,p_target", expected_valid_inputs)
