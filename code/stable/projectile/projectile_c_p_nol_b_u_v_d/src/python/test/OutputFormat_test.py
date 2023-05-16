@@ -12,6 +12,7 @@ expected_outputs = [
     # (s, d_offset, t_flight)
     ("The target was hit.",        -0.183673469, 2.8861496557), # result of default_float
     ("The projectile fell short.", -3.885819313, 3.4345754482), # result of default_int
+    ("The projectile went long.",  13.885819313, 10), # for completeness; checks all values of `s`
 ]
 
 # \brief Tests writing valid input
