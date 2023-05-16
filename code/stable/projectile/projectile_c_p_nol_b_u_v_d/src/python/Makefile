@@ -5,6 +5,7 @@ run: build
 
 test: build
 	pytest -v test
+	rm output.txt
 
 doc: doxConfig Control.py InputParameters.py Calculations.py OutputFormat.py
 	doxygen doxConfig
