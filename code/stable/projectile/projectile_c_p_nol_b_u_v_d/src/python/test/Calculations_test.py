@@ -12,7 +12,7 @@ from python import Calculations
 
 g = 9.8
 epsilon = 0.02
-valid_input_files = ["default_float", "default_int"]
+valid_input_files = ["default_float", "default_int", "projectile_went_long"]
 expected_outputs = [
     {
         "filename": "default_float",
@@ -27,6 +27,13 @@ expected_outputs = [
         "p_land":   37.114180687,
         "d_offset": -3.885819313,
         "s":        "The projectile fell short."
+    },
+    {
+        "filename": "projectile_went_long",
+        "t_flight": 2.8861496557,
+        "p_land":   40.816326531,
+        "d_offset": 0.816326531,
+        "s":        "The projectile went long."
     },
 ]
 
