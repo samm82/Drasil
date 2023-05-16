@@ -8,14 +8,14 @@ from sys import path
 path.append("../")
 from python import OutputFormat
 
-expected_valid_inputs = [
+expected_outputs = [
     # (s, d_offset, t_flight)
     ("The target was hit.",        -0.183673469, 2.8861496557), # result of default_float
     ("The projectile fell short.", -3.885819313, 3.4345754482), # result of default_int
 ]
 
 # \brief Tests writing valid input
-@mark.parametrize("s, d_offset, t_flight", expected_valid_inputs)
+@mark.parametrize("s, d_offset, t_flight", expected_outputs)
 def test_get_input_valid(s, d_offset, t_flight):
     OutputFormat.write_output(s, d_offset, t_flight)
     with open("output.txt") as f:

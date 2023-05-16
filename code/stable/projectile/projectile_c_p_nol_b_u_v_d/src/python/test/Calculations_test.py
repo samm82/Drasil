@@ -13,7 +13,7 @@ from python import Calculations
 g = 9.8
 epsilon = 0.02
 valid_input_files = ["default_float", "default_int"]
-expected_valid_input_calculations = [
+expected_outputs = [
     {
         "filename": "default_float",
         "t_flight": 2.8861496557,
@@ -32,10 +32,10 @@ expected_valid_input_calculations = [
 
 # \brief Returns a list of tuples with relevant value for each valid input
 def get_expected(*fields):
-    out = [(d["filename"],) for d in expected_valid_input_calculations]
+    out = [(d["filename"],) for d in expected_outputs]
     for i in range(len(out)):
         for field in fields:
-            out[i] = out[i] + (expected_valid_input_calculations[i][field],)
+            out[i] = out[i] + (expected_outputs[i][field],)
     return out
 
 # \brief Tests calculation of t_flight with valid input

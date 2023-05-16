@@ -11,7 +11,7 @@ from contextlib import redirect_stdout
 from io import StringIO
 
 valid_input_files = ["default_float", "default_int"]
-expected_valid_inputs = [
+expected_outputs = [
     # (filename, v_launch, theta, p_target)
     ("default_float", 20.0, 0.785398, 41.0),
     ("default_int",   20,   1,        41),
@@ -24,7 +24,7 @@ invalid_input_files = [
 ]
 
 # \brief Tests reading valid input
-@mark.parametrize("filename,v_launch,theta,p_target", expected_valid_inputs)
+@mark.parametrize("filename,v_launch,theta,p_target", expected_outputs)
 def test_get_input_valid(filename, v_launch, theta, p_target):
     inParams = read_inParams(filename)
 
