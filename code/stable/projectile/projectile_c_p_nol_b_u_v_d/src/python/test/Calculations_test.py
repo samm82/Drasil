@@ -14,23 +14,23 @@ valid_input_files = ["default_float", "default_int", "projectile_went_long"]
 expected_outputs = [
     {
         "filename": "default_float",
-        "t_flight": 2.8861496557,
-        "p_land":   40.816326531,
-        "d_offset": -0.183673469,
+        "t_flight": 2.8861496557024258,
+        "p_land":   40.81632653061006266,
+        "d_offset": -0.18367346938993734,
         "s":        "The target was hit.",
     },
     {
         "filename": "default_int",
-        "t_flight": 3.4345754482,
-        "p_land":   37.114180687,
-        "d_offset": -3.885819313,
+        "t_flight": 3.434575448195496,
+        "p_land":   37.1141806867625164,
+        "d_offset": -3.8858193132374836,
         "s":        "The projectile fell short."
     },
     {
         "filename": "projectile_went_long",
-        "t_flight": 2.8861496557,
-        "p_land":   40.816326531,
-        "d_offset": 0.816326531,
+        "t_flight": 2.8861496557024258,
+        "p_land":   40.8163265306100627,
+        "d_offset": 0.8163265306100627,
         "s":        "The projectile went long."
     },
 ]
@@ -60,8 +60,7 @@ def test_func_p_land(filename, p_land):
 def test_func_d_offset(filename, d_offset):
     inParams = read_inParams(filename)
     assert isclose(Calculations.func_d_offset(
-        inParams, Calculations.func_p_land(inParams, g)), d_offset,
-        abs_tol=1e-09) # needed for cancellation?
+        inParams, Calculations.func_p_land(inParams, g)), d_offset)
     
 # \brief Tests calculation of s with valid input
 @mark.parametrize("filename,d_offset,s", get_expected("d_offset", "s"))
