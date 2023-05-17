@@ -5,18 +5,13 @@
 from math import isclose
 from pytest import mark
 
-from .TestHelpers import read_inParams
+from .TestHelpers import get_expected, read_inParams
 
 # for capturing stdout
 from contextlib import redirect_stdout
 from io import StringIO
 
 valid_input_files = ["default_float", "default_int"]
-expected_outputs = [
-    # (filename, v_launch, theta, p_target)
-    ("default_float", 20.0, 0.785398, 41.0),
-    ("default_int",   20,   1,        41),
-]
 invalid_input_files = [
     "zero_v_launch",   # violates lower bound of v_launch
     "zero_theta",      # violates lower bound of theta
@@ -25,7 +20,8 @@ invalid_input_files = [
 ]
 
 # \brief Tests reading valid input
-@mark.parametrize("filename,v_launch,theta,p_target", expected_outputs)
+@mark.parametrize("filename,v_launch,theta,p_target",
+                  get_expected("v_launch", "theta", "p_target"))
 def test_get_input_valid(filename, v_launch, theta, p_target):
     inParams = read_inParams(filename)
 

@@ -4,44 +4,12 @@
 
 from math import isclose
 from pytest import mark
-from .TestHelpers import read_inParams
 
 from python import Calculations
+from .TestHelpers import get_expected, read_inParams
 
 g = 9.8
 epsilon = 0.02
-valid_input_files = ["default_float", "default_int", "projectile_went_long"]
-expected_outputs = [
-    {
-        "filename": "default_float",
-        "t_flight": 2.8861496557024258,
-        "p_land":   40.81632653061006266,
-        "d_offset": -0.18367346938993734,
-        "s":        "The target was hit.",
-    },
-    {
-        "filename": "default_int",
-        "t_flight": 3.434575448195496,
-        "p_land":   37.1141806867625164,
-        "d_offset": -3.8858193132374836,
-        "s":        "The projectile fell short."
-    },
-    {
-        "filename": "projectile_went_long",
-        "t_flight": 2.8861496557024258,
-        "p_land":   40.8163265306100627,
-        "d_offset": 0.8163265306100627,
-        "s":        "The projectile went long."
-    },
-]
-
-# \brief Returns a list of tuples with relevant value for each valid input
-def get_expected(*fields):
-    out = [(d["filename"],) for d in expected_outputs]
-    for i in range(len(out)):
-        for field in fields:
-            out[i] = out[i] + (expected_outputs[i][field],)
-    return out
 
 # \brief Tests calculation of t_flight with valid input
 @mark.parametrize("filename,t_flight", get_expected("t_flight"))
