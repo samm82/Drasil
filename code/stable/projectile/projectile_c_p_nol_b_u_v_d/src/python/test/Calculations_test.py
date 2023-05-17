@@ -29,8 +29,7 @@ def test_func_p_land(filename, p_land):
 def test_func_d_offset(filename, d_offset):
     inParams = read_inParams(filename)
     assert isclose(Calculations.func_d_offset(
-        inParams, Calculations.func_p_land(inParams, g)), d_offset,
-        abs_tol=1e-09) # needed for cancellation?
+        inParams, Calculations.func_p_land(inParams, g)), d_offset)
     
 # \brief Tests calculation of s with valid input
 @mark.parametrize("filename,d_offset,s", get_expected("d_offset", "s"))
