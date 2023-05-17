@@ -4,9 +4,9 @@
 import sys
 import argparse
 
-import Calculations
-import InputParameters
-import OutputFormat
+from . import Calculations
+from . import InputParameters
+from . import OutputFormat
 
 def main():	
 	# from https://stackoverflow.com/questions/54071312/how-to-pass-command-line-argument-from-pytest-to-code

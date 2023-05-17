@@ -3,8 +3,7 @@
 # \brief Defines helper functions for testing
 
 from pathlib import Path
-from sys import path
-path.append("../")
+
 from python import InputParameters
 
 # \brief Reads input from a file with the given file name (without extension)

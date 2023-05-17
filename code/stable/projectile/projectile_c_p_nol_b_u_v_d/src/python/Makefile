@@ -1,11 +1,7 @@
 build:
 
 run: build
-	python Control.py $(RUNARGS)
-
-test: build
-	pytest -v *Test.py
-	rm output.txt
+	python3 Control.py $(RUNARGS)
 
 test: build
 	pytest -v test

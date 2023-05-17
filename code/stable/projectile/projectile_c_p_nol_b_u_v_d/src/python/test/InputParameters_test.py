@@ -4,7 +4,8 @@
 
 from math import isclose
 from pytest import mark
-from TestHelpers import read_inParams
+
+from .TestHelpers import read_inParams
 
 # for capturing stdout
 from contextlib import redirect_stdout

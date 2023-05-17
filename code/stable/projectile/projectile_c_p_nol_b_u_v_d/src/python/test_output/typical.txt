@@ -1,3 +1,0 @@
-s = The projectile went long.
-d_offset = 20.40816326525146
-t_flight = 14.43074827851213

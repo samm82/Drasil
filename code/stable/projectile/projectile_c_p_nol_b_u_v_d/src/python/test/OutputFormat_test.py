@@ -4,8 +4,6 @@
 
 from pytest import mark
 
-from sys import path
-path.append("../")
 from python import OutputFormat
 
 expected_outputs = [

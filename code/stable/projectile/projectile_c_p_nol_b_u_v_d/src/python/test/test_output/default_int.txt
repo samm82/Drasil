@@ -1,0 +1,3 @@
+s = The projectile fell short.
+d_offset = -3.885819313
+t_flight = 3.4345754482
