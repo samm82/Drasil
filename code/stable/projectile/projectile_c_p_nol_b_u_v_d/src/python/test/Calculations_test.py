@@ -67,7 +67,7 @@ def test_func_t_flight_zero_g(filename):
 
 # \brief Tests calculation of p_land with zero gravitational acceleration
 @mark.parametrize("filename", get_expected())
-def test_func_p_land_neg_g(filename):
+def test_func_p_land_zero_g(filename):
     inParams = read_inParams(filename)
     with raises(ZeroDivisionError):
         Calculations.func_p_land(inParams, zero_g)
