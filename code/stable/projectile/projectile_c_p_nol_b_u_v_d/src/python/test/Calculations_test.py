@@ -3,13 +3,14 @@
 # \brief Runs tests for the input of parameters
 
 from math import isclose
-from pytest import mark
+from pytest import mark, raises
 
 from python import Calculations
 from .TestHelpers import get_expected, read_inParams
 
 valid_g = 9.8
 neg_g = -9.8
+zero_g = 0
 epsilon = 0.02
 
 # \brief Tests calculation of t_flight with valid input
@@ -56,3 +57,17 @@ def test_func_d_offset_neg_g(filename, d_offset,p_target):
     inParams = read_inParams(filename)
     assert isclose(Calculations.func_d_offset(
         inParams, Calculations.func_p_land(inParams, neg_g)), -d_offset - 2 * p_target)
+
+# \brief Tests calculation of t_flight with zero gravitational acceleration
+@mark.parametrize("filename", get_expected())
+def test_func_t_flight_zero_g(filename):
+    inParams = read_inParams(filename)
+    with raises(ZeroDivisionError):
+        Calculations.func_t_flight(inParams, zero_g)
+
+# \brief Tests calculation of p_land with zero gravitational acceleration
+@mark.parametrize("filename", get_expected())
+def test_func_p_land_neg_g(filename):
+    inParams = read_inParams(filename)
+    with raises(ZeroDivisionError):
+        Calculations.func_p_land(inParams, zero_g)

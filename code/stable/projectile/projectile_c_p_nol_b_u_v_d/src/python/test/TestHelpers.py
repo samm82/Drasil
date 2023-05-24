@@ -15,6 +15,9 @@ def read_inParams(filename):
 
 # \brief Returns a list of tuples with relevant value for each valid input
 def get_expected(*fields):
+    if len(fields) == 0:
+        return [d["filename"] for d in expected_outputs]
+    
     out = [(d["filename"],) for d in expected_outputs]
     for i in range(len(out)):
         for field in fields:
