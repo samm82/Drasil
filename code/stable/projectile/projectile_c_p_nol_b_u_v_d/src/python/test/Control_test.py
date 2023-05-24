@@ -6,6 +6,7 @@ import pytest
 from pathlib import Path
 
 from python import Control
+from .TestHelpers import get_expected
 
 def read_file(filename):
     with open(filename) as f:
@@ -13,7 +14,7 @@ def read_file(filename):
     return lines
 
 # from https://stackoverflow.com/questions/54071312/how-to-pass-command-line-argument-from-pytest-to-code
-@pytest.mark.parametrize("filename", ["default_float", "default_int", "projectile_went_long"])
+@pytest.mark.parametrize("filename", get_expected())
 def test_main_valid(monkeypatch, filename):
     with monkeypatch.context() as m:
         m.setattr(sys, 'argv', ['Control.py', str(Path("test/test_input") / f"{filename}.txt")])
