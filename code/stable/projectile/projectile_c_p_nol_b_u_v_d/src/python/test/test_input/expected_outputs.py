@@ -1,3 +1,11 @@
+# TODO: should this be here?
+invalid_input_files = [
+    "zero_v_launch",   # violates lower bound of v_launch
+    "zero_theta",      # violates lower bound of theta
+    "too_large_theta", # violates upper bound of theta
+    "zero_p_target",   # violates lower bound of p_target
+]
+
 expected_outputs = [
     {
         "filename": "default_float",
