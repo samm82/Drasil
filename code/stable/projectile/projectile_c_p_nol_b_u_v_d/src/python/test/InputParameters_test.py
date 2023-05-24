@@ -10,13 +10,7 @@ from contextlib import redirect_stdout
 from io import StringIO
 
 from .TestHelpers import get_expected, read_inParams
-
-invalid_input_files = [
-    "zero_v_launch",   # violates lower bound of v_launch
-    "zero_theta",      # violates lower bound of theta
-    "too_large_theta", # violates upper bound of theta
-    "zero_p_target",   # violates lower bound of p_target
-]
+from .test_input.expected_outputs import invalid_input_files
 
 # \brief Tests reading valid input
 @mark.parametrize("filename,v_launch,theta,p_target",
