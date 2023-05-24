@@ -5,11 +5,11 @@
 from math import isclose
 from pytest import mark
 
-from .TestHelpers import get_expected, read_inParams
-
 # for capturing stdout
 from contextlib import redirect_stdout
 from io import StringIO
+
+from .TestHelpers import get_expected, read_inParams
 
 valid_input_files = ["default_float", "default_int"]
 invalid_input_files = [
