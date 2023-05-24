@@ -7,6 +7,12 @@ from pathlib import Path
 from python import InputParameters
 from python.test.test_input.expected_outputs import expected_outputs
 
+# \brief Reads the contents of a file from its full file name
+def read_file(filename):
+    with open(filename) as f:
+        lines = f.readlines()
+    return lines
+
 # \brief Reads input from a file with the given file name (without extension)
 def read_inParams(filename):
     return InputParameters.InputParameters(

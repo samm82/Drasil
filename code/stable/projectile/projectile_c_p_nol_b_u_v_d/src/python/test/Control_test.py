@@ -8,15 +8,10 @@ from pathlib import Path
 from errno import ENOENT
 
 from python import Control
-from .TestHelpers import get_expected
+from .TestHelpers import get_expected, read_file
 from .test_input.expected_outputs import invalid_input_files
 
 output_filename = "output.txt"
-
-def read_file(filename):
-    with open(filename) as f:
-        lines = f.readlines()
-    return lines
 
 # from https://stackoverflow.com/questions/54071312/how-to-pass-command-line-argument-from-pytest-to-code
 @mark.parametrize("filename", get_expected())
