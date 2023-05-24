@@ -5,8 +5,8 @@
 from math import isclose
 from pytest import mark
 
-from python import Calculations
 from .TestHelpers import get_expected, read_inParams
+from python import Calculations
 
 g = 9.8
 epsilon = 0.02
