@@ -4,10 +4,8 @@
 
 from math import isclose
 from pytest import mark
-from TestHelpers import read_inParams
 
-from sys import path
-path.append("../")
+from .TestHelpers import read_inParams
 from python import Calculations
 
 g = 9.8
