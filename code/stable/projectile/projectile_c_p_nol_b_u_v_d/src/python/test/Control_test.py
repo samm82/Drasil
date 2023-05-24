@@ -14,6 +14,7 @@ from .test_input.expected_outputs import invalid_input_files
 output_filename = "output.txt"
 
 # from https://stackoverflow.com/questions/54071312/how-to-pass-command-line-argument-from-pytest-to-code
+# \brief Tests main with valid input file
 @mark.parametrize("filename", get_expected())
 def test_main_valid(monkeypatch, filename):
     with monkeypatch.context() as m:
@@ -22,6 +23,7 @@ def test_main_valid(monkeypatch, filename):
     assert read_file(output_filename) == read_file(str(Path("test/test_output") / f"{filename}.txt"))
 
 # from https://stackoverflow.com/questions/54071312/how-to-pass-command-line-argument-from-pytest-to-code
+# \brief Tests main with invalid input file
 @mark.parametrize("filename", invalid_input_files)
 @mark.xfail
 def test_main_invalid(monkeypatch, filename):
