@@ -11,7 +11,6 @@ from io import StringIO
 
 from .TestHelpers import get_expected, read_inParams
 
-valid_input_files = ["default_float", "default_int"]
 invalid_input_files = [
     "zero_v_launch",   # violates lower bound of v_launch
     "zero_theta",      # violates lower bound of theta
@@ -30,7 +29,7 @@ def test_get_input_valid(filename, v_launch, theta, p_target):
     assert isclose(inParams.p_target, p_target)
 
 # \brief Tests constraint checking valid input
-@mark.parametrize("filename", valid_input_files)
+@mark.parametrize("filename", get_expected())
 def test_input_constraints_valid(filename):
     inParams = read_inParams(filename)
 
