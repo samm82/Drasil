@@ -1,6 +1,6 @@
 ## \file Calculations_test.py
 # \author Samuel J. Crawford
-# \brief Runs tests for the input of parameters
+# \brief Runs tests for the output of calculated values
 
 from pytest import mark
 
