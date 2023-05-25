@@ -9,7 +9,7 @@ from errno import ENOENT
 
 from python import Control
 from .TestHelpers import get_expected, read_file
-from .test_input.expected_outputs import invalid_input_files
+from .test_input.expected_outputs import invalid_value_input_files
 
 output_filename = "output.txt"
 
@@ -24,7 +24,7 @@ def test_main_valid(monkeypatch, filename):
 
 # from https://stackoverflow.com/questions/54071312/how-to-pass-command-line-argument-from-pytest-to-code
 ## \brief Tests main with invalid input file
-@mark.parametrize("filename", invalid_input_files)
+@mark.parametrize("filename", invalid_value_input_files)
 @mark.xfail
 def test_main_invalid(monkeypatch, filename):
     # from https://stackoverflow.com/questions/10840533/most-pythonic-way-to-delete-a-file-which-may-not-exist
