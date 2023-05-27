@@ -7,7 +7,7 @@ from pytest import mark, raises
 from unittest.mock import Mock
 
 from python import Calculations
-from .TestHelpers import get_expected, read_inParams
+from .TestHelpers import get_expected
 
 valid_g = 9.8
 neg_g = -valid_g
