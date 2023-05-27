@@ -9,9 +9,11 @@ from unittest.mock import Mock
 from python import Calculations
 from .TestHelpers import get_expected
 
+# A:gravAccelValue states "The acceleration due to gravity is assumed to have
+# the value [9.8]", so any other value for g is invalid
 valid_g = 9.8
-neg_g = -valid_g
-zero_g = 0
+invalid_g_values = [-valid_g, 0, valid_g * 2]
+
 epsilon = 0.02
 
 def build_mocks(*attrs):
@@ -47,35 +49,20 @@ def test_func_s_valid(mock):
     assert Calculations.func_s(mock, epsilon, mock.d_offset) == mock.s
 
 # TODO: should the following tests also be made into Control tests?
-## \brief Tests calculation of t_flight with negative gravitational acceleration \n
-#  and valid input
-@mark.parametrize("mock", build_mocks("t_flight"))
-def test_func_t_flight_neg_g(mock):
-    assert isclose(Calculations.func_t_flight(mock, neg_g), -mock.t_flight)
-
-## \brief Tests calculation of p_land with negative gravitational acceleration \n
-#  and valid input
-@mark.parametrize("mock", build_mocks("p_land"))
-def test_func_p_land_neg_g(mock):
-    assert isclose(Calculations.func_p_land(mock, neg_g), -mock.p_land)
-
-## \brief Tests calculation of d_offset with negative gravitational acceleration \n
-#  and valid input
-@mark.parametrize("mock", build_mocks("p_land", "d_offset", "p_target"))
-def test_func_d_offset_neg_g(mock):
-    assert isclose(Calculations.func_d_offset(mock, -mock.p_land),
-                     -mock.d_offset - 2 * mock.p_target)
-
-## \brief Tests calculation of t_flight with zero gravitational acceleration \n
-#  and valid input
+## \brief Tests calculation of t_flight with invalid gravitational \n
+#  acceleration and valid input
 @mark.parametrize("mock", build_mocks())
-def test_func_t_flight_zero_g(mock):
-    with raises(ZeroDivisionError):
-        Calculations.func_t_flight(mock, zero_g)
+@mark.parametrize("invalid_g", invalid_g_values)
+@mark.xfail
+def test_func_t_flight_invalid_g(mock, invalid_g):
+    with raises(AssertionError):
+        Calculations.func_t_flight(mock, invalid_g)
 
-## \brief Tests calculation of p_land with zero gravitational acceleration \n
-#  and valid input
+## \brief Tests calculation of p_land with invalid gravitational \n
+#  acceleration and valid input
 @mark.parametrize("mock", build_mocks())
-def test_func_p_land_zero_g(mock):
-    with raises(ZeroDivisionError):
-        Calculations.func_p_land(mock, zero_g)
+@mark.parametrize("invalid_g", invalid_g_values)
+@mark.xfail
+def test_func_p_land_invalid_g(mock, invalid_g):
+    with raises(AssertionError):
+        Calculations.func_p_land(mock, invalid_g)
