@@ -10,7 +10,7 @@ from python import Calculations
 from .TestHelpers import get_expected, read_inParams
 
 valid_g = 9.8
-neg_g = -9.8
+neg_g = -valid_g
 zero_g = 0
 epsilon = 0.02
 
