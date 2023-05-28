@@ -11,7 +11,8 @@ import Data.Drasil.People
 campidelli, koothoor2013, parnas1972, parnasClements1984,
   parnasClements1986, smithLai2005, lineSource, pointSource,
   hibbeler2004, lund2023, hydrateSource, polymerSource, nonIntCoeffSource,
-  inorganicIUPAC, organicIUPAC, elemListWiki, smithChemSpec :: Citation
+  inorganicIUPAC, organicIUPAC, elemListWiki, smithChemSpec,
+  smithEtAl2007, smithKoothoor2016 :: Citation
 
 campidelli = cBooklet
   "Glass-BR Software for the design and risk assessment of glass facades subjected to blast loading"
@@ -50,6 +51,21 @@ smithLai2005 = cInProceedings [spencerSmith, lLai]
   , pages [107..121], 
   note "In conjunction with 13th IEEE International Requirements Engineering Conference,"] 
   "smithLai2005"
+
+smithEtAl2007 = cArticle [spencerSmith, lLai, rKhedri]
+  ("Requirements Analysis for Engineering Computation: A Systematic Approach for" ++ 
+    " Improving Software Reliability")
+  "Reliable Computing, Special Issue on Reliable Engineering Computation" 2007
+  [month Feb, volume 13, number 1, pages [83..107], howPublishedU "https://doi.org/10.1007/s11155-006-9020-7"]
+  "smithEtAl2007"
+
+smithKoothoor2016 = cArticle [spencerSmith, nKoothoor]
+  ("A Document-Driven Method for Certifying Scientific Computing Software for Use" ++ 
+    " in Nuclear Safety Analysis")
+  " Nuclear Engineering and Technology" 2016
+  [month Apr, volume 48, number 2, pages[404..418], 
+    howPublishedU "http://www.sciencedirect.com/science/article/pii/S1738573315002582"]
+  "smithKoothoor2016"
 
 lineSource = cMisc
   [author [mononym "The Editors of Encyclopaedia Britannica"], title "Line",

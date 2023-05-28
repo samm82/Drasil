@@ -74,7 +74,7 @@ $\text{(x,y)}$ & Cartesian Position Coordinates: $y$ is considered parallel to t
 \\
 $A$ & Area: A part of an object or surface. & ${\text{m}^{2}}$
 \\
-$\symbf{a}$ & Acceleration: The rate of change of a body's velocity. & $\frac{\text{m}}{\text{s}^{2}}$
+$\symbf{a}\text{(}t\text{)}$ & Acceleration: The rate of change of a body's velocity. & $\frac{\text{m}}{\text{s}^{2}}$
 \\
 $\symbf{b}$ & Base Width of Slices: The width of each slice in the $x$-direction. & ${\text{m}}$
 \\
@@ -328,7 +328,7 @@ Reviewers of this documentation should have an understanding of undergraduate le
 
 \subsection{Organization of Document}
 \label{Sec:DocOrg}
-The organization of this document follows the template for an SRS for scientific computing software proposed by Koothoor \cite{koothoor2013} as well as Smith and Lai \cite{smithLai2005}. The presentation follows the standard pattern of presenting goals, theories, definitions, and assumptions. For readers that would like a more bottom up approach, they can start reading the \hyperref[Sec:IMs]{instance models} and trace back to find any additional information they require.
+The organization of this document follows the template for an SRS for scientific computing software proposed by \cite{koothoor2013}, \cite{smithLai2005}, \cite{smithEtAl2007}, and \cite{smithKoothoor2016}. The presentation follows the standard pattern of presenting goals, theories, definitions, and assumptions. For readers that would like a more bottom up approach, they can start reading the \hyperref[Sec:IMs]{instance models} and trace back to find any additional information they require.
 
 The \hyperref[Sec:GoalStmt]{goal statements} are refined to the theoretical models and the \hyperref[Sec:TMs]{theoretical models} to the \hyperref[Sec:IMs]{instance models}. The instance models provide the set of algebraic equations that must be solved.
 
@@ -621,16 +621,16 @@ Label & Newton's second law of motion
         
 \\ \midrule \\
 Equation & \begin{displaymath}
-           \symbf{F}=m \symbf{a}
+           \symbf{F}=m \symbf{a}\text{(}t\text{)}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
               \item{$\symbf{F}$ is the force (${\text{N}}$)}
               \item{$m$ is the mass (${\text{kg}}$)}
-              \item{$\symbf{a}$ is the acceleration ($\frac{\text{m}}{\text{s}^{2}}$)}
+              \item{$\symbf{a}\text{(}t\text{)}$ is the acceleration ($\frac{\text{m}}{\text{s}^{2}}$)}
               \end{symbDescription}
 \\ \midrule \\
-Notes & The net force $\symbf{F}$ on a body is proportional to the acceleration $\symbf{a}$ of the body, where $m$ denotes the mass of the body as the constant of proportionality.
+Notes & The net force $\symbf{F}$ on a body is proportional to the acceleration $\symbf{a}\text{(}t\text{)}$ of the body, where $m$ denotes the mass of the body as the constant of proportionality.
         
 \\ \midrule \\
 Source & --
@@ -1143,10 +1143,10 @@ RefBy & \hyperref[GD:sliceWght]{GD:sliceWght} and \hyperref[GD:momentEql]{GD:mom
 Under the influence of gravity, and assuming a 2D Cartesian coordinate system with down as positive, an object has an acceleration vector of:
 
 \begin{displaymath}
-\symbf{a}=\begin{bmatrix}
-          0\\
-          \symbf{g} \symbf{\hat{j}}
-          \end{bmatrix}
+\symbf{a}\text{(}t\text{)}=\begin{bmatrix}
+                           0\\
+                           \symbf{g} \symbf{\hat{j}}
+                           \end{bmatrix}
 \end{displaymath}
 Since there is only one non-zero vector component, the scalar value $W$ will be used for the weight. In this scenario, Newton's second law of motion from \hyperref[TM:NewtonSecLawMot]{TM:NewtonSecLawMot} can be expressed as:
 
@@ -3121,6 +3121,16 @@ month=feb,
 volume={42},
 number={1},
 pages={272--278}}
+@article{smithKoothoor2016,
+author={Smith, W. Spencer and Koothoor, Nirmitha},
+title={A Document-Driven Method for Certifying Scientific Computing Software for Use in Nuclear Safety Analysis},
+journal={ Nuclear Engineering and Technology},
+year={2016},
+month=apr,
+volume={48},
+number={2},
+pages={404--418},
+howpublished={\url{http://www.sciencedirect.com/science/article/pii/S1738573315002582}}}
 @inproceedings{smithLai2005,
 author={Smith, W. Spencer and Lai, Lei},
 title={A new requirements template for scientific computing},
@@ -3130,6 +3140,16 @@ editor={Agerfalk, PJ and Kraiem, N. and Ralyte, J.},
 address={Paris, France},
 pages={107--121},
 note={In conjunction with 13th IEEE International Requirements Engineering Conference,}}
+@article{smithEtAl2007,
+author={Smith, W. Spencer and Lai, Lei and Khedri, Ridha},
+title={Requirements Analysis for Engineering Computation: A Systematic Approach for Improving Software Reliability},
+journal={Reliable Computing, Special Issue on Reliable Engineering Computation},
+year={2007},
+month=feb,
+volume={13},
+number={1},
+pages={83--107},
+howpublished={\url{https://doi.org/10.1007/s11155-006-9020-7}}}
 @article{li2010,
 author={Yu-Chao, Li and Yun-Min, Chen and Zhan, Tony L. T. and Sao-Sheng, Ling and Cleall, Peter John},
 title={An efficient approach for locating the critical slip surface in slope stability analyses using a real-coded genetic algorithm},

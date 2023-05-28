@@ -10,7 +10,7 @@ spencerSmith, henryFrankis, nKoothoor, dParnas, daAruliah, gWilson,
   fIncropera, dDewitt, tBergman, aLavine, jRobertson, sRobertson, 
   wlBeason, tlKohutek, jmBracci, qhQian, dyZhu, cfLee, grChen, dgFredlund,
   jKrahn, dStolle, yCLi, ymChen, tltZhan, ssLing, pjCleall, pGuo, aBergholm,
-  mCampidelli,   dmWiess, sPalmer, scottSmith, bKarchewski, rHuston, 
+  mCampidelli, dmWiess, sPalmer, scottSmith, bKarchewski, rHuston, rKhedri,
   hJosephs, nrMorgenstern, vePrice, samCrawford, rcHibbeler, olu, rodPierce,
   pWexler, dong, jCarette, jBalaci, ngConnelly, haFavre, atHutton, mNiazi,
   dScime, dSzymczak, tWu, tDahmus, rmHartshorn, gpMoss, whPowell :: Person
@@ -98,6 +98,7 @@ dmWiess       = personWM  ""          []              "Wiess"
 olu           = person    "Olu"                       "Owojaiye"
 rodPierce     = person    "Rod"                       "Pierce"
 dong          = person    "Dong"                      "Chen"
+rKhedri       = person    "Ridha"                     "Khedri"
 
 -- Right now, we have to say these are each a 'Person', even though they clearly aren't
 harpCollins, iupac, wikiAuthors :: Person
