@@ -71,7 +71,7 @@
 
 **Expected Output:** An error message is not displayed.
 
-**Source of Expected Output:** The data satisfies the constraints, so an error message should not displayed.
+**Source of Expected Output:** The data satisfies the constraints, so an error message should not be displayed.
 
 **Rationale:** The InputParameters module should be able to verify data correctly when it satisfies all constraints if it is entered using floating point numbers.
 
@@ -87,7 +87,7 @@
 
 **Expected Output:** An error message is not displayed.
 
-**Source of Expected Output:** The data satisfies the constraints, so an error message should not displayed.
+**Source of Expected Output:** The data satisfies the constraints, so an error message should not be displayed.
 
 **Rationale:** The InputParameters module should be able to verify data correctly when it satisfies all constraints if it is entered using integers.
 
@@ -103,6 +103,70 @@
 
 **Expected Output:** An error message is not displayed.
 
-**Source of Expected Output:** The data satisfies the constraints, so an error message should not displayed.
+**Source of Expected Output:** The data satisfies the constraints, so an error message should not be displayed.
 
 **Rationale:** The InputParameters module should be able to verify data correctly when it satisfies all constraints if it is entered using floating point numbers.
+
+### T:input_constraints_zero_v_launch
+
+**Input:** N/A
+
+**Initial State:** An `InputParameters` object exists with the following fields:
+
+- $v_\text{launch} = 0.0 \frac{\text{m}}{\text{s}}$
+- $\theta = 0.785398 \text{ rad}$
+- $p_\text{target} = 41.0\text{m}$
+
+**Expected Output:** An error message is displayed.
+
+**Source of Expected Output:** The data violates a constraint, so an error message should be displayed.
+
+**Rationale:** The InputParameters module should be able to verify data correctly when it violates the lower bound constraint on $v_\text{launch}$.
+
+### T:input_constraints_zero_theta
+
+**Input:** N/A
+
+**Initial State:** An `InputParameters` object exists with the following fields:
+
+- $v_\text{launch} = 20 \frac{\text{m}}{\text{s}}$
+- $\theta = 0 \text{ rad}$
+- $p_\text{target} = 41\text{m}$
+
+**Expected Output:** An error message is displayed.
+
+**Source of Expected Output:** The data violates a constraint, so an error message should be displayed.
+
+**Rationale:** The InputParameters module should be able to verify data correctly when it violates the lower bound constraint on $\theta$.
+
+### T:input_constraints_too_large_theta
+
+**Input:** N/A
+
+**Initial State:** An `InputParameters` object exists with the following fields:
+
+- $v_\text{launch} = 20 \frac{\text{m}}{\text{s}}$
+- $\theta = 2 \text{ rad}$
+- $p_\text{target} = 41\text{m}$
+
+**Expected Output:** An error message is displayed.
+
+**Source of Expected Output:** The data violates a constraint, so an error message should be displayed.
+
+**Rationale:** The InputParameters module should be able to verify data correctly when it violates the upper bound constraint on $\theta$.
+
+### T:input_constraints_zero_p_target
+
+**Input:** N/A
+
+**Initial State:** An `InputParameters` object exists with the following fields:
+
+- $v_\text{launch} = 20.0 \frac{\text{m}}{\text{s}}$
+- $\theta = 0.785398 \text{ rad}$
+- $p_\text{target} = 0.0\text{m}$
+
+**Expected Output:** An error message is displayed.
+
+**Source of Expected Output:** The data violates a constraint, so an error message should be displayed.
+
+**Rationale:** The InputParameters module should be able to verify data correctly when it violates the lower bound constraint on $p_\text{target}$.
