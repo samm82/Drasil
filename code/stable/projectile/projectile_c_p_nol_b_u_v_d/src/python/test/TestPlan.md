@@ -58,3 +58,51 @@
 **Source of Expected Output:** The state of the `InputParameters` object after reading the data should match the provided inputs.
 
 **Rationale:** The InputParameters module should be able to read data correctly when it satisfies all constraints if it is entered using floating point numbers.
+
+### T:input_constraints_default_float
+
+**Input:** N/A
+
+**Initial State:** An `InputParameters` object exists with the following fields:
+
+- $v_\text{launch} = 20.0 \frac{\text{m}}{\text{s}}$
+- $\theta = 0.785398 \text{ rad}$
+- $p_\text{target} = 41.0\text{m}$
+
+**Expected Output:** An error message is not displayed.
+
+**Source of Expected Output:** The data satisfies the constraints, so an error message should not displayed.
+
+**Rationale:** The InputParameters module should be able to verify data correctly when it satisfies all constraints if it is entered using floating point numbers.
+
+### T:input_constraints_default_int
+
+**Input:** N/A
+
+**Initial State:** An `InputParameters` object exists with the following fields:
+
+- $v_\text{launch} = 20 \frac{\text{m}}{\text{s}}$
+- $\theta = 1 \text{ rad}$
+- $p_\text{target} = 41\text{m}$
+
+**Expected Output:** An error message is not displayed.
+
+**Source of Expected Output:** The data satisfies the constraints, so an error message should not displayed.
+
+**Rationale:** The InputParameters module should be able to verify data correctly when it satisfies all constraints if it is entered using integers.
+
+### T:input_constraints_projectile_went_long
+
+**Input:** N/A
+
+**Initial State:** An `InputParameters` object exists with the following fields:
+
+- $v_\text{launch} = 20.0 \frac{\text{m}}{\text{s}}$
+- $\theta = 0.785398 \text{ rad}$
+- $p_\text{target} = 40.0\text{m}$
+
+**Expected Output:** An error message is not displayed.
+
+**Source of Expected Output:** The data satisfies the constraints, so an error message should not displayed.
+
+**Rationale:** The InputParameters module should be able to verify data correctly when it satisfies all constraints if it is entered using floating point numbers.
