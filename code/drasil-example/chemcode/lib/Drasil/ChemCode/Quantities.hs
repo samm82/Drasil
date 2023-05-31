@@ -1,6 +1,7 @@
 module Drasil.ChemCode.Quantities where
 
 import Language.Drasil -- hiding (matrix)
+import Language.Drasil.Sentence.Combinators (ofA)
 import Language.Drasil.ShortHands
 
 import Data.Drasil.Concepts.Chemistry (chemical, compound, element, reaction)
@@ -10,14 +11,14 @@ inputs = [inputChemEqn]
 
 quants :: [QuantityDict]
 quants = inputs ++ [aMat, bVec, cVec, qMat, qEnt, xVec, unaryVec, zeroVec,
-  genE, genC, genI, genJ, genR, genX, genY, tupC, count, elems, elemT, compT,
-  reacT]
+  genE, genC, genI, genJ, genR, genX, genY, c_i, tupC, count, elems, elemT,
+  compT, reacT]
 
 constants :: [ConstQDef]
 constants = [maintainFrac]
 
 inputChemEqn, aMat, bVec, cVec, qMat, qEnt, xVec, unaryVec, zeroVec, genE,
-  genC, genI, genJ, genR, genX, genY, tupC, count, elems, elemT, compT,
+  genC, genI, genJ, genR, genX, genY, c_i, tupC, count, elems, elemT, compT,
   reacT :: QuantityDict
 
 inputChemEqn = vcSt "inputChemEqn"
@@ -41,6 +42,8 @@ genJ = vc "genJ" (nounPhraseSent $ S "generic integer")             lJ Integer
 genR = vc "genR" (nounPhraseSent $ S "generic" +:+ phrase reaction) lR Reaction
 genX = vc "genX" (nounPhraseSent $ S "generic real number")         lX Real
 genY = vc "genY" (nounPhraseSent $ S "generic integer")             lY Integer
+
+c_i = vc "c_i" (nounPhraseSent $ S "entry" `ofA` S "generic" +:+ phrase compound) (sub lC lI) Natural
 
 compoundRecord :: Space
 compoundRecord = Record [("elem", Element), ("count", Real)]

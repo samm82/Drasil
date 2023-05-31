@@ -58,6 +58,8 @@ $c$ & Generic compound & --
 \\
 ${c^{r}}$ & Generic record of a compound & --
 \\
+${c_{i}}$ & Entry of a generic compound & --
+\\
 $\symbf{c}$ & Generic vector & --
 \\
 $\text{count}$ & Count of an element in a compound & --
@@ -391,7 +393,8 @@ Notes & A type representing each element from \cite{elemListWiki}.
 Source & \cite{smithChemSpec}
          
 \\ \midrule \\
-RefBy & 
+RefBy & \hyperref[DD:compoundType]{DD:compoundType}
+        
 \\ \bottomrule
 \end{tabular}
 \end{minipage}
@@ -410,14 +413,14 @@ Symbol & $C$
          
 \\ \midrule \\
 Equation & \begin{displaymath}
-           C=\text{sequence of}\,\text{record of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)
+           C=\mathbb{N}^{\text{118}}
            \end{displaymath}
 \\ \midrule \\
 Description & \begin{symbDescription}
               \item{$C$ is the compound data type (Unitless)}
               \end{symbDescription}
 \\ \midrule \\
-Notes & A type representing a compound.
+Notes & A type representing a compound where an entry ${c_{i}}$ represents how many atoms of the $i$-th element of $E$ (from \hyperref[DD:elementType]{DD:elementType}) are present in the compound.
         
 \\ \midrule \\
 Source & --
@@ -806,7 +809,7 @@ The purpose of the traceability matrices is to provide easy references on what h
 \endhead
 \hyperref[DD:elementType]{DD:elementType} &  &  &  &  &  &  &  &  & 
 \\
-\hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  &  &  &  &  & 
+\hyperref[DD:compoundType]{DD:compoundType} & X &  &  &  &  &  &  &  & 
 \\
 \hyperref[DD:reactionType]{DD:reactionType} &  &  &  &  &  &  &  &  & 
 \\

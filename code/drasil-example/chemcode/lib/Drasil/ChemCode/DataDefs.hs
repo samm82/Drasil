@@ -3,6 +3,7 @@ module Drasil.ChemCode.DataDefs where
 import Control.Lens ((^.))
 
 import Language.Drasil
+import Language.Drasil.Sentence.Combinators (inThe, of_, ofThe)
 import Theory.Drasil
 
 import Data.Drasil.Citations (elemListWiki, smithChemSpec)
@@ -10,8 +11,8 @@ import Data.Drasil.Concepts.Chemistry (chemical, compound, element, equation,
   reaction)
 import Data.Drasil.Concepts.Documentation (output_)
 
-import Drasil.ChemCode.Quantities (compT, count, elemT, genC, genE, genR, genX,
-  genY, reacT, tupC, elems)
+import Drasil.ChemCode.Quantities (c_i, compT, count, elemT, genC, genE, genI,
+  genR, genX, genY, reacT, tupC, elems)
 
 dds :: [DataDefinition]
 dds = [elementDD, compoundDD, reactionDD, countDD, elemsDD]
@@ -27,7 +28,10 @@ elementExpr = mkQuantDef elemT $ space (elemT ^. typ) -- FIXME: This is probably
 
 compoundDD :: DataDefinition
 compoundDD = ddMENoRefs compoundExpr Nothing "compoundType"
-  [S "A type representing a" +:+. phrase compound]
+  [foldlSent [S "A type representing a", phrase compound, S "where an entry",
+    ch c_i, S "represents how many atoms" `ofThe` ch genI :+: S "-th",
+    phrase element `of_` ch elementDD, fromSource elementDD,
+    S "are present" `inThe` phrase compound]]
 -- FIXME: what's a good UID for this?
 
 compoundExpr :: ModelQDef
