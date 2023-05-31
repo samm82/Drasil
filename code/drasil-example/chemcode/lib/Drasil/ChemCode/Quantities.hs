@@ -73,7 +73,7 @@ elemT = vcSt "elemT" (nounPhraseSent $ phrase element +:+ S "data type")
   -- FIXME: move to drasil-data
 
 compT = vcSt "compT" (nounPhraseSent $ phrase compound +:+ S "data type")
-  (autoStage cC) (Sequence compoundRecord)
+  (autoStage cC) (Vect (Just 118) Natural)
 
 reacT = vcSt "reacT" (nounPhraseSent $ phrase reaction +:+ S "data type")
   (autoStage cR)
