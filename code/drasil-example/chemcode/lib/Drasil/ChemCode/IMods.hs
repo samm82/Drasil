@@ -47,7 +47,7 @@ chemEqIntLinProg :: InstanceModel
 chemEqIntLinProg = imNoRefs
   (ilpModel "chemEqIntLinProg" (cn' "integer linear program for a chemical equation")
     $ minILP xVec unaryVec
-      $ (sy qMat `mulRe` sy xVec $= sy zeroVec) NE.:| [sy xVec $> sy zeroVec, isIn (sy xVec) (Vect Integer)])
+      $ (sy qMat `mulRe` sy xVec $= sy zeroVec) NE.:| [sy xVec $> sy zeroVec, isIn (sy xVec) (Vect Nothing Integer)])
   [qwUC qMat] -- FIXME: why should I need to convert the Unitals to QuantityDicts?
   xVec
   []

@@ -24,15 +24,15 @@ inputChemEqn = vcSt "inputChemEqn"
   (nounPhraseSP "representation of a chemical equation")
   (autoStage $ sub lR $ label "in") Reaction
 
-aMat = vc "aMat" (nounPhraseSP "generic matrix")                               (vec cA) (Vect Real)
-bVec = vc "bVec" (nounPhraseSP "generic vector")                               (vec lB) (Vect Real)
-cVec = vc "cVec" (nounPhraseSP "generic vector")                               (vec lC) (Vect Real)
-qMat = vc "qMat" (nounPhraseSP "matrix representation of a chemical equation") (vec cQ) (Vect Real)
+aMat = vc "aMat" (nounPhraseSP "generic matrix")                               (vec cA) (Vect Nothing Real)
+bVec = vc "bVec" (nounPhraseSP "generic vector")                               (vec lB) (Vect Nothing Real)
+cVec = vc "cVec" (nounPhraseSP "generic vector")                               (vec lC) (Vect Nothing Real)
+qMat = vc "qMat" (nounPhraseSP "matrix representation of a chemical equation") (vec cQ) (Vect Nothing Real)
 qEnt = vc "qEnt" (nounPhraseSent $ S "element of" +:+ ch qMat)                 (sub lQ $ label "ij") Real -- FIXME: symbol hack
-xVec = vc "xVec" (nounPhraseSP "generic vector")                               (vec lX) (Vect Integer)
+xVec = vc "xVec" (nounPhraseSP "generic vector")                               (vec lX) (Vect Nothing Integer)
 
-unaryVec = vc "unaryVec" (nounPhraseSP "unary vector") (vec $ variable "1") (Vect Integer)
-zeroVec  = vc "zeroVec"  (nounPhraseSP "zero vector")  (vec $ variable "0") (Vect Integer)
+unaryVec = vc "unaryVec" (nounPhraseSP "unary vector") (vec $ variable "1") (Vect Nothing Integer)
+zeroVec  = vc "zeroVec"  (nounPhraseSP "zero vector")  (vec $ variable "0") (Vect Nothing Integer)
 
 genE = vc "genE" (nounPhraseSent $ S "generic" +:+ phrase element)  lE Element
 genC = vc "genC" (nounPhraseSent $ S "generic" +:+ phrase compound) lC Compound
