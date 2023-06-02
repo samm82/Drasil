@@ -1,4 +1,4 @@
-# Test Plan for Projectile
+# Test Summary for Projectile
 
 ## Tests for InputParameters Module
 
