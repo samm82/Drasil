@@ -4,6 +4,9 @@
 
 ### T:get_input_default_float
 
+**Rationale:** The InputParameters module should be able to read data correctly
+when it satisfies all constraints if it is entered using floating point numbers.
+
 **Input:**
 
 - $v_\text{launch} = 20.0 \frac{\text{m}}{\text{s}}$
@@ -21,10 +24,10 @@ inputs properly entered.
 **Source of Expected Output:** The state of the `InputParameters` object after
 reading the data should match the provided inputs.
 
-**Rationale:** The InputParameters module should be able to read data correctly
-when it satisfies all constraints if it is entered using floating point numbers.
-
 ### T:get_input_default_int
+
+**Rationale:** The InputParameters module should be able to read data correctly
+when it satisfies all constraints if it is entered using integers.
 
 **Input:**
 
@@ -43,10 +46,10 @@ inputs properly entered.
 **Source of Expected Output:** The state of the `InputParameters` object after
 reading the data should match the provided inputs.
 
-**Rationale:** The InputParameters module should be able to read data correctly
-when it satisfies all constraints if it is entered using integers.
-
 ### T:get_input_projectile_went_long
+
+**Rationale:** The InputParameters module should be able to read data correctly
+when it satisfies all constraints if it is entered using floating point numbers.
 
 **Input:**
 
@@ -65,10 +68,11 @@ above inputs properly entered.
 **Source of Expected Output:** The state of the `InputParameters` object after
 reading the data should match the provided inputs.
 
-**Rationale:** The InputParameters module should be able to read data correctly
-when it satisfies all constraints if it is entered using floating point numbers.
-
 ### T:input_constraints_default_float
+
+**Rationale:** The InputParameters module should be able to verify data
+correctly when it satisfies all constraints if it is entered using floating
+point numbers.
 
 **Input:** N/A
 
@@ -83,11 +87,10 @@ when it satisfies all constraints if it is entered using floating point numbers.
 **Source of Expected Output:** The data satisfies the constraints, so an error
 message should not be displayed.
 
-**Rationale:** The InputParameters module should be able to verify data
-correctly when it satisfies all constraints if it is entered using floating
-point numbers.
-
 ### T:input_constraints_default_int
+
+**Rationale:** The InputParameters module should be able to verify data
+correctly when it satisfies all constraints if it is entered using integers.
 
 **Input:** N/A
 
@@ -102,10 +105,11 @@ point numbers.
 **Source of Expected Output:** The data satisfies the constraints, so an error
 message should not be displayed.
 
-**Rationale:** The InputParameters module should be able to verify data
-correctly when it satisfies all constraints if it is entered using integers.
-
 ### T:input_constraints_projectile_went_long
+
+**Rationale:** The InputParameters module should be able to verify data
+correctly when it satisfies all constraints if it is entered using floating
+point numbers.
 
 **Input:** N/A
 
@@ -120,11 +124,10 @@ correctly when it satisfies all constraints if it is entered using integers.
 **Source of Expected Output:** The data satisfies the constraints, so an error
 message should not be displayed.
 
-**Rationale:** The InputParameters module should be able to verify data
-correctly when it satisfies all constraints if it is entered using floating
-point numbers.
-
 ### T:input_constraints_zero_v_launch
+
+**Rationale:** The InputParameters module should be able to verify data
+correctly when it violates the lower bound constraint on $v_\text{launch}$.
 
 **Input:** N/A
 
@@ -139,10 +142,10 @@ point numbers.
 **Source of Expected Output:** The data violates a constraint, so an error
 message should be displayed.
 
-**Rationale:** The InputParameters module should be able to verify data
-correctly when it violates the lower bound constraint on $v_\text{launch}$.
-
 ### T:input_constraints_zero_theta
+
+**Rationale:** The InputParameters module should be able to verify data
+correctly when it violates the lower bound constraint on $\theta$.
 
 **Input:** N/A
 
@@ -157,10 +160,10 @@ correctly when it violates the lower bound constraint on $v_\text{launch}$.
 **Source of Expected Output:** The data violates a constraint, so an error
 message should be displayed.
 
-**Rationale:** The InputParameters module should be able to verify data
-correctly when it violates the lower bound constraint on $\theta$.
-
 ### T:input_constraints_too_large_theta
+
+**Rationale:** The InputParameters module should be able to verify data
+correctly when it violates the upper bound constraint on $\theta$.
 
 **Input:** N/A
 
@@ -175,10 +178,10 @@ correctly when it violates the lower bound constraint on $\theta$.
 **Source of Expected Output:** The data violates a constraint, so an error
 message should be displayed.
 
-**Rationale:** The InputParameters module should be able to verify data
-correctly when it violates the upper bound constraint on $\theta$.
-
 ### T:input_constraints_zero_p_target
+
+**Rationale:** The InputParameters module should be able to verify data
+correctly when it violates the lower bound constraint on $p_\text{target}$.
 
 **Input:** N/A
 
@@ -192,6 +195,3 @@ correctly when it violates the upper bound constraint on $\theta$.
 
 **Source of Expected Output:** The data violates a constraint, so an error
 message should be displayed.
-
-**Rationale:** The InputParameters module should be able to verify data
-correctly when it violates the lower bound constraint on $p_\text{target}$.
