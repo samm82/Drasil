@@ -7,8 +7,8 @@
 \usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{unicode-math}
-\usepackage{tabu}
-\usepackage{longtable}
+\usepackage{tabularray}
+\usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{caption}
 \usepackage{graphics}
@@ -20,7 +20,6 @@
 \setmathfont{Latin Modern Math}
 \newcommand{\gt}{\ensuremath >}
 \newcommand{\lt}{\ensuremath <}
-\global\tabulinesep=1mm
 \newlist{symbDescription}{description}{1}
 \setlist[symbDescription]{noitemsep, topsep=0pt, parsep=0pt, partopsep=0pt}
 \bibliography{bibfile}
@@ -38,12 +37,11 @@ This section records information for easy reference.
 \label{Sec:ToS}
 The symbols used in this document are summarized in the \hyperref[Table:ToS]{Table of Symbols} along with their units. The symbols are listed in alphabetical order.
 
-\begin{longtable}{l l l}
-\toprule
+\begin{longtblr}
+[caption={Table of Symbols}]
+{colspec={l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{Symbol} & \textbf{Description} & \textbf{Units}
 \\
-\midrule
-\endhead
 $\symbf{0}$ & Zero vector & --
 \\
 $\symbf{1}$ & Unary vector & --
@@ -91,19 +89,15 @@ $x$ & Generic real number & --
 $\symbf{x}$ & Generic vector & --
 \\
 $y$ & Generic integer & --
-\\
-\bottomrule
-\caption{Table of Symbols}
 \label{Table:ToS}
-\end{longtable}
+\end{longtblr}
 \subsection{Abbreviations and Acronyms}
 \label{Sec:TAbbAcc}
-\begin{longtable}{l l}
-\toprule
+\begin{longtblr}
+[caption={Abbreviations and Acronyms}]
+{colspec={l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{Abbreviation} & \textbf{Full Form}
 \\
-\midrule
-\endhead
 A & Assumption
 \\
 ChemCode & Chemistry Code
@@ -123,11 +117,8 @@ SRS & Software Requirements Specification
 TM & Theoretical Model
 \\
 UC & Unlikely Change
-\\
-\bottomrule
-\caption{Abbreviations and Acronyms}
 \label{Table:TAbbAcc}
-\end{longtable}
+\end{longtblr}
 \section{Introduction}
 \label{Sec:Intro}
 Chemical equations are common ways of representing chemical reactions (\hyperref[Figure:physSysFig]{Fig:physSysFig} shows an example of a chemical equation). Subscripts indicate the number of atoms of each element present in the given chemical compound. A chemical equation is ``balanced'' if there are the same number of atoms of each element before and after the reaction takes place, which satisfies the Law of Conservation of Mass. Chemical equations are balanced by introducing coefficients before each chemical formula (this coefficient may be ``1'', in which case is implicit and not added to the equation). We want a tool to balance chemical equations automatically to improve the productivity of scientists and engineers and reduce the potential for human error. This program should balance a given chemical equation if it is feasible and if it is not, it should provide a message communicating this to the user. The program that performs these tasks as documented here will be called Chemistry Code (ChemCode).
@@ -150,7 +141,7 @@ Reviewers of this documentation should have an understanding of high school chem
 
 \subsection{Organization of Document}
 \label{Sec:DocOrg}
-The organization of this document follows the template for an SRS for scientific computing software proposed by \cite{koothoor2013} and \cite{smithLai2005}. The presentation follows the standard pattern of presenting goals, theories, definitions, and assumptions. For readers that would like a more bottom up approach, they can start reading the \hyperref[Sec:IMs]{instance models} and trace back to find any additional information they require.
+The organization of this document follows the template for an SRS for scientific computing software proposed by \cite{koothoor2013}, \cite{smithLai2005}, \cite{smithEtAl2007}, and \cite{smithKoothoor2016}. The presentation follows the standard pattern of presenting goals, theories, definitions, and assumptions. For readers that would like a more bottom up approach, they can start reading the \hyperref[Sec:IMs]{instance models} and trace back to find any additional information they require.
 
 The \hyperref[Sec:GoalStmt]{goal statements} are refined to the theoretical models and the \hyperref[Sec:TMs]{theoretical models} to the \hyperref[Sec:IMs]{instance models}.
 
@@ -276,10 +267,10 @@ This section focuses on the general equations and laws that ChemCode is based on
 \toprule \textbf{Refname} & \textbf{TM:canonIntLinProg}
 \phantomsection 
 \label{TM:canonIntLinProg}
-\\ \midrule \\
+\\ \midrule
 Label & Canonical integer linear program
         
-\\ \midrule \\
+\\ \midrule
 Equation & \begin{displaymath}
            \symbf{c} \symbf{x}
            \end{displaymath}
@@ -292,7 +283,7 @@ Equation & \begin{displaymath}
            \begin{displaymath}
            \symbf{x}\in{}\mathbb{Z}^{n}
            \end{displaymath}
-\\ \midrule \\
+\\ \midrule
 Description & \begin{symbDescription}
               \item{$\symbf{c}$ is the generic vector (Unitless)}
               \item{$\symbf{x}$ is the generic vector (Unitless)}
@@ -309,15 +300,15 @@ Description & \begin{symbDescription}
               \begin{symbDescription}
               \item{$\symbf{x}$ is the generic vector (Unitless)}
               \end{symbDescription}
-\\ \midrule \\
+\\ \midrule
 Notes & The above equation gives the canonical form of an integer linear program, which is ``a mathematical optimization or feasibility program in which some or all of the variables are restricted to be integers [and] the objective function and the constraints (other than the integer constraints) are linear'' \cite{ilpWiki}.
         
         The values of $\symbf{x}$ are unknown and will be solved for.
         
-\\ \midrule \\
+\\ \midrule
 Source & \cite{ilpWiki}
          
-\\ \midrule \\
+\\ \midrule
 RefBy & \hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}
         
 \\ \bottomrule
@@ -330,29 +321,29 @@ RefBy & \hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}
 \toprule \textbf{Refname} & \textbf{TM:lawConsMass}
 \phantomsection 
 \label{TM:lawConsMass}
-\\ \midrule \\
+\\ \midrule
 Label & Law of conservation of mass
         
-\\ \midrule \\
+\\ \midrule
 Equation & \begin{displaymath}
            \forall{}\,e\in{}E,r\in{}R\text{ | }\displaystyle\sum{\text{count}\left(e,r_{i}\text{.comp}\right) {r\text{.reac}}_{i}\text{.coeff}}=\displaystyle\sum{\text{count}\left(e,r_{i}\text{.comp}\right) {r\text{.prod}}_{i}\text{.coeff}}
            \end{displaymath}
-\\ \midrule \\
+\\ \midrule
 Description & \begin{symbDescription}
               \item{$\text{count}$ is the count of an element in a compound (Unitless)}
               \item{$e$ is the generic element (Unitless)}
               \item{$r$ is the generic reaction (Unitless)}
               \item{$i$ is the generic integer (Unitless)}
               \end{symbDescription}
-\\ \midrule \\
+\\ \midrule
 Notes & This law states that ``matter can neither be created nor destroyed in a chemical reaction ... but it may change forms to other substances'' \cite[(pg. 112)]{lund2023}.
         
         The above equation assumes that $r$ is balanced.
         
-\\ \midrule \\
+\\ \midrule
 Source & \cite{lund2023}
          
-\\ \midrule \\
+\\ \midrule
 RefBy & 
 \\ \bottomrule
 \end{tabular}
@@ -372,27 +363,27 @@ This section collects and defines all the data needed to build the instance mode
 \toprule \textbf{Refname} & \textbf{DD:elementType}
 \phantomsection 
 \label{DD:elementType}
-\\ \midrule \\
+\\ \midrule
 Label & Element data type
         
-\\ \midrule \\
+\\ \midrule
 Symbol & $E$
          
-\\ \midrule \\
+\\ \midrule
 Equation & \begin{displaymath}
            E=\{\text{H},\text{He},\text{Li},\text{Be},\text{B},\text{C},\text{N},\text{O},\text{F},\text{Ne},\text{Na},\text{Mg},\text{Al},\text{Si},\text{P},\text{S},\text{Cl},\text{Ar},\text{K},\text{Ca},\text{Sc},\text{Ti},\text{V},\text{Cr},\text{Mn},\text{Fe},\text{Co},\text{Ni},\text{Cu},\text{Zn},\text{Ga},\text{Ge},\text{As},\text{Se},\text{Br},\text{Kr},\text{Rb},\text{Sr},\text{Y},\text{Zr},\text{Nb},\text{Mo},\text{Tc},\text{Ru},\text{Rh},\text{Pd},\text{Ag},\text{Cd},\text{In},\text{Sn},\text{Sb},\text{Te},\text{I},\text{Xe},\text{Cs},\text{Ba},\text{La},\text{Ce},\text{Pr},\text{Nd},\text{Pm},\text{Sm},\text{Eu},\text{Gd},\text{Tb},\text{Dy},\text{Ho},\text{Er},\text{Tm},\text{Yb},\text{Lu},\text{Hf},\text{Ta},\text{W},\text{Re},\text{Os},\text{Ir},\text{Pt},\text{Au},\text{Hg},\text{Tl},\text{Pb},\text{Bi},\text{Po},\text{At},\text{Rn},\text{Fr},\text{Ra},\text{Ac},\text{Th},\text{Pa},\text{U},\text{Np},\text{Pu},\text{Am},\text{Cm},\text{Bk},\text{Cf},\text{Es},\text{Fm},\text{Md},\text{No},\text{Lr},\text{Rf},\text{Db},\text{Sg},\text{Bh},\text{Hs},\text{Mt},\text{Ds},\text{Rg},\text{Cn},\text{Nh},\text{Fl},\text{Mc},\text{Lv},\text{Ts},\text{Og}\}
            \end{displaymath}
-\\ \midrule \\
+\\ \midrule
 Description & \begin{symbDescription}
               \item{$E$ is the element data type (Unitless)}
               \end{symbDescription}
-\\ \midrule \\
+\\ \midrule
 Notes & A type representing each element from \cite{elemListWiki}.
         
-\\ \midrule \\
+\\ \midrule
 Source & \cite{smithChemSpec}
          
-\\ \midrule \\
+\\ \midrule
 RefBy & \hyperref[DD:compoundType]{DD:compoundType}
         
 \\ \bottomrule
@@ -405,27 +396,27 @@ RefBy & \hyperref[DD:compoundType]{DD:compoundType}
 \toprule \textbf{Refname} & \textbf{DD:compoundType}
 \phantomsection 
 \label{DD:compoundType}
-\\ \midrule \\
+\\ \midrule
 Label & Compound data type
         
-\\ \midrule \\
+\\ \midrule
 Symbol & $C$
          
-\\ \midrule \\
+\\ \midrule
 Equation & \begin{displaymath}
            C=\mathbb{N}^{\text{118}}
            \end{displaymath}
-\\ \midrule \\
+\\ \midrule
 Description & \begin{symbDescription}
               \item{$C$ is the compound data type (Unitless)}
               \end{symbDescription}
-\\ \midrule \\
+\\ \midrule
 Notes & A type representing a compound where an entry ${c_{i}}$ represents how many atoms of the $i$-th element of $E$ (from \hyperref[DD:elementType]{DD:elementType}) are present in the compound.
         
-\\ \midrule \\
+\\ \midrule
 Source & --
          
-\\ \midrule \\
+\\ \midrule
 RefBy & 
 \\ \bottomrule
 \end{tabular}
@@ -437,27 +428,27 @@ RefBy &
 \toprule \textbf{Refname} & \textbf{DD:reactionType}
 \phantomsection 
 \label{DD:reactionType}
-\\ \midrule \\
+\\ \midrule
 Label & Reaction data type
         
-\\ \midrule \\
+\\ \midrule
 Symbol & $R$
          
-\\ \midrule \\
+\\ \midrule
 Equation & \begin{displaymath}
            R=\text{record of}\,\left(\text{prod}\in{}\text{sequence of}\,\text{record of}\,\left(\text{comp}\in{}C,\,\text{coeff}\in{}\mathbb{Z}\right),\,\text{reac}\in{}\text{sequence of}\,\text{record of}\,\left(\text{comp}\in{}C,\,\text{coeff}\in{}\mathbb{Z}\right)\right)
            \end{displaymath}
-\\ \midrule \\
+\\ \midrule
 Description & \begin{symbDescription}
               \item{$R$ is the reaction data type (Unitless)}
               \end{symbDescription}
-\\ \midrule \\
+\\ \midrule
 Notes & A type representing a reaction.
         
-\\ \midrule \\
+\\ \midrule
 Source & --
          
-\\ \midrule \\
+\\ \midrule
 RefBy & 
 \\ \bottomrule
 \end{tabular}
@@ -469,33 +460,33 @@ RefBy &
 \toprule \textbf{Refname} & \textbf{DD:countFunc}
 \phantomsection 
 \label{DD:countFunc}
-\\ \midrule \\
+\\ \midrule
 Label & Count of an element in a compound
         
-\\ \midrule \\
+\\ \midrule
 Symbol & $\text{count}$
          
-\\ \midrule \\
+\\ \midrule
 Equation & \begin{displaymath}
            \text{count}\left(e,c\right)=\begin{cases}
                                         {c^{r}}\text{.count}\,\text{such that }\,{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e, & \exists{}\,{{c^{r}}\in{}\text{record of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)}\text{ | }{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e\\
                                         0, & \neg{}\exists{}\,{{c^{r}}\in{}\text{record of}\,\left(\text{elem}\in{}E,\,\text{count}\in{}\mathbb{R}\right)}\text{ | }{c^{r}}\in{}c\land{}{c^{r}}\text{.elem}=e
                                         \end{cases}
            \end{displaymath}
-\\ \midrule \\
+\\ \midrule
 Description & \begin{symbDescription}
               \item{$\text{count}$ is the count of an element in a compound (Unitless)}
               \item{${c^{r}}$ is the generic record of a compound (Unitless)}
               \item{$c$ is the generic compound (Unitless)}
               \item{$e$ is the generic element (Unitless)}
               \end{symbDescription}
-\\ \midrule \\
+\\ \midrule
 Notes & The output represents the number of atoms of a given element $e$ (of type $E$) in a given compound $c$ (of type $C$).
         
-\\ \midrule \\
+\\ \midrule
 Source & --
          
-\\ \midrule \\
+\\ \midrule
 RefBy & 
 \\ \bottomrule
 \end{tabular}
@@ -507,17 +498,17 @@ RefBy &
 \toprule \textbf{Refname} & \textbf{DD:elemsFunc}
 \phantomsection 
 \label{DD:elemsFunc}
-\\ \midrule \\
+\\ \midrule
 Label & Set of elements in a chemical reaction
         
-\\ \midrule \\
+\\ \midrule
 Symbol & $\text{elems}$
          
-\\ \midrule \\
+\\ \midrule
 Equation & \begin{displaymath}
            \text{elems}\left(r\right)=\{e\in{}E\text{ | }\exists{}\,c\in{}C,y\in{}\mathbb{Z},x\in{}\mathbb{R}\text{ | }\left(\left(c,y\right)\in{}r\text{.prod}\lor{}\left(c,y\right)\in{}r\text{.reac}\right)\land{}\left(e,x\right)\in{}c\}
            \end{displaymath}
-\\ \midrule \\
+\\ \midrule
 Description & \begin{symbDescription}
               \item{$\text{elems}$ is the set of elements in a chemical reaction (Unitless)}
               \item{$e$ is the generic element (Unitless)}
@@ -526,13 +517,13 @@ Description & \begin{symbDescription}
               \item{$x$ is the generic real number (Unitless)}
               \item{$r$ is the generic reaction (Unitless)}
               \end{symbDescription}
-\\ \midrule \\
+\\ \midrule
 Notes & The output represents the set of elements that occur in a given chemical equation $r$ (of type $R$).
         
-\\ \midrule \\
+\\ \midrule
 Source & --
          
-\\ \midrule \\
+\\ \midrule
 RefBy & 
 \\ \bottomrule
 \end{tabular}
@@ -548,23 +539,23 @@ This section transforms the problem defined in the \hyperref[Sec:ProbDesc]{probl
 \toprule \textbf{Refname} & \textbf{IM:matRepresentation}
 \phantomsection 
 \label{IM:matRepresentation}
-\\ \midrule \\
+\\ \midrule
 Label & Matrix representation of a chemical equation
         
-\\ \midrule \\
+\\ \midrule
 Input & ${r_{\text{in}}}$
         
-\\ \midrule \\
+\\ \midrule
 Output & $\symbf{Q}$
          
-\\ \midrule \\
+\\ \midrule
 Equation & \begin{displaymath}
            \symbf{Q}=\text{the matrix such that}\,\forall{}\,i\in{}\mathbb{Z},j\in{}\mathbb{Z}\text{ | }0\leq{}i\lt{}|\text{elems}\left({r_{\text{in}}}\right)|\land{}0\leq{}j\lt{}|{r_{\text{in}}}\text{.reac}|+|{r_{\text{in}}}\text{.prod}|\implies{}{q_{\text{ij}}}=\begin{cases}
                                                                                                                                                                                                                                                                         \text{count}\left({\text{elems}\left({r_{\text{in}}}\right)}_{i},{{r_{\text{in}}}\text{.reac}}_{j}\text{.comp}\right), & j\lt{}|{r_{\text{in}}}\text{.reac}|\\
                                                                                                                                                                                                                                                                         -\left(\text{count}\left({\text{elems}\left({r_{\text{in}}}\right)}_{i},{{r_{\text{in}}}\text{.prod}}_{j-|{r_{\text{in}}}\text{.reac}|}\text{.comp}\right)\right), & \neg{}j\lt{}|{r_{\text{in}}}\text{.reac}|
                                                                                                                                                                                                                                                                         \end{cases}
            \end{displaymath}
-\\ \midrule \\
+\\ \midrule
 Description & \begin{symbDescription}
               \item{$\symbf{Q}$ is the matrix representation of a chemical equation (Unitless)}
               \item{$i$ is the generic integer (Unitless)}
@@ -574,10 +565,10 @@ Description & \begin{symbDescription}
               \item{${q_{\text{ij}}}$ is the element of $\symbf{Q}$ (Unitless)}
               \item{$\text{count}$ is the count of an element in a compound (Unitless)}
               \end{symbDescription}
-\\ \midrule \\
+\\ \midrule
 Source & --
          
-\\ \midrule \\
+\\ \midrule
 RefBy & 
 \\ \bottomrule
 \end{tabular}
@@ -589,16 +580,16 @@ RefBy &
 \toprule \textbf{Refname} & \textbf{IM:chemEqIntLinProg}
 \phantomsection 
 \label{IM:chemEqIntLinProg}
-\\ \midrule \\
+\\ \midrule
 Label & Integer linear program for a chemical equation
         
-\\ \midrule \\
+\\ \midrule
 Input & $\symbf{Q}$
         
-\\ \midrule \\
+\\ \midrule
 Output & $\symbf{x}$
          
-\\ \midrule \\
+\\ \midrule
 Equation & \begin{displaymath}
            \begin{aligned}
             & \text{minimize} &  & \symbf{1}\cdot{}\symbf{x}\\
@@ -607,20 +598,20 @@ Equation & \begin{displaymath}
             & \text{and} &  & \symbf{x}\in{}\mathbb{Z}^{n}
            \end{aligned}
            \end{displaymath}
-\\ \midrule \\
+\\ \midrule
 Description & \begin{symbDescription}
               \item{$\symbf{1}$ is the unary vector (Unitless)}
               \item{$\symbf{x}$ is the generic vector (Unitless)}
               \item{$\symbf{Q}$ is the matrix representation of a chemical equation (Unitless)}
               \item{$\symbf{0}$ is the zero vector (Unitless)}
               \end{symbDescription}
-\\ \midrule \\
+\\ \midrule
 Notes & This is a specific instance of the ILP from \hyperref[TM:canonIntLinProg]{TM:canonIntLinProg} with $\symbf{A}=\symbf{Q}$, $\symbf{b}=\symbf{0}$, and $\symbf{c}=\symbf{1}$. The goal and constraints are also modified.
         
-\\ \midrule \\
+\\ \midrule
 Source & --
          
-\\ \midrule \\
+\\ \midrule
 RefBy & \hyperref[accurate]{NFR:Accurate}
         
 \\ \bottomrule
@@ -640,18 +631,14 @@ This section provides the functional requirements, the tasks and behaviours that
 \item[Feasible-Output:\phantomsection\label{feasOut}]{If the inputted chemical equation is feasible, output its balanced form with the smallest positive integer coefficients possible.}
 \item[Infeasible-Output:\phantomsection\label{infeasOut}]{If the inputted chemical equation is infeasible, output a descriptive message.}
 \end{itemize}
-\begin{longtable}{l l l}
-\toprule
+\begin{longtblr}
+[caption={Required Inputs following \hyperref[inputValues]{FR:Input-Values}}]
+{colspec={l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{Symbol} & \textbf{Description} & \textbf{Units}
 \\
-\midrule
-\endhead
 ${r_{\text{in}}}$ & Representation of a chemical equation & --
-\\
-\bottomrule
-\caption{Required Inputs following \hyperref[inputValues]{FR:Input-Values}}
 \label{Table:ReqInputs}
-\end{longtable}
+\end{longtblr}
 \subsection{Non-Functional Requirements}
 \label{Sec:NFRs}
 This section provides the non-functional requirements, the qualities that the software is expected to exhibit.
@@ -697,12 +684,11 @@ This section lists the unlikely changes to be made to the software.
 \label{Sec:TraceMatrices}
 The purpose of the traceability matrices is to provide easy references on what has to be additionally modified if a certain component is changed. Every time a component is changed, the items in the column of that component that are marked with an ``X'' should be modified as well. \hyperref[Table:TraceMatAvsA]{Tab:TraceMatAvsA} shows the dependencies of the assumptions on each other. \hyperref[Table:TraceMatAvsAll]{Tab:TraceMatAvsAll} shows the dependencies of the data definitions, theoretical models, general definitions, instance models, requirements, likely changes, and unlikely changes on the assumptions. \hyperref[Table:TraceMatRefvsRef]{Tab:TraceMatRefvsRef} shows the dependencies of the data definitions, theoretical models, general definitions, and instance models on each other. \hyperref[Table:TraceMatAllvsR]{Tab:TraceMatAllvsR} shows the dependencies of the requirements and goal statements on the data definitions, theoretical models, general definitions, and instance models.
 
-\begin{longtable}{l l l l l l l}
-\toprule
+\begin{longtblr}
+[caption={Traceability Matrix Showing the Connections Between Assumptions and Other Assumptions}]
+{colspec={l l l l l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}} & \textbf{\hyperref[simpleForms]{A:simpleForms}} & \textbf{\hyperref[intCoeffs]{A:intCoeffs}}
 \\
-\midrule
-\endhead
 \hyperref[elemCompDiff]{A:elemCompDiff} &  &  &  &  &  & 
 \\
 \hyperref[validForms]{A:validForms} &  &  &  &  &  & 
@@ -714,17 +700,13 @@ The purpose of the traceability matrices is to provide easy references on what h
 \hyperref[simpleForms]{A:simpleForms} &  &  &  &  &  & 
 \\
 \hyperref[intCoeffs]{A:intCoeffs} &  &  &  &  &  & 
-\\
-\bottomrule
-\caption{Traceability Matrix Showing the Connections Between Assumptions and Other Assumptions}
 \label{Table:TraceMatAvsA}
-\end{longtable}
-\begin{longtable}{l l l l l l l}
-\toprule
+\end{longtblr}
+\begin{longtblr}
+[caption={Traceability Matrix Showing the Connections Between Assumptions and Other Items}]
+{colspec={l l l l l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}} & \textbf{\hyperref[simpleForms]{A:simpleForms}} & \textbf{\hyperref[intCoeffs]{A:intCoeffs}}
 \\
-\midrule
-\endhead
 \hyperref[DD:elementType]{DD:elementType} &  &  &  &  &  & 
 \\
 \hyperref[DD:compoundType]{DD:compoundType} &  &  &  &  &  & 
@@ -796,17 +778,13 @@ The purpose of the traceability matrices is to provide easy references on what h
 \hyperref[checkValidEqns]{UC:checkValidEqns} &  &  & X &  &  & 
 \\
 \hyperref[nonintCoeffs]{UC:nonintCoeffs} &  &  &  &  &  & X
-\\
-\bottomrule
-\caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
 \label{Table:TraceMatAvsAll}
-\end{longtable}
-\begin{longtable}{l l l l l l l l l l}
-\toprule
+\end{longtblr}
+\begin{longtblr}
+[caption={Traceability Matrix Showing the Connections Between Items and Other Sections}]
+{colspec={l l l l l l l l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[TM:lawConsMass]{TM:lawConsMass}} & \textbf{\hyperref[IM:matRepresentation]{IM:matRepresentation}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}}
 \\
-\midrule
-\endhead
 \hyperref[DD:elementType]{DD:elementType} &  &  &  &  &  &  &  &  & 
 \\
 \hyperref[DD:compoundType]{DD:compoundType} & X &  &  &  &  &  &  &  & 
@@ -824,17 +802,13 @@ The purpose of the traceability matrices is to provide easy references on what h
 \hyperref[IM:matRepresentation]{IM:matRepresentation} &  &  &  &  &  &  &  &  & 
 \\
 \hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg} &  &  &  &  &  & X &  &  & 
-\\
-\bottomrule
-\caption{Traceability Matrix Showing the Connections Between Items and Other Sections}
 \label{Table:TraceMatRefvsRef}
-\end{longtable}
-\begin{longtable}{l l l l l l l l l l l l l l l l l l l l l}
-\toprule
+\end{longtblr}
+\begin{longtblr}
+[caption={Traceability Matrix Showing the Connections Between Requirements, Goal Statements and Other Items}]
+{colspec={l l l l l l l l l l l l l l l l l l l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[DD:compoundType]{DD:compoundType}} & \textbf{\hyperref[DD:reactionType]{DD:reactionType}} & \textbf{\hyperref[DD:countFunc]{DD:countFunc}} & \textbf{\hyperref[DD:elemsFunc]{DD:elemsFunc}} & \textbf{\hyperref[TM:canonIntLinProg]{TM:canonIntLinProg}} & \textbf{\hyperref[TM:lawConsMass]{TM:lawConsMass}} & \textbf{\hyperref[IM:matRepresentation]{IM:matRepresentation}} & \textbf{\hyperref[IM:chemEqIntLinProg]{IM:chemEqIntLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[understandable]{NFR:Understandable}} & \textbf{\hyperref[usable]{NFR:Usable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[maintainable]{NFR:Maintainable}} & \textbf{\hyperref[portable]{NFR:Portable}}
 \\
-\midrule
-\endhead
 \hyperref[findBalancedForm]{GS:findBalancedForm} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
 \hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
@@ -858,11 +832,8 @@ The purpose of the traceability matrices is to provide easy references on what h
 \hyperref[maintainable]{NFR:Maintainable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
 \hyperref[portable]{NFR:Portable} &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  &  & 
-\\
-\bottomrule
-\caption{Traceability Matrix Showing the Connections Between Requirements, Goal Statements and Other Items}
 \label{Table:TraceMatAllvsR}
-\end{longtable}
+\end{longtblr}
 The purpose of the traceability graphs is also to provide easy references on what has to be additionally modified if a certain component is changed. The arrows in the graphs represent dependencies. The component at the tail of an arrow is depended on by the component at the head of that arrow. Therefore, if a component is changed, the components that it points to should also be changed. \hyperref[Figure:TraceGraphAvsA]{Fig:TraceGraphAvsA} shows the dependencies of assumptions on each other. \hyperref[Figure:TraceGraphAvsAll]{Fig:TraceGraphAvsAll} shows the dependencies of data definitions, theoretical models, general definitions, instance models, requirements, likely changes, and unlikely changes on the assumptions. \hyperref[Figure:TraceGraphRefvsRef]{Fig:TraceGraphRefvsRef} shows the dependencies of data definitions, theoretical models, general definitions, and instance models on each other. \hyperref[Figure:TraceGraphAllvsR]{Fig:TraceGraphAllvsR} shows the dependencies of requirements and goal statements on the data definitions, theoretical models, general definitions, and instance models. \hyperref[Figure:TraceGraphAllvsAll]{Fig:TraceGraphAllvsAll} shows the dependencies of dependencies of assumptions, models, definitions, requirements, goals, and changes with each other.
 
 \begin{figure}
@@ -913,18 +884,14 @@ For convenience, the following graphs can be found at the links below:
 \label{Sec:AuxConstants}
 This section contains the standard values that are used for calculations in ChemCode.
 
-\begin{longtable}{l l l l}
-\toprule
+\begin{longtblr}
+[caption={Auxiliary Constants}]
+{colspec={l l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{Symbol} & \textbf{Description} & \textbf{Value} & \textbf{Unit}
 \\
-\midrule
-\endhead
 $\text{MAINTAIN_FRAC}$ & maintainability fraction & $10.0\%$ & --
-\\
-\bottomrule
-\caption{Auxiliary Constants}
 \label{Table:TAuxConsts}
-\end{longtable}
+\end{longtblr}
 \section{References}
 \label{Sec:References}
 \begin{filecontents*}{bibfile.bib}
@@ -1008,6 +975,16 @@ title={Assignment 2},
 howpublished={\url{https://gitlab.cas.mcmaster.ca/smiths/se2aa4\_cs2me3/-/blob/master/Assignments/PreviousYears/2020/A2-ChemReacts/A2.pdf}},
 month=feb,
 year={2020}}
+@article{smithKoothoor2016,
+author={Smith, W. Spencer and Koothoor, Nirmitha},
+title={A Document-Driven Method for Certifying Scientific Computing Software for Use in Nuclear Safety Analysis},
+journal={ Nuclear Engineering and Technology},
+year={2016},
+month=apr,
+volume={48},
+number={2},
+pages={404--418},
+howpublished={\url{http://www.sciencedirect.com/science/article/pii/S1738573315002582}}}
 @inproceedings{smithLai2005,
 author={Smith, W. Spencer and Lai, Lei},
 title={A new requirements template for scientific computing},
@@ -1017,6 +994,16 @@ editor={Agerfalk, PJ and Kraiem, N. and Ralyte, J.},
 address={Paris, France},
 pages={107--121},
 note={In conjunction with 13th IEEE International Requirements Engineering Conference,}}
+@article{smithEtAl2007,
+author={Smith, W. Spencer and Lai, Lei and Khedri, Ridha},
+title={Requirements Analysis for Engineering Computation: A Systematic Approach for Improving Software Reliability},
+journal={Reliable Computing, Special Issue on Reliable Engineering Computation},
+year={2007},
+month=feb,
+volume={13},
+number={1},
+pages={83--107},
+howpublished={\url{https://doi.org/10.1007/s11155-006-9020-7}}}
 @book{polymerSource,
 author={Wexler, Philip},
 title={Encyclopedia of Toxicology},
