@@ -7,8 +7,8 @@
 \usepackage{amssymb}
 \usepackage{mathtools}
 \usepackage{unicode-math}
-\usepackage{tabu}
-\usepackage{longtable}
+\usepackage{tabularray}
+\usepackage{tabularx}
 \usepackage{booktabs}
 \usepackage{caption}
 \usepackage{graphics}
@@ -20,7 +20,6 @@
 \setmathfont{Latin Modern Math}
 \newcommand{\gt}{\ensuremath >}
 \newcommand{\lt}{\ensuremath <}
-\global\tabulinesep=1mm
 \newlist{symbDescription}{description}{1}
 \setlist[symbDescription]{noitemsep, topsep=0pt, parsep=0pt, partopsep=0pt}
 \bibliography{bibfile}
@@ -38,12 +37,11 @@ This section records information for easy reference.
 \label{Sec:ToS}
 The symbols used in this document are summarized in the \hyperref[Table:ToS]{Table of Symbols} along with their units. The symbols are listed in alphabetical order.
 
-\begin{longtable}{l l l}
-\toprule
+\begin{longtblr}
+[caption={Table of Symbols}]
+{colspec={l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{Symbol} & \textbf{Description} & \textbf{Units}
 \\
-\midrule
-\endhead
 $\symbf{0}$ & Zero vector & --
 \\
 $\symbf{A}$ & Generic matrix & --
@@ -59,19 +57,15 @@ $\text{MAINTAIN_FRAC}$ & Maintainability fraction & --
 $r$ & Representation of a chemical equation & --
 \\
 $\symbf{x}$ & Generic vector & --
-\\
-\bottomrule
-\caption{Table of Symbols}
 \label{Table:ToS}
-\end{longtable}
+\end{longtblr}
 \subsection{Abbreviations and Acronyms}
 \label{Sec:TAbbAcc}
-\begin{longtable}{l l}
-\toprule
+\begin{longtblr}
+[caption={Abbreviations and Acronyms}]
+{colspec={l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{Abbreviation} & \textbf{Full Form}
 \\
-\midrule
-\endhead
 A & Assumption
 \\
 ChemCode & Chemistry Code
@@ -89,11 +83,8 @@ SRS & Software Requirements Specification
 TM & Theoretical Model
 \\
 UC & Unlikely Change
-\\
-\bottomrule
-\caption{Abbreviations and Acronyms}
 \label{Table:TAbbAcc}
-\end{longtable}
+\end{longtblr}
 \section{Introduction}
 \label{Sec:Intro}
 Chemical equations are common ways of representing chemical reactions (\hyperref[Figure:physSysFig]{Fig:physSysFig} shows an example of a chemical equation). Subscripts indicate the number of atoms of each element present in the given chemical compound. A chemical equation is ``balanced'' if there are the same number of atoms of each element before and after the reaction takes place, which satisfies the Law of Conservation of Mass. Chemical equations are balanced by introducing coefficients before each chemical formula (this coefficient may be ``1'', in which case is implicit and not added to the equation). We want a tool to balance chemical equations automatically to improve the productivity of scientists and engineers and reduce the potential for human error. This program should balance a given chemical equation if it is feasible and if it is not, it should provide a message communicating this to the user. The program that performs these tasks as documented here will be called Chemistry Code (ChemCode).
@@ -116,7 +107,7 @@ Reviewers of this documentation should have an understanding of high school chem
 
 \subsection{Organization of Document}
 \label{Sec:DocOrg}
-The organization of this document follows the template for an SRS for scientific computing software proposed by \cite{koothoor2013} and \cite{smithLai2005}. The presentation follows the standard pattern of presenting goals, theories, definitions, and assumptions. For readers that would like a more bottom up approach, they can start reading the \hyperref[Sec:IMs]{instance models} and trace back to find any additional information they require.
+The organization of this document follows the template for an SRS for scientific computing software proposed by \cite{koothoor2013}, \cite{smithLai2005}, \cite{smithEtAl2007}, and \cite{smithKoothoor2016}. The presentation follows the standard pattern of presenting goals, theories, definitions, and assumptions. For readers that would like a more bottom up approach, they can start reading the \hyperref[Sec:IMs]{instance models} and trace back to find any additional information they require.
 
 The \hyperref[Sec:GoalStmt]{goal statements} are refined to the theoretical models and the \hyperref[Sec:TMs]{theoretical models} to the \hyperref[Sec:IMs]{instance models}.
 
@@ -242,10 +233,10 @@ This section focuses on the general equations and laws that ChemCode is based on
 \toprule \textbf{Refname} & \textbf{TM:intLinProg}
 \phantomsection 
 \label{TM:intLinProg}
-\\ \midrule \\
+\\ \midrule
 Label & Integer linear program
         
-\\ \midrule \\
+\\ \midrule
 Equation & \begin{displaymath}
            \begin{cases}
            \symbf{c} \symbf{x}, & 1\\
@@ -253,7 +244,7 @@ Equation & \begin{displaymath}
            \symbf{x}\geq{}\symbf{0}, & 3
            \end{cases}
            \end{displaymath}
-\\ \midrule \\
+\\ \midrule
 Description & \begin{symbDescription}
               \item{$\symbf{c}$ is the generic vector (Unitless)}
               \item{$\symbf{x}$ is the generic vector (Unitless)}
@@ -261,15 +252,15 @@ Description & \begin{symbDescription}
               \item{$\symbf{b}$ is the generic vector (Unitless)}
               \item{$\symbf{0}$ is the zero vector (Unitless)}
               \end{symbDescription}
-\\ \midrule \\
+\\ \midrule
 Notes & The above equation gives the canonical form of an integer linear program, which is ``a mathematical optimization or feasibility program in which some or all of the variables are restricted to be integers [and] the objective function and the constraints (other than the integer constraints) are linear'' \cite{ilpWiki}.
         
         The values of $\symbf{x}$ are unknown and will be solved for.
         
-\\ \midrule \\
+\\ \midrule
 Source & \cite{ilpWiki}
          
-\\ \midrule \\
+\\ \midrule
 RefBy & 
 \\ \bottomrule
 \end{tabular}
@@ -289,28 +280,28 @@ This section collects and defines all the data needed to build the instance mode
 \toprule \textbf{Refname} & \textbf{DD:elementType}
 \phantomsection 
 \label{DD:elementType}
-\\ \midrule \\
+\\ \midrule
 Label & Element data type
         
-\\ \midrule \\
+\\ \midrule
 Symbol & $E$
          
-\\ \midrule \\
+\\ \midrule
 Equation & \begin{displaymath}
            E=E
            \end{displaymath}
-\\ \midrule \\
+\\ \midrule
 Description & \begin{symbDescription}
               \item{$E$ is the element data type (Unitless)}
               \item{$E$ is the element data type (Unitless)}
               \end{symbDescription}
-\\ \midrule \\
+\\ \midrule
 Notes & A type representing each element from \cite{elemListWiki}.
         
-\\ \midrule \\
+\\ \midrule
 Source & \cite{smithChemSpec}
          
-\\ \midrule \\
+\\ \midrule
 RefBy & 
 \\ \bottomrule
 \end{tabular}
@@ -329,18 +320,14 @@ This section provides the functional requirements, the tasks and behaviours that
 \item[Feasible-Output:\phantomsection\label{feasOut}]{If the inputted chemical equation is feasible, output its balanced form with the smallest positive integer coefficients possible.}
 \item[Infeasible-Output:\phantomsection\label{infeasOut}]{If the inputted chemical equation is infeasible, output a descriptive message.}
 \end{itemize}
-\begin{longtable}{l l l}
-\toprule
+\begin{longtblr}
+[caption={Required Inputs following \hyperref[inputValues]{FR:Input-Values}}]
+{colspec={l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{Symbol} & \textbf{Description} & \textbf{Units}
 \\
-\midrule
-\endhead
 $r$ & Representation of a chemical equation & --
-\\
-\bottomrule
-\caption{Required Inputs following \hyperref[inputValues]{FR:Input-Values}}
 \label{Table:ReqInputs}
-\end{longtable}
+\end{longtblr}
 \subsection{Non-Functional Requirements}
 \label{Sec:NFRs}
 This section provides the non-functional requirements, the qualities that the software is expected to exhibit.
@@ -386,12 +373,11 @@ This section lists the unlikely changes to be made to the software.
 \label{Sec:TraceMatrices}
 The purpose of the traceability matrices is to provide easy references on what has to be additionally modified if a certain component is changed. Every time a component is changed, the items in the column of that component that are marked with an ``X'' should be modified as well. \hyperref[Table:TraceMatAvsA]{Tab:TraceMatAvsA} shows the dependencies of the assumptions on each other. \hyperref[Table:TraceMatAvsAll]{Tab:TraceMatAvsAll} shows the dependencies of the data definitions, theoretical models, general definitions, instance models, requirements, likely changes, and unlikely changes on the assumptions. \hyperref[Table:TraceMatRefvsRef]{Tab:TraceMatRefvsRef} shows the dependencies of the data definitions, theoretical models, general definitions, and instance models on each other. \hyperref[Table:TraceMatAllvsR]{Tab:TraceMatAllvsR} shows the dependencies of the requirements and goal statements on the data definitions, theoretical models, general definitions, and instance models.
 
-\begin{longtable}{l l l l l l l}
-\toprule
+\begin{longtblr}
+[caption={Traceability Matrix Showing the Connections Between Assumptions and Other Assumptions}]
+{colspec={l l l l l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}} & \textbf{\hyperref[simpleForms]{A:simpleForms}} & \textbf{\hyperref[intCoeffs]{A:intCoeffs}}
 \\
-\midrule
-\endhead
 \hyperref[elemCompDiff]{A:elemCompDiff} &  &  &  &  &  & 
 \\
 \hyperref[validForms]{A:validForms} &  &  &  &  &  & 
@@ -403,17 +389,13 @@ The purpose of the traceability matrices is to provide easy references on what h
 \hyperref[simpleForms]{A:simpleForms} &  &  &  &  &  & 
 \\
 \hyperref[intCoeffs]{A:intCoeffs} &  &  &  &  &  & 
-\\
-\bottomrule
-\caption{Traceability Matrix Showing the Connections Between Assumptions and Other Assumptions}
 \label{Table:TraceMatAvsA}
-\end{longtable}
-\begin{longtable}{l l l l l l l}
-\toprule
+\end{longtblr}
+\begin{longtblr}
+[caption={Traceability Matrix Showing the Connections Between Assumptions and Other Items}]
+{colspec={l l l l l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{} & \textbf{\hyperref[elemCompDiff]{A:elemCompDiff}} & \textbf{\hyperref[validForms]{A:validForms}} & \textbf{\hyperref[validEqns]{A:validEqns}} & \textbf{\hyperref[correctInputFormat]{A:correctInputFormat}} & \textbf{\hyperref[simpleForms]{A:simpleForms}} & \textbf{\hyperref[intCoeffs]{A:intCoeffs}}
 \\
-\midrule
-\endhead
 \hyperref[DD:elementType]{DD:elementType} &  &  &  &  &  & 
 \\
 \hyperref[TM:intLinProg]{TM:intLinProg} &  &  &  &  &  & 
@@ -471,31 +453,23 @@ The purpose of the traceability matrices is to provide easy references on what h
 \hyperref[checkValidEqns]{UC:checkValidEqns} &  &  & X &  &  & 
 \\
 \hyperref[nonintCoeffs]{UC:nonintCoeffs} &  &  &  &  &  & X
-\\
-\bottomrule
-\caption{Traceability Matrix Showing the Connections Between Assumptions and Other Items}
 \label{Table:TraceMatAvsAll}
-\end{longtable}
-\begin{longtable}{l l l}
-\toprule
+\end{longtblr}
+\begin{longtblr}
+[caption={Traceability Matrix Showing the Connections Between Items and Other Sections}]
+{colspec={l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[TM:intLinProg]{TM:intLinProg}}
 \\
-\midrule
-\endhead
 \hyperref[DD:elementType]{DD:elementType} &  & 
 \\
 \hyperref[TM:intLinProg]{TM:intLinProg} &  & 
-\\
-\bottomrule
-\caption{Traceability Matrix Showing the Connections Between Items and Other Sections}
 \label{Table:TraceMatRefvsRef}
-\end{longtable}
-\begin{longtable}{l l l l l l l l l l l l l l}
-\toprule
+\end{longtblr}
+\begin{longtblr}
+[caption={Traceability Matrix Showing the Connections Between Requirements, Goal Statements and Other Items}]
+{colspec={l l l l l l l l l l l l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{} & \textbf{\hyperref[DD:elementType]{DD:elementType}} & \textbf{\hyperref[TM:intLinProg]{TM:intLinProg}} & \textbf{\hyperref[inputValues]{FR:Input-Values}} & \textbf{\hyperref[convertMatrix]{FR:Convert-to-Matrix}} & \textbf{\hyperref[feasOut]{FR:Feasible-Output}} & \textbf{\hyperref[infeasOut]{FR:Infeasible-Output}} & \textbf{\hyperref[accurate]{NFR:Accurate}} & \textbf{\hyperref[verifiable]{NFR:Verifiable}} & \textbf{\hyperref[understandable]{NFR:Understandable}} & \textbf{\hyperref[usable]{NFR:Usable}} & \textbf{\hyperref[reusable]{NFR:Reusable}} & \textbf{\hyperref[maintainable]{NFR:Maintainable}} & \textbf{\hyperref[portable]{NFR:Portable}}
 \\
-\midrule
-\endhead
 \hyperref[findBalancedForm]{GS:findBalancedForm} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
 \hyperref[inputValues]{FR:Input-Values} &  &  &  &  &  &  &  &  &  &  &  &  & 
@@ -519,11 +493,8 @@ The purpose of the traceability matrices is to provide easy references on what h
 \hyperref[maintainable]{NFR:Maintainable} &  &  &  &  &  &  &  &  &  &  &  &  & 
 \\
 \hyperref[portable]{NFR:Portable} &  &  &  &  &  &  &  &  &  &  &  &  & 
-\\
-\bottomrule
-\caption{Traceability Matrix Showing the Connections Between Requirements, Goal Statements and Other Items}
 \label{Table:TraceMatAllvsR}
-\end{longtable}
+\end{longtblr}
 The purpose of the traceability graphs is also to provide easy references on what has to be additionally modified if a certain component is changed. The arrows in the graphs represent dependencies. The component at the tail of an arrow is depended on by the component at the head of that arrow. Therefore, if a component is changed, the components that it points to should also be changed. \hyperref[Figure:TraceGraphAvsA]{Fig:TraceGraphAvsA} shows the dependencies of assumptions on each other. \hyperref[Figure:TraceGraphAvsAll]{Fig:TraceGraphAvsAll} shows the dependencies of data definitions, theoretical models, general definitions, instance models, requirements, likely changes, and unlikely changes on the assumptions. \hyperref[Figure:TraceGraphRefvsRef]{Fig:TraceGraphRefvsRef} shows the dependencies of data definitions, theoretical models, general definitions, and instance models on each other. \hyperref[Figure:TraceGraphAllvsR]{Fig:TraceGraphAllvsR} shows the dependencies of requirements and goal statements on the data definitions, theoretical models, general definitions, and instance models. \hyperref[Figure:TraceGraphAllvsAll]{Fig:TraceGraphAllvsAll} shows the dependencies of dependencies of assumptions, models, definitions, requirements, goals, and changes with each other.
 
 \begin{figure}
@@ -574,18 +545,14 @@ For convenience, the following graphs can be found at the links below:
 \label{Sec:AuxConstants}
 This section contains the standard values that are used for calculations in ChemCode.
 
-\begin{longtable}{l l l l}
-\toprule
+\begin{longtblr}
+[caption={Auxiliary Constants}]
+{colspec={l l l l}, rowhead=1, hline{1,Z}=\heavyrulewidth, hline{2}=\lightrulewidth}
 \textbf{Symbol} & \textbf{Description} & \textbf{Value} & \textbf{Unit}
 \\
-\midrule
-\endhead
 $\text{MAINTAIN_FRAC}$ & maintainability fraction & $10.0\%$ & --
-\\
-\bottomrule
-\caption{Auxiliary Constants}
 \label{Table:TAuxConsts}
-\end{longtable}
+\end{longtblr}
 \section{References}
 \label{Sec:References}
 \begin{filecontents*}{bibfile.bib}
@@ -669,6 +636,16 @@ title={Assignment 2},
 howpublished={\url{https://gitlab.cas.mcmaster.ca/smiths/se2aa4\_cs2me3/-/blob/master/Assignments/PreviousYears/2020/A2-ChemReacts/A2.pdf}},
 month=feb,
 year={2020}}
+@article{smithKoothoor2016,
+author={Smith, W. Spencer and Koothoor, Nirmitha},
+title={A Document-Driven Method for Certifying Scientific Computing Software for Use in Nuclear Safety Analysis},
+journal={ Nuclear Engineering and Technology},
+year={2016},
+month=apr,
+volume={48},
+number={2},
+pages={404--418},
+howpublished={\url{http://www.sciencedirect.com/science/article/pii/S1738573315002582}}}
 @inproceedings{smithLai2005,
 author={Smith, W. Spencer and Lai, Lei},
 title={A new requirements template for scientific computing},
@@ -678,6 +655,16 @@ editor={Agerfalk, PJ and Kraiem, N. and Ralyte, J.},
 address={Paris, France},
 pages={107--121},
 note={In conjunction with 13th IEEE International Requirements Engineering Conference,}}
+@article{smithEtAl2007,
+author={Smith, W. Spencer and Lai, Lei and Khedri, Ridha},
+title={Requirements Analysis for Engineering Computation: A Systematic Approach for Improving Software Reliability},
+journal={Reliable Computing, Special Issue on Reliable Engineering Computation},
+year={2007},
+month=feb,
+volume={13},
+number={1},
+pages={83--107},
+howpublished={\url{https://doi.org/10.1007/s11155-006-9020-7}}}
 @book{polymerSource,
 author={Wexler, Philip},
 title={Encyclopedia of Toxicology},

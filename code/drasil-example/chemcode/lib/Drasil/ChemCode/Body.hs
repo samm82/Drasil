@@ -11,7 +11,7 @@ import Theory.Drasil (GenDefn, InstanceModel)
 import Data.Drasil.Citations (chen2022, drasilSource, elemListWiki, hydrateSource,
   ilpWiki, inorganicIUPAC, koothoor2013, lund2023, maclachlan2021,
   nonIntCoeffSource, organicIUPAC, parnasClements1986, polymerSource,
-  smithChemSpec, smithLai2005)
+  smithChemSpec, smithEtAl2007, smithKoothoor2016, smithLai2005)
 import Data.Drasil.Concepts.Chemistry
 import Data.Drasil.Concepts.Computation (algorithm)
 import qualified Data.Drasil.Concepts.Documentation as Doc (scope, srs)
@@ -55,7 +55,7 @@ mkSRS = [TableOfContents,
       [ IPurpose $ purpDoc progName Verbose,
         IScope scope,
         IChar [] readerChars [],
-        IOrgSec orgOfDocIntro inModel (SRS.inModel [] []) EmptyS
+        IOrgSec inModel (SRS.inModel [] []) EmptyS
       ],
   -- StkhldrSec $
   --   StkhldrProg
@@ -336,7 +336,8 @@ refDB = rdb citations concIns
 citations :: BibRef
 citations = [chen2022, drasilSource, elemListWiki, hydrateSource, ilpWiki,
   inorganicIUPAC, koothoor2013, lund2023, maclachlan2021, nonIntCoeffSource,
-  organicIUPAC, parnasClements1986, polymerSource, smithChemSpec, smithLai2005]
+  organicIUPAC, parnasClements1986, polymerSource, smithChemSpec,
+  smithEtAl2007, smithKoothoor2016, smithLai2005]
 
 concIns :: [ConceptInstance]
 concIns = assumps ++ goals ++ funcReqs ++ nonfuncReqs ++ lChanges ++ uChanges
