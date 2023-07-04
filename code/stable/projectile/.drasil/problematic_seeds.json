@@ -19,11 +19,23 @@
         "sections",
         "references"
     ],
+    "DocOrgLabel": [
+        "sections",
+        "references"
+    ],
+    "DocPurposeLabel": [
+        "sections",
+        "references"
+    ],
     "FRsLabel": [
         "sections",
         "references"
     ],
     "GDsLabel": [
+        "sections",
+        "references"
+    ],
+    "GenSysDescLabel": [
         "sections",
         "references"
     ],
@@ -65,6 +77,10 @@
         "sections",
         "references"
     ],
+    "ReaderCharsLabel": [
+        "sections",
+        "references"
+    ],
     "RefMatLabel": [
         "sections",
         "references"
@@ -91,6 +107,14 @@
         "references"
     ],
     "SpecSystDescLabel": [
+        "sections",
+        "references"
+    ],
+    "SysConstraintsLabel": [
+        "sections",
+        "references"
+    ],
+    "SysContextLabel": [
         "sections",
         "references"
     ],
@@ -173,6 +197,10 @@
         "labelledContent"
     ],
     "TraceMatricesLabel": [
+        "sections",
+        "references"
+    ],
+    "UserCharsLabel": [
         "sections",
         "references"
     ],
@@ -536,6 +564,10 @@
         "references",
         "labelledContent",
         "dataDefinitions"
+    ],
+    "sysCtxDiag": [
+        "references",
+        "labelledContent"
     ],
     "targetHit": [
         "references",

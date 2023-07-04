@@ -10,6 +10,7 @@ import Prelude hiding ((<>))
 import Text.PrettyPrint.HughesPJ (Doc, empty, isEmpty, vcat, text, (<+>),
     (<>), comma, punctuate, hsep)
 import Utils.Drasil.Document (drasilImage, contSep)
+import Language.Drasil.Printing.Helpers (upcase)
 
 -- | Separates document sections.
 type Separator = Doc
@@ -22,15 +23,15 @@ makeMd = vcat . punctuate secSep . filtEmp
 introInfo :: String -> [String] -> Maybe String -> Doc
 introInfo name auths descr = introSec (text name) (listToDoc auths) (length auths) (maybePurpDoc descr)
 
--- | Instruction section, contains 3 paragraphs, Running, Building and Config Files.
+-- | Instruction section, contains 4 paragraphs, Running, Building, Input-Output and Config Files.
 -- The Config file section is only displayed if there are configuration files.
-instDoc :: [String] -> Doc
-instDoc cfp = regularSec (text "Making Examples") 
-    (runInstDoc <> doubleSep <> makeInstDoc) <> configSec cfp 
+instDoc :: [String] -> String -> (String, String) -> Doc
+instDoc cfp name inoutn = regularSec (text "Making Examples") 
+    (runInstDoc inoutn <> doubleSep <> makeInstDoc) <> inOutFile name inoutn <> configSec cfp
 
 -- | Helper for creating optional Purpose subsection as Doc
 maybePurpDoc :: Maybe String -> Doc
-maybePurpDoc = maybe empty (\descr-> doubleSep <> text "> Purpose:" <+> text descr)
+maybePurpDoc = maybe empty (\descr-> doubleSep <> text "> Purpose:" <+> upcase descr)
 
 -- | 'What' section in generated README file, does not display if empty
 whatInfo :: Maybe String -> Doc
@@ -42,19 +43,31 @@ commandLine = text $ "In your terminal command line, enter the same directory as
     "README file. Then enter the following line:"
 
 -- | Helper for giving instructions on how to run the program.
-runInstDoc :: Doc
-runInstDoc = text "How to Run the Program:" <> contSep <>
-    commandLine <> contSep <> bkQuote3 <> contSep <> text "make run RUNARGS=input.txt" <> contSep <> bkQuote3
+runInstDoc :: (String, String) -> Doc
+runInstDoc (inFile, _) = text "How to Run the Program:" <> contSep <>
+    commandLine <> contSep <> bkQuote3 <> contSep <> text "make run RUNARGS=" <> text inFile
+      <> contSep <> bkQuote3
 
 -- | Helper for giving instructions on how to build the program.
 makeInstDoc :: Doc
 makeInstDoc = text "How to Build the Program:" <> contSep <> commandLine <> contSep <>
     bkQuote3 <> contSep <> text "make build" <> contSep <> bkQuote3
 
+-- | Helper for giving instuctions and Input and Output files.
+-- * This needs a more permanent solution (For cases of no Input/Output file).
+inOutFile :: String -> (String, String) -> Doc
+inOutFile name (inFile, outFile) = doubleSep <>
+      text "How to Change Input:" <> contSep <> text name <+> 
+      text "will take the inputs from" <+> bkQuote <> text inFile <> bkQuote <+> 
+      text "and write the outputs to" <+> bkQuote <> text outFile <> bkQuote <> 
+      text "." <> contSep <> text "Inputs can be changed by editing" <+> bkQuote <> 
+      text inFile <> bkQuote <> text "."
+
 -- | Helper for giving instructions for configuration files.
 configSec :: [String] -> Doc
 configSec [] = empty
-configSec cfp = doubleSep <> regularSec (text "Configuration Files") (text ("Configuration files are files that must be " ++
+configSec cfp = doubleSep <> regularSec (text "Configuration Files") 
+  (text ("Configuration files are files that must be " ++
     "in the same directory as the executable in order to run or build successfully.")
     <> doubleSep <> bkQuote <> listToDoc cfp <> bkQuote)
 
