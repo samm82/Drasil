@@ -8,6 +8,10 @@ from python import OutputFormat
 from .TestHelpers import get_expected
 
 ## \brief Tests writing valid input
+#  \par Types of Testing:
+#  Dynamic Black-Box (Behavioural) Testing
+#  Equivalence Partitioning/Classing
+#  Logic Flow Testing
 @mark.parametrize("s, d_offset, t_flight", get_expected("d_offset", "t_flight"))
 def test_get_input_valid(s, d_offset, t_flight):
     OutputFormat.write_output(s, d_offset, t_flight)
