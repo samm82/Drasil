@@ -29,21 +29,34 @@ def build_mocks(*attrs):
     return mocks
 
 ## \brief Tests calculation of t_flight with valid input
+#  \par Types of Testing:
+#  Dynamic Black-Box (Behavioural) Testing
+#  Logic Flow Testing
 @mark.parametrize("mock", build_mocks("t_flight"))
 def test_func_t_flight_valid(mock):
     assert isclose(Calculations.func_t_flight(mock, valid_g), mock.t_flight)
 
 ## \brief Tests calculation of p_land with valid input
+#  \par Types of Testing:
+#  Dynamic Black-Box (Behavioural) Testing
+#  Logic Flow Testing
 @mark.parametrize("mock", build_mocks("p_land"))
 def test_func_p_land_valid(mock):
     assert isclose(Calculations.func_p_land(mock, valid_g), mock.p_land)
 
 ## \brief Tests calculation of d_offset with valid input
+#  \par Types of Testing:
+#  Dynamic Black-Box (Behavioural) Testing
+#  Logic Flow Testing
 @mark.parametrize("mock", build_mocks("p_land", "d_offset"))
 def test_func_d_offset_valid(mock):
     assert isclose(Calculations.func_d_offset(mock, mock.p_land), mock.d_offset)
     
 ## \brief Tests calculation of s with valid input
+#  \par Types of Testing:
+#  Dynamic Black-Box (Behavioural) Testing
+#  Equivalence Partitioning/Classing
+#  Logic Flow Testing
 @mark.parametrize("mock", build_mocks("d_offset", "s"))
 def test_func_s_valid(mock):
     assert Calculations.func_s(mock, epsilon, mock.d_offset) == mock.s
@@ -51,6 +64,11 @@ def test_func_s_valid(mock):
 # TODO: should the following tests also be made into Control tests?
 ## \brief Tests calculation of t_flight with invalid gravitational \n
 #  acceleration and valid input
+#  \par Types of Testing:
+#  Dynamic Black-Box (Behavioural) Testing
+#  Default, Empty, Blank, Null, Zero, and None
+#  Invalid, Wrong, Incorrect, and Garbage Data
+#  Logic Flow Testing
 @mark.parametrize("mock", build_mocks())
 @mark.parametrize("invalid_g", invalid_g_values)
 @mark.xfail
@@ -60,6 +78,11 @@ def test_func_t_flight_invalid_g(mock, invalid_g):
 
 ## \brief Tests calculation of p_land with invalid gravitational \n
 #  acceleration and valid input
+#  \par Types of Testing:
+#  Dynamic Black-Box (Behavioural) Testing
+#  Default, Empty, Blank, Null, Zero, and None
+#  Invalid, Wrong, Incorrect, and Garbage Data
+#  Logic Flow Testing
 @mark.parametrize("mock", build_mocks())
 @mark.parametrize("invalid_g", invalid_g_values)
 @mark.xfail
