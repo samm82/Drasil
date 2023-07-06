@@ -1,6 +1,6 @@
 ## \file InputParameters_test.py
-#  \author Samuel J. Crawford
-#  \brief Runs tests for the input of parameters
+# \author Samuel J. Crawford
+# \brief Runs tests for the input of parameters
 
 from math import isclose
 from pytest import mark, raises
@@ -15,9 +15,9 @@ from .test_input.expected_outputs import invalid_format_input_files, \
     invalid_value_input_files
 
 ## \brief Tests reading valid input
-#  \par Types of Testing:
-#  Dynamic Black-Box (Behavioural) Testing
-#  Logic Flow Testing
+# \par Types of Testing:
+# Dynamic Black-Box (Behavioural) Testing
+# Logic Flow Testing
 @mark.parametrize("filename,v_launch,theta,p_target",
                   get_expected("v_launch", "theta", "p_target"))
 def test_get_input_valid(filename, v_launch, theta, p_target):
@@ -26,11 +26,11 @@ def test_get_input_valid(filename, v_launch, theta, p_target):
     assert isclose(conftest.inParams[filename].p_target, p_target)
 
 ## \brief Tests reading improperly formatted input
-#  \par Types of Testing:
-#  Dynamic Black-Box (Behavioural) Testing
-#  Default, Empty, Blank, Null, Zero, and None
-#  Invalid, Wrong, Incorrect, and Garbage Data
-#  Logic Flow Testing
+# \par Types of Testing:
+# Dynamic Black-Box (Behavioural) Testing
+# Default, Empty, Blank, Null, Zero, and None
+# Invalid, Wrong, Incorrect, and Garbage Data
+# Logic Flow Testing
 @mark.parametrize("filename", invalid_format_input_files)
 def test_get_input_invalid_format(filename):
     # TODO: is this desired behaviour?
@@ -38,9 +38,9 @@ def test_get_input_invalid_format(filename):
         read_inParams(filename)
 
 ## \brief Tests constraint checking valid input
-#  \par Types of Testing:
-#  Dynamic Black-Box (Behavioural) Testing
-#  Logic Flow Testing
+# \par Types of Testing:
+# Dynamic Black-Box (Behavioural) Testing
+# Logic Flow Testing
 @mark.parametrize("filename", get_expected())
 def test_input_constraints_valid(filename):
     stdout = StringIO()
@@ -49,12 +49,12 @@ def test_input_constraints_valid(filename):
     assert stdout.getvalue() == ""
 
 ## \brief Tests constraint checking invalid input
-#  \par Types of Testing:
-#  Dynamic Black-Box (Behavioural) Testing
-#  Boundary Conditions
-#  Default, Empty, Blank, Null, Zero, and None
-#  Invalid, Wrong, Incorrect, and Garbage Data
-#  Logic Flow Testing
+# \par Types of Testing:
+# Dynamic Black-Box (Behavioural) Testing
+# Boundary Conditions
+# Default, Empty, Blank, Null, Zero, and None
+# Invalid, Wrong, Incorrect, and Garbage Data
+# Logic Flow Testing
 @mark.parametrize("filename", invalid_value_input_files)
 def test_input_constraints_invalid(filename):
     stdout = StringIO()
