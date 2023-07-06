@@ -1,6 +1,6 @@
-## \filename ControlTest.py
-#  \author Samuel J. Crawford
-#  \brief Runs tests for the program
+## \file ControlTest.py
+# \author Samuel J. Crawford
+# \brief Runs tests for the program
 from os import path, remove
 import sys
 from pytest import mark
@@ -15,10 +15,10 @@ output_filename = "output.txt"
 
 # from https://stackoverflow.com/questions/54071312/how-to-pass-command-line-argument-from-pytest-to-code
 ## \brief Tests main with valid input file
-#  \par Types of Testing:
-#  Dynamic Black-Box (Behavioural) Testing
-#  Equivalence Partitioning/Classing
-#  Logic Flow Testing
+# \par Types of Testing:
+# Dynamic Black-Box (Behavioural) Testing
+# Equivalence Partitioning/Classing
+# Logic Flow Testing
 @mark.parametrize("filename", get_expected())
 def test_main_valid(monkeypatch, filename):
     with monkeypatch.context() as m:
@@ -28,12 +28,12 @@ def test_main_valid(monkeypatch, filename):
 
 # from https://stackoverflow.com/questions/54071312/how-to-pass-command-line-argument-from-pytest-to-code
 ## \brief Tests main with invalid input file
-#  \par Types of Testing:
-#  Dynamic Black-Box (Behavioural) Testing
-#  Boundary Conditions
-#  Default, Empty, Blank, Null, Zero, and None
-#  Invalid, Wrong, Incorrect, and Garbage Data
-#  Logic Flow Testing
+# \par Types of Testing:
+# Dynamic Black-Box (Behavioural) Testing
+# Boundary Conditions
+# Default, Empty, Blank, Null, Zero, and None
+# Invalid, Wrong, Incorrect, and Garbage Data
+# Logic Flow Testing
 @mark.parametrize("filename", invalid_value_input_files)
 @mark.xfail
 def test_main_invalid(monkeypatch, filename):
