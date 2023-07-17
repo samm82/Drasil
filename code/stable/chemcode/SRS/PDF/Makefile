@@ -6,4 +6,4 @@ ChemCode_SRS.pdf: ChemCode_SRS.tex
 	lualatex $(TEXFLAGS) ChemCode_SRS
 	lualatex $(TEXFLAGS) ChemCode_SRS
 
-.PHONY: srs
+.PHONY:

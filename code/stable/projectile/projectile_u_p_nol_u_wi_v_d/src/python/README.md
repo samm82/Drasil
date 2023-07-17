@@ -1,7 +1,7 @@
 # Projectile 
 > Authors:  Samuel J. Crawford, Brooks MacLachlan, W. Spencer Smith
 
-> Purpose: predict whether a launched projectile hits its target.
+> Purpose: Predict whether a launched projectile hits its target.
 
 ------------------------------------------------------------
 ## Making Examples 
@@ -16,6 +16,10 @@ In your terminal command line, enter the same directory as this README file. The
 ```
 make build
 ```
+
+How to Change Input:
+Projectile will take the inputs from `input.txt` and write the outputs to `output.txt`.
+Inputs can be changed by editing `input.txt`.
 
 ------------------------------------------------------------
 ## Version 
