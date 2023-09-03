@@ -56,8 +56,6 @@ jobs:
         run: |
           echo "$HOME/.local/bin" >> $GITHUB_PATH
           echo "$HOME/.swift/usr/bin" >> $GITHUB_PATH
-      - name: "HLint"
-        run: make hot_hlint
       - name: "Install dependencies"
         run: make stackArgs="--no-terminal" deps
       - name: "Build"
@@ -87,6 +85,8 @@ jobs:
         if: ${{ fromJSON(env.is_deployment) }}
       - name: "Build website generator"
         run: make website
+      - name: "Test Built Website against Stable Version"
+        run: make test_website NOISY=yes
       - name: "Build website"
         run: |
           LABEL_FILE=/tmp/ci_build_failures \
@@ -96,7 +96,7 @@ jobs:
             bash scripts/deploy_wrapper.bash
       - name: "Deploy 🚀"
         if: ${{ fromJSON(env.is_deployment) }}
-        uses: JamesIves/github-pages-deploy-action@v4.4.2
+        uses: JamesIves/github-pages-deploy-action@v4.4.3
         with:
           git-config-name: ${{ secrets.BOT_NAME }}
           git-config-email: ${{ secrets.BOT_EMAIL }}
