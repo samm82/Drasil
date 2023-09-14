@@ -9,7 +9,7 @@ from errno import ENOENT
 
 from python import Control
 from .TestHelpers import get_expected, read_file
-from .test_input.expected_outputs import invalid_value_input_files
+from .test_input.input_data import invalid_value_input_files
 
 output_filename = "output.txt"
 

@@ -5,7 +5,7 @@
 from pathlib import Path
 
 from python import InputParameters
-from python.test.test_input.expected_outputs import expected_outputs
+from python.test.test_input.input_data import valid_input_data
 
 ## \brief Reads the contents of a file from its full file name
 def read_file(filename):
@@ -22,10 +22,10 @@ def read_inParams(filename):
 ## \brief Returns a list of tuples with relevant value for each valid input
 def get_expected(*fields):
     if len(fields) == 0:
-        return [d["filename"] for d in expected_outputs]
+        return [d["filename"] for d in valid_input_data]
     
-    out = [(d["filename"],) for d in expected_outputs]
+    out = [(d["filename"],) for d in valid_input_data]
     for i in range(len(out)):
         for field in fields:
-            out[i] = out[i] + (expected_outputs[i][field],)
+            out[i] = out[i] + (valid_input_data[i][field],)
     return out

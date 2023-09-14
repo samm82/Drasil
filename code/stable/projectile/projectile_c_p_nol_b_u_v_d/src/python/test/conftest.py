@@ -3,7 +3,7 @@
 #  \brief Defines setup function for initializing inParams
 
 from .TestHelpers import get_expected, read_inParams
-from .test_input.expected_outputs import invalid_value_input_files
+from .test_input.input_data import invalid_value_input_files
 
 inParams = dict()
 for filename in get_expected() + invalid_value_input_files:

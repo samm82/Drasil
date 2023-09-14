@@ -11,7 +11,7 @@ from io import StringIO
 
 from . import conftest
 from .TestHelpers import get_expected, read_inParams
-from .test_input.expected_outputs import invalid_format_input_files, \
+from .test_input.input_data import invalid_format_input_files, \
     invalid_value_input_files
 
 ## \brief Tests reading valid input

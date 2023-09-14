@@ -1,4 +1,3 @@
-# TODO: should this be here?
 invalid_value_input_files = [
     "zero_v_launch",   # violates lower bound of v_launch
     "zero_theta",      # violates lower bound of theta
@@ -10,7 +9,7 @@ invalid_format_input_files = [
     "empty" # empty file
 ]
 
-expected_outputs = [
+valid_input_data = [
     {
         "filename": "default_float",
         "v_launch": 20.0,
