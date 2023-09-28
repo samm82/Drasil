@@ -9,9 +9,9 @@ Last updated: March 2, 2023
 
 - Contains the (currently) expected output for the ChemCode example
 
-**dblpendulum**
+**dblpend**
 
-- Contains the (currently) expected output for the DblPendulum example
+- Contains the (currently) expected output for the DblPend example
 
 **gamephysics**
 
@@ -25,10 +25,10 @@ Last updated: March 2, 2023
 
 - Contains the (currently) expected output for the HGHC example
 
-**nopcm**
+**swhsnopcm**
 
-- Contains the (currently) expected output for the NoPCM example
-  
+- Contains the (currently) expected output for the SWHSNoPCM example
+
 **pdcontroller**
 
 - Contains the (currently) expected output for the PD Controller example
@@ -37,9 +37,15 @@ Last updated: March 2, 2023
 
 - Contains the (currently) expected output for the Projectile example
 
+<<<<<<< HEAD
 **sglpendulum**
 
 - Contains the (currently) expected output for the SglPendulum example
+=======
+**sglpend**
+  - Contains the (currently) expected output for the SglPend example
+
+>>>>>>> master
 
 **ssp**
 
