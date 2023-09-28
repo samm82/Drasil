@@ -11,7 +11,7 @@ This folder contains our working examples (implementations in Drasil of the prev
 
 - Contains the current state of the Chemistry Code case study implemented in Drasil
 
-**dblpendulum**
+**dblpend**
 
 - Contains the current state of the Double Pendulum case study implemented in Drasil
 
@@ -27,7 +27,7 @@ This folder contains our working examples (implementations in Drasil of the prev
 
 - Contains the current state of the HGHC (fuel pin) example implemented in Drasil
   
-**nopcm**
+**swhsnopcm**
 
 - Contains the current state of the solar water heating system case study implemented in Drasil
 
@@ -39,9 +39,15 @@ This folder contains our working examples (implementations in Drasil of the prev
 
 - Contains the current work on implementing the projectile example in Drasil
 
+<<<<<<< HEAD
 **sglpendulum**
 
 - Contains the current state of the Single Pendulum case study implemented in Drasil
+=======
+**sglpend**
+  - Contains the current state of the Single Pendulum case study implemented in Drasil
+
+>>>>>>> master
 
 **ssp**
 

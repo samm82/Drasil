@@ -28,14 +28,14 @@ main = do
   -- Env variables relating to variables exposed on CI.
   -- Because we want to be able to test site building locally, we fill in these stubs with
   -- (sometimes correct) assumptions.
-  repoSlug <- fromMaybe "JacquesCarette/Drasil" <$> lookupEnv "GITHUB_REPOSITORY"
-  commit <- fromMaybe "master" <$> lookupEnv "GITHUB_SHA"
+  repoSlug <- fromMaybe "samm82/Drasil" <$> lookupEnv "GITHUB_REPOSITORY"
+  tree <- fromMaybe "master" <$> lookupEnv "DRASIL_WEBSITE_TREE"
   -- Next two are metadata used to produce the footer.
   buildNumber <- fromMaybe "0" <$> lookupEnv "GITHUB_RUN_NUMBER"
   buildId <- lookupEnv "GITHUB_RUN_ID"
 
   -- get commit root and build path
-  let repoCommitRoot = "https://github.com/" ++ repoSlug ++ "/tree/" ++ commit ++ "/"
+  let repoCommitRoot = "https://github.com/" ++ repoSlug ++ "/tree/" ++ tree ++ "/"
       buildPath = "https://github.com/" ++ repoSlug ++ "/actions" ++ maybe "" ("/runs/" ++) buildId
 
       -- organize all the possible folder locations to use in functions
