@@ -236,7 +236,7 @@ scope = foldlSent_ [phraseNP (stabAnalysis `ofA` twoD), sParen (getAcc twoD),
 -- SECTION 2.4 --
 -- Organization automatically generated in IOrgSec
 orgSecEnd :: Sentence
-orgSecEnd   = foldlSent_ [atStartNP' (the inModel), S "provide the set of",
+orgSecEnd = foldlSent_ [atStartNP' (the inModel), S "provide the set of",
   S "algebraic", plural equation, S "that must be solved"]
 
 -- SECTION 3 --
@@ -348,13 +348,13 @@ physSystContents = [physSysConv, LlC figIndexConv, physSysFbd, LlC figForceActin
 
 physSysConv :: Contents
 physSysConv = foldlSP [atStart morPrice, phrase analysis, refS morgenstern1965
-  `S.ofThe` phrase slope,  S "involves representing the", phrase slope,
+  `S.ofThe` phrase slope, S "involves representing the", phrase slope,
   S "as a series of vertical" +:+. plural slice, S "As shown in",
   refS figIndexConv `sC` phraseNP (the index), ch index, S "is used to denote a",
   phrase value, S "for a single", phrase slice `sC` S "and an", phrase intrslce, 
   phrase value, S "at a given", phrase index, ch index, S "refers to the",
   phrase value, S "between", phrase slice, ch index `S.and_` S "adjacent", phrase slice,
-  eS $ sy index `addI` int 1]
+  eS $ sy index $+ int 1]
 
 figIndexConv :: LabelledContent
 figIndexConv = llcc (makeFigRef "IndexConvention") $ 
