@@ -64,7 +64,7 @@ module Language.Drasil (
   , HasReasVal(reasVal)
   , Constrained(constraints)
   , HasAdditionalNotes(getNotes)
-  , HasDerivation(derivations)
+  , MayHaveDerivation(derivations)
   , IsUnit(getUnits)
   , DefiningExpr(defnExpr)
   , Express(express)
@@ -100,7 +100,7 @@ module Language.Drasil (
   -- Language.Drasil.Chunk.Relation
   , RelationConcept, makeRC, addRelToCC
   -- Language.Drasil.Chunk.DifferentialModel
-  , DifferentialModel(..), ODESolverFormat(..), InitialValueProblem(..), ($^^),($*), ($+)
+  , DifferentialModel(..), ODESolverFormat(..), InitialValueProblem(..), ($^^),($**), ($++)
   , makeAODESolverFormat, makeAIVP, formEquations, makeASystemDE, makeASingleDE
 
   -- *** Quantities and Units
@@ -334,7 +334,7 @@ import Language.Drasil.Classes (Definition(defn), ConceptDomain(cdom), Concept, 
   IsUnit(getUnits), CommonIdea(abrv), HasAdditionalNotes(getNotes), Constrained(constraints),
   HasReasVal(reasVal), DefiningExpr(defnExpr), Quantity, Callable,
   IsArgumentName, Express(..))
-import Language.Drasil.Derivation (Derivation(Derivation), mkDeriv, mkDerivName, mkDerivNoHeader, HasDerivation(..))
+import Language.Drasil.Derivation (Derivation(Derivation), mkDeriv, mkDerivName, mkDerivNoHeader, MayHaveDerivation(..))
 import Language.Drasil.Data.Date (Month(..))
 import Language.Drasil.Chunk.Citation (
     Citation, EntryID, BibRef
@@ -361,7 +361,7 @@ import Language.Drasil.Chunk.NamedIdea
 import Language.Drasil.Chunk.Quantity
 import Language.Drasil.Chunk.Relation(RelationConcept, makeRC, addRelToCC)
 import Language.Drasil.Chunk.DifferentialModel(DifferentialModel(..), ODESolverFormat(..),
-  InitialValueProblem(..), ($^^), ($*), ($+), makeAODESolverFormat, makeAIVP, makeASystemDE, 
+  InitialValueProblem(..), ($^^), ($**), ($++), makeAODESolverFormat, makeAIVP, makeASystemDE, 
   makeASingleDE, formEquations)
 import Language.Drasil.Chunk.UncertainQuantity
 import Language.Drasil.Chunk.Unital(UnitalChunk(..), uc, uc', ucStaged, ucStaged',

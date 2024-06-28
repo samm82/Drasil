@@ -133,16 +133,16 @@ col2DFD :: SimpleQDef
 col2DFD = mkFuncDefByQ velA [timeC] col2DExpr
 
 col2DNP :: NP
-col2DNP =  nounPhraseSP "Collisions on 2D rigid bodies"
+col2DNP = nounPhraseSP "Collisions on 2D rigid bodies"
 
 col2DExpr {-, im3Rel2, im3Rel3, im3Rel4 -} :: Expr -- FIXME: add proper equation
-col2DExpr = apply1 velA time `addRe`
-  ((sy impulseS $/ sy massA) `mulRe` sy normalVect)
+col2DExpr = apply1 velA time $+
+  ((sy impulseS $/ sy massA) $* sy normalVect)
 
 
 col2DOutputs, impulseNote :: Sentence
 col2DOutputs = foldlSent [atStartNP (output_ `the_ofThe` inModel),
-  S "will be the functions" `S.of_` vals,  S "over time that satisfy the",
+  S "will be the functions" `S.of_` vals, S "over time that satisfy the",
   plural equation, S "for the", phraseNP (velocity `and_` angularAccel) `sC`
   S "with the given initial", plural condition, S "for" +:+. vals, atStartNP (the motion),
   S "is translational" `sC` S "so the", vals, S "functions are for the",
