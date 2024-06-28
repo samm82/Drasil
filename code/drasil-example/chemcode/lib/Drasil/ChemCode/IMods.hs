@@ -15,7 +15,7 @@ ims = [matRepresentation, chemEqIntLinProg]
 convertMatEq :: SimpleQDef
 convertMatEq = mkQuantDef qMat (theSuchThat "matrix" $ forall [genI, genJ]
   $ ((int 0 $<= sy genI $< abs_ (apply elems [sy inputChemEqn])) $&&
-      (int 0 $<= sy genJ $< (abs_ (getReactionSide "reac") `addRe`
+      (int 0 $<= sy genJ $< (abs_ (getReactionSide "reac") $+
         abs_ (getReactionSide "prod")))) $=>
         sy qEnt $= completeCase [
           (apply count [elemInElems, compInReac],
@@ -47,7 +47,7 @@ chemEqIntLinProg :: InstanceModel
 chemEqIntLinProg = imNoRefs
   (ilpModel "chemEqIntLinProg" (cn' "integer linear program for a chemical equation")
     $ minILP xVec unaryVec
-      $ (sy qMat `mulRe` sy xVec $= sy zeroVec) NE.:| [sy xVec $> sy zeroVec, isIn (sy xVec) (Vect Integer)])
+      $ (sy qMat $* sy xVec $= sy zeroVec) NE.:| [sy xVec $> sy zeroVec, isIn (sy xVec) (Vect Integer)])
   [qwUC qMat] -- FIXME: why should I need to convert the Unitals to QuantityDicts?
   xVec
   []

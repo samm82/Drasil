@@ -26,12 +26,12 @@ intLinProg :: TheoryModel
 intLinProg = tm
   (ilpModel "canonIntLinProg" (cn' "canonical integer linear program")
     $ maxILP xVec cVec
-      $ sy aMat `mulRe` sy xVec $<= sy bVec NE.:| [sy xVec $>= sy zeroVec, isIn (sy xVec) (Vect Integer)])
+      $ sy aMat $* sy xVec $<= sy bVec NE.:| [sy xVec $>= sy zeroVec, isIn (sy xVec) (Vect Integer)])
   ([] :: [QuantityDict]) -- FIXME: I should not need to manually define the type signature for this to type check
   [ilpChunk] -- FIXME: why do I need this?
   []
-  [sy cVec `mulRe` sy xVec,
-   sy aMat `mulRe` sy xVec $<= sy bVec,
+  [sy cVec $* sy xVec,
+   sy aMat $* sy xVec $<= sy bVec,
    sy xVec $>= sy zeroVec,
    isIn (sy xVec) (Vect Integer)] -- FIXME: apparently this is needed since generation doesn't happen from ModelKinds
   []
@@ -76,6 +76,6 @@ lawConsMass = tm
     consMassExpr = forall [genE, genR]
       (sideOfConsMassExpr "reac" $= sideOfConsMassExpr "prod")
     sideOfConsMassExpr s = sumAll (eqSymb genI) (
-      apply count [sy genE, access (idx (sy genR) (sy genI)) "comp"] `mulRe`
+      apply count [sy genE, access (idx (sy genR) (sy genI)) "comp"] $*
       access (idx (access (sy genR) s) (sy genI)) "coeff"
       )

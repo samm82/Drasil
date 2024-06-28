@@ -64,7 +64,7 @@ module Language.Drasil (
   , HasReasVal(reasVal)
   , Constrained(constraints)
   , HasAdditionalNotes(getNotes)
-  , HasDerivation(derivations)
+  , MayHaveDerivation(derivations)
   , IsUnit(getUnits)
   , DefiningExpr(defnExpr)
   , Express(express)
@@ -98,7 +98,7 @@ module Language.Drasil (
   -- Language.Drasil.Chunk.Concept
   , dcc, dccWDS, cc, cc', ccs, cw, cic
   -- Language.Drasil.Chunk.DifferentialModel
-  , DifferentialModel(..), ODESolverFormat(..), InitialValueProblem(..), ($^^),($*), ($+)
+  , DifferentialModel(..), ODESolverFormat(..), InitialValueProblem(..), ($^^),($**), ($++)
   , makeAODESolverFormat, makeAIVP, formEquations, makeASystemDE, makeASingleDE
   -- Language.Drasil.Chunk.IntLinProgModel
   , IntLinProgModel(..), maxILP, minILP
@@ -336,7 +336,7 @@ import Language.Drasil.Classes (Definition(defn), ConceptDomain(cdom), Concept, 
   IsUnit(getUnits), CommonIdea(abrv), HasAdditionalNotes(getNotes), Constrained(constraints),
   HasReasVal(reasVal), DefiningExpr(defnExpr), Quantity, Callable,
   IsArgumentName, Express(..))
-import Language.Drasil.Derivation (Derivation(Derivation), mkDeriv, mkDerivName, mkDerivNoHeader, HasDerivation(..))
+import Language.Drasil.Derivation (Derivation(Derivation), mkDeriv, mkDerivName, mkDerivNoHeader, MayHaveDerivation(..))
 import Language.Drasil.Data.Date (Month(..))
 import Language.Drasil.Chunk.Citation (
     Citation, EntryID, BibRef
@@ -357,7 +357,7 @@ import Language.Drasil.Constraint (physc, sfwrc, isPhysC, isSfwrC,
   Constraint(..), ConstraintE, ConstraintReason(..))
 import Language.Drasil.Chunk.DefinedQuantity
 import Language.Drasil.Chunk.DifferentialModel (DifferentialModel(..), ODESolverFormat(..),
-  InitialValueProblem(..), ($^^), ($*), ($+), makeAODESolverFormat, makeAIVP, makeASystemDE, 
+  InitialValueProblem(..), ($^^), ($**), ($++), makeAODESolverFormat, makeAIVP, makeASystemDE, 
   makeASingleDE, formEquations)
 import Language.Drasil.Chunk.Eq (QDefinition, fromEqn, fromEqn', fromEqnSt,
   fromEqnSt', fromEqnSt'', mkQDefSt, mkQuantDef, mkQuantDef', ec,
