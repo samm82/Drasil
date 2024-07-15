@@ -48,9 +48,10 @@ import GOOL.Drasil (SFile, MSBody, MSBlock, SVariable, SValue, MSStatement,
   SMethod, CSStateVar, SClass, OOProg, BodySym(..), bodyStatements, oneLiner,
   BlockSym(..), PermanenceSym(..), TypeSym(..), VariableSym(..), Literal(..),
   VariableValue(..), CommandLineArgs(..), BooleanExpression(..),
-  StatementSym(..), AssignStatement(..), DeclStatement(..), objDecNewNoParams,
-  extObjDecNewNoParams, IOStatement(..), ControlStatement(..), ifNoElse,
-  ScopeSym(..), MethodSym(..), StateVarSym(..), pubDVar, convType, ScopeTag(..))
+  StatementSym(..), AssignStatement(..), DeclStatement(..), OODeclStatement(..),
+  objDecNewNoParams, extObjDecNewNoParams, IOStatement(..),
+  ControlStatement(..), ifNoElse, ScopeSym(..), MethodSym(..), StateVarSym(..),
+  pubDVar, convTypeOO, ScopeTag(..))
 
 import Prelude hiding (print)
 import Data.List (intersperse, partition)
@@ -209,26 +210,30 @@ genInputClass scp = do
       cs = constants $ codeSpec g
       filt :: (CodeIdea c) => [c] -> [c]
       filt = filter ((Just cname ==) . flip Map.lookup (clsMap g) . codeName)
+      constructors :: (OOProg r) => GenState [SMethod r]
+      constructors = if cname `elem` defSet g
+        then concat <$> mapM (fmap maybeToList) [genInputConstructor]
+        else return []
       methods :: (OOProg r) => GenState [SMethod r]
       methods = if cname `elem` defSet g
-        then concat <$> mapM (fmap maybeToList) [genInputConstructor,
-        genInputFormat Priv, genInputDerived Priv, genInputConstraints Priv]
+        then concat <$> mapM (fmap maybeToList) [genInputFormat Priv,
+        genInputDerived Priv, genInputConstraints Priv]
         else return []
       genClass :: (OOProg r) => [CodeVarChunk] -> [CodeDefinition] ->
         GenState (Maybe (SClass r))
       genClass [] [] = return Nothing
       genClass inps csts = do
         vals <- mapM (convExpr . (^. codeExpr)) csts
-        inputVars <- mapM (\x -> fmap (pubDVar . var (codeName x) . convType)
+        inputVars <- mapM (\x -> fmap (pubDVar . var (codeName x) . convTypeOO)
           (codeType x)) inps
         constVars <- zipWithM (\c vl -> fmap (\t -> constVarFunc (conRepr g)
-          (var (codeName c) (convType t)) vl) (codeType c))
+          (var (codeName c) (convTypeOO t)) vl) (codeType c))
           csts vals
         let getFunc Primary = primaryClass
             getFunc Auxiliary = auxClass
             f = getFunc scp
         icDesc <- inputClassDesc
-        c <- f cname Nothing icDesc (inputVars ++ constVars) methods
+        c <- f cname Nothing icDesc (inputVars ++ constVars) constructors methods
         return $ Just c
   genClass (filt ins) (filt cs)
 
@@ -454,13 +459,13 @@ genConstClass scp = do
       genClass [] = return Nothing
       genClass vs = do
         vals <- mapM (convExpr . (^. codeExpr)) vs
-        vars <- mapM (\x -> fmap (var (codeName x) . convType) (codeType x)) vs
+        vars <- mapM (\x -> fmap (var (codeName x) . convTypeOO) (codeType x)) vs
         let constVars = zipWith (constVarFunc (conRepr g)) vars vals
             getFunc Primary = primaryClass
             getFunc Auxiliary = auxClass
             f = getFunc scp
         cDesc <- constClassDesc
-        cls <- f cname Nothing cDesc constVars (return [])
+        cls <- f cname Nothing cDesc constVars (return []) (return [])
         return $ Just cls
   genClass $ filter (flip member (Map.filter (cname ==) (clsMap g))
     . codeName) cs
@@ -501,7 +506,7 @@ genCalcFunc cdef = do
   desc <- getComment cdef
   publicFunc
     nm
-    (convType tp)
+    (convTypeOO tp)
     ("Calculates " ++ desc)
     (map pcAuto parms)
     (Just desc)
